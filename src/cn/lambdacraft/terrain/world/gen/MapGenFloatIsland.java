@@ -234,7 +234,7 @@ public class MapGenFloatIsland extends MapGenBase{
     @Override
 	protected void recursiveGenerate(World world, int genChunkX, int genChunkZ, int thisChunkX, int thisChunkZ, byte[] par6ArrayOfByte)
     {
-        if (this.rand.nextInt(12) == 0)
+        if (this.rand.nextInt(50) == 0)
         {
         	int genX = genChunkX * 16 + this.rand.nextInt(16);
             int genY = this.rand.nextInt(90);

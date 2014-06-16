@@ -93,10 +93,10 @@ public class ChunkProviderXenContinent implements IChunkProvider
     
     private MapGenBase ravineGenerator = new MapGenRavine();
     private MapGenBase caveGenerator = new MapGenCaves();
-    /**
-     * 生成小型浮空岛
-     */
+    
+    /** 生成小型浮空岛或者浮空岛群组   */
     private MapGenFloatIsland floatIslandGenerator = new MapGenFloatIsland();
+    private MapGenFloatIslandGroup floatIslandGroupGenerator = new MapGenFloatIslandGroup();
 
     public ChunkProviderXenContinent(World par1World, long par2, boolean par4)
     {
@@ -637,6 +637,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(this.biomesForGeneration, par1 * 16, par2 * 16, 16, 16);
         this.generateTerrain(par1, par2, abyte);
         this.floatIslandGenerator.generate(this, this.worldObj, par1, par2, abyte);
+        this.floatIslandGroupGenerator.generate(this, this.worldObj, par1, par2, abyte);
         this.replaceBlocksForBiome(par1, par2, abyte, this.biomesForGeneration);
         this.generateTerrainXen(par1, par2, abyte);
         this.caveGenerator.generate(this, this.worldObj, par1, par2, abyte);

@@ -38,6 +38,7 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
         this.biomesToSpawnIn.add(MainBiomes.xenPlain);
         this.biomesToSpawnIn.add(MainBiomes.xenVoid);
         this.biomesToSpawnIn.add(MainBiomes.xenBroken);
+        this.biomesToSpawnIn.add(MainBiomes.xenStonePlain);
     }
 
     public WorldChunkManagerXenContinent(long par1, WorldType par3WorldType)

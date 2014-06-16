@@ -66,6 +66,8 @@ public class ModuleTerrain {
 	@Configurable(key = "xenBrokenBiomeId", defValue = "33")
 	public static int xenBrokenBiomeId;
 	
+	@Configurable(key = "xenStonePlainBiomeId", defValue = "34")
+	public static int xenStonePlainBiomeId;
 	
 	@SidedProxy(clientSide = "cn.lambdacraft.terrain.proxy.ClientProxy", serverSide = "cn.lambdacraft.terrain.proxy.Proxy")
 	public static cn.lambdacraft.terrain.proxy.Proxy proxy;

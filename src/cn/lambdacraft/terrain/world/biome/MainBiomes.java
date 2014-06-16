@@ -13,5 +13,6 @@ public class MainBiomes {
 	public static final BiomeGenPlain xenPlain = new BiomeGenPlain(ModuleTerrain.xenPlainBiomeId);
 	public static final BiomeGenVoid xenVoid = new BiomeGenVoid(ModuleTerrain.xenVoidBiomeId);
 	public static final BiomeGenBroken xenBroken = new BiomeGenBroken(ModuleTerrain.xenBrokenBiomeId);
+	public static final BiomeGenStonePlain xenStonePlain = new BiomeGenStonePlain(ModuleTerrain.xenStonePlainBiomeId);
 
 }

@@ -14,7 +14,7 @@ public class GenLayerBiomesXenContinent extends GenLayer {
 	/** 通过改变放的个数可以改变每个biome的比重，即出现概率 */
 	protected BiomeGenBase[] allowedBiomes = 
 		{MainBiomes.xenVoid, MainBiomes.xenVoid, MainBiomes.xenPlain, MainBiomes.xenPlain, MainBiomes.xenHill,
-		MainBiomes.xenBroken};
+		 MainBiomes.xenBroken, MainBiomes.xenStonePlain};
 
 	public GenLayerBiomesXenContinent(long seed, GenLayer genlayer) {
 		super(seed);
