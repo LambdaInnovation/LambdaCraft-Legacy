@@ -642,7 +642,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
         this.generateTerrainXen(par1, par2, abyte);
         this.caveGenerator.generate(this, this.worldObj, par1, par2, abyte);
         this.ravineGenerator.generate(this, this.worldObj, par1, par2, abyte);
-
+        
         if (this.mapFeaturesEnabled){}
 
         Chunk chunk = new Chunk(this.worldObj, abyte, par1, par2);
@@ -650,7 +650,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
 
         for (int k = 0; k < abyte1.length; ++k)
         {
-            abyte1[k] = (byte)this.biomesForGeneration[k].biomeID;
+            //abyte1[k] = (byte)this.biomesForGeneration[k].biomeID;
         }
 
         chunk.generateSkylightMap();

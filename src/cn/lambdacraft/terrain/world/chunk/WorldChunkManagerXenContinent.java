@@ -28,7 +28,7 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
     private GenLayer genBiomes;
     private GenLayer biomeIndexLayer;
     private BiomeCache biomeCache;
-    private List biomesToSpawnIn;
+    private List<BiomeGenBase> biomesToSpawnIn;
 
     protected WorldChunkManagerXenContinent()
     {
@@ -59,7 +59,7 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
      * Gets the list of valid biomes for the player to spawn in.
      */
     @Override
-	public List getBiomesToSpawnIn()
+	public List<BiomeGenBase> getBiomesToSpawnIn()
     {
         return this.biomesToSpawnIn;
     }
@@ -289,10 +289,4 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
         this.biomeCache.cleanupCache();
     }
 
-    @Override
-	public GenLayer[] getModdedBiomeGenerators(WorldType worldType, long seed, GenLayer[] original)
-    {
-        WorldTypeEvent.InitBiomeGens event = new WorldTypeEvent.InitBiomeGens(worldType, seed, original);
-        return event.newBiomeGens;
-    }
 }

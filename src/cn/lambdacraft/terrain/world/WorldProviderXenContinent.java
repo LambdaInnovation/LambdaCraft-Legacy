@@ -26,6 +26,7 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.client.IRenderHandler;
+import net.minecraftforge.common.DimensionManager;
 
 /**
  * @author F
@@ -40,7 +41,7 @@ public class WorldProviderXenContinent extends WorldProvider {
 
 	@Override
 	public void registerWorldChunkManager() {
-		this.worldChunkMgr = new WorldChunkManagerXenContinent(worldObj);
+		this.worldChunkMgr = new WorldChunkManagerXenContinent(worldObj.getSeed(), terrainType);
 		this.dimensionId = ModuleTerrain.xenContinentDimensionID;
 	}
 	

@@ -6,7 +6,7 @@ import net.minecraft.world.gen.MapGenBase;
 
 public class MapGenFloatIsland extends MapGenBase{
 
-    protected void generateFloatIsland(World world, long seed, int genX, int genY, int genZ, byte[] par5ArrayOfByte, int thisChunkX, int thisChunkZ)
+    protected void generateFloatIsland(World world, int genX, int genY, int genZ, byte[] par5ArrayOfByte, int thisChunkX, int thisChunkZ)
     {
     	
 		int height = this.rand.nextInt(25) + 25;
@@ -142,7 +142,7 @@ public class MapGenFloatIsland extends MapGenBase{
 		int genEndX = genX + width - thisChunkX * 16;
 		int genStartZ = genZ - thisChunkZ * 16;
 		int genEndZ = genZ + width - thisChunkZ * 16;
-		float genEndY = genY + height * 0.5F;
+		int genEndY = genY + height / 2;
 		int x2;
 		int y2;
 		int z2;
@@ -206,7 +206,7 @@ public class MapGenFloatIsland extends MapGenBase{
 		{
 			height = height/2;
 			genY = (int)genEndY + 1;
-			genEndY = genEndY + rand.nextInt(height);
+			genEndY = genEndY + rand.nextInt(height) + 5;
 			
 			if(genEndY > 128 )
 			{
@@ -234,13 +234,13 @@ public class MapGenFloatIsland extends MapGenBase{
     @Override
 	protected void recursiveGenerate(World world, int genChunkX, int genChunkZ, int thisChunkX, int thisChunkZ, byte[] par6ArrayOfByte)
     {
-        if (this.rand.nextInt(50) == 0)
+        if (this.rand.nextInt(30) == 0)
         {
         	int genX = genChunkX * 16 + this.rand.nextInt(16);
             int genY = this.rand.nextInt(90);
             int genZ = genChunkZ * 16 + this.rand.nextInt(16);
             
-            this.generateFloatIsland(world, this.rand.nextLong(), genX, genY, genZ, par6ArrayOfByte, thisChunkX, thisChunkZ);
+            this.generateFloatIsland(world, genX, genY, genZ, par6ArrayOfByte, thisChunkX, thisChunkZ);
         }
     }
 }
