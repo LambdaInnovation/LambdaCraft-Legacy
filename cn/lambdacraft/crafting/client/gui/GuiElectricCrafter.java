@@ -74,8 +74,8 @@ public class GuiElectricCrafter extends LIGuiContainer {
 		public String getTip() {
 			switch (tileEntity.iconType) {
 			case CRAFTING:
-				return StatCollector.translateToLocal("gui.crafting.name")
-						+ tileEntity.currentRecipe.toString();
+				return tileEntity.currentRecipe == null ? "" : 
+					StatCollector.translateToLocal("gui.crafting.name") + tileEntity.currentRecipe.toString();
 			case NOMATERIAL:
 				return StatCollector.translateToLocal("gui.nomaterial.name");
 			case NONE:
@@ -97,7 +97,7 @@ public class GuiElectricCrafter extends LIGuiContainer {
 
 		@Override
 		public String getTip() {
-			return tileEntity.heat + "/" + tileEntity.maxHeat + " "
+			return tileEntity.heatForRendering + "/" + tileEntity.maxHeat + " "
 					+ StatCollector.translateToLocal("gui.heat.name");
 		}
 
@@ -137,7 +137,7 @@ public class GuiElectricCrafter extends LIGuiContainer {
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-		int height = tileEntity.heat * 46 / tileEntity.maxHeat;
+		int height = tileEntity.heatForRendering * 46 / tileEntity.maxHeat;
 		if (height > 0) {
 			drawTexturedModalRect(x + 138, y + 63 - height, 181, 0, 6, height);
 		}
@@ -145,7 +145,7 @@ public class GuiElectricCrafter extends LIGuiContainer {
 		if (height > 0) {
 			drawTexturedModalRect(x + 116, y + 63 - height, 174, 0, 6, height);
 		}
-		if (tileEntity.isCrafting) {
+		if (tileEntity.isCrafting && tileEntity.currentRecipe != null) {
 			if (tileEntity.heatRequired > 0) {
 				height = tileEntity.heatRequired * 46 / tileEntity.maxHeat;
 				drawTexturedModalRect(x + 136, y + 63 - height, 207, 1, 6, 3);

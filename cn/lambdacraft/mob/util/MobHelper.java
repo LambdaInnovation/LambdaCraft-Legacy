@@ -78,7 +78,7 @@ public final class MobHelper {
                     entityliving.rotationYawHead = entityliving.rotationYaw;
                     entityliving.renderYawOffset = entityliving.rotationYaw;
                     entityliving.onSpawnWithEgg((EntityLivingData)null);
-                    if (entityliving instanceof IEntityLink) {
+                    if (entityliving instanceof IEntityLink && thrower != null) {
         				((IEntityLink) entityliving).setLinkedEntity(thrower);
         			}
                     par0World.spawnEntityInWorld(entity);

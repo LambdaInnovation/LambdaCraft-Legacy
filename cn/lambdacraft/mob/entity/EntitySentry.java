@@ -234,7 +234,7 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
 			} else { 
 				rotationSet = false;
 				this.playSound("lambdacraft:mobs.tu_fire", 0.5F, 1.0F);
-				WeaponHelper.Shoot_rev(3, this, worldObj);
+				WeaponHelper.Shoot(3, this, worldObj);
 			}
 			if(currentTarget.getDistanceSqToEntity(this) > 400) {
 				this.currentTarget = null;

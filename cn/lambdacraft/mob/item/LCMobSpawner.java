@@ -40,6 +40,10 @@ public class LCMobSpawner extends CBCGenericItem {
 		}
         return par1ItemStack;
     }
+    
+    public Class<? extends Entity> getEntityClass() {
+    	return entClass;
+    }
 	
 	/**
 	 * How long it takes to use or consume an item

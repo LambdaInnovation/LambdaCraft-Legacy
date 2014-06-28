@@ -57,8 +57,26 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 			this.writeRecipeInfoToSlot();
 		}
 
-		if (worldObj.isRemote)
+		if(worldObj.isRemote) {
+			if(isBuffering) {
+				if(heatForRendering < heat) {
+					heatForRendering += BUFFER_SPEED;
+					if(heatForRendering >= heat) {
+						heatForRendering = heat;
+						isBuffering = false;
+					}
+				} else {
+					heatForRendering -= BUFFER_SPEED;
+					if(heatForRendering <= heat) {
+						heatForRendering = heat;
+						isBuffering = false;
+					}
+				}
+			} else if(Math.abs(heat - heatForRendering) > 300) {
+				isBuffering = true;
+			} else heatForRendering = heat;
 			return;
+		}
 
 		if (heat > 0)
 			heat--;
@@ -77,9 +95,6 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 			if (currentEnergy >= 7) {
 				currentEnergy -= 14;
 				heat += 6;
-			}
-			if (worldObj.getWorldTime() - lastTime > 1000L) {
-				isCrafting = false;
 			}
 		}
 

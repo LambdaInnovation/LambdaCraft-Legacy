@@ -52,7 +52,7 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 
 		@Override
 		public String getTip() {
-			return te.heat + "/" + te.maxHeat + " "
+			return te.heatForRendering + "/" + te.maxHeat + " "
 					+ StatCollector.translateToLocal("gui.heat.name");
 		}
 
@@ -148,14 +148,14 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 			dy = 38;
 		drawTexturedModalRect(x + 160, y + 16, 232, dy, 8, 18);
 
-		int height = te.heat * 64 / te.maxHeat;
+		int height = te.heatForRendering * 64 / te.maxHeat;
 		if (height > 0) {
 			drawTexturedModalRect(x + 174, y + 78 - height, 232, 150 - height,
 					8, height);
 		}
 		if (te.heatRequired > 0) {
 			if (te.currentRecipe != null) {
-				height = te.heatRequired * 64 / te.maxHeat;
+				height = te.currentRecipe.heatRequired * 64 / te.maxHeat;
 				drawTexturedModalRect(x + 173, y + 77 - height, 201, 1, 6, 3);
 			}
 		}

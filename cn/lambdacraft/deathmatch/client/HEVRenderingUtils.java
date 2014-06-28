@@ -33,6 +33,7 @@ import cn.lambdacraft.api.hud.ISpecialCrosshair;
 import cn.lambdacraft.core.CBCPlayer;
 import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
+import cn.liutils.api.client.util.HudUtils;
 import cn.liutils.api.client.util.RenderUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -74,10 +75,10 @@ public class HEVRenderingUtils {
         //Health Section
     	
         GL11.glColor4f(0.7F, 0.7F, 0.7F, 0.6F);
-        drawTexturedModalRect(0 , 0 , 64, 64, 24, 24, 64, 64);
+        HudUtils.drawTexturedModalRect(0 , 0 , 64, 64, 24, 24, 64, 64);
         GL11.glColor4f(1.0F, 0.5F, 0.0F, 0.6F);
         int h = (int) (player.getHealth() * 16 / 20);
-        drawTexturedModalRect(0 , 24 - (int)(h * 1.5), 192, 128 - 4 * h, 24, (int) (1.5 * h), 64, 4 * h);
+        HudUtils.drawTexturedModalRect(0 , 24 - (int)(h * 1.5), 192, 128 - 4 * h, 24, (int) (1.5 * h), 64, 4 * h);
         if(player.getHealth() <= 5)
         	GL11.glColor4f(0.9F, 0.1F, 0.1F, 0.6F);
         drawNumberAt((byte) (player.getHealth() * 5), 18, 0);
@@ -85,12 +86,12 @@ public class HEVRenderingUtils {
         
         //Armor Section
         GL11.glColor4f(0.7F, 0.7F, 0.7F, 0.6F);
-        drawTexturedModalRect(70 , 0 , 0, 64, 24, 24, 64, 64);
+        HudUtils.drawTexturedModalRect(70 , 0 , 0, 64, 24, 24, 64, 64);
         GL11.glColor4f(1.0F, 0.5F, 0.0F, 0.6F);
         h = player.getTotalArmorValue() * 16 / 20;
         if(h > 16)
         	h = 16;
-        drawTexturedModalRect(70, 24 - (int)(h * 1.5), 128, 128 - 4 * h, 24, (int)(h * 1.5), 64, 4 * h);
+        HudUtils.drawTexturedModalRect(70, 24 - (int)(h * 1.5), 128, 128 - 4 * h, 24, (int)(h * 1.5), 64, 4 * h);
         
         drawNumberAt(player.getTotalArmorValue() * 5, 70 + 12, 0 );
         
@@ -163,13 +164,13 @@ public class HEVRenderingUtils {
 				}
 				//xOffset = (int) (xOffset * 0.7);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.9F);
-				drawTexturedModelRectFromIcon(tx + xOffset, height, hev.getIcon(is, 0), 16, 16);
+				HudUtils.drawTexturedModelRectFromIcon(tx + xOffset, height, hev.getIcon(is, 0), 16, 16);
 				renderEngine.bindTexture(ClientProps.HEV_HUD_PATH);
 				
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
-				drawTexturedModalRect(tx2 + xOffset, height + 16 - heightToDraw, 286, 64, 8, 16, 34, 64); //overlay
+				HudUtils.drawTexturedModalRect(tx2 + xOffset, height + 16 - heightToDraw, 286, 64, 8, 16, 34, 64); //overlay
 				GL11.glColor4f(1.0F, 0.5F, 0.0F, 0.75F);
-				drawTexturedModalRect(tx2 + xOffset, height + 16 - heightToDraw, 350, 128 - 4 * heightToDraw, 8, heightToDraw, 34, heightToDraw * 4); //actual
+				HudUtils.drawTexturedModalRect(tx2 + xOffset, height + 16 - heightToDraw, 350, 128 - 4 * heightToDraw, 8, heightToDraw, 34, heightToDraw * 4); //actual
 			}
 		}
 	}
@@ -201,7 +202,7 @@ public class HEVRenderingUtils {
 				else if(sheetIndex != 5)
 					engine.bindTexture(engine.getResourceLocation(1)); 
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.7F);
-				drawTexturedModelRectFromIcon(k - 30, startHeight, icon, 20, 20);
+				HudUtils.drawTexturedModelRectFromIcon(k - 30, startHeight, icon, 20, 20);
 				GL11.glColor4f(1.0F, 0.5F, 0.0F, 0.6F);
 				//Bind the texture by Rikka0_0
 				RenderUtils.loadTexture(ClientProps.HEV_HUD_PATH);
@@ -226,7 +227,7 @@ public class HEVRenderingUtils {
 		drawTipStringAt(s, x, y);
 	}
 
-	private static void drawTipStringAt(String s, int x, int y) {
+	static void drawTipStringAt(String s, int x, int y) {
 		int lastLength = 0;
 		for(int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
@@ -235,59 +236,14 @@ public class HEVRenderingUtils {
 				int number = Integer.valueOf(String.valueOf(c));
 				drawSingleNumberAt(number, x + lastLength, y);
 			} else {
-				drawTexturedModalRect(x + lastLength - 5, y, 608, 64, 12, 24, 32, 64);
+				HudUtils.drawTexturedModalRect(x + lastLength - 5, y, 608, 64, 12, 24, 32, 64);
 			}
 			lastLength += b? 12 : 7; 
 		}
 	}
 	
 	private static void drawSingleNumberAt(int number, int x, int y) {
-		drawTexturedModalRect(x, y, 64 * number + 32, 0, 24, 24, 64, 64);
+		HudUtils.drawTexturedModalRect(x, y, 64 * number + 32, 0, 24, 24, 64, 64);
 	}
-	
-	private static final float SCALE_X = 1.0F / TEX_WIDTH, SCALE_Y = 1.0F / TEX_HEIGHT;
-	
-    /**
-     * Draws a textured rectangle at the stored z-value. Args: x, y, u, v, width, height
-     */
-    public static void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6)
-    {
-        float f = SCALE_X;
-        float f1 = SCALE_Y;
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(par1 + 0, par2 + par6, -90, (par3 + 0) * f, (par4 + par6) * f1);
-        tessellator.addVertexWithUV(par1 + par5, par2 + par6, -90, (par3 + par5) * f, (par4 + par6) * f1);
-        tessellator.addVertexWithUV(par1 + par5, par2 + 0, -90, (par3 + par5) * f, (par4 + 0) * f1);
-        tessellator.addVertexWithUV(par1 + 0, par2 + 0, -90, (par3 + 0) * f, (par4 + 0) * f1);
-        tessellator.draw();
-    }
-    
-    /**
-     * Draws a textured rectangle at the stored z-value. Args: x, y, u, v, width, height, texWidth, texHeight
-     */
-    public static void drawTexturedModalRect(int par1, int par2, int par3, int par4, int par5, int par6, int par7, int par8)
-    {
-    	float f = SCALE_X;
-        float f1 = SCALE_Y;
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(par1 + 0, par2 + par6, -90, (par3 + 0) * f, (par4 + par8) * f1);
-        tessellator.addVertexWithUV(par1 + par5, par2 + par6, -90, (par3 + par7) * f, (par4 + par8) * f1);
-        tessellator.addVertexWithUV(par1 + par5, par2 + 0, -90, (par3 + par7) * f, (par4 + 0) * f1);
-        tessellator.addVertexWithUV(par1 + 0, par2 + 0, -90, (par3 + 0) * f, (par4 + 0) * f1);
-        tessellator.draw();
-    }
-    
-    public static void drawTexturedModelRectFromIcon(int par1, int par2, Icon par3Icon, int par4, int par5)
-    {
-        Tessellator tessellator = Tessellator.instance;
-        tessellator.startDrawingQuads();
-        tessellator.addVertexWithUV(par1 + 0, par2 + par5, -90, par3Icon.getMinU(), par3Icon.getMaxV());
-        tessellator.addVertexWithUV(par1 + par4, par2 + par5, -90, par3Icon.getMaxU(), par3Icon.getMaxV());
-        tessellator.addVertexWithUV(par1 + par4, par2 + 0, -90, par3Icon.getMaxU(), par3Icon.getMinV());
-        tessellator.addVertexWithUV(par1 + 0, par2 + 0, -90, par3Icon.getMinU(), par3Icon.getMinV());
-        tessellator.draw();
-    }
 
 }

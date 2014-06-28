@@ -1,11 +1,13 @@
 package cn.lambdacraft.mob.register;
 
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.item.Item;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
 import cn.lambdacraft.mob.entity.EntityHLZombie;
 import cn.lambdacraft.mob.entity.EntityHeadcrab;
 import cn.lambdacraft.mob.entity.EntityHoundeye;
 import cn.lambdacraft.mob.entity.EntitySentry;
+import cn.lambdacraft.mob.item.DispenserBehaviorSpawner;
 import cn.lambdacraft.mob.item.ItemBarnaclePlacer;
 import cn.lambdacraft.mob.item.ItemDNAFragment;
 import cn.lambdacraft.mob.item.ItemSentrySyncer;
@@ -18,6 +20,7 @@ public class CBCMobItems {
 	public static Item weapon_snark, headcrab0w0, barnacle, zombie, turret,
 			sentrySyncer, houndeye, vortigaunt;
 	public static ItemDNAFragment dna;
+	public static DispenserBehaviorSpawner dispenserBehaviorSpawner;
 
 	public static void init(Config conf) {
 		weapon_snark = new LCMobSpawner(ConfigHandler.getItemId(conf, "snark",
@@ -41,6 +44,13 @@ public class CBCMobItems {
 				"syncer", 1));
 		dna = new ItemDNAFragment(ConfigHandler.getItemId(conf, "dna", 1));
 
+		dispenserBehaviorSpawner = new DispenserBehaviorSpawner();
+		BlockDispenser.dispenseBehaviorRegistry.putObject(weapon_snark, dispenserBehaviorSpawner);
+		BlockDispenser.dispenseBehaviorRegistry.putObject(headcrab0w0, dispenserBehaviorSpawner);
+		BlockDispenser.dispenseBehaviorRegistry.putObject(zombie, dispenserBehaviorSpawner);
+		BlockDispenser.dispenseBehaviorRegistry.putObject(turret, dispenserBehaviorSpawner);
+		BlockDispenser.dispenseBehaviorRegistry.putObject(vortigaunt, dispenserBehaviorSpawner);
+		BlockDispenser.dispenseBehaviorRegistry.putObject(houndeye, dispenserBehaviorSpawner);
 	}
 
 }

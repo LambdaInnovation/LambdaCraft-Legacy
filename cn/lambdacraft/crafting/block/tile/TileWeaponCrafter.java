@@ -16,6 +16,9 @@ package cn.lambdacraft.crafting.block.tile;
 
 import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -46,6 +49,14 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 	public int scrollFactor = 0;
 	public int page = 0;
 	public int heat, burnTimeLeft, maxBurnTime;
+	
+	@SideOnly(Side.CLIENT)
+	public int heatForRendering = 0;
+	@SideOnly(Side.CLIENT)
+	public boolean isBuffering = false;
+	
+	public final int BUFFER_SPEED = 20;
+	
 	public RecipeCrafter currentRecipe;
 	public CrafterIconType iconType = CrafterIconType.NONE;
 	public long lastTime = 0;
@@ -54,6 +65,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 	public boolean isLoad = false;
 	public int tickUpdate = 0;
 
+	@SideOnly(Side.CLIENT)
 	public int heatRequired = 0;
 
 	/**
@@ -78,9 +90,27 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 			this.writeRecipeInfoToSlot();
 			isLoad = true;
 		}
-
-		if (worldObj.isRemote)
+		
+		if(worldObj.isRemote) {
+			if(isBuffering) {
+				if(heatForRendering < heat) {
+					heatForRendering += BUFFER_SPEED;
+					if(heatForRendering >= heat) {
+						heatForRendering = heat;
+						isBuffering = false;
+					}
+				} else {
+					heatForRendering -= BUFFER_SPEED;
+					if(heatForRendering <= heat) {
+						heatForRendering = heat;
+						isBuffering = false;
+					}
+				}
+			} else if(Math.abs(heat - heatForRendering) > 300) {
+				isBuffering = true;
+			} else heatForRendering = heat;
 			return;
+		}
 
 		if (heat > 0)
 			heat--;
@@ -115,6 +145,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 
 		if (++tickUpdate > 3)
 			this.onInventoryChanged();
+		
 	}
 
 	protected void writeRecipeInfoToSlot() {
@@ -357,6 +388,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 				inventory[0] = currentRecipe.output.copy();
 			}
 			consumeMaterial(currentRecipe);
+			heat -= currentRecipe.heatRequired / 3;
 		} else {
 			if (inventory[0] != null) {
 				iconType = CrafterIconType.NOMATERIAL;

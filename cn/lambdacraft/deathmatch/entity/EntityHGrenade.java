@@ -50,13 +50,10 @@ public class EntityHGrenade extends EntityThrowable {
 		if (worldObj.isRemote)
 			return;
 
-		if (ticksExisted - time > 5) { // 最小时间间隔0.3s
-			this.playSound("lambdacraft:weapons.hgrenadebounce", .5F, 1.0F);
-			time = ticksExisted;
-		}
-
 		int id = this.worldObj
 				.getBlockId(par1.blockX, par1.blockY, par1.blockZ);
+		
+		double collideStrengh = 1.0F;
 		// 碰撞代码
 		if (par1.typeOfHit == EnumMovingObjectType.TILE) {
 			if (!Block.blocksList[id].isCollidable())
@@ -67,23 +64,33 @@ public class EntityHGrenade extends EntityThrowable {
 			case 1:
 				this.motionY = 0.3 * -motionY;
 				this.motionX = 0.6 * motionX;
+				collideStrengh = Math.abs(motionY);
 				this.motionZ = 0.6 * motionZ;
 				break;
 
 			case 2:
 			case 3:
 				this.motionZ = 0.6 * -motionZ;
+				collideStrengh = Math.abs(motionZ);
 				break;
 
 			case 4:
 			case 5:
 				this.motionX = 0.6 * -motionX;
+				collideStrengh = Math.abs(motionX);
 				break;
 
 			default:
 				break;
 			}
 		}
+		if(collideStrengh > 1.0) collideStrengh = 1.0;
+		System.out.println(collideStrengh);
+		if (ticksExisted - time > 20) { // 最小时间间隔1s
+			this.playSound("lambdacraft:weapons.hgrenadebounce", (float) (5F * collideStrengh), 1.0F);
+			time = ticksExisted;
+		}
+
 	}
 
 	private void Explode() {

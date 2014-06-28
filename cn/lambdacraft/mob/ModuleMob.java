@@ -61,7 +61,7 @@ public class ModuleMob {
 		CBCMobBlocks.init(CBCMod.config);
 
 		try {
-			boolean spawnOverworld = CBCMod.config.getBoolean("spawnInOverwofld", true);
+			boolean spawnOverworld = CBCMod.config.getBoolean("spawnInOverworld", true);
 			if(spawnOverworld){
 				EntityRegistry.addSpawn(EntityHeadcrab.class, 7, 0, 50, EnumCreatureType.monster, GENERIC_GEN);
 				EntityRegistry.addSpawn(EntityHoundeye.class, 10, 0, 70, EnumCreatureType.monster, GENERIC_GEN);
