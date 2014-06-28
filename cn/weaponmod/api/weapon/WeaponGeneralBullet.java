@@ -225,6 +225,12 @@ public abstract class WeaponGeneralBullet extends WeaponGeneral implements IRelo
 		InformationBullet information = (InformationBullet) loadInformation(stack, player);
 		Boolean canUse = canShoot(player, stack, left);
 		if (canUse) {
+			if(this.doesAbortReloadingWhenClick() && information.isReloading) {
+				information.setLastTick(false);
+				information.isReloading = false;
+				player.playSound(this.getSoundJam(false), 0.5F, 1.0F);
+			}
+				
 			if (this.doesShoot(information, player, stack, left)) 
 				this.onBulletWpnShoot(stack, world, player, information, left);
 			//information.isReloading = false;
@@ -311,6 +317,7 @@ public abstract class WeaponGeneralBullet extends WeaponGeneral implements IRelo
 	@Override
 	public void addInformation(ItemStack par1ItemStack,
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+		if(this.getMaxDamage() > 0)
 		par3List.add(StatCollector.translateToLocal("ammocap.name")
 				+ ": "
 				+ (par1ItemStack.getMaxDamage()
@@ -338,4 +345,7 @@ public abstract class WeaponGeneralBullet extends WeaponGeneral implements IRelo
 		return rotation;
 	}
 	
+	public boolean doesAbortReloadingWhenClick() {
+		return false;
+	}
 }

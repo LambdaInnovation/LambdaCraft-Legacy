@@ -186,11 +186,6 @@ public class WeaponHelper {
 			World worldObj) {
 		worldObj.spawnEntityInWorld(new EntityBullet(worldObj, entityPlayer, damage));
 	}
-	
-	public static void Shoot_rev(int damage, EntityLivingBase entityPlayer,
-			World worldObj) {
-		worldObj.spawnEntityInWorld(new EntityBullet(worldObj, entityPlayer, damage, true));
-	}
 
 	/**
 	 * 意义何在？

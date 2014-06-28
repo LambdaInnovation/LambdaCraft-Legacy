@@ -23,7 +23,7 @@ public class NetExplosion implements IChannelProcess {
 		ByteArrayOutputStream bos = WMPacketHandler.getStream(WMGeneralProps.NET_ID_EXPLOSION, 16);
 		DataOutputStream outputStream = new DataOutputStream(bos);
 
-		int dimension = world.getWorldInfo().getVanillaDimension();
+		int dimension = world.provider.dimensionId;
 		try {
 			outputStream.writeFloat(bx);
 			outputStream.writeFloat(by);
@@ -36,6 +36,7 @@ public class NetExplosion implements IChannelProcess {
 		packet.channel = WMGeneralProps.NET_CHANNEL_CLIENT;
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
+		System.out.println("Sending explosion packet from dimension " + dimension);
 		PacketDispatcher.sendPacketToAllInDimension(packet, dimension);
 	}
 
@@ -51,6 +52,7 @@ public class NetExplosion implements IChannelProcess {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		System.out.println("Recieved explosion package");
 		WeaponHelper.clientExplode(Minecraft.getMinecraft().theWorld, st, bx, by, bz);
 	}
 	
