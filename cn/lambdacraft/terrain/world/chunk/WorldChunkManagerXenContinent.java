@@ -17,7 +17,6 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
-import net.minecraftforge.event.terraingen.WorldTypeEvent;
 /**
  * 与biome有关
  * @author F

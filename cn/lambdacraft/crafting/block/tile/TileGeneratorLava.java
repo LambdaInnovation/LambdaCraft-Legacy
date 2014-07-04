@@ -49,11 +49,9 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 		if (currentEnergy > 0) {
 			if (this.slots[1] != null
 					&& slots[1].getItem() instanceof ICustomEnItem) {
-				currentEnergy -= ((ICustomEnItem) slots[1].getItem()).charge(
-						slots[1], currentEnergy, 1, false, false);
+				currentEnergy -= ((ICustomEnItem) slots[1].getItem()).charge(slots[1], currentEnergy, 1, false, false);
 			}
-			int toConsume = 10 - sendEnergy(currentEnergy > 10 ? 10
-					: currentEnergy);
+			int toConsume = 10 - sendEnergy(currentEnergy > 10 ? 10 : currentEnergy);
 			currentEnergy -= toConsume;
 		} else {
 			if (bucketCnt-- > 0)

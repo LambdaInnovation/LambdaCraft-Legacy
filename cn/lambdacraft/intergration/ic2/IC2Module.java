@@ -14,23 +14,29 @@
  */
 package cn.lambdacraft.intergration.ic2;
 
+import cn.liutils.core.register.Config;
+
 /**
  * @author WeAthFolD
  *
  */
 public class IC2Module {
 
-	public static boolean init() {
+	public static boolean placableBlocks = false;
+	
+	public static boolean init(Config conf) {
 		Class c;
 		try {
 			c = Class.forName("ic2.api.energy.tile.IEnergySink");
+			placableBlocks = conf.getBoolean("AllowInternalElectricytBlockPlacement", false);
+			IC2Registration.registerBlocks();
+			IC2Registration.registerItems();
 		} catch(Exception e) {
 			return false;
 		}
 		if(c == null)
 			return false;
-		IC2Registration.registerBlocks();
-		IC2Registration.registerItems();
+		
 		return true;
 	}
 	

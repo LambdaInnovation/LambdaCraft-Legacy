@@ -6,12 +6,10 @@ package cn.lambdacraft.mob.item;
 import cn.lambdacraft.mob.util.MobHelper;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
-import net.minecraft.dispenser.DispenserBehaviors;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 
@@ -24,12 +22,13 @@ public class DispenserBehaviorSpawner extends BehaviorDefaultDispenseItem {
     /**
      * Dispense the specified stack, play the dispense sound and spawn particles.
      */
-    public ItemStack dispenseStack(IBlockSource blockSource, ItemStack stack)
+    @Override
+	public ItemStack dispenseStack(IBlockSource blockSource, ItemStack stack)
     {
         EnumFacing enumfacing = BlockDispenser.getFacing(blockSource.getBlockMetadata());
-        double d0 = blockSource.getX() + (double)enumfacing.getFrontOffsetX();
-        double d1 = (double)((float)blockSource.getYInt() + 0.2F);
-        double d2 = blockSource.getZ() + (double)enumfacing.getFrontOffsetZ();
+        double d0 = blockSource.getX() + enumfacing.getFrontOffsetX();
+        double d1 = blockSource.getYInt() + 0.2F;
+        double d2 = blockSource.getZ() + enumfacing.getFrontOffsetZ();
         Entity entity = MobHelper.spawnCreature(blockSource.getWorld(), null, ((LCMobSpawner)stack.getItem()).getEntityClass()
         		, d0, d1, d2);
 

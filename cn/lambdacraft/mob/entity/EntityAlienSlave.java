@@ -31,10 +31,10 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
-import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.BlockPos;
 import cn.liutils.api.util.GenericUtils;
+import cn.weaponmod.api.WeaponHelper;
 
 /**
  * @author WeAthFolD
@@ -126,8 +126,10 @@ public class EntityAlienSlave extends LIEntityMob {
 		if(isCharging && this.entityToAttack != null) {
 			if(++chargeTick >= 30) {
 				isCharging = false;
-				Entity ray = worldObj.isRemote ? new EntityVortigauntRay(worldObj, this, entityToAttack) : new EntityBullet(worldObj, this, entityToAttack, 6);
-				worldObj.spawnEntityInWorld(ray);
+				if(worldObj.isRemote)
+					worldObj.spawnEntityInWorld(new EntityVortigauntRay(worldObj, this, entityToAttack));
+				boolean b = (WeaponHelper.traceBetweenEntities(this, entityToAttack) == null);
+				if(b) entityToAttack.attackEntityFrom(DamageSource.causeMobDamage(this), 6);
 				this.playSound("lambdacraft:mobs.zapa", 0.5F, 1.0F);
 				this.playSound(GenericUtils.getRandomSound("lambdacraft:weapons.electro", 3), 0.5F, 1.0F);
 				lastAttackTick = ticksExisted;

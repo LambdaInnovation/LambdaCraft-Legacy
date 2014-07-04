@@ -73,6 +73,7 @@ public class HEVRenderingUtils {
     	
         GL11.glScaled(scale, scale, 1.0);
         //Health Section
+        HudUtils.setTextureResolution(TEX_WIDTH, TEX_HEIGHT);
     	
         GL11.glColor4f(0.7F, 0.7F, 0.7F, 0.6F);
         HudUtils.drawTexturedModalRect(0 , 0 , 64, 64, 24, 24, 64, 64);

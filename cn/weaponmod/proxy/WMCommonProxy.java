@@ -7,7 +7,7 @@ import cpw.mods.fml.relauncher.Side;
 public class WMCommonProxy {
 
 	public void preInit() {
-		TickRegistry.registerTickHandler(new WMTickHandler(), Side.SERVER);
+		TickRegistry.registerTickHandler(new WMTickHandler(), Side.CLIENT);
 	}
 
 	public void init() {}

@@ -152,12 +152,9 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 		}
 		isEmitting = false;
 
-		if (this.slots[0] != null
-				&& slots[0].getItem() instanceof ICustomEnItem) {
-			currentEnergy -= ((ICustomEnItem) slots[0].getItem()).charge(
-					slots[0], currentEnergy, 1, false, false);
+		if (currentEnergy > 0 && this.slots[0] != null && slots[0].getItem() instanceof ICustomEnItem) {
+			currentEnergy -= ((ICustomEnItem) slots[0].getItem()).charge(slots[0], currentEnergy, 1, false, false);
 		}
-
 	}
 
 	/**

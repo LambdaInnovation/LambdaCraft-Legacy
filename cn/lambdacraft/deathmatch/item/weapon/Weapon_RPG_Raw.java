@@ -51,7 +51,7 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 
 		setJamTime(20);
 		setLiftProps(20, 2);
-		this.reloadTime = 55;
+		this.reloadTime = 45;
 	}
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
@@ -185,6 +185,7 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 		
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
 	/**
 	 * 获取上弹时武器的旋转角度（0.0F~1.0F)

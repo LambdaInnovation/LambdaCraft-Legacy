@@ -70,7 +70,7 @@ public class Weapon_Shotgun extends WeaponGeneralBullet_LC {
 			EntityPlayer par3Entity, InformationBullet information, boolean left) {
 		int count = left ? 8 : 16;
 		for (int i = 0; i < count; i++) {
-			par2World.spawnEntityInWorld(new EntityBullet(par2World, par3Entity, getWeaponDamage(left)));
+			par2World.spawnEntityInWorld(new EntityBullet(par2World, par3Entity, getWeaponDamage(left), left ? 5 : 10));
 		}
 		if (!par2World.isRemote) {
 			par2World.playSoundAtEntity(par3Entity, getSoundShoot(left), 0.5F, 1.0F);
@@ -110,7 +110,7 @@ public class Weapon_Shotgun extends WeaponGeneralBullet_LC {
 
 	@Override
 	public int getWeaponDamage(boolean left) {
-		return 3;
+		return 2;
 	}
 
 	@Override

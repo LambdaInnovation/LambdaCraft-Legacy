@@ -69,11 +69,7 @@ public class ContainerGeneratorSolar extends Container {
 		super.updateProgressBar(par1, par2);
 		if (par1 == 0) {
 			te.currentEnergy = Math.abs(par2);
-			if (par2 > 0)
-				te.isEmitting = true;
-			else
-				te.isEmitting = false;
-
+			te.isEmitting = par2 > 0;
 		}
 	}
 

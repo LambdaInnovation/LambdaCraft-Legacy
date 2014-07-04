@@ -224,6 +224,14 @@ public class WeaponHelper {
 		return mop;
 	}
 	
+	public static MovingObjectPosition traceBetweenEntities(Entity e1, Entity e2) {
+		if(e1.worldObj != e2.worldObj) return null;
+		Vec3 v1 = e1.worldObj.getWorldVec3Pool().getVecFromPool(e1.posX, e1.posY, e1.posZ),
+				v2 = e2.worldObj.getWorldVec3Pool().getVecFromPool(e2.posX, e2.posY, e2.posZ);
+		MovingObjectPosition mop = e1.worldObj.clip(v1, v2);
+		return mop;
+	}
+	
 	public static MovingObjectPosition rayTraceEntities(IEntitySelector selector, World world, Vec3 vec1, Vec3 vec2, Entity... exclusion) {
         Entity entity = null;
         AxisAlignedBB boundingBox = getBoundingBox(vec1, vec2);

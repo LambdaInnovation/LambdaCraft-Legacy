@@ -176,7 +176,7 @@ public class MapGenFloatIsland extends MapGenBase{
 		{
 			for (z2 = genStartZ; z2 < genEndZ; z2++)
 			{
-				for (y2 = genY; y2 <= genEndY; y2++)
+				for (y2 = genY; y2 < genEndY; y2++)
 				{
 					if(noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] <= 0.5F && y2 > noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY)
 					{
@@ -205,7 +205,7 @@ public class MapGenFloatIsland extends MapGenBase{
 		if(!(genEndY == 128))
 		{
 			height = height/2;
-			genY = (int)genEndY + 1;
+			genY = genEndY + 1;
 			genEndY = genEndY + rand.nextInt(height) + 5;
 			
 			if(genEndY > 128 )
@@ -217,7 +217,7 @@ public class MapGenFloatIsland extends MapGenBase{
 			{
 				for (z2 = genStartZ; z2 < genEndZ; z2++)
 				{
-					for (y2 = genY; y2 <= genEndY; y2++)
+					for (y2 = genY; y2 < genEndY; y2++)
 					{
 						if(y2 < noiseArray2[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY
 						&& booleanArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31])

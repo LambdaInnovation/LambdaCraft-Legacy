@@ -16,7 +16,6 @@ package cn.lambdacraft.mob.entity;
 
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatMessageComponent;
@@ -29,9 +28,10 @@ import net.minecraft.world.World;
 import cn.lambdacraft.api.entity.IEntityLink;
 import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
+import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.GenericUtils;
-import cn.weaponmod.api.WeaponHelper;
+import net.minecraft.entity.monster.IMob;
 
 /**
  * 你问我为什么要继承EntityLiving？这货本来可是大光圈基地的产物啊，233
@@ -60,9 +60,9 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
 				if(!attackPlayer || ep.username.equals(placerName))
 					return false;
 			} else if(entity instanceof EntitySentry)
-				return attackPlayer && !((EntitySentry)entity).placerName.equals(placerName);
+				return false;
 			else if(GenericUtils.selectorLiving.isEntityApplicable(entity)) {
-				if(entity instanceof EntityMob)
+				if(entity instanceof IMob)
 					return true;
 			}
 			return false;
@@ -234,7 +234,7 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
 			} else { 
 				rotationSet = false;
 				this.playSound("lambdacraft:mobs.tu_fire", 0.5F, 1.0F);
-				WeaponHelper.Shoot(3, this, worldObj);
+				worldObj.spawnEntityInWorld(new EntityBullet(worldObj, this, currentTarget, 5).setEntitySelector(selector));
 			}
 			if(currentTarget.getDistanceSqToEntity(this) > 400) {
 				this.currentTarget = null;

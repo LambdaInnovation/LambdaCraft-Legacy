@@ -135,6 +135,9 @@ public class CBCItems {
 		// Recipes
 
 		OreDictionary.registerOre("oreUranium", CBCBlocks.uraniumOre);
+		OreDictionary.registerOre("oreTin", CBCBlocks.oreTin);
+		OreDictionary.registerOre("oreCopper", CBCBlocks.oreCopper);
+		
 		OreDictionary.registerOre("ingotUranium", CBCItems.ingotUranium);
 		OreDictionary.registerOre("ingotRefinedIron", CBCItems.ingotSteel);
 		OreDictionary.registerOre("blockRefinedIron", CBCBlocks.blockRefined);

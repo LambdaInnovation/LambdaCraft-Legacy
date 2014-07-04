@@ -1,5 +1,6 @@
 package cn.lambdacraft.intergration.ic2;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.proxy.GeneralProps;
 import cn.lambdacraft.crafting.register.CBCBlocks;
@@ -19,7 +20,6 @@ import cn.lambdacraft.intergration.ic2.tile.TileHealthChargerIC2;
 import cn.lambdacraft.intergration.ic2.tile.TileMedkitFillerIC2;
 import cn.liutils.core.register.Config;
 import cn.liutils.core.register.ConfigHandler;
-import net.minecraft.src.ModLoader;
 
 public class IC2Registration {
 
@@ -30,14 +30,14 @@ public class IC2Registration {
 		DMBlocks.healthCharger = new BlockHealthChargerIC2(ConfigHandler.getBlockId(conf, "healthCharger", 0));
 		DMBlocks.medkitFiller = new BlockMedkitFillerIC2(ConfigHandler.getBlockId(conf, "medkitFiller", 0));
 		
-		ModLoader.registerBlock(CBCBlocks.elCrafter);
-		ModLoader.registerBlock(DMBlocks.armorCharger);
-		ModLoader.registerBlock(DMBlocks.healthCharger);
-		ModLoader.registerBlock(DMBlocks.medkitFiller);
-		ModLoader.registerTileEntity(TileArmorChargerIC2.class, "tile_entity_charger");
-		ModLoader.registerTileEntity(TileHealthChargerIC2.class, "tile_entity_hcharger");
-		ModLoader.registerTileEntity(TileMedkitFillerIC2.class, "tile_entity_medfiller");
-		ModLoader.registerTileEntity(TileElCrafterIC2.class, "tile_entity_elcrafter");
+		GameRegistry.registerBlock(CBCBlocks.elCrafter, "electric_crafter");
+		GameRegistry.registerBlock(DMBlocks.armorCharger, "armor_charger");
+		GameRegistry.registerBlock(DMBlocks.healthCharger, "health_charger");
+		GameRegistry.registerBlock(DMBlocks.medkitFiller, "medkit_filler");
+		GameRegistry.registerTileEntity(TileArmorChargerIC2.class, "tile_entity_charger");
+		GameRegistry.registerTileEntity(TileHealthChargerIC2.class, "tile_entity_hcharger");
+		GameRegistry.registerTileEntity(TileMedkitFillerIC2.class, "tile_entity_medfiller");
+		GameRegistry.registerTileEntity(TileElCrafterIC2.class, "tile_entity_elcrafter");
 	}
 	
 	public static void registerItems() {

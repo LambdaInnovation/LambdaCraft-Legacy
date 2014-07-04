@@ -23,7 +23,6 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Property;
 

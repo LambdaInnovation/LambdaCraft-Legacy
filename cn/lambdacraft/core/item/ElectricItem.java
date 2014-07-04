@@ -138,20 +138,16 @@ public abstract class ElectricItem extends CBCGenericItem implements
 	public int charge(ItemStack itemStack, int amount, int tier,
 			boolean ignoreTransferLimit, boolean simulate) {
 
-		int en = this.maxCharge - getItemCharge(itemStack) - 1;
+		int chg = getItemCharge(itemStack), lim = getTransferLimit(itemStack);
+		int en = this.maxCharge - chg - 1;
 		if (en == 0)
 			return 0;
 		if (!ignoreTransferLimit)
-			amount = this.getTransferLimit(itemStack);
-		if (en > amount) {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) + amount);
-			return amount;
-		} else {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) + en);
-			return en;
-		}
+			amount = lim > amount ? amount : lim;
+		en = en > amount ? amount : en;
+		if (!simulate)
+			setItemCharge(itemStack, chg + en);
+		return en;
 	}
 
 	@SideOnly(Side.CLIENT)
