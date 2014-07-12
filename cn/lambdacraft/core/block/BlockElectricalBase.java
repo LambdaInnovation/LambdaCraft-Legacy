@@ -30,8 +30,8 @@ public class BlockElectricalBase extends CBCBlockContainer {
 	 * @param par1
 	 * @param mat
 	 */
-	public BlockElectricalBase(int par1, Material mat) {
-		super(par1, mat);
+	public BlockElectricalBase(Material mat) {
+		super(mat);
 		this.setHardness(2.0F);
 	}
 
@@ -48,7 +48,7 @@ public class BlockElectricalBase extends CBCBlockContainer {
 	 * .world.World)
 	 */
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int v2) {
 		try {
 			return generatorType.getConstructor().newInstance();
 		} catch (Exception e) {

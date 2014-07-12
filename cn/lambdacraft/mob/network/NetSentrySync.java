@@ -14,84 +14,91 @@
  */
 package cn.lambdacraft.mob.network;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.misc.CBCNetHandler;
-import cn.lambdacraft.core.proxy.GeneralProps;
 import cn.lambdacraft.core.proxy.Proxy;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
-import cn.liutils.api.register.IChannelProcess;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 /**
  * @author WeAthFolD
  * 
  */
-public class NetSentrySync implements IChannelProcess {
-
-	public static void sendSyncPacket(TileSentryRay tile) {
-		int dataSize = tile.linkedBlock == null ? 11 : 21;
-		ByteArrayOutputStream bos = CBCNetHandler.getStream(
-				GeneralProps.NET_ID_SENTRYSYNCER, dataSize);
-		DataOutputStream outputStream = new DataOutputStream(bos);
-		boolean isVaild = tile.isActivated && tile.linkedBlock != null;
-		try {
-			outputStream.writeInt(tile.xCoord);
-			outputStream.writeShort(tile.yCoord);
-			outputStream.writeInt(tile.zCoord);
-			outputStream.writeBoolean(isVaild);
-			if (tile.linkedBlock != null) {
-				outputStream.writeInt(tile.linkedBlock.xCoord);
-				outputStream.writeShort(tile.linkedBlock.yCoord);
-				outputStream.writeInt(tile.linkedBlock.zCoord);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+public class NetSentrySync implements IMessage {
+	
+	int x, y, z;
+	int lx, ly, lz;
+	boolean isValid;
+	
+	public NetSentrySync(TileSentryRay tile) {
+		isValid = !(tile.linkedBlock == null);
+		x = tile.xCoord;
+		y = tile.yCoord;
+		z = tile.zCoord;
+		if(isValid) {
+			lx = tile.linkedBlock.xCoord;
+			ly = tile.linkedBlock.yCoord;
+			lz = tile.linkedBlock.zCoord;
 		}
-
-		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = GeneralProps.NET_CHANNEL_CLIENT;
-		packet.data = bos.toByteArray();
-		packet.length = bos.size();
-		int dimension = tile.worldObj.getWorldInfo().getVanillaDimension();
-		PacketDispatcher.sendPacketToAllInDimension(packet, dimension);
 	}
 
 	@Override
-	public void onPacketData(DataInputStream stream, Player player) {
-		try {
-			int x = stream.readInt(), y = stream.readShort(), z = stream
-					.readInt();
-			World world = ((EntityPlayer)player).worldObj;
-			TileEntity te = world.getBlockTileEntity(x, y, z);
+	public void fromBytes(ByteBuf buf) {
+		isValid = ByteBufUtils.readVarInt(buf, 1) == 1;
+		x = ByteBufUtils.readVarInt(buf, 4);
+		y = ByteBufUtils.readVarInt(buf, 4);
+		z = ByteBufUtils.readVarInt(buf, 4);
+		lx = ByteBufUtils.readVarInt(buf, 4);
+		ly = ByteBufUtils.readVarInt(buf, 4);
+		lz = ByteBufUtils.readVarInt(buf, 4);
+	}
+
+	@Override
+	public void toBytes(ByteBuf buf) {
+		ByteBufUtils.writeVarInt(buf, isValid ? 1 : 0, 1);
+		ByteBufUtils.writeVarInt(buf, x, 4);
+		ByteBufUtils.writeVarInt(buf, y, 4);
+		ByteBufUtils.writeVarInt(buf, z, 4);
+		if(isValid) {
+			ByteBufUtils.writeVarInt(buf, lx, 4);
+			ByteBufUtils.writeVarInt(buf, ly, 4);
+			ByteBufUtils.writeVarInt(buf, lz, 4);
+		}
+	}
+	
+	public static class Handler implements IMessageHandler<NetSentrySync, IMessage> {
+
+		@Override
+		public IMessage onMessage(NetSentrySync message, MessageContext ctx) {
+			int x = message.x, y = message.y, z = message.z;
+			World world = ((EntityPlayer)ctx.getServerHandler().playerEntity).worldObj;
+			TileEntity te = world.getTileEntity(x, y, z);
 			if (te == null || !(te instanceof TileSentryRay)) {
-				return;
+				return null;
 			}
 			TileSentryRay ray = (TileSentryRay) te;
-			boolean isVaild = stream.readBoolean();
+			boolean isVaild = message.isValid;
 			if (isVaild) {
-				x = stream.readInt();
-				y = stream.readShort();
-				z = stream.readInt();
-				te = world.getBlockTileEntity(x, y, z);
+				x = message.lx;
+				y = message.ly;
+				z = message.lz;
+				te = world.getTileEntity(x, y, z);
 				if (te == null || !(te instanceof TileSentryRay)) {
 					Proxy.logExceptionMessage(te, "Couldn't find the right partner TileEntity.");
-					return;
+					return null;
 				}
 				ray.linkedBlock = (TileSentryRay) te;
 			} else {
 				ray.linkedBlock = null;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			return null;
 		}
+		
 	}
 
 }

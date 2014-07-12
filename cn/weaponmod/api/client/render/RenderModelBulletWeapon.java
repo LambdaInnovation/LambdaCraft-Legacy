@@ -29,7 +29,7 @@ import cn.liutils.api.client.model.IItemModel;
 import cn.liutils.api.client.render.RenderModelItem;
 import cn.weaponmod.api.information.InformationBullet;
 import cn.weaponmod.api.weapon.WeaponGeneralBullet;
-import cn.weaponmod.events.ItemHelper;
+import cn.weaponmod.events.ItemControlHandler;
 
 /**
  * @author WeAthFolD
@@ -86,7 +86,7 @@ public class RenderModelBulletWeapon extends RenderModelItem {
 			EntityLivingBase entity, ItemRenderType type) {
 		boolean left = true;
 		if(entity instanceof EntityPlayer)
-			left = ItemHelper.getUsingTickLeft((EntityPlayer) entity, false) == 0 ? true : ItemHelper.getUsingSide((EntityPlayer) entity);
+			left = ItemControlHandler.getUsingTickLeft((EntityPlayer) entity, false) == 0 ? true : ItemControlHandler.getUsingSide((EntityPlayer) entity);
 		doRenderEquipped(item, render, entity, left, type);
 	}
 	

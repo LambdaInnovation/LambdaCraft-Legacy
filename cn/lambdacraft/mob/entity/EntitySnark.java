@@ -21,13 +21,13 @@ import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.GenericUtils;
-
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -60,7 +60,7 @@ public class EntitySnark extends LIEntityMob implements IEntityLink<EntityPlayer
 			if(!b)
 				return false;
 			if(entity instanceof EntityPlayer) {
-				if(throwerName.equals(((EntityPlayer)entity).username))
+				if(throwerName.equals(((EntityPlayer)entity).getCommandSenderName()))
 						return ticksExisted < 120;
 		    }
 			else if(entity instanceof EntitySnark)
@@ -77,14 +77,14 @@ public class EntitySnark extends LIEntityMob implements IEntityLink<EntityPlayer
 	}
 	
     @Override
-	public EntityItem dropItemWithOffset(int par1, int par2, float par3)
+	public EntityItem func_145778_a(Item par1, int par2, float par3)
     {
         return this.entityDropItem(new ItemStack(par1, par2, 3), par3);
     }
     
     @Override
-    public int getDropItemId() {
-    	return CBCMobItems.dna.itemID;
+    public Item getDropItem() {
+    	return CBCMobItems.dna;
     }
 
 	@Override
@@ -245,7 +245,7 @@ public class EntitySnark extends LIEntityMob implements IEntityLink<EntityPlayer
 
 	@Override
 	public void setLinkedEntity(EntityPlayer entity) {
-		this.throwerName = entity.username;
+		this.throwerName = entity.getCommandSenderName();
 	}
 	
 	@Override

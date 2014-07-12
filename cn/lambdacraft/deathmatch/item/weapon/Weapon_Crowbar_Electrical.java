@@ -58,7 +58,7 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustom
 	}
 
 	@Override
-	public int getChargedItemId(ItemStack itemStack) {
+	public int getChargedItem(ItemStack itemStack) {
 		return this.itemID;
 	}
 

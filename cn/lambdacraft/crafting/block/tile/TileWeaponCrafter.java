@@ -50,7 +50,6 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 	public int page = 0;
 	public int heat, burnTimeLeft, maxBurnTime;
 	
-	@SideOnly(Side.CLIENT)
 	public int heatForRendering = 0;
 	@SideOnly(Side.CLIENT)
 	public boolean isBuffering = false;

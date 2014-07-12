@@ -53,7 +53,7 @@ public class EntityHGrenade extends EntityThrowable {
 		int id = this.worldObj
 				.getBlockId(par1.blockX, par1.blockY, par1.blockZ);
 		
-		double collideStrengh = 1.0F;
+		double collideStrengh = 1.0;
 		// 碰撞代码
 		if (par1.typeOfHit == EnumMovingObjectType.TILE) {
 			if (!Block.blocksList[id].isCollidable())
@@ -62,10 +62,10 @@ public class EntityHGrenade extends EntityThrowable {
 
 			case 0:
 			case 1:
-				this.motionY = 0.3 * -motionY;
-				this.motionX = 0.6 * motionX;
-				collideStrengh = Math.abs(motionY);
-				this.motionZ = 0.6 * motionZ;
+				collideStrengh = Math.abs(motionY) * 0.3;
+				this.motionY = 0.01 * -motionY;
+				this.motionX = 0.8 * motionX;
+				this.motionZ = 0.8 * motionZ;
 				break;
 
 			case 2:
@@ -86,7 +86,7 @@ public class EntityHGrenade extends EntityThrowable {
 		}
 		if(collideStrengh > 1.0) collideStrengh = 1.0;
 		System.out.println(collideStrengh);
-		if (ticksExisted - time > 20) { // 最小时间间隔1s
+		if (time == 0 || ticksExisted - time > 20) { // 最小时间间隔1s
 			this.playSound("lambdacraft:weapons.hgrenadebounce", (float) (5F * collideStrengh), 1.0F);
 			time = ticksExisted;
 		}

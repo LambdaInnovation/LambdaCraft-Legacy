@@ -38,7 +38,6 @@ import cn.lambdacraft.mob.entity.EntitySnark;
 import cn.lambdacraft.mob.entity.EntityVortigauntRay;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.client.render.LIRenderMob;
-import cn.liutils.core.client.register.LISoundRegistry;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -62,41 +61,13 @@ public class ClientProxy extends Proxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityVortigauntRay.class, new RenderVortigauntRay());
 		RenderingRegistry.registerEntityRenderingHandler(EntityAlienSlave.class, new RenderAlienSlave());
 		
-		MinecraftForgeClient.registerItemRenderer(CBCMobItems.weapon_snark.itemID, new RenderSnark());
+		MinecraftForgeClient.registerItemRenderer(CBCMobItems.weapon_snark, new RenderSnark());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileSentryRay.class,
 				new RenderSentryRay());
 	}
 	
 	@Override
 	public void preInit() {
-		for (String s : SND_MOBS) {
-			LISoundRegistry.addSoundPath("lambdacraft", "mobs/" + s);
-		}
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/he_alert", 3);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/he_attack", 3);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/he_blast", 3);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/he_die", 3);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/he_hunt", 4);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/he_idle", 4);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/he_pain", 5);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/tu_die", 3);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/tu_active", 2);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/slv_alert", 3);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/slv_die", 2);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/slv_pain", 2);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "mobs/slv_word", 8);
-		LISoundRegistry.addSoundPath("lambdacraft", "mobs/zapa");
-		LISoundRegistry.addSoundPath("lambdacraft", "mobs/zapd");
 	}
-	
-	public static final String SND_MOBS[] = { "sqk_blast", "sqk_hunta",
-		"sqk_huntb", "sqk_huntc", "sqk_die", "sqk_deploy", "hc_attacka", "hc_attackb",
-		"hc_attackc", "hc_idlea", "hc_idleb", "hc_idlec", "hc_idled", "hc_idlee",
-		"hc_diea", "hc_dieb", "hc_paina", "hc_painb", "hc_painc",
-		"bcl_tongue", "bcl_chewa", "bcl_chewb", "bcl_chewc", "bcl_alert", "bcl_bite", "zo_alerta",
-		"zo_alertb", "zo_alertc", "zo_attacka", "zo_attackb", "zo_claw_missa", "zo_claw_missb", 
-		"zo_claw_strikea", "zo_claw_strikeb", "zo_claw_strikec", "zo_idlea", "zo_idleb", "zo_idlec",
-		"zo_paina", "zo_painb", "zo_moan_loopa", "zo_moan_loopb", "zo_moan_loopc", "zo_moan_loopd", "zo_diea", "zo_dieb", "zo_diec", "tu_spinup",
-		"tu_spindown", "tu_ping", "tu_fire", "tu_deploy", "tu_alert" };
 	
 }

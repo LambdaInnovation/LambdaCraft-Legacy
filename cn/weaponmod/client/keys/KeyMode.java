@@ -18,8 +18,9 @@ import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import cn.liutils.api.client.register.IKeyProcess;
+import cn.weaponmod.WeaponMod;
 import cn.weaponmod.api.feature.IModdable;
-import cn.weaponmod.network.NetDeathmatch;
+import cn.weaponmod.network.MessageDM;
 
 public class KeyMode implements IKeyProcess {
 
@@ -57,7 +58,7 @@ public class KeyMode implements IKeyProcess {
 
 		int mode = wpn.getMode(itemStack);
 		mode = (maxModes - 1 <= mode) ? 0 : mode + 1;
-		NetDeathmatch.sendModePacket((byte) stackInSlot, (byte) 0, (byte) mode);
+		WeaponMod.netHandler.sendToServer(new MessageDM(stackInSlot, 0, mode));
 
 	}
 

@@ -21,6 +21,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 
+import net.minecraft.client.Minecraft;
+
 import org.lwjgl.input.Keyboard;
 
 import cn.lambdacraft.core.CBCMod;
@@ -28,13 +30,7 @@ import cn.lambdacraft.core.CBCPlayer;
 import cn.lambdacraft.core.client.key.KeyUse;
 import cn.lambdacraft.deathmatch.client.renderer.RenderEmptyBlock;
 import cn.liutils.core.client.register.LIKeyProcess;
-import cn.liutils.core.client.register.LISoundRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.sound.SoundLoadEvent;
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 /**
  * 客户端代理加载。
@@ -43,20 +39,17 @@ import cpw.mods.fml.relauncher.Side;
  * 
  */
 public class ClientProxy extends Proxy {
-
-	LISoundRegistry events = new LISoundRegistry();
 	
 	private final String PATH_TRACKS[] = { "hla", "hlb", "hlc" } ;
 	
 	private final int MAX_CROSSHAIR_FILES = 16, MAX_SPRAY_FILES = 14;
 	
+	
 	@Override
 	public void init() {
 		super.init();
-		events.onSound(new SoundLoadEvent(Minecraft.getMinecraft().sndManager));
 		
 		CBCPlayer cbcPlayer = new CBCPlayer();
-		TickRegistry.registerTickHandler(cbcPlayer, Side.CLIENT);
 		RenderingRegistry.registerBlockHandler(new RenderEmptyBlock());
 		ClientProps.loadProps(CBCMod.config);
 		
@@ -78,7 +71,6 @@ public class ClientProxy extends Proxy {
 	
 	@Override
 	public void preInit() {
-		MinecraftForge.EVENT_BUS.register(events);
 		LIKeyProcess.addKey("key.cbcuse", Keyboard.KEY_F, true, new KeyUse());
 	}
 	

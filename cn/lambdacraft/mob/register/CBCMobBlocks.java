@@ -14,11 +14,11 @@
  */
 package cn.lambdacraft.mob.register;
 
-import net.minecraft.src.ModLoader;
+import net.minecraftforge.common.config.Configuration;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cn.lambdacraft.core.proxy.GeneralProps;
 import cn.lambdacraft.mob.block.BlockSentryRay;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
-import cn.liutils.core.register.Config;
 import cn.liutils.core.register.ConfigHandler;
 
 /**
@@ -29,11 +29,11 @@ public class CBCMobBlocks {
 
 	public static BlockSentryRay sentryRay;
 	
-	public static void init(Config conf) {
-		sentryRay = new BlockSentryRay(ConfigHandler.getBlockId(conf, "sentryRay", GeneralProps.CAT_MISC));
+	public static void init(Configuration conf) {
+		sentryRay = new BlockSentryRay();
 		
-		ModLoader.registerBlock(sentryRay);
-		ModLoader.registerTileEntity(TileSentryRay.class, "tile_entity_sentry_ray");
+		GameRegistry.registerBlock(sentryRay, "sentry_ray");
+		GameRegistry.registerTileEntity(TileSentryRay.class, "tile_entity_sentry_ray");
 	}
 
 }

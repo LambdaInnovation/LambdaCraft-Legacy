@@ -22,11 +22,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.mob.ModuleMob;
 import cn.lambdacraft.mob.block.BlockSentryRay;
 import cn.lambdacraft.mob.entity.EntitySentry;
@@ -90,11 +91,10 @@ public class TileSentryRay extends TileEntity {
 		
 		++tickSinceLastActivate;
 		if (linkedX != 0 || linkedY != 0 || linkedZ != 0) {
-			TileEntity te = worldObj.getBlockTileEntity(linkedX, linkedY,
-					linkedZ);
+			TileEntity te = worldObj.getTileEntity(linkedX, linkedY, linkedZ);
 			if (te != null && te instanceof TileSentryRay) {
 				linkedBlock = (TileSentryRay) te;
-				NetSentrySync.sendSyncPacket(this);
+				CBCMod.netHandler.sendToDimension(new NetSentrySync(this), worldObj.provider.dimensionId);
 			}
 			linkedX = linkedY = linkedZ = 0;
 		}
@@ -104,27 +104,27 @@ public class TileSentryRay extends TileEntity {
 			BlockPos bp = new BlockPos(this);
 			if(ModuleMob.placeMap.containsKey(bp)) {
 				EntityPlayer player = ModuleMob.placeMap.get(bp);
-				placerName = player.username;
+				placerName = player.getCommandSenderName();
 				TileSentryRay t = ModuleMob.tileMap.get(player);
 				if(t == null) {
 					ModuleMob.tileMap.put(player, this);
 					isActivated = false;
-					player.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.GREEN + StatCollector.translateToLocal("sentry.another.name")));
+					player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.GREEN + StatCollector.translateToLocal("sentry.another.name")));
 				} else {
 					if(t.worldObj.equals(worldObj)) {
 						if(t.getDistanceFrom(xCoord, yCoord, zCoord) <= 400.0) {
 							linkedBlock = t;
 							ModuleMob.tileMap.remove(player);
-							player.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.GREEN + StatCollector.translateToLocal("sentry.successful.name")));
-							NetSentrySync.sendSyncPacket(this);
+							player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.GREEN + StatCollector.translateToLocal("sentry.successful.name")));
+							CBCMod.netHandler.sendToDimension(new NetSentrySync(this), worldObj.provider.dimensionId);
 							isActivated = true;
 						} else {
-							player.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.RED +StatCollector.translateToLocal( "sentry.toofar.name")));
+							player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED +StatCollector.translateToLocal( "sentry.toofar.name")));
 							ModuleMob.tileMap.remove(player);
 						}
 					} else {
 						ModuleMob.tileMap.put(player, this);
-						player.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.RED + StatCollector.translateToLocal("sentry.diffdim.name")));
+						player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal("sentry.diffdim.name")));
 					}
 				}
 			} else {
@@ -149,7 +149,7 @@ public class TileSentryRay extends TileEntity {
 		}
 		if (++tickSinceLastUpdate > 20) {
 			tickSinceLastUpdate = 0;
-			NetSentrySync.sendSyncPacket(this);
+			CBCMod.netHandler.sendToDimension(new NetSentrySync(this), worldObj.provider.dimensionId);
 		}
 	}
 
@@ -199,10 +199,10 @@ public class TileSentryRay extends TileEntity {
 			return;
 		StringBuilder sb = new StringBuilder(StatCollector.translateToLocal("sentry.head.name"));
 		sb.append(EnumChatFormatting.RED).append(StatCollector.translateToLocal("sentry.id.name")).append(" : ")
-				.append(EnumChatFormatting.RED).append(sentry.entityId)
+				.append(EnumChatFormatting.RED).append(sentry.getEntityId())
 				.append("\n").append(EnumChatFormatting.GREEN)
 				.append(StatCollector.translateToLocal("sentry.raydep.name"));
-		player.sendChatToPlayer(new ChatMessageComponent().addText(sb.toString()));
+		player.addChatMessage(new ChatComponentTranslation(sb.toString()));
 	}
 
 	@Override

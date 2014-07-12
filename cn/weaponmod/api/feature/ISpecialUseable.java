@@ -25,7 +25,7 @@ public interface ISpecialUseable {
 	
 	/**
 	 * Fired both client and server side, called to update clicking action.
-	 * @see cn.lambdacraft.deathmatch.utils.ItemHelper#setItemInUse(EntityPlayer, ItemStack, int, boolean)
+	 * @see cn.ItemControlHandler.deathmatch.utils.ItemHelper#setItemInUse(EntityPlayer, ItemStack, int, boolean)
 	 * @param world
 	 * @param player
 	 * @param stack

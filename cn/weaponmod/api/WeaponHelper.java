@@ -27,13 +27,10 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import cn.liutils.api.entity.EntityBullet;
-import cn.liutils.api.util.LIExplosion;
 import cn.weaponmod.api.weapon.WeaponGeneral;
-import cn.weaponmod.network.NetExplosion;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -47,7 +44,7 @@ public class WeaponHelper {
 	 * @return how many are left to be consumed
 	 */
 	public static int consumeAmmo(EntityPlayer player, WeaponGeneral item, int amount) {
-		return tryConsume(player, item.ammoID, amount);
+		return tryConsume(player, item.ammoItem, amount);
 	}
 
 	/**
@@ -55,15 +52,15 @@ public class WeaponHelper {
 	 * 
 	 * @return how many are left to be consumed
 	 */
-	public static int tryConsume(EntityPlayer player, int itemID, int amount) {
+	public static int tryConsume(EntityPlayer player, Item item, int amount) {
 
 		int left = amount;
 		ItemStack is;
-		if (Item.itemsList[itemID].getItemStackLimit() > 1) {
+		if (item.getItemStackLimit() > 1) {
 
 			for (int i = 0; i < player.inventory.mainInventory.length; i++) {
 				is = player.inventory.mainInventory[i];
-				if (is != null && is.itemID == itemID) {
+				if (is != null && is.getItem() == item) {
 					if (is.stackSize > left) {
 						player.inventory.decrStackSize(i, left);
 						return 0;
@@ -80,7 +77,7 @@ public class WeaponHelper {
 			for (int i = 0; i < player.inventory.mainInventory.length; i++) {
 				is = player.inventory.mainInventory[i];
 				int stackCap;
-				if (is != null && is.itemID == itemID) {
+				if (is != null && is.getItem() == item) {
 					stackCap = is.getMaxDamage() - is.getItemDamage() - 1;
 					if (stackCap > left) {
 						is.damageItem(left, player);
@@ -103,7 +100,7 @@ public class WeaponHelper {
 		for (ItemStack i : player.inventory.mainInventory) {
 			if (i == null)
 				continue;
-			if (i.itemID == is.ammoID) {
+			if (i.getItem() == is.ammoItem) {
 				if (i.isStackable())
 					return true;
 				else if (i.getItemDamage() < i.getMaxDamage() - 1)
@@ -113,29 +110,29 @@ public class WeaponHelper {
 		return false;
 	}
 	
-	public static int getAmmoCapacity(int itemID, InventoryPlayer inv) {
+	public static int getAmmoCapacity(Item item, InventoryPlayer inv) {
 		int cnt = 0;
 		for(ItemStack s : inv.mainInventory) {
-			if(s != null && s.itemID == itemID) {
+			if(s != null && s.getItem() == item) {
 				cnt += s.getMaxStackSize() == 1 ? s.getMaxDamage() - s.getItemDamage() - 1 : s.stackSize;
 			}
 		}
 		return cnt;
 	}
 
-	public static boolean hasAmmo(int itemID, EntityPlayer player) {
+	public static boolean hasAmmo(Item itemID, EntityPlayer player) {
 		return player.inventory.hasItem(itemID);
 	}
 
-	public static int consumeInventoryItem(ItemStack[] inv, int itemID,
+	public static int consumeInventoryItem(ItemStack[] inv, Item item,
 			int count) {
 		int left = count;
 		ItemStack is;
-		if (Item.itemsList[itemID].getItemStackLimit() > 1) {
+		if (item.getItemStackLimit() > 1) {
 
 			for (int i = 0; i < inv.length; i++) {
 				is = inv[i];
-				if (is != null && is.itemID == itemID) {
+				if (is != null && is.getItem() == item) {
 					if (is.stackSize > left) {
 						inv[i].splitStack(left);
 						return 0;
@@ -151,15 +148,15 @@ public class WeaponHelper {
 			return left;
 	}
 
-	public static int consumeInventoryItem(ItemStack[] inv, int itemID,
+	public static int consumeInventoryItem(ItemStack[] inv, Item item,
 			int count, int startFrom) {
 		int left = count;
 		ItemStack is;
-		if (Item.itemsList[itemID].getItemStackLimit() > 1) {
+		if (item.getItemStackLimit() > 1) {
 
 			for (int i = startFrom; i < inv.length; i++) {
 				is = inv[i];
-				if (is != null && is.itemID == itemID) {
+				if (is != null && is.getItem() == item) {
 					if (is.stackSize > left) {
 						inv[i].splitStack(left);
 						return 0;
@@ -213,14 +210,14 @@ public class WeaponHelper {
 	public static MovingObjectPosition rayTraceBlocksAndEntities(World world, Vec3 vec1, Vec3 vec2) {
 		MovingObjectPosition mop = rayTraceEntities(null, world, vec1, vec2);
 		if(mop == null)
-			return world.clip(vec1, vec2);
+			return world.rayTraceBlocks(vec1, vec2);
 		return mop;
 	}
 	
 	public static MovingObjectPosition rayTraceBlocksAndEntities(IEntitySelector selector, World world, Vec3 vec1, Vec3 vec2, Entity... exclusion) {
 		MovingObjectPosition mop = rayTraceEntities(selector, world, vec1, vec2, exclusion);
 		if(mop == null)
-			return world.clip(vec1, vec2);
+			return world.rayTraceBlocks(vec1, vec2);
 		return mop;
 	}
 	
@@ -228,7 +225,7 @@ public class WeaponHelper {
 		if(e1.worldObj != e2.worldObj) return null;
 		Vec3 v1 = e1.worldObj.getWorldVec3Pool().getVecFromPool(e1.posX, e1.posY, e1.posZ),
 				v2 = e2.worldObj.getWorldVec3Pool().getVecFromPool(e2.posX, e2.posY, e2.posZ);
-		MovingObjectPosition mop = e1.worldObj.clip(v1, v2);
+		MovingObjectPosition mop = e1.worldObj.rayTraceBlocks(v1, v2);
 		return mop;
 	}
 	
@@ -325,21 +322,13 @@ public class WeaponHelper {
 			double radius, double posX, double posY, double posZ,
 			int additionalDamage, double velocityRadius, float soundRadius) {
 
-		LIExplosion explosion = new LIExplosion(world, entity, posX, posY,
-				posZ, strengh).setSoundFactor(soundRadius).setVelocityFactor(
-				velocityRadius);
-		explosion.isSmoking = true;
-		explosion.isFlaming = false;
-
-		explosion.doExplosionA();
-		explosion.doExplosionB(true);
+		//TODO:Use original explosion
+		Explosion explosion = new Explosion(world, entity, posX, posY, posZ, strengh);
 		
-		NetExplosion.sendNetPacket(world, (float) posX, (float) posY, (float) posZ, strengh);
 		if (additionalDamage <= 0)
 			return;
 
-		doRangeDamage(world, DamageSource.setExplosionSource(explosion
-				.asDefaultExplosion()), world.getWorldVec3Pool().getVecFromPool(posX, posY, posZ), additionalDamage, radius, entity);
+		doRangeDamage(world, DamageSource.setExplosionSource(explosion), world.getWorldVec3Pool().getVecFromPool(posX, posY, posZ), additionalDamage, radius, entity);
 		
 	}
 	
@@ -359,17 +348,4 @@ public class WeaponHelper {
 			}
 		}
 	}
-
-	@SideOnly(Side.CLIENT)
-	public static void clientExplode(World world, float strengh, double posX,
-			double posY, double posZ) {
-		LIExplosion explosion = new LIExplosion(world, null, posX, posY,
-				posZ, strengh);
-		explosion.isSmoking = true;
-		explosion.isFlaming = false;
-
-		explosion.doExplosionA();
-		explosion.doExplosionB(true);
-	}
-
 }

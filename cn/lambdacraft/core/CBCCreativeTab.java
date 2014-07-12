@@ -16,6 +16,7 @@ package cn.lambdacraft.core;
 
 import cn.lambdacraft.deathmatch.register.DMItems;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 
 /**
  * 自定义CreativeTab.
@@ -32,8 +33,8 @@ public class CBCCreativeTab extends CreativeTabs {
 	}
 
 	@Override
-	public int getTabIconItemIndex() {
-		return id == 0 ? DMItems.weapon_gauss.itemID : DMItems.medkit.itemID;
+	public Item getTabIconItem() {
+		return id == 0 ? DMItems.weapon_gauss : DMItems.medkit;
 	}
 
 }

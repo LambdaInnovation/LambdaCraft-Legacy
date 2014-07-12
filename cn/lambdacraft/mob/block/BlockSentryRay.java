@@ -23,6 +23,7 @@ import cn.lambdacraft.mob.register.CBCMobItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -39,10 +40,10 @@ public class BlockSentryRay extends CBCBlockContainer {
 	 * @param par1
 	 * @param par2Material
 	 */
-	public BlockSentryRay(int par1) {
-		super(par1, Material.rock);
+	public BlockSentryRay() {
+		super(Material.rock);
 		this.setCreativeTab(null);
-		setIconName("ss_1");
+		setBlockTextureName("lambdacraft:ss_1");
 	}
 	
 	@Override
@@ -79,16 +80,16 @@ public class BlockSentryRay extends CBCBlockContainer {
 	}
 	
     @Override
-	public int idDropped(int par1, Random par2Random, int par3)
+	public Item getItemDropped(int par1, Random par2Random, int par3)
     {
-    	return CBCMobItems.sentrySyncer.itemID;
+    	return CBCMobItems.sentrySyncer;
     }
 
 	/* (non-Javadoc)
 	 * @see net.minecraft.block.ITileEntityProvider#createNewTileEntity(net.minecraft.world.World)
 	 */
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int v) {
 		return new TileSentryRay();
 	}
 	

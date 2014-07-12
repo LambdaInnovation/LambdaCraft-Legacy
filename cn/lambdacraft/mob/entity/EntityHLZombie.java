@@ -32,6 +32,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -92,9 +93,9 @@ public class EntityHLZombie extends LIEntityMob {
 	protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.followRange).setAttribute(40.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(0.23000000417232513D);
-        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setAttribute(3.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D);
+        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3.0D);
     }
 	
 	@Override
@@ -193,13 +194,13 @@ public class EntityHLZombie extends LIEntityMob {
 			playtick = 0;
 		}
 		++playtick;
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setAttribute(1.0f);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0f);
 	}
 
 	@Override
-    protected int getDropItemId()
+    protected Item getDropItem()
     {
-        return Item.rottenFlesh.itemID;
+        return Items.rotten_flesh;
     }
 	
     /**

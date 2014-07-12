@@ -14,15 +14,13 @@
  */
 package cn.lambdacraft.core.misc;
 
-import cn.lambdacraft.crafting.CraftingHandler;
-import cn.lambdacraft.crafting.register.CBCBlocks;
-import cn.lambdacraft.crafting.register.CBCItems;
-import cn.liutils.core.register.Config;
-
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
+import net.minecraftforge.common.config.Configuration;
+import cn.lambdacraft.crafting.register.CBCBlocks;
+import cn.lambdacraft.crafting.register.CBCItems;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * Mod的成就类。
@@ -46,33 +44,28 @@ public class CBCAchievements {
 	/* The Page of Achs */
 	public static AchievementPage achpage;
 
-	/* Activer */
-	public static CraftingHandler craftHandler;
-
-	public static void init(Config conf) {
+	public static void init(Configuration conf) {
 		try {
 
-			oreAchievements[0] = (new Achievement(conf.getInteger(
-					"nuclearRawMaterial", 99), "nuclearRawMaterial", 0, 0,
+			oreAchievements[0] = (new Achievement(getString(conf, "nuclearRawMaterial", 99), "nuclearRawMaterial", 0, 0,
 					CBCBlocks.uraniumOre, (Achievement) null))
-					.registerAchievement();
-			oreAchievements[1] = (new Achievement(conf.getInteger("newTinOre",
+					.registerStat();
+			oreAchievements[1] = (new Achievement(getString(conf, "newTinOre",
 					100), "newTinOre", 2, 0, CBCBlocks.oreTin,
-					(Achievement) null)).registerAchievement();
-			oreAchievements[2] = (new Achievement(conf.getInteger(
-					"newCopperOre", 101), "newCopperOre", 4, 0,
+					(Achievement) null)).registerStat();
+			oreAchievements[2] = (new Achievement(getString(conf, "newCopperOre", 101), "newCopperOre", 4, 0,
 					CBCBlocks.oreCopper, (Achievement) null))
-					.registerAchievement();
-			radioactiveBeryl = (new Achievement(conf.getInteger(
+					.registerStat();
+			radioactiveBeryl = (new Achievement(getString(conf, 
 					"radioactiveBeryl", 102), "radioactiveBeryl", 1, 2,
 					CBCItems.ingotUranium, oreAchievements[0]))
-					.registerAchievement();
-			ohMyTeeth = (new Achievement(conf.getInteger("ohMyTeeth", 103),
+					.registerStat();
+			ohMyTeeth = (new Achievement(getString(conf, "ohMyTeeth", 103),
 					"ohMyTeeth", 3, 0, CBCItems.ingotSteel, (Achievement) null))
-					.registerAchievement();
-			letsMoe = (new Achievement(conf.getInteger("letsMoe", 104),
+					.registerStat();
+			letsMoe = (new Achievement(getString(conf, "letsMoe", 104),
 					"letsMoe", 12, 12, CBCItems.halfLife01, (Achievement) null))
-					.registerAchievement();
+					.registerStat();
 			System.out.println("finish achievements");
 			achpage = new AchievementPage("LambdaCraft", oreAchievements[0],
 
@@ -80,11 +73,13 @@ public class CBCAchievements {
 					ohMyTeeth, letsMoe);
 
 			AchievementPage.registerAchievementPage(achpage);
-			craftHandler = new CraftingHandler();
-			GameRegistry.registerCraftingHandler(craftHandler);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static String getString(Configuration conf, String nam, int def) {
+		return conf.get("achivement", nam, def).getString();
 	}
 
 	public CBCAchievements() {

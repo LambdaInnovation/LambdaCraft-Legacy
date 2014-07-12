@@ -51,22 +51,22 @@ public class UsingUtils {
 	/**
 	 * 在键位被按下的时候调用方块的使用函数。 **内部函数，一般不建议在你的方块类中调用。**
 	 * 
-	 * @param block
+	 * @param bPos
 	 *            要调用的方块
 	 * @param world
 	 * @param player
 	 */
-	public static void useBlock(BlockPos block, World world, EntityPlayer player) {
-		if (!(Block.blocksList[block.blockID] instanceof IUseable))
+	public static void useBlock(BlockPos bPos, World world, EntityPlayer player) {
+		if (!(bPos.block instanceof IUseable))
 			return;
-		if (block.equals(getCurrentUsingBlock(world, player))) {
-			if (player.getDistance(block.x, block.y, block.z) > 8.0) {
+		if (bPos.equals(getCurrentUsingBlock(world, player))) {
+			if (player.getDistance(bPos.x, bPos.y, bPos.z) > 8.0) {
 				stopUsingBlock(world, player);
 			}
 			return;
 		}
-		((IUseable) Block.blocksList[block.blockID]).onBlockUse(world, player,
-				block.x, block.y, block.z);
+		((IUseable) bPos.block).onBlockUse(world, player,
+				bPos.x, bPos.y, bPos.z);
 	}
 
 	/**
@@ -76,10 +76,10 @@ public class UsingUtils {
 	 * @param player
 	 */
 	public static void stopUsingBlock(World world, EntityPlayer player) {
-		BlockPos block = getCurrentUsingBlock(world, player);
-		if (block != null) {
-			((IUseable) Block.blocksList[block.blockID]).onBlockStopUsing(
-					world, player, block.x, block.y, block.z);
+		BlockPos pos = getCurrentUsingBlock(world, player);
+		if (pos != null) {
+			((IUseable) pos.block).onBlockStopUsing(
+					world, player, pos.x, pos.y, pos.z);
 		}
 		NBTTagCompound nbt = player.getEntityData();
 		nbt.setInteger("usingX", -1);
@@ -100,11 +100,11 @@ public class UsingUtils {
 		NBTTagCompound nbt = player.getEntityData();
 		int x = nbt.getInteger("usingX"), y = nbt.getInteger("usingY"), z = nbt
 				.getInteger("usingZ");
-		int id = world.getBlockId(x, y, z);
-		if (!(Block.blocksList[id] instanceof IUseable)) {
+		Block block = world.getBlock(x, y, z);
+		if (!(block instanceof IUseable)) {
 			return null;
 		} else {
-			return new BlockPos(x, y, z, id);
+			return new BlockPos(x, y, z, block);
 		}
 	}
 

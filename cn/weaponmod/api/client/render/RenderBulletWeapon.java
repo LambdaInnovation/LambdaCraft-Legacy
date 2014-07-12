@@ -29,7 +29,7 @@ import org.lwjgl.opengl.GL11;
 import cn.liutils.api.client.util.RenderUtils;
 import cn.weaponmod.api.information.InformationBullet;
 import cn.weaponmod.api.weapon.WeaponGeneralBullet;
-import cn.weaponmod.events.ItemHelper;
+import cn.weaponmod.events.ItemControlHandler;
 
 /**
  * @author WeAthFolD
@@ -136,7 +136,7 @@ public class RenderBulletWeapon implements IItemRenderer {
 		
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			boolean left = ItemHelper.getUsingTickLeft(player, false) == 0 ? true : ItemHelper.getUsingSide(player);
+			boolean left = ItemControlHandler.getUsingTickLeft(player, false) == 0 ? true : ItemControlHandler.getUsingSide(player);
 			boolean firstPerson = (entity == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) 
 					&& Minecraft.getMinecraft().currentScreen == null;
 			int mt = inf == null ? -1 : (left ? inf.muzzle_left : inf.muzzle_right);

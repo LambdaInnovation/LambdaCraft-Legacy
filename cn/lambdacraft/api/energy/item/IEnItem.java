@@ -1,5 +1,6 @@
 package cn.lambdacraft.api.energy.item;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -23,14 +24,14 @@ public interface IEnItem {
 	 * 
 	 * @return Item ID to use
 	 */
-	int getChargedItemId(ItemStack itemStack);
+	Item getChargedItem(ItemStack itemStack);
 
 	/**
 	 * Get the item ID to use for a charge energy of 0.
 	 * 
 	 * @return Item ID to use
 	 */
-	int getEmptyItemId(ItemStack itemStack);
+	Item getEmptyItem(ItemStack itemStack);
 
 	/**
 	 * Get the item's maximum charge energy in EU.

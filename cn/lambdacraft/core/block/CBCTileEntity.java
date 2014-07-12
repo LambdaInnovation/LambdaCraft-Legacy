@@ -40,7 +40,8 @@ public abstract class CBCTileEntity extends TileEntity {
 		if (++this.lastTick > updateFreq) {
 			lastTick = 0;
 			this.frequentUpdate();
-			this.onInventoryChanged();
+			//this.onInventoryChanged();
+			//TODO:寻找替代方法
 		}
 	}
 

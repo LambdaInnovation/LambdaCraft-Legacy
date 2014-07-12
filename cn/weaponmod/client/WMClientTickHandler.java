@@ -3,15 +3,11 @@
  */
 package cn.weaponmod.client;
 
-import java.util.EnumSet;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cn.weaponmod.api.weapon.IZoomable;
-import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -20,7 +16,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  *
  */
 @SideOnly(Side.CLIENT)
-public class WMClientTickHandler implements ITickHandler {
+public class WMClientTickHandler {
 	
 	public final float DEFAULT_UPLIFT_RADIUS = 1.0F, UPLIFT_SPEED = 1.2F, RECOVER_SPEED = .5F;
 	
@@ -40,11 +36,7 @@ public class WMClientTickHandler implements ITickHandler {
 		angleToLift += upliftRad;
 	}
 
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.ITickHandler#tickStart(java.util.EnumSet, java.lang.Object[])
-	 */
-	@Override
-	public void tickStart(EnumSet<TickType> type, Object... tickData) {
+	public void tickStart() {
 		player = mc.thePlayer;
 		if(player != null) {
 			if(angleToLift > 0) {
@@ -78,26 +70,6 @@ public class WMClientTickHandler implements ITickHandler {
 	private void setZooming(boolean b) {
 		lastIsZooming = isZooming;
 		isZooming = b;
-	}
-	
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.ITickHandler#tickEnd(java.util.EnumSet, java.lang.Object[])
-	 */
-	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-	}
-
-	/* (non-Javadoc)
-	 * @see cpw.mods.fml.common.ITickHandler#ticks()
-	 */
-	@Override
-	public EnumSet<TickType> ticks() {
-		return EnumSet.of(TickType.CLIENT);
-	}
-	
-	@Override
-	public String getLabel() {
-		return "MyWeaponary Client Tick Handler";
 	}
 
 }

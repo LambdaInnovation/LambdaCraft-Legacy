@@ -19,9 +19,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cn.liutils.api.client.register.IKeyProcess;
+import cn.weaponmod.WeaponMod;
 import cn.weaponmod.api.feature.ISpecialUseable;
-import cn.weaponmod.events.ItemHelper;
-import cn.weaponmod.network.NetKeyClicking;
+import cn.weaponmod.events.ItemControlHandler;
+import cn.weaponmod.network.MessageClicking;
 
 /**
  * @author WeAthFolD
@@ -52,7 +53,7 @@ public class KeyClicking implements IKeyProcess {
 			Item item = stack.getItem();
 			if (item instanceof ISpecialUseable) {
 				((ISpecialUseable) item).onItemClick(mc.theWorld, player, stack, isLeft);
-				NetKeyClicking.sendPacketData(isLeft ? 1 : -1);
+				WeaponMod.netHandler.sendToServer(new MessageClicking(isLeft ? 1 : -1));
 			}
 		}
 	}
@@ -67,7 +68,7 @@ public class KeyClicking implements IKeyProcess {
 		EntityPlayer player = mc.thePlayer;
 		if (player == null || mc.currentScreen != null)
 			return;
-		ItemHelper.stopUsingItem(player, isLeft);
+		ItemControlHandler.stopUsingItem(player, isLeft);
 	}
 
 }

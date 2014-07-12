@@ -16,15 +16,12 @@ package cn.lambdacraft.core.item;
 
 import java.util.List;
 
-import cn.lambdacraft.core.CBCMod;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import cn.lambdacraft.core.CBCMod;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * 通用盔甲类。
@@ -41,27 +38,10 @@ public class CBCGenericArmor extends ItemArmor {
 	 * @param renderIndex
 	 * @param armorType
 	 */
-	public CBCGenericArmor(int id, EnumArmorMaterial mat, int renderIndex,
+	public CBCGenericArmor(ArmorMaterial mat, int renderIndex,
 			int armorType) {
-		super(id, mat, renderIndex, armorType);
+		super(mat, renderIndex, armorType);
 		setCreativeTab(CBCMod.cct);
-	}
-	
-	 public CBCGenericArmor setIAndU(String names) {
-		this.setUnlocalizedName(names);
-		this.setIconName(names);
-		return this;
-	} 
-
-	public void setIconName(String name) {
-		this.iconName = name;
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister
-				.registerIcon("lambdacraft:" + iconName);
 	}
 
 	public CBCGenericArmor setDescription(String d) {

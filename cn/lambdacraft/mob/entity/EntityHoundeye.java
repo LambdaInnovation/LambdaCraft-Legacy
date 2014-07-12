@@ -21,6 +21,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -73,7 +74,7 @@ public class EntityHoundeye extends LIEntityMob implements IEntityLink<EntityLiv
     protected Entity findPlayerToAttack()
     {
 		Entity e = GenericUtils.getNearestEntityTo(this, GenericUtils.getEntitiesAround_CheckSight(this, 15.0, selector));
-		if(e != null && e.getEntityName().equals(throwerName))
+		if(e != null && e.getCommandSenderName().equals(throwerName))
 			return null;
 		return e;
     }
@@ -144,14 +145,14 @@ public class EntityHoundeye extends LIEntityMob implements IEntityLink<EntityLiv
 	
 	
     @Override
-	public EntityItem dropItemWithOffset(int par1, int par2, float par3)
+	public EntityItem func_145778_a(Item par1, int par2, float par3)
     {
         return this.entityDropItem(new ItemStack(par1, par2, 2), par3);
     }
     
     @Override
-    public int getDropItemId() {
-    	return CBCMobItems.dna.itemID;
+    public Item getDropItem() {
+    	return CBCMobItems.dna;
     }
 	
 	/**
@@ -185,7 +186,7 @@ public class EntityHoundeye extends LIEntityMob implements IEntityLink<EntityLiv
 
 	@Override
 	public void setLinkedEntity(EntityLivingBase entity) {
-		throwerName = entity.getEntityName();
+		throwerName = entity.getCommandSenderName();
 	}
 	
 	@Override

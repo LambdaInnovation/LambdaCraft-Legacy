@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
-
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -67,7 +67,7 @@ public class EnergyUtils {
 	 */
 	public static int tryChargeFromStack(ItemStack sl, int energyReq) {
 		int energyReceived = 0;
-		if (sl.itemID == Item.redstone.itemID) {
+		if (sl.getItem() == Items.redstone) {
 			if (energyReq > 500) {
 				sl.stackSize--;
 			}

@@ -17,7 +17,7 @@ import cn.weaponmod.api.information.InformationWeapon;
 public abstract class WeaponGeneral extends Item implements ISpecialUseable {
 
 	public int type;
-	public int ammoID;
+	public Item ammoItem;
 	public float upLiftRadius, recoverRadius;
 	
 	/**
@@ -29,11 +29,11 @@ public abstract class WeaponGeneral extends Item implements ISpecialUseable {
 	 * @param par3MaxModes
 	 *            最大模式数。（不一定被使用）
 	 */
-	public WeaponGeneral(int par1, int par2AmmoID) {
-		super(par1);
+	public WeaponGeneral(Item ammo) {
+		super();
 		setMaxStackSize(1);
 		this.setFull3D();
-		ammoID = par2AmmoID;
+		ammoItem = ammo;
 	}
 	
 	//-------------------------SETTINGS---------------------

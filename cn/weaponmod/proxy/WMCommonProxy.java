@@ -1,14 +1,13 @@
 package cn.weaponmod.proxy;
 
-import cn.weaponmod.events.WMTickHandler;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
+import cn.weaponmod.events.ItemControlHandler;
 
 public class WMCommonProxy {
+	
+	public ItemControlHandler controlHandler_client = new ItemControlHandler(),
+			controlHandler_server = new ItemControlHandler();
 
-	public void preInit() {
-		TickRegistry.registerTickHandler(new WMTickHandler(), Side.CLIENT);
-	}
+	public void preInit() {}
 
 	public void init() {}
 	

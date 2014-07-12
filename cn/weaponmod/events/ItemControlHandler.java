@@ -1,7 +1,6 @@
 package cn.weaponmod.events;
 
 
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,16 +9,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import cn.weaponmod.WeaponMod;
 import cn.weaponmod.api.feature.ISpecialUseable;
-import cn.weaponmod.network.NetKeyClicking;
-import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.TickType;
+import cn.weaponmod.network.MessageClicking;
 
 /**
  * 左右键射击的底层支持。
  * @author WeAthFolD
  */
-public class ItemHelper implements ITickHandler {
+public class ItemControlHandler {
 
 	protected static class UsingStatus {
 		
@@ -40,12 +38,12 @@ public class ItemHelper implements ITickHandler {
 		
 		public boolean handleUpdate(EntityPlayer player) {
 			ItemStack curItem = player.getCurrentEquippedItem(); 
-			return --useDurationLeft > 0 && stack != null && curItem != null && stack.itemID == curItem.itemID;
+			return --useDurationLeft > 0 && stack != null && curItem != null && stack.getItem() == curItem.getItem();
 		}
 		
 		public boolean isUsing(EntityPlayer player) {
 			ItemStack curItem = player.getCurrentEquippedItem(); 
-			return useDurationLeft > 0 && stack != null && curItem != null && stack.itemID == curItem.itemID;
+			return useDurationLeft > 0 && stack != null && curItem != null && stack.getItem() == curItem.getItem();
 		}
 		
 		public void resetStatus(int maxUse, boolean side, ItemStack is) {
@@ -113,17 +111,14 @@ public class ItemHelper implements ITickHandler {
 		if(stat != null) {
 			stat.stopUsing(player);
 			if(player.worldObj.isRemote)
-				NetKeyClicking.sendPacketData(side ? 2 : -2);
+				WeaponMod.netHandler.sendToServer(new MessageClicking(side ? 2 : -2));
 		}
 	}
 
 
-	@Override
-	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		if(type.contains(TickType.PLAYER)) {
-			EntityPlayer player = (EntityPlayer) tickData[0];
-			World world = player.worldObj;
-			for(int i = 0; i < 2 ; i++) {
+	public void tickStart(EntityPlayer player) {
+		World world = player.worldObj;
+		for(int i = 0; i < 2 ; i++) {
 			Map<EntityPlayer, UsingStatus> usingPlayerMap = getUsingPlayerMapFor(world, i == 0 );
 			UsingStatus stat = usingPlayerMap.get(player);
 			if(stat != null && stat.isUsing(player)) {
@@ -140,28 +135,12 @@ public class ItemHelper implements ITickHandler {
 					}
 				}
 			}
-			}
 		}
 	}
 
 	private static Map<EntityPlayer, UsingStatus> getUsingPlayerMapFor(World world, boolean isLeft) {
 		Map<EntityPlayer, UsingStatus> usingPlayerMap[] = world.isRemote ? usingPlayerMap_client : usingPlayerMap_server;
 		return usingPlayerMap[isLeft ? 0 : 1];
-	}
-	
-	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData) {}
-
-
-	@Override
-	public EnumSet<TickType> ticks() {
-		return EnumSet.of(TickType.PLAYER);
-	}
-
-
-	@Override
-	public String getLabel() {
-		return "MyWeaponry Special Using";
 	}
 
 }

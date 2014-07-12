@@ -25,7 +25,7 @@ public class DispenserBehaviorSpawner extends BehaviorDefaultDispenseItem {
     @Override
 	public ItemStack dispenseStack(IBlockSource blockSource, ItemStack stack)
     {
-        EnumFacing enumfacing = BlockDispenser.getFacing(blockSource.getBlockMetadata());
+        EnumFacing enumfacing = BlockDispenser.func_149937_b(blockSource.getBlockMetadata());
         double d0 = blockSource.getX() + enumfacing.getFrontOffsetX();
         double d1 = blockSource.getYInt() + 0.2F;
         double d2 = blockSource.getZ() + enumfacing.getFrontOffsetZ();

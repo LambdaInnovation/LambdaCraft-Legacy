@@ -16,19 +16,15 @@ package cn.lambdacraft.core.block;
 
 import java.util.Random;
 
-import cn.lambdacraft.core.CBCMod;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.CBCMod;
 
 /**
  * @author WeAthFolD
@@ -36,7 +32,6 @@ import net.minecraft.world.World;
  */
 public abstract class CBCBlockContainer extends BlockContainer {
 
-	private String iconName;
 	protected int guiId = -1;
 	protected static final Random rand = new Random();
 
@@ -44,14 +39,9 @@ public abstract class CBCBlockContainer extends BlockContainer {
 	 * @param par1
 	 * @param par2Material
 	 */
-	public CBCBlockContainer(int par1, Material mat) {
-		super(par1, mat);
+	public CBCBlockContainer(Material mat) {
+		super(mat);
 		setCreativeTab(CBCMod.cct);
-	}
-
-	public CBCBlockContainer setIconName(String name) {
-		this.iconName = name;
-		return this;
 	}
 
 	public CBCBlockContainer setGuiId(int id) {
@@ -60,15 +50,9 @@ public abstract class CBCBlockContainer extends BlockContainer {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
-		this.blockIcon = par1IconRegister.registerIcon("lambdacraft:" + iconName);
-	}
-
-	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int idk, float what, float these, float are) {
-		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (guiId == -1 || tileEntity == null || player.isSneaking()) {
 			return false;
 		}
@@ -88,8 +72,7 @@ public abstract class CBCBlockContainer extends BlockContainer {
 				float rz = rand.nextFloat() * 0.8F + 0.1F;
 
 				EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z
-						+ rz, new ItemStack(item.itemID, item.stackSize,
-						item.getItemDamage()));
+						+ rz, new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
 				if (item.hasTagCompound()) {
 					entityItem.getEntityItem().setTagCompound(

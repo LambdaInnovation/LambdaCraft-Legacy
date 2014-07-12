@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 
 /**
  * 用来指明一个方块可以被Mod中的使用按钮调用。
- * @see cn.lambdacraft.core.network.NetKeyUsing
+ * @see cn.lambdacraft.core.network.MessageKeyUsing
  * @see cn.lambdacraft.core.client.key.KeyUse
  * @author WeAthFolD
  */

@@ -21,38 +21,30 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandHandler;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import cn.lambdacraft.core.energy.EnergyNet;
-import cn.lambdacraft.core.misc.CBCNetHandler;
-import cn.lambdacraft.core.network.NetKeyUsing;
+import cn.lambdacraft.core.event.CBCEventListener;
+import cn.lambdacraft.core.network.MessageKeyUsing;
 import cn.lambdacraft.core.proxy.GeneralProps;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
-import cn.lambdacraft.intergration.ic2.IC2Module;
 import cn.liutils.api.register.LIGuiHandler;
-import cn.liutils.core.register.Config;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = "LambdaCraft", name = "LambdaCraft Core", version = CBCMod.VERSION)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, 
-clientPacketHandlerSpec = @SidedPacketHandler(channels = { GeneralProps.NET_CHANNEL_CLIENT }, packetHandler = CBCNetHandler.class), 
-serverPacketHandlerSpec = @SidedPacketHandler(channels = { GeneralProps.NET_CHANNEL_SERVER }, packetHandler = CBCNetHandler.class))
-public class CBCMod implements ITickHandler {
+public class CBCMod {
 
 	public static final String VERSION = "1.7.8pre";
 
@@ -86,7 +78,7 @@ public class CBCMod implements ITickHandler {
 	/**
 	 * 公用设置。
 	 */
-	public static Config config;
+	public static Configuration config;
 
 	@Instance("LambdaCraft")
 	public static CBCMod instance;
@@ -96,10 +88,11 @@ public class CBCMod implements ITickHandler {
 	 */
 	@SidedProxy(clientSide = "cn.lambdacraft.core.proxy.ClientProxy", serverSide = "cn.lambdacraft.core.proxy.Proxy")
 	public static cn.lambdacraft.core.proxy.Proxy proxy;
-
-	public static boolean ic2Installed = true;
 	
 	public static LIGuiHandler guiHandler = new LIGuiHandler();
+	
+	public static SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(GeneralProps.NET_CHANNEL);
+	private static int nextNetID = 0;
 
 	/**
 	 * 预加载（设置、世界生成、注册Event）
@@ -109,17 +102,15 @@ public class CBCMod implements ITickHandler {
 	@EventHandler()
 	public void preInit(FMLPreInitializationEvent event) {
 
-		log.setParent(FMLLog.getLogger());
 		log.info("Starting LambdaCraft " + CBCMod.VERSION);
 		log.info("Copyright (c) Lambda Innovation, 2013");
 		log.info("http://www.lambdacraft.cn");
 		
 
-		config = new Config(event.getSuggestedConfigurationFile());
+		config = new Configuration(event.getSuggestedConfigurationFile());
 		EnergyNet.initialize();
 		proxy.preInit();
-		TickRegistry.registerTickHandler(this, Side.CLIENT);
-		TickRegistry.registerTickHandler(this, Side.SERVER);
+		
 		GeneralProps.loadProps(config);
 		
 	}
@@ -131,13 +122,14 @@ public class CBCMod implements ITickHandler {
 	 */
 	@EventHandler()
 	public void init(FMLInitializationEvent Init) {
-		ic2Installed = IC2Module.init(config);
-		log.fine("LambdaCraft IC2 Intergration Module STATE : " + ic2Installed);
 		// Blocks, Items, GUI Handler,Key Process.
-		NetworkRegistry.instance().registerGuiHandler(this, guiHandler);
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMod", "LambdaCraft");
 		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMisc", "LambdaCraft:Misc");
-		CBCNetHandler.addChannel(GeneralProps.NET_ID_USE, new NetKeyUsing());
+
+		netHandler.registerMessage(MessageKeyUsing.Handler.class, MessageKeyUsing.class, ++nextNetID, Side.SERVER);
+		MinecraftForge.EVENT_BUS.register(new CBCEventListener());
+		
 		proxy.init();
 	}
 
@@ -148,8 +140,7 @@ public class CBCMod implements ITickHandler {
 	 */
 	@EventHandler()
 	public void postInit(FMLPostInitializationEvent Init) {
-		config.SaveConfig();
-
+		config.save();
 	}
 
 	/**
@@ -162,37 +153,8 @@ public class CBCMod implements ITickHandler {
 		CommandHandler commandManager = (CommandHandler) event.getServer()
 				.getCommandManager();
 	}
-
-	@Override
-	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		if (type.contains(TickType.WORLD)) {
-			
-			proxy.profilerStartSection("LambdaCraft");
-			
-			World world = (World) tickData[0];
-			
-			proxy.profilerEndStartSection("EnergyNet");
-			if(!ic2Installed)
-				EnergyNet.onTick(world);
-			
-			proxy.profilerEndSection();
-			
-		}
+	
+	public static int getUniqueNetChannel() {
+		return nextNetID++;
 	}
-
-	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-	}
-
-	@Override
-	public EnumSet<TickType> ticks() {
-		return EnumSet.of(TickType.WORLD);
-	}
-
-	@Override
-	public String getLabel() {
-		return "LambdaCraft ticks";
-	}
-
-
 }

@@ -24,14 +24,14 @@ import java.util.Random;
 import java.util.logging.Level;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.Property;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
+import cn.lambdacraft.core.CBCMod;
+import cn.liutils.api.register.Configurable;
+import cn.liutils.core.register.ConfigHandler;
 
 import com.google.common.base.Charsets;
 
-import cn.lambdacraft.core.CBCMod;
-import cn.liutils.api.register.Configurable;
-import cn.liutils.core.register.Config;
-import cn.liutils.core.register.ConfigHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 /**
@@ -202,7 +202,7 @@ public class ClientProps {
 		return path;
 	}
 
-	public static void loadProps(Config config) {
+	public static void loadProps(Configuration config) {
 		ConfigHandler.loadConfigurableClass(CBCMod.config, ClientProps.class);
 		
 		crosshairProps = new Properties();
@@ -253,7 +253,7 @@ public class ClientProps {
 	public static void setSprayId(int id) {
 		Property prop;
 		try {
-			prop = CBCMod.config.getProperty("graphics", "Spray_ID", "0");
+			prop = CBCMod.config.get("graphics", "Spray_ID", "0");
 			prop.set(id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -273,16 +273,16 @@ public class ClientProps {
 		sprayA = a;
 		Property prop;
 		try {
-			prop = CBCMod.config.getProperty("graphics", "Spray_R", "255");
+			prop = CBCMod.config.get("graphics", "Spray_R", "255");
 			prop.set(r);
 			
-			prop = CBCMod.config.getProperty("graphics", "Spray_G", "255");
+			prop = CBCMod.config.get("graphics", "Spray_G", "255");
 			prop.set(g);
 			
-			prop = CBCMod.config.getProperty("graphics", "Spray_B", "255");
+			prop = CBCMod.config.get("graphics", "Spray_B", "255");
 			prop.set(b);
 			
-			prop = CBCMod.config.getProperty("graphics", "Spray_A", "255");
+			prop = CBCMod.config.get("graphics", "Spray_A", "255");
 			prop.set(a);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -298,13 +298,13 @@ public class ClientProps {
 		xHairB = b;
 		Property prop;
 		try {
-			prop = CBCMod.config.getProperty("graphics", "CrossHair_R", "255");
+			prop = CBCMod.config.get("graphics", "CrossHair_R", "255");
 			prop.set(r);
 			
-			prop = CBCMod.config.getProperty("graphics", "CrossHair_G", "255");
+			prop = CBCMod.config.get("graphics", "CrossHair_G", "255");
 			prop.set(g);
 			
-			prop = CBCMod.config.getProperty("graphics", "CrossHair_B", "255");
+			prop = CBCMod.config.get("graphics", "CrossHair_B", "255");
 			prop.set(b);
 		} catch(Exception e) {
 			e.printStackTrace();

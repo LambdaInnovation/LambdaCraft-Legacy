@@ -1,7 +1,5 @@
 package cn.lambdacraft.core;
 
-import java.util.EnumSet;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.GameSettings;
@@ -15,12 +13,10 @@ import cn.lambdacraft.deathmatch.item.ArmorHEV.EnumAttachment;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.lambdacraft.terrain.ModuleTerrain;
 import cn.liutils.api.util.GenericUtils;
-import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class CBCPlayer implements ITickHandler {
+public class CBCPlayer {
 
 	public static final float LJ_VEL_RADIUS = 1.5F, BHOP_VEL_SCALE = 0.003F, SPEED_REDUCE_SCALE = 0.0005F;
 	private float lastTickRotationYaw;
@@ -65,17 +61,18 @@ public class CBCPlayer implements ITickHandler {
 		
 		//putting HEV on at this tick
 		if(!preOnHEV && (armorStat[2] && armorStat[3])) {
-			mc.sndManager.playSoundFX("lambdacraft:hev.hev_logon", 0.5F, 1.0F);
+			//mc.getSoundHandler().playSoundFX("lambdacraft:hev.hev_logon", 0.5F, 1.0F);
 		} else if(preOnHEV && !(armorStat[2] && armorStat[3])) { //HEV 'Broke down' because player action or energy critical
 			if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[3] != null) {
-				mc.sndManager.playSoundFX("lambdacraft:hev.hev_shutdown", 0.5F, 1.0F);
+				//mc.sndManager.playSoundFX("lambdacraft:hev.hev_shutdown", 0.5F, 1.0F);
 			}
 		}
 		
 		/**
 		 * TODO:添加XC
 		 */
-		if(player.worldObj.provider.dimensionId == ModuleTerrain.xenIslandDimensionID) {
+		if(player.worldObj.provider.dimensionId == ModuleTerrain.xenIslandDimensionID 
+				|| player.worldObj.provider.dimensionId == ModuleTerrain.xenContinentDimensionID) {
 			if(!player.onGround && !player.capabilities.isFlying && !(player.isOnLadder() || player.isInWater())) {
 				player.motionY += 0.036;
 			}
@@ -87,7 +84,7 @@ public class CBCPlayer implements ITickHandler {
 		if((armorStat[2] &&  armorStat[3])) {
 			if(player.getHealth() - lastHealth < 0 && player.getHealth() <= 5) {
 				if(tickSinceLastSound > 30) {
-					mc.sndManager.playSoundFX("lambdacraft:hev.health_critical", 0.5F, 1.0F);
+					//mc.sndManager.playSoundFX("lambdacraft:hev.health_critical", 0.5F, 1.0F);
 					tickSinceLastSound = 0;
 				}
 			}
@@ -203,9 +200,7 @@ public class CBCPlayer implements ITickHandler {
 	}
 	
 	
-
-	@Override
-	public void tickStart(EnumSet<TickType> type, Object... tickData) {
+	public void tickStart() {
 		player = Minecraft.getMinecraft().thePlayer;
 		if(player != null) {
 			beforeOnUpdate();
@@ -218,20 +213,9 @@ public class CBCPlayer implements ITickHandler {
 		}
 	}
 
-	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
+	public void tickEnd() {
 		if(player != null)
 			afterOnUpdate();
-	}
-
-	@Override
-	public EnumSet<TickType> ticks() {
-		return EnumSet.of(TickType.PLAYER);
-	}
-
-	@Override
-	public String getLabel() {
-		return "LambdaCraft Player Handler";
 	}
 	
 	//----------------Sounds-----------------

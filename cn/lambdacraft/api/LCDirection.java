@@ -1,7 +1,8 @@
 package cn.lambdacraft.api;
 
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public enum LCDirection {
 
@@ -30,10 +31,11 @@ public enum LCDirection {
 
 		coords[(this.dir / 2)] += getSign();
 
-		if ((tileEntity.worldObj != null)
-				&& (tileEntity.worldObj.blockExists(coords[0], coords[1],
+		World world = tileEntity.getWorldObj();
+		if ((world != null)
+				&& (world.blockExists(coords[0], coords[1],
 						coords[2]))) {
-			return tileEntity.worldObj.getBlockTileEntity(coords[0], coords[1],
+			return world.getTileEntity(coords[0], coords[1],
 					coords[2]);
 		}
 		return null;

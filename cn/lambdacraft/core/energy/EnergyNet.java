@@ -9,6 +9,12 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.WeakHashMap;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import cn.lambdacraft.api.LCDirection;
 import cn.lambdacraft.api.energy.events.EnergyTileLoadEvent;
 import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
@@ -21,14 +27,6 @@ import cn.lambdacraft.api.energy.tile.IEnergySource;
 import cn.lambdacraft.api.energy.tile.IEnergyTile;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.world.WorldData;
-
-
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 
 public final class EnergyNet {
 
@@ -220,9 +218,9 @@ public final class EnergyNet {
 							if ((energySink instanceof TileEntity)) {
 								TileEntity te = (TileEntity) energySink;
 								c = new StringBuilder()
-										.append(te.worldObj == null ? "unknown"
+										.append(te.getWorldObj() == null ? "unknown"
 												: Integer
-														.valueOf(te.worldObj.provider.dimensionId))
+														.valueOf(te.getWorldObj().provider.dimensionId))
 										.append(":").append(te.xCoord)
 										.append(",").append(te.yCoord)
 										.append(",").append(te.zCoord)
@@ -279,7 +277,7 @@ public final class EnergyNet {
 			energyPath.totalEnergyConducted += energyInjected;
 
 			if (energyInjected > energyPath.minInsulationEnergyAbsorption) {
-				List<EntityLiving> entitiesNearEnergyPath = ((TileEntity) energySource).worldObj
+				List<EntityLiving> entitiesNearEnergyPath = ((TileEntity) energySource).getWorldObj()
 						.getEntitiesWithinAABB(EntityLiving.class,
 								AxisAlignedBB.getBoundingBox(
 										energyPath.minX - 1,
@@ -685,18 +683,18 @@ public final class EnergyNet {
 			MinecraftForge.EVENT_BUS.register(this);
 		}
 
-		@ForgeSubscribe
+		@SubscribeEvent
 		public void onEnergyTileLoad(EnergyTileLoadEvent event) {
 			EnergyNet.getForWorld(event.world).addTileEntity((TileEntity) event.energyTile);
 		}
 
-		@ForgeSubscribe
+		@SubscribeEvent
 		public void onEnergyTileUnload(EnergyTileUnloadEvent event) {
 			EnergyNet.getForWorld(event.world).removeTileEntity(
 					(TileEntity) event.energyTile);
 		}
 
-		@ForgeSubscribe
+		@SubscribeEvent
 		public void onEnergyTileSource(EnergyTileSourceEvent event) {
 			event.amount = EnergyNet.getForWorld(event.world).emitEnergyFrom(
 					(IEnergySource) event.energyTile, event.amount);

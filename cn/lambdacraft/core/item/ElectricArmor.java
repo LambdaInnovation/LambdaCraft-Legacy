@@ -16,20 +16,19 @@ package cn.lambdacraft.core.item;
 
 import java.util.List;
 
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.CBCMod;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumArmorMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.ISpecialArmor;
+import cn.lambdacraft.api.energy.item.ICustomEnItem;
+import cn.lambdacraft.core.CBCMod;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -48,9 +47,9 @@ public abstract class ElectricArmor extends CBCGenericArmor implements
 	 * @param renderIndex
 	 * @param armorType
 	 */
-	public ElectricArmor(int id, EnumArmorMaterial mat, int renderIndex,
+	public ElectricArmor(ArmorMaterial mat, int renderIndex,
 			int armorType) {
-		super(id, mat, renderIndex, armorType);
+		super(mat, renderIndex, armorType);
 	}
 
 	public void setEnergyPerDamage(int p) {
@@ -105,13 +104,13 @@ public abstract class ElectricArmor extends CBCGenericArmor implements
 	}
 
 	@Override
-	public int getChargedItemId(ItemStack itemStack) {
-		return this.itemID;
+	public Item getChargedItem(ItemStack itemStack) {
+		return this;
 	}
 
 	@Override
-	public int getEmptyItemId(ItemStack itemStack) {
-		return this.itemID;
+	public Item getEmptyItem(ItemStack itemStack) {
+		return this;
 	}
 
 	@Override
@@ -163,7 +162,7 @@ public abstract class ElectricArmor extends CBCGenericArmor implements
 	public void addInformation(ItemStack par1ItemStack,
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-		if (!CBCMod.ic2Installed && this.canShowChargeToolTip(par1ItemStack))
+		if (this.canShowChargeToolTip(par1ItemStack))
 			par3List.add(StatCollector.translateToLocal("gui.curenergy.name")
 					+ " : " + getItemCharge(par1ItemStack) + "/"
 					+ getMaxDamage(par1ItemStack) + " EU");
@@ -171,8 +170,7 @@ public abstract class ElectricArmor extends CBCGenericArmor implements
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs,
-			List par3List) {
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
 		par3List.add(new ItemStack(par1, 1, 0));
 		ItemStack chargedItem = new ItemStack(par1, 1, 0);
 		this.setItemCharge(chargedItem, maxCharge);

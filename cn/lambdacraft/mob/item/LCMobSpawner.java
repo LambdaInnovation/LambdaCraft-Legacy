@@ -13,17 +13,19 @@ public class LCMobSpawner extends CBCGenericItem {
 
 	protected Class<? extends Entity> entClass = EntitySnark.class;
 	
-	public LCMobSpawner(int par1) {
-		super(par1);
+	public LCMobSpawner() {
+		super();
 		this.setCreativeTab(CBCMod.cct);
-		setIAndU("snark");
+		setUnlocalizedName("snark");
+		setTextureName("lambdacraft:snark");
 	}
 	
-	public LCMobSpawner(int id, Class<? extends Entity> entityClass, String name) {
-		super(id);
+	public LCMobSpawner(Class<? extends Entity> entityClass, String name) {
+		super();
 		setCreativeTab(CBCMod.cct);
 		entClass = entityClass;
-		setIAndU(name);
+		setUnlocalizedName(name);
+		setTextureName("lambdacraft:" + name);
 	}
 
     /**

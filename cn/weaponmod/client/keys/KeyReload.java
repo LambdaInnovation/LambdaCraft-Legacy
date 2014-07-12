@@ -4,9 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import cn.liutils.api.client.register.IKeyProcess;
+import cn.weaponmod.WeaponMod;
 import cn.weaponmod.api.information.InformationBullet;
 import cn.weaponmod.api.weapon.WeaponGeneralBullet;
-import cn.weaponmod.network.NetDeathmatch;
+import cn.weaponmod.network.MessageDM;
 
 public class KeyReload implements IKeyProcess {
 
@@ -46,6 +47,6 @@ public class KeyReload implements IKeyProcess {
 			return;
 
 		if (wpn.onSetReload(is, player))
-			NetDeathmatch.sendModePacket((byte) stackInSlot, (byte) 1, (byte) 0);
+			WeaponMod.netHandler.sendToServer(new MessageDM((byte) stackInSlot, (byte) 1, (byte) 0));
 	}
 }

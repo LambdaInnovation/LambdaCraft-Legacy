@@ -14,12 +14,12 @@
  */
 package cn.lambdacraft.mob.item;
 
-import cn.lambdacraft.mob.entity.EntityBarnacle;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
+import cn.lambdacraft.mob.entity.EntityBarnacle;
 
 /**
  * @author WeAthFolD
@@ -30,18 +30,9 @@ public class ItemBarnaclePlacer extends LCMobSpawner {
 	/**
 	 * @param par1
 	 */
-	public ItemBarnaclePlacer(int par1) {
-		super(par1, EntityBarnacle.class, "barnacle");
-	}
-
-	/**
-	 * @param id
-	 * @param entityClass
-	 * @param name
-	 */
-	public ItemBarnaclePlacer(int id,
-			Class<? extends EntityLiving> entityClass, String name) {
-		super(id, entityClass, name);
+	public ItemBarnaclePlacer() {
+		super(EntityBarnacle.class, "barnacle");
+		setTextureName("egg0");
 	}
 	
 	@Override
@@ -57,7 +48,7 @@ public class ItemBarnaclePlacer extends LCMobSpawner {
 		if(world.isRemote)
 			return false;
 		if(side == 0) {
-			if(world.isBlockSolidOnSide(x, y, z, ForgeDirection.DOWN)) {
+			if(world.isSideSolid(x, y, z, ForgeDirection.DOWN)) {
 				EntityBarnacle barnacle = new EntityBarnacle(world, x, y, z);
 				world.spawnEntityInWorld(barnacle);
 				return true;
