@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import cn.lambdacraft.deathmatch.item.weapon.InformationEnergy;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Egon;
 import cn.lambdacraft.deathmatch.register.DMItems;
-import cn.weaponmod.events.ItemHelper;
+import cn.weaponmod.events.ItemControlHandler;
 
 /**
  * 进行Egon光束渲染的实用实体。
@@ -77,8 +77,8 @@ public class EntityEgonRay extends Entity {
 		InformationEnergy inf = ((Weapon_Egon) item.getItem()).getInformation(
 				item, worldObj);
 		if (inf == null|| 
-				!(thrower.getCurrentEquippedItem() != null && thrower.getCurrentEquippedItem().itemID == DMItems.weapon_egon.itemID && 
-				ItemHelper.getUsingTickLeft(thrower, true) > 0 && ((Weapon_Egon)item.getItem()).canShoot(thrower, item, true))) {
+				!(thrower.getCurrentEquippedItem() != null && thrower.getCurrentEquippedItem().getItem() == DMItems.weapon_egon && 
+				ItemControlHandler.getUsingTickLeft(thrower, true) > 0 && ((Weapon_Egon)item.getItem()).canShoot(thrower, item, true))) {
 			this.setDead();
 			return;
 		}

@@ -3,12 +3,13 @@
  */
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.api.hud.IHudTipProvider;
@@ -17,7 +18,7 @@ import cn.liutils.api.entity.EntityBullet;
 import cn.weaponmod.api.WMInformation;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.weapon.WeaponGeneral;
-import cn.weaponmod.events.ItemHelper;
+import cn.weaponmod.events.ItemControlHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -34,8 +35,8 @@ public class WeaponGeneralEnergy_LC extends WeaponGeneral implements IHudTipProv
 	 * @param par1
 	 * @param par2AmmoID
 	 */
-	public WeaponGeneralEnergy_LC(int par1, int par2AmmoID) {
-		super(par1, par2AmmoID);
+	public WeaponGeneralEnergy_LC(Item ammo) {
+		super(ammo);
 	}
 	
 	public WeaponGeneral setIAndU(String name) {
@@ -46,7 +47,7 @@ public class WeaponGeneralEnergy_LC extends WeaponGeneral implements IHudTipProv
 	
     @Override
 	@SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
+    public void registerIcons(IIconRegister par1IconRegister)
     {
         this.itemIcon = par1IconRegister.registerIcon("lambdacraft:" + iconName);
     }
@@ -59,7 +60,7 @@ public class WeaponGeneralEnergy_LC extends WeaponGeneral implements IHudTipProv
 			if(this.doesShoot(information, player, stack, left)) {
 				this.onEnergyWpnShoot(stack, world, player, information, left);
 			}
-			ItemHelper.setItemInUse(player, stack, this.getMaxItemUseDuration(stack), left); 
+			ItemControlHandler.setItemInUse(player, stack, this.getMaxItemUseDuration(stack), left); 
 		}
 
 		return;
@@ -270,7 +271,7 @@ public class WeaponGeneralEnergy_LC extends WeaponGeneral implements IHudTipProv
 				new IHudTip() {
 
 					@Override
-					public Icon getRenderingIcon(ItemStack itemStack,
+					public IIcon getRenderingIcon(ItemStack itemStack,
 							EntityPlayer player) {
 						return CBCItems.ammo_uranium.getIconFromDamage(0);
 					}
@@ -283,7 +284,7 @@ public class WeaponGeneralEnergy_LC extends WeaponGeneral implements IHudTipProv
 					@Override
 					public String getTip(ItemStack itemStack,
 							EntityPlayer player) {
-						return String.valueOf(WeaponHelper.getAmmoCapacity(CBCItems.ammo_uranium.itemID, player.inventory));
+						return String.valueOf(WeaponHelper.getAmmoCapacity(CBCItems.ammo_uranium, player.inventory));
 					}
 					
 				}

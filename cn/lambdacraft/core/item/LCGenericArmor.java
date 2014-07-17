@@ -17,34 +17,34 @@ package cn.lambdacraft.core.item;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * LambdaCraft通用物品类。
- * 
- * @author WeAthFolD, mkpoli
- * 
+ * 通用盔甲类。
  */
-public class CBCGenericItem extends Item {
+public class LCGenericArmor extends ItemArmor {
 
+	private String iconName = "";
 	protected String description;
 	protected boolean useDescription = false;
-	private String iconName = "";
 
 	/**
-	 * @param par1
+	 * @param id
+	 * @param mat
+	 * @param renderIndex
+	 * @param armorType
 	 */
-	public CBCGenericItem() {
-		super();
-		setCreativeTab(CBCMod.cctMisc);
+	public LCGenericArmor(ArmorMaterial mat, int renderIndex,
+			int armorType) {
+		super(mat, renderIndex, armorType);
+		setCreativeTab(LCMod.cct);
 	}
 
-	public CBCGenericItem setDescription(String d) {
+	public LCGenericArmor setDescription(String d) {
 		this.description = d;
 		useDescription = true;
 		return this;
@@ -57,10 +57,5 @@ public class CBCGenericItem extends Item {
 		if (useDescription)
 			par3List.add(description);
 	}
-	
-    public String getLocalizedName(ItemStack par1ItemStack)
-    {
-        String s = this.getUnlocalizedName(par1ItemStack);
-        return s == null ? "" : StatCollector.translateToLocal(s);
-    }
+
 }

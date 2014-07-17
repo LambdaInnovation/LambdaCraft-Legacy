@@ -24,9 +24,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.lambdacraft.core.energy.EnergyNet;
-import cn.lambdacraft.core.event.CBCEventListener;
+import cn.lambdacraft.core.event.LCEventListener;
 import cn.lambdacraft.core.network.MessageKeyUsing;
-import cn.lambdacraft.core.proxy.GeneralProps;
+import cn.lambdacraft.core.proxy.LCGeneralProps;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.register.LIGuiHandler;
 import cpw.mods.fml.common.Mod;
@@ -43,8 +43,8 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = "LambdaCraft", name = "LambdaCraft Core", version = CBCMod.VERSION)
-public class CBCMod {
+@Mod(modid = "LambdaCraft", name = "LambdaCraft Core", version = LCMod.VERSION)
+public class LCMod {
 
 	public static final String VERSION = "1.7.8pre";
 
@@ -72,8 +72,8 @@ public class CBCMod {
 	/**
 	 * Creative Tab.
 	 */
-	public static CreativeTabs cct = new CBCCreativeTab("CBCMod", 0),
-			cctMisc = new CBCCreativeTab("CBCMisc", 1);
+	public static CreativeTabs cct = new LCCreativeTab("LCMod", 0),
+			cctMisc = new LCCreativeTab("LCMisc", 1);
 
 	/**
 	 * 公用设置。
@@ -81,17 +81,17 @@ public class CBCMod {
 	public static Configuration config;
 
 	@Instance("LambdaCraft")
-	public static CBCMod instance;
+	public static LCMod instance;
 
 	/**
 	 * 加载代理。
 	 */
-	@SidedProxy(clientSide = "cn.lambdacraft.core.proxy.ClientProxy", serverSide = "cn.lambdacraft.core.proxy.Proxy")
-	public static cn.lambdacraft.core.proxy.Proxy proxy;
+	@SidedProxy(clientSide = "cn.lambdacraft.core.proxy.LCClientProxy", serverSide = "cn.lambdacraft.core.proxy.LCCommonProxy")
+	public static cn.lambdacraft.core.proxy.LCCommonProxy proxy;
 	
 	public static LIGuiHandler guiHandler = new LIGuiHandler();
 	
-	public static SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(GeneralProps.NET_CHANNEL);
+	public static SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(LCGeneralProps.NET_CHANNEL);
 	private static int nextNetID = 0;
 
 	/**
@@ -102,7 +102,7 @@ public class CBCMod {
 	@EventHandler()
 	public void preInit(FMLPreInitializationEvent event) {
 
-		log.info("Starting LambdaCraft " + CBCMod.VERSION);
+		log.info("Starting LambdaCraft " + LCMod.VERSION);
 		log.info("Copyright (c) Lambda Innovation, 2013");
 		log.info("http://www.lambdacraft.cn");
 		
@@ -111,7 +111,7 @@ public class CBCMod {
 		EnergyNet.initialize();
 		proxy.preInit();
 		
-		GeneralProps.loadProps(config);
+		LCGeneralProps.loadProps(config);
 		
 	}
 
@@ -124,11 +124,10 @@ public class CBCMod {
 	public void init(FMLInitializationEvent Init) {
 		// Blocks, Items, GUI Handler,Key Process.
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
-		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMod", "LambdaCraft");
-		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMisc", "LambdaCraft:Misc");
+		LanguageRegistry.instance().addStringLocalization("itemGroup.LCMod", "LambdaCraft");
+		LanguageRegistry.instance().addStringLocalization("itemGroup.LCMisc", "LambdaCraft:Misc");
 
 		netHandler.registerMessage(MessageKeyUsing.Handler.class, MessageKeyUsing.class, ++nextNetID, Side.SERVER);
-		MinecraftForge.EVENT_BUS.register(new CBCEventListener());
 		
 		proxy.init();
 	}

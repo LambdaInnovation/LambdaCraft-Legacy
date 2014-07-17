@@ -16,7 +16,7 @@ package cn.lambdacraft.mob.register;
 
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cn.lambdacraft.core.proxy.GeneralProps;
+import cn.lambdacraft.core.proxy.LCGeneralProps;
 import cn.lambdacraft.mob.block.BlockSentryRay;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cn.liutils.core.register.ConfigHandler;

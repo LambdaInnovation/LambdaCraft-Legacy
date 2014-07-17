@@ -18,13 +18,13 @@ import java.util.List;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
-import cn.lambdacraft.core.block.CBCTileEntity;
+import cn.lambdacraft.core.block.LCTileEntity;
 import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.recipe.RecipeCrafter;
 import cn.lambdacraft.crafting.recipe.RecipeRepair;
@@ -37,7 +37,7 @@ import cn.weaponmod.api.WeaponHelper;
  * 
  * @author WeAthFolD
  */
-public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
+public class TileWeaponCrafter extends LCTileEntity implements IInventory {
 
 	/**
 	 * 最大存储热量。
@@ -83,8 +83,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 		if (!isLoad) {
 			if (blockType == null)
 				return;
-			isAdvanced = this.blockType.blockID == CBCBlocks.weaponCrafter.blockID ? false
-					: true;
+			isAdvanced = !(this.blockType == CBCBlocks.weaponCrafter);
 			this.maxHeat = isAdvanced ? 7000 : 4000;
 			this.writeRecipeInfoToSlot();
 			isLoad = true;
@@ -142,8 +141,8 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 			}
 		}
 
-		if (++tickUpdate > 3)
-			this.onInventoryChanged();
+		//if (++tickUpdate > 3)
+		//	this.onInventoryChanged();
 		
 	}
 
@@ -213,13 +212,8 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 	}
 
 	@Override
-	public String getInvName() {
+	public String getInventoryName() {
 		return "lambdacraft:weaponcrafter";
-	}
-
-	@Override
-	public boolean isInvNameLocalized() {
-		return false;
 	}
 
 	@Override
@@ -232,15 +226,6 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
 				zCoord + 0.5) <= 64;
 	}
-
-	@Override
-	public void openChest() {
-	}
-
-	@Override
-	public void closeChest() {
-	}
-
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
@@ -266,7 +251,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 			byte count = nbt.getByte("count" + i);
 			if (id == 0)
 				continue;
-			ItemStack is = new ItemStack(id, count, damage);
+			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
 			inventory[i] = is;
 		}
 		this.page = nbt.getByte("page");
@@ -282,7 +267,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 		for (int i = 0; i < 20; i++) {
 			if (inventory[i] == null)
 				continue;
-			nbt.setShort("id" + i, (short) inventory[i].itemID);
+			nbt.setShort("id" + i, (short) Item.getIdFromItem(inventory[i].getItem()));
 			nbt.setByte("count" + i, (byte) inventory[i].stackSize);
 			nbt.setShort("damage" + i, (short) inventory[i].getItemDamage());
 		}
@@ -346,7 +331,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 			if (inventory[1].stackSize <= 1)
 				inventory[1] = null;
 			isBurning = true;
-			blockType.setLightValue(0.4F);
+			blockType.setLightLevel(0.4F);
 		}
 	}
 
@@ -374,7 +359,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 			return;
 		if (!(currentRecipe instanceof RecipeRepair)) {
 			if (inventory[0] != null) {
-				if (!(inventory[0].itemID == currentRecipe.output.itemID && inventory[0]
+				if (!(inventory[0].getItem() == currentRecipe.output.getItem() && inventory[0]
 						.isStackable()))
 					return;
 				if (inventory[0].stackSize >= inventory[0].getMaxStackSize()) {
@@ -417,8 +402,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 					.getItemDamage() : bulletCount;
 			bulletToConsume /= rs.scale;
 			damage = damage < 0 ? 0 : damage;
-			WeaponHelper.consumeInventoryItem(inventory, rs.inputB.itemID,
-					bulletToConsume, 2);
+			WeaponHelper.consumeInventoryItem(inventory, rs.inputB, bulletToConsume, 2);
 			inventory[slotWeapon] = null;
 			inventory[0] = new ItemStack(rs.inputA, 1, damage);
 		}
@@ -466,7 +450,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 			boolean flag = is != null;
 			if (flag) {
 				for (int j = 0; j < r.input.length; j++) {
-					if (r.input[j].itemID == is.itemID && r.input[j].getItemDamage() == is.getItemDamage()) {
+					if (r.input[j].getItem() == is.getItem() && r.input[j].getItemDamage() == is.getItemDamage()) {
 						if (left[j] < is.stackSize)
 							left[j] = 0;
 						else
@@ -497,7 +481,7 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 			for (int j = 0; j < r.input.length; j++) {
 				boolean flag = inventory[i] != null;
 				//both id and damage
-				if (flag && inventory[i].itemID == r.input[j].itemID && (inventory[i].getItemDamage() == r.input[j].getItemDamage())) {
+				if (flag && inventory[i].getItem() == r.input[j].getItem() && (inventory[i].getItemDamage() == r.input[j].getItemDamage())) {
 					if (inventory[i].stackSize > left[j]) {
 						inventory[i].splitStack(left[j]);
 						left[j] = 0;
@@ -523,6 +507,24 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 			return RecipeWeapons.getRecipe(page, factor + i);
 		else
 			return RecipeWeapons.getAdvRecipe(page, factor + i);
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void openInventory() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeInventory() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

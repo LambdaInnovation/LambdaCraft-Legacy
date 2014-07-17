@@ -1,18 +1,18 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.ISpecialCrosshair;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityBulletEgon;
 import cn.lambdacraft.deathmatch.entity.fx.EntityEgonRay;
 import cn.weaponmod.api.WeaponHelper;
-import cn.weaponmod.events.ItemHelper;
+import cn.weaponmod.events.ItemControlHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -27,11 +27,11 @@ public class Weapon_Egon extends WeaponGeneralEnergy_LC implements ISpecialCross
 	public static String SND_WINDUP = "lambdacraft:weapons.egon_windup",
 			SND_RUN = "lambdacraft:weapons.egon_run", SND_OFF = "lambdacraft:weapons.egon_off";
 
-	public Icon iconEquipped;
+	public IIcon iconEquipped;
 
-	public Weapon_Egon(int par1) {
-		super(par1, CBCItems.ammo_uranium.itemID);
-		setCreativeTab(CBCMod.cct);
+	public Weapon_Egon() {
+		super(CBCItems.ammo_uranium);
+		setCreativeTab(LCMod.cct);
 		setUnlocalizedName("weapon_egon");
 		setIAndU("weapon_egon");
 		setJamTime(20);
@@ -40,7 +40,7 @@ public class Weapon_Egon extends WeaponGeneralEnergy_LC implements ISpecialCross
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister reg) {
+	public void registerIcons(IIconRegister reg) {
 		super.registerIcons(reg);
 		iconEquipped = reg.registerIcon("lambdacraft:weapon_egon0");
 	}
@@ -81,7 +81,7 @@ public class Weapon_Egon extends WeaponGeneralEnergy_LC implements ISpecialCross
 	public void onItemClick(World world, EntityPlayer player, ItemStack stack, boolean left) {
 		super.onItemClick(world, player, stack, left);
 		InformationEnergy inf = loadInformation(stack, player);
-		if (ItemHelper.getUsingTickLeft(player, left) > 0 && canShoot(player, stack, left)) {
+		if (ItemControlHandler.getUsingTickLeft(player, left) > 0 && canShoot(player, stack, left)) {
 			if (world.isRemote)
 				world.spawnEntityInWorld(new EntityEgonRay(world,
 						player, stack));

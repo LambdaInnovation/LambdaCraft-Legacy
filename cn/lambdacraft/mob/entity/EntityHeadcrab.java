@@ -17,7 +17,7 @@ package cn.lambdacraft.mob.entity;
 import java.util.List;
 
 import cn.lambdacraft.api.entity.IEntityLink;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.lambdacraft.mob.util.MobHelper;
 import cn.liutils.api.entity.LIEntityMob;
@@ -352,6 +352,6 @@ public class EntityHeadcrab extends LIEntityMob implements
 
 	@Override
 	public ResourceLocation getTexture() {
-		return ClientProps.HEADCRAB_MOB_PATH;
+		return LCClientProps.HEADCRAB_MOB_PATH;
 	}
 }

@@ -19,6 +19,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
@@ -52,13 +53,13 @@ public class EntityBulletEgon extends EntityBullet {
 			e.attackEntityFrom(DamageSource.causeMobDamage(getThrower()), damage);
 		}
 		if(rand.nextFloat() < 0.1)  {
-			int blockID = worldObj.getBlockId(result.blockX, result.blockY, result.blockZ);
+			Block blockID = worldObj.getBlock(result.blockX, result.blockY, result.blockZ);
 			//检查以防破坏基岩等重要方块
-			if(Block.blocksList[blockID] != null) {
-				float hardness = Block.blocksList[blockID].getBlockHardness(worldObj, result.blockX, result.blockY, result.blockZ);
-				if(hardness > 0.0F && hardness < 5.0F)
-					worldObj.destroyBlock(result.blockX, result.blockY, result.blockZ, false);
-			} else worldObj.setBlock(result.blockX, result.blockY, result.blockZ, 0, 0, 3);
+			if(blockID != null && blockID != Blocks.air) {
+				float hardness = blockID.getBlockHardness(worldObj, result.blockX, result.blockY, result.blockZ);
+				//if(hardness > 0.0F && hardness < 5.0F) TODO:orz
+				//	worldObj.destroyBlock(result.blockX, result.blockY, result.blockZ, false);
+			} else worldObj.setBlock(result.blockX, result.blockY, result.blockZ, Blocks.air, 0, 3);
 		}
 		this.setDead();
 	}

@@ -18,6 +18,7 @@ import cn.lambdacraft.api.energy.item.ICustomEnItem;
 import cn.lambdacraft.api.energy.item.IEnItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -37,10 +38,6 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 	 */
 	public TileGeneratorSolar() {
 		super(1, 10000);
-	}
-
-	@Override
-	public void closeChest() {
 	}
 
 	@Override
@@ -65,7 +62,7 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 	}
 
 	@Override
-	public String getInvName() {
+	public String getInventoryName() {
 		return "cbc.tile.genfire";
 	}
 
@@ -90,11 +87,6 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 	}
 
 	@Override
-	public boolean isInvNameLocalized() {
-		return false;
-	}
-
-	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		if (i == 0)
 			return true;
@@ -106,10 +98,6 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
 				zCoord + 0.5) <= 64;
-	}
-
-	@Override
-	public void openChest() {
 	}
 
 	/**
@@ -124,7 +112,7 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 			byte count = nbt.getByte("count" + i);
 			if (id == 0)
 				continue;
-			ItemStack is = new ItemStack(id, count, damage);
+			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
 			slots[i] = is;
 		}
 	}
@@ -166,10 +154,28 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 		for (int i = 0; i < slots.length; i++) {
 			if (slots[i] == null)
 				continue;
-			nbt.setShort("id" + i, (short) slots[i].itemID);
+			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
 			nbt.setByte("count" + i, (byte) slots[i].stackSize);
 			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
 		}
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void openInventory() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeInventory() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

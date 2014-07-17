@@ -16,19 +16,18 @@ package cn.lambdacraft.crafting.entity;
 
 import java.util.List;
 
-import cn.lambdacraft.core.proxy.ClientProps;
-import cn.liutils.api.util.Color4I;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.liutils.api.util.Color4I;
 
 /**
  * @author Mkpoli
@@ -64,7 +63,7 @@ public class EntitySpray extends Entity {
 		this.hanging_direction = direction;
 		this.title_id = title_id;
 
-		color = new Color4I(ClientProps.sprayR, ClientProps.sprayG, ClientProps.sprayB);
+		color = new Color4I(LCClientProps.sprayR, LCClientProps.sprayG, LCClientProps.sprayB);
 		
 		this.save_params();
 		this.initParams();
@@ -305,18 +304,18 @@ public class EntitySpray extends Entity {
 					Material material, material2;
 
 					if (direction == 1 || direction == 3) {
-						material = this.worldObj.getBlockMaterial(this.block_pos_x, y, z);
-						material2 = this.worldObj.getBlockMaterial(this.block_pos_x + 1, y, z);
+						material = this.worldObj.getBlock(this.block_pos_x, y, z).getMaterial();
+						material2 = this.worldObj.getBlock(this.block_pos_x + 1, y, z).getMaterial();
 					} else {
-						material = this.worldObj.getBlockMaterial(x, y, this.block_pos_z);
-						material2 = this.worldObj.getBlockMaterial(x , y, this.block_pos_z + 1);
+						material = this.worldObj.getBlock(x, y, this.block_pos_z).getMaterial();
+						material2 = this.worldObj.getBlock(x , y, this.block_pos_z + 1).getMaterial();
 					}
 					if (!material.isSolid()) {
-						player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.nospace")));
+						player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.nospace")));
 						return false;
 					}
 					if (material2.isLiquid()) {
-						player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.haswater")));
+						player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.haswater")));
 						return false;
 			}
 		} else {
@@ -325,18 +324,18 @@ public class EntitySpray extends Entity {
 					Material material, material2;
 
 					if (direction == 1 || direction == 3) {
-						material = this.worldObj.getBlockMaterial(this.block_pos_x, y + j, z + i);
-						material2 = this.worldObj.getBlockMaterial(this.block_pos_x + 1, y + j, z + i);
+						material = this.worldObj.getBlock(this.block_pos_x, y + j, z + i).getMaterial();
+						material2 = this.worldObj.getBlock(this.block_pos_x + 1, y + j, z + i).getMaterial();
 					} else {
-						material = this.worldObj.getBlockMaterial(x + i, y + j, this.block_pos_z);
-						material2 = this.worldObj.getBlockMaterial(x + i, y + j, this.block_pos_z + 1);
+						material = this.worldObj.getBlock(x + i, y + j, this.block_pos_z).getMaterial();
+						material2 = this.worldObj.getBlock(x + i, y + j, this.block_pos_z + 1).getMaterial();
 					}
 					if (!material.isSolid()) {
-						player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.nospace")));
+						player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.nospace")));
 						return false;
 					}
 					if (material2.isLiquid()) {
-						player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.haswater")));
+						player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.haswater")));
 						return false;
 					}
 				}
@@ -351,7 +350,7 @@ public class EntitySpray extends Entity {
 				continue;
 			if (entity instanceof EntitySpray && ((EntitySpray) entity).block_pos_x == this.block_pos_x && ((EntitySpray) entity).block_pos_y == this.block_pos_y && ((EntitySpray) entity).block_pos_z == this.block_pos_z)
 				continue;
-			player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.beenblocked") + entity.getClass().getName()));
+			player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.beenblocked") + entity.getClass().getName()));
 			return false;
 		}
 

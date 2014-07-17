@@ -16,13 +16,11 @@ package cn.lambdacraft.deathmatch.proxy;
 
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.MinecraftForge;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.block.TileArmorCharger;
 import cn.lambdacraft.deathmatch.block.TileHealthCharger;
 import cn.lambdacraft.deathmatch.block.TileTripmine;
-import cn.lambdacraft.deathmatch.client.DMClientEventHandler;
 import cn.lambdacraft.deathmatch.client.model.Model357;
 import cn.lambdacraft.deathmatch.client.model.ModelAR;
 import cn.lambdacraft.deathmatch.client.model.ModelBattery;
@@ -60,7 +58,7 @@ import cn.lambdacraft.deathmatch.entity.fx.EntityEgonRay;
 import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRay;
 import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRayColored;
 import cn.lambdacraft.deathmatch.entity.fx.GaussParticleFX;
-import cn.lambdacraft.deathmatch.flashlight.ClientTickHandler;
+import cn.lambdacraft.deathmatch.flashlight.FlashTickHandler;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.client.LIClientRegistry;
@@ -70,14 +68,11 @@ import cn.liutils.api.client.render.RenderIcon;
 import cn.liutils.api.client.render.RenderModel;
 import cn.liutils.api.client.render.RenderModelItem;
 import cn.liutils.api.client.render.RenderModelProjectile;
-import cn.liutils.core.client.register.LISoundRegistry;
 import cn.weaponmod.api.client.render.RenderBulletWeapon;
 import cn.weaponmod.api.client.render.RenderModelBulletWeapon;
 import cn.weaponmod.api.weapon.WeaponGeneralBullet;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 /**
  * @author WeAthFolD
@@ -85,7 +80,7 @@ import cpw.mods.fml.relauncher.Side;
  */
 public class ClientProxy extends Proxy {
 
-	public static ClientTickHandler cth;
+	public static FlashTickHandler fth;
 
 	public final static String SOUND_WEAPONS[] = {
 
@@ -116,40 +111,35 @@ public class ClientProxy extends Proxy {
 	
 	@Override
 	public void preInit() {
-		for (String s : SOUND_WEAPONS)
-			LISoundRegistry.addSoundPath("lambdacraft", "weapons/" + s);
-		for (String s : SND_ENTITIES)
-			LISoundRegistry.addSoundPath("lambdacraft", "entities/" + s);
-		for (String s : SND_HEV)
-			LISoundRegistry.addSoundPath("lambdacraft", "hev/" + s);
-		LISoundRegistry.addSoundWithVariety("lambdacraft", "weapons/electro", 3);
-		MinecraftForge.EVENT_BUS.register(new DMClientEventHandler());
+		super.preInit();
+		fth = new FlashTickHandler();
 	}
 	
 	@Override
 	public void init() {
-
+		super.init();
+	
 		RenderingRegistry.registerEntityRenderingHandler(EntityHGrenade.class, new RenderSnowball(DMItems.weapon_hgrenade));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGaussRay.class, new RenderGaussRay(false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGaussRayColored.class, new RenderGaussRay(true));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySatchel.class,new RenderSatchel());
-		RenderingRegistry.registerEntityRenderingHandler(EntityARGrenade.class,new RenderModelProjectile(new ModelGrenade(), ClientProps.AR_GRENADE_PATH));
+		RenderingRegistry.registerEntityRenderingHandler(EntityARGrenade.class,new RenderModelProjectile(new ModelGrenade(), LCClientProps.AR_GRENADE_PATH));
 		RenderingRegistry.registerEntityRenderingHandler(EntityEgonRay.class,	new RenderEgonRay());
-		RenderingRegistry.registerEntityRenderingHandler(EntityRocket.class,new RenderModelProjectile(new ModelRocket(), ClientProps.RPG_ROCKET_PATH));
-		RenderingRegistry.registerEntityRenderingHandler(EntityCrossbowArrow.class, new RenderCrossedProjectile(0.6,0.12, ClientProps.CROSSBOW_BOW_PATH));
-		RenderingRegistry.registerEntityRenderingHandler(EntityCrossbowStill.class, new RenderCrossedProjectile(0.6,0.12, ClientProps.CROSSBOW_BOW_PATH));
-		RenderingRegistry.registerEntityRenderingHandler(EntityRPGDot.class,new RenderIcon(ClientProps.RED_DOT_PATH).setBlend(0.8F).setHasLight(false));
+		RenderingRegistry.registerEntityRenderingHandler(EntityRocket.class,new RenderModelProjectile(new ModelRocket(), LCClientProps.RPG_ROCKET_PATH));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCrossbowArrow.class, new RenderCrossedProjectile(0.6,0.12, LCClientProps.CROSSBOW_BOW_PATH));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCrossbowStill.class, new RenderCrossedProjectile(0.6,0.12, LCClientProps.CROSSBOW_BOW_PATH));
+		RenderingRegistry.registerEntityRenderingHandler(EntityRPGDot.class,new RenderIcon(LCClientProps.RED_DOT_PATH).setBlend(0.8F).setHasLight(false));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBulletGauss.class, new RenderEmpty());
 		RenderingRegistry.registerEntityRenderingHandler(EntityBulletGaussSec.class, new RenderEmpty());
 		RenderingRegistry.registerEntityRenderingHandler(EntityHornet.class, new RenderHornet());
-		RenderingRegistry.registerEntityRenderingHandler(EntityBattery.class,new RenderModel(new ModelBattery(), ClientProps.BATTERY_PATH,0.5F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityMedkit.class,new RenderModel(new ModelMedkit(), ClientProps.MEDKIT_ENT_PATH,1.0F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityBattery.class,new RenderModel(new ModelBattery(), LCClientProps.BATTERY_PATH,0.5F));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMedkit.class,new RenderModel(new ModelMedkit(), LCClientProps.MEDKIT_ENT_PATH,1.0F));
 		RenderingRegistry.registerEntityRenderingHandler(GaussParticleFX.class, new RenderGlow());
-		RenderModelBulletWeapon handgun_render = new RenderModelBulletWeapon(new ModelHandgun(), DMItems.weapon_9mmhandgun, ClientProps.HANDGUN_MDL_PATH, 
-				ClientProps.MUZZLEFLASH);
-		RenderModelBulletWeapon pyt_render = new RenderModelBulletWeapon(new Model357(), DMItems.weapon_357, ClientProps.PYTHON_MDL_PATH, ClientProps.MUZZLEFLASH);
-		RenderModelBulletWeapon ar_render = new RenderModelBulletWeapon(new ModelAR(), DMItems.weapon_9mmAR, ClientProps.NMMAR_MDL_PATH, ClientProps.MUZZLEFLASH2);
-		RenderModelItem uranium_render = new RenderModelItem(new ModelUranium(), ClientProps.URANIUM_MDL_PATH);
+		RenderModelBulletWeapon handgun_render = new RenderModelBulletWeapon(new ModelHandgun(), DMItems.weapon_9mmhandgun, LCClientProps.HANDGUN_MDL_PATH, 
+				LCClientProps.MUZZLEFLASH);
+		RenderModelBulletWeapon pyt_render = new RenderModelBulletWeapon(new Model357(), DMItems.weapon_357, LCClientProps.PYTHON_MDL_PATH, LCClientProps.MUZZLEFLASH);
+		RenderModelBulletWeapon ar_render = new RenderModelBulletWeapon(new ModelAR(), DMItems.weapon_9mmAR, LCClientProps.NMMAR_MDL_PATH, LCClientProps.MUZZLEFLASH2);
+		RenderModelItem uranium_render = new RenderModelItem(new ModelUranium(), LCClientProps.URANIUM_MDL_PATH);
 		pyt_render.setMuzzleflashOffset(0.484F, -0.07F, 0.0F).setRotation(0F, 180F, 0F).setOffset(0.002F, 0.402F, -0.314F).setRotation(0F, 181.13414F, 0F).setEquipOffset(1.06F, -0.278F, 0.016F)
 			.setInventorySpin(false).setScale(1.212F).setInvOffset(-2.45F, 3.04F).setInvScale(0.912F).setInvRotation(-35.796F, -94.770F, -3.452F); //爱死debugger了
 		handgun_render.setMuzzleflashOffset(0.294F, -0.19F, 0.0620F).setInventorySpin(false).setRotation(0F, 180F, 0F).setOffset(0.0F, 0.11F, -0.30F).setEquipOffset(0.91F, -0.12F, 0.132F)
@@ -158,21 +148,19 @@ public class ClientProxy extends Proxy {
 			.setScale(1.352F).setRotation(0F, -177.768F, 0F).setInventorySpin(false).setInvOffset(-0.408F, 2.75F).setInvScale(0.908F).setInvRotation(-42.78F, -65.428F, -11F);
 		uranium_render.setInventorySpin(false).setOffset(0F, -0.14F, 0F).setEquipRotation(-130.276F, -42.034F, -101.67F).setEquipOffset(0.562F, 0.118F, -0.248F).setRotation(0F, 0F, 0F)
 			.setInvRotation(0F, -45F, -26F).setInvOffset(0.01F, 2.318F).setScale(1.05F).setEntityItemRotation(0F, 0F, 0F).setInvScale(1.424F);
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_crossbow.itemID, new RenderCrossbow());
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_egon.itemID,new RenderEgon());
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_gauss.itemID,new RenderGauss());
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_9mmhandgun.itemID, handgun_render);
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_357.itemID, pyt_render);
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_shotgun.itemID,new RenderBulletWeapon((WeaponGeneralBullet) DMItems.weapon_shotgun,0.08F, ClientProps.MUZZLEFLASH3));
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_9mmAR.itemID, ar_render);
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_RPG.itemID, new RenderBulletWeapon(DMItems.weapon_RPG, 0.15F, ClientProps.MUZZLEFLASH).setReloadStyle(1));
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_crowbar_el.itemID, new RenderItemElCrowbar());
-		MinecraftForgeClient.registerItemRenderer(CBCItems.ammo_uranium.itemID, uranium_render);
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_crossbow, new RenderCrossbow());
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_egon,new RenderEgon());
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_gauss,new RenderGauss());
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_9mmhandgun, handgun_render);
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_357, pyt_render);
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_shotgun,new RenderBulletWeapon((WeaponGeneralBullet) DMItems.weapon_shotgun,0.08F, LCClientProps.MUZZLEFLASH3));
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_9mmAR, ar_render);
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_RPG, new RenderBulletWeapon(DMItems.weapon_RPG, 0.15F, LCClientProps.MUZZLEFLASH).setReloadStyle(1));
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_crowbar_el, new RenderItemElCrowbar());
+		MinecraftForgeClient.registerItemRenderer(CBCItems.ammo_uranium, uranium_render);
 		LIClientRegistry.addPlayerRenderingHelper(new RenderHelperEgon());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileTripmine.class,new RenderTileTripmine(DMBlocks.blockTripmine));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileArmorCharger.class,new RenderTileCharger(DMBlocks.armorCharger));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHealthCharger.class,new RenderTileHeCharger(DMBlocks.healthCharger));
-		cth = new ClientTickHandler();
-		TickRegistry.registerTickHandler(cth, Side.CLIENT);
 	}
 }

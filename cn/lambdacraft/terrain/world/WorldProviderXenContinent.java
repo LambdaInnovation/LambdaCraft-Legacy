@@ -84,9 +84,6 @@ public class WorldProviderXenContinent extends WorldProvider {
     }
 	
     @Override
-	public void toggleRain(){}
-    
-    @Override
 	public void updateWeather(){}
     
     @Override

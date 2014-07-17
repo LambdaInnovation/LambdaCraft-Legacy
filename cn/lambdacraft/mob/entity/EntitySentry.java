@@ -27,7 +27,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.entity.IEntityLink;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.entity.LIEntityMob;
@@ -355,7 +355,7 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
 
 	@Override
 	public ResourceLocation getTexture() {
-		return ClientProps.TURRET_PATH;
+		return LCClientProps.TURRET_PATH;
 	}
 
 }

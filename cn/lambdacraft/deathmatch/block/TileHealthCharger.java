@@ -21,8 +21,8 @@ import java.util.Set;
 import cn.lambdacraft.api.LCDirection;
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
 import cn.lambdacraft.core.block.TileElectricStorage;
-
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -120,17 +120,17 @@ public class TileHealthCharger extends TileElectricStorage implements
 		 */
 		if (currentEnergy < ENERGY_MAX
 				&& !(!this.isRSActivated && this.getCurrentBehavior() == EnumBehavior.RECEIVEONLY)) {
-			ItemStack sl = slots[2];
-			if (sl != null && sl.itemID == Item.redstone.itemID) {
+			ItemStack stack = slots[2];
+			if (stack != null && stack.getItem() == Items.redstone) {
 				if (energyReq > 500) {
 					this.decrStackSize(2, 1);
 				}
 				currentEnergy += 500;
-			} else if (sl != null && sl.getItem() instanceof ICustomEnItem) {
-				ICustomEnItem item = (ICustomEnItem) sl.getItem();
-				if (item.canProvideEnergy(sl)) {
+			} else if (stack != null && stack.getItem() instanceof ICustomEnItem) {
+				ICustomEnItem item = (ICustomEnItem) stack.getItem();
+				if (item.canProvideEnergy(stack)) {
 					int cn = energyReq < 128 ? energyReq : 128;
-					cn = item.discharge(sl, cn, 2, false, false);
+					cn = item.discharge(stack, cn, 2, false, false);
 					currentEnergy += cn;
 				}
 			}
@@ -156,9 +156,9 @@ public class TileHealthCharger extends TileElectricStorage implements
 
 		}
 
-		if (slots[0] != null && slots[0].itemID == Item.potion.itemID) {
+		if (slots[0] != null && slots[0].getItem() == Items.potionitem) {
 			int dmg = slots[0].getItemDamage();
-			List<PotionEffect> list = Item.potion.getEffects(dmg);
+			List<PotionEffect> list = Items.potionitem.getEffects(dmg);
 			PotionEffect effect = list.get(0);
 			if (mainEff < HEALTH_MAX) {
 				if (effect.getPotionID() == Potion.heal.getId()) {
@@ -199,10 +199,10 @@ public class TileHealthCharger extends TileElectricStorage implements
 				mainEff = HEALTH_MAX;
 		} else prgAddMain = 0;
 
-		if (slots[1] != null && slots[1].itemID == Item.potion.itemID) {
+		if (slots[1] != null && slots[1].getItem() == Items.potionitem) {
 
 			int dmg = slots[1].getItemDamage();
-			List<PotionEffect> list = Item.potion.getEffects(dmg);
+			List<PotionEffect> list = Items.potionitem.getEffects(dmg);
 			PotionEffect effect = list.get(0);
 			if (TileHealthCharger.availableIds.contains(effect.getPotionID())
 					&& sideEff < EFFECT_MAX) {
@@ -241,8 +241,8 @@ public class TileHealthCharger extends TileElectricStorage implements
 			PotionEffect eff = charger
 					.getActivePotionEffect(Potion.potionTypes[sideEffectId]);
 			if (eff != null) {
-				eff.duration += amt;
-				charger.addPotionEffect(eff);
+				int add = eff.getDuration();
+				charger.addPotionEffect(new PotionEffect(sideEffectId, amt + add, 0));
 			} else
 				charger.addPotionEffect(new PotionEffect(sideEffectId, amt, 0));
 		}
@@ -289,13 +289,8 @@ public class TileHealthCharger extends TileElectricStorage implements
 	}
 
 	@Override
-	public String getInvName() {
+	public String getInventoryName() {
 		return "armorcharger";
-	}
-
-	@Override
-	public boolean isInvNameLocalized() {
-		return true;
 	}
 
 	@Override
@@ -307,14 +302,6 @@ public class TileHealthCharger extends TileElectricStorage implements
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
 				zCoord + 0.5) <= 64;
-	}
-
-	@Override
-	public void openChest() {
-	}
-
-	@Override
-	public void closeChest() {
 	}
 
 	@Override
@@ -336,7 +323,7 @@ public class TileHealthCharger extends TileElectricStorage implements
 			byte count = nbt.getByte("count" + i);
 			if (id == 0)
 				continue;
-			ItemStack is = new ItemStack(id, count, damage);
+			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
 			slots[i] = is;
 		}
 		currentEnergy = nbt.getInteger("energy");
@@ -356,7 +343,7 @@ public class TileHealthCharger extends TileElectricStorage implements
 		for (int i = 0; i < slots.length; i++) {
 			if (slots[i] == null)
 				continue;
-			nbt.setShort("id" + i, (short) slots[i].itemID);
+			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
 			nbt.setByte("count" + i, (byte) slots[i].stackSize);
 			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
 		}
@@ -394,5 +381,16 @@ public class TileHealthCharger extends TileElectricStorage implements
 	public int getMaxSafeInput() {
 		return 32;
 	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return true;
+	}
+
+	@Override
+	public void openInventory() {}
+
+	@Override
+	public void closeInventory() {}
 
 }

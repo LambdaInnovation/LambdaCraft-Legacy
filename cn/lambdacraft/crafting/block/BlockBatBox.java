@@ -14,21 +14,21 @@
  */
 package cn.lambdacraft.crafting.block;
 
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.block.BlockElectricalBase;
-import cn.lambdacraft.core.proxy.GeneralProps;
-import cn.lambdacraft.crafting.block.tile.TileBatBox;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.block.BlockElectricalBase;
+import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.crafting.block.tile.TileBatBox;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -36,7 +36,7 @@ import net.minecraft.world.World;
  */
 public class BlockBatBox extends BlockElectricalBase {
 
-	public Icon iconSide, iconTop, iconBottom, iconMain;
+	public IIcon iconSide, iconTop, iconBottom, iconMain;
 
 	private final int type;
 
@@ -44,11 +44,11 @@ public class BlockBatBox extends BlockElectricalBase {
 	 * @param par1
 	 * @param mat
 	 */
-	public BlockBatBox(int par1, int typ) {
-		super(par1, Material.rock);
-		this.setUnlocalizedName("batbox" + typ);
+	public BlockBatBox(int typ) {
+		super(Material.rock);
+		this.setBlockName("batbox" + typ);
 		type = typ;
-		this.setGuiId(GeneralProps.GUI_ID_BATBOX);
+		this.setGuiId(LCGeneralProps.GUI_ID_BATBOX);
 		if (type != 0 && type != 1)
 			throw new RuntimeException();
 
@@ -57,14 +57,14 @@ public class BlockBatBox extends BlockElectricalBase {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int side, float what, float these, float are) {
-		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (player.isSneaking()) {
 			world.setBlockMetadataWithNotify(x, y, z, side, 2);
 			return true;
 		}
 		if (guiId == -1 || tileEntity == null)
 			return false;
-		player.openGui(CBCMod.instance, guiId, world, x, y, z);
+		player.openGui(LCMod.instance, guiId, world, x, y, z);
 		return true;
 	}
 
@@ -99,13 +99,13 @@ public class BlockBatBox extends BlockElectricalBase {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int v) {
 		return (type == 1 ? new TileBatBox.TileBoxLarge()
 				: new TileBatBox.TileBoxSmall());
 	}
 
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerBlockIcons(IIconRegister par1IconRegister) {
 		if (type == 0) {
 			iconSide = par1IconRegister.registerIcon("lambdacraft:batbox_side");
 			iconTop = par1IconRegister.registerIcon("lambdacraft:batbox_top_s");
@@ -122,7 +122,7 @@ public class BlockBatBox extends BlockElectricalBase {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public Icon getIcon(int par1, int par2) {
+	public IIcon getIcon(int par1, int par2) {
 		if (par1 == par2)
 			return iconMain;
 		if (par1 < 1)

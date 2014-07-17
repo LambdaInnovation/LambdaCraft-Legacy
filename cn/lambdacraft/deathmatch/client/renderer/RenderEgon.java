@@ -1,7 +1,7 @@
 package cn.lambdacraft.deathmatch.client.renderer;
 
 import net.minecraft.client.renderer.Tessellator;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.deathmatch.client.model.ModelEgonHead;
 import cn.liutils.api.client.render.RenderModelItem;
 
@@ -11,7 +11,7 @@ import cn.liutils.api.client.render.RenderModelItem;
 public class RenderEgon extends RenderModelItem {
 
 	public RenderEgon() {
-		super(new ModelEgonHead(), ClientProps.EGON_HEAD_PATH);
+		super(new ModelEgonHead(), LCClientProps.EGON_HEAD_PATH);
 		this.renderInventory = false;
 		this.setRotation(0F, 179.35F, 0F);
 		this.inventorySpin = false;

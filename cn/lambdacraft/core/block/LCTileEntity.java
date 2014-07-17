@@ -14,17 +14,17 @@
  */
 package cn.lambdacraft.core.block;
 
-import cn.lambdacraft.core.proxy.GeneralProps;
+import cn.lambdacraft.core.proxy.LCGeneralProps;
 import net.minecraft.tileentity.TileEntity;
 
 /**
  * @author WeAthFolD
  * 
  */
-public abstract class CBCTileEntity extends TileEntity {
+public abstract class LCTileEntity extends TileEntity {
 
 	protected int lastTick;
-	private int updateFreq = GeneralProps.updateRate;
+	private int updateFreq = LCGeneralProps.updateRate;
 
 	@Override
 	public boolean canUpdate() {

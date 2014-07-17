@@ -21,6 +21,7 @@ import cn.lambdacraft.core.util.EnergyUtils;
 import cn.lambdacraft.deathmatch.item.ItemMedkit;
 import cn.lambdacraft.deathmatch.item.ItemMedkit.EnumAddingType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPotion;
@@ -118,12 +119,12 @@ public class TileMedkitFiller extends TileElectricStorage implements IInventory 
 	private void addEffect(int slot) {
 		EnumAddingType type = EnumAddingType.NONE;
 		if(slots[4] != null) {
-			if(slots[4].itemID == Item.glowstone.itemID) {
+			if(slots[4].getItem() == Items.glowstone_dust) {
 				type = EnumAddingType.EFFECT;
 				slots[4].stackSize--;
 				if(slots[4].stackSize <= 0)
 					slots[4] = null;
-			} else if (slots[4].itemID == Item.redstone.itemID) {
+			} else if (slots[4].getItem() == Items.redstone) {
 				type = EnumAddingType.DURATION;
 				slots[4].stackSize--;
 				if(slots[4].stackSize <= 0)
@@ -185,13 +186,8 @@ public class TileMedkitFiller extends TileElectricStorage implements IInventory 
 	}
 
 	@Override
-	public String getInvName() {
+	public String getInventoryName() {
 		return "medfiller";
-	}
-
-	@Override
-	public boolean isInvNameLocalized() {
-		return true;
 	}
 
 	@Override
@@ -204,15 +200,6 @@ public class TileMedkitFiller extends TileElectricStorage implements IInventory 
 		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
 				zCoord + 0.5) <= 64;
 	}
-
-	@Override
-	public void openChest() {
-	}
-
-	@Override
-	public void closeChest() {
-	}
-
 	/**
 	 * Reads a tile entity from NBT.
 	 */
@@ -225,7 +212,7 @@ public class TileMedkitFiller extends TileElectricStorage implements IInventory 
 			byte count = nbt.getByte("count" + i);
 			if (id == 0)
 				continue;
-			ItemStack is = new ItemStack(id, count, damage);
+			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
 			slots[i] = is;
 		}
 	}
@@ -239,7 +226,7 @@ public class TileMedkitFiller extends TileElectricStorage implements IInventory 
 		for (int i = 0; i < slots.length; i++) {
 			if (slots[i] == null)
 				continue;
-			nbt.setShort("id" + i, (short) slots[i].itemID);
+			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
 			nbt.setByte("count" + i, (byte) slots[i].stackSize);
 			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
 		}
@@ -255,6 +242,19 @@ public class TileMedkitFiller extends TileElectricStorage implements IInventory 
 	@Override
 	public int getMaxSafeInput() {
 		return 32;
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return true;
+	}
+
+	@Override
+	public void openInventory() {
+	}
+
+	@Override
+	public void closeInventory() {
 	}
 
 

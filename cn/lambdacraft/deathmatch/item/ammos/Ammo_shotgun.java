@@ -1,12 +1,12 @@
 package cn.lambdacraft.deathmatch.item.ammos;
 
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 
 public class Ammo_shotgun extends ItemAmmo {
 
-	public Ammo_shotgun(int par1) {
-		super(par1);
-		setCreativeTab(CBCMod.cct);
+	public Ammo_shotgun() {
+		super();
+		setCreativeTab(LCMod.cct);
 		setMaxStackSize(64);
 		setIAndU("ammo_shotgun");
 	}

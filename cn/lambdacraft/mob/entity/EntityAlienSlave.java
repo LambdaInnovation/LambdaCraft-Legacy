@@ -30,7 +30,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.BlockPos;
@@ -265,7 +265,7 @@ public class EntityAlienSlave extends LIEntityMob {
 
 	@Override
 	public ResourceLocation getTexture() {
-		return ClientProps.VORTIGAUNT_PATH;
+		return LCClientProps.VORTIGAUNT_PATH;
 	}
 
 

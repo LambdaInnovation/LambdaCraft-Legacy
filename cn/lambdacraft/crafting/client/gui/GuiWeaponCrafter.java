@@ -20,11 +20,12 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.block.container.ContainerWeaponCrafter;
 import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
-import cn.lambdacraft.crafting.network.NetCrafterClient;
+import cn.lambdacraft.crafting.network.MessageCrafter;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.client.gui.LIGuiButton;
 import cn.liutils.api.client.gui.LIGuiContainer;
@@ -123,9 +124,9 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 				.translateToLocal("gui.crafter_storage.name");
 		String currentPage = StatCollector.translateToLocal(RecipeWeapons
 				.getDescription(te.page));
-		this.fontRenderer.drawString(storage, 8, 88, 4210752);
-		fontRenderer.drawString(currentPage,
-				100 - fontRenderer.getStringWidth(currentPage) / 2, 1, 4210752);
+		this.fontRendererObj.drawString(storage, 8, 88, 4210752);
+		fontRendererObj.drawString(currentPage,
+				100 - fontRendererObj.getStringWidth(currentPage) / 2, 1, 4210752);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
 
@@ -134,7 +135,7 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 		if (!this.te.isLoad)
 			return;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		bindTexture(ClientProps.GUI_WEAPONCRAFTER_PATH);
+		bindTexture(LCClientProps.GUI_WEAPONCRAFTER_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
@@ -181,13 +182,13 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 		if (button.name == "up" || button.name == "down") {
 			boolean isDown = button.name == "down" ? true : false;
 			te.addScrollFactor(isDown);
-			NetCrafterClient.sendCrafterPacket(te, 0, isDown);
+			LCMod.netHandler.sendToServer(new MessageCrafter(te, 0, isDown));
 			return;
 		}
 		if (button.name == "left" || button.name == "right") {
 			boolean isForward = button.name == "right" ? true : false;
 			te.addPage(isForward);
-			NetCrafterClient.sendCrafterPacket(te, 1, isForward);
+			LCMod.netHandler.sendToServer(new MessageCrafter(te, 1, isForward));
 			return;
 		}
 	}

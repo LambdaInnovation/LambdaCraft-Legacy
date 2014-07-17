@@ -21,7 +21,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.terrain.client.model.ModelXenAmethyst;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
 import cn.liutils.api.client.render.RenderTileEntityModel;
@@ -62,7 +62,7 @@ public class RenderTileXenAmethyst extends RenderTileEntityModel {
     	GL11.glDisable(GL11.GL_LIGHTING);
     	GL11.glEnable(GL11.GL_BLEND);
     	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-    	RenderUtils.loadTexture(ClientProps.VORTIGAUNT_RAY_PATH[rng.nextInt(3)]);
+    	RenderUtils.loadTexture(LCClientProps.VORTIGAUNT_RAY_PATH[rng.nextInt(3)]);
     	
     	Vec3 v1 = RenderUtils.newV3(tx - WIDTH, ty, tz), v2 = RenderUtils.newV3(tx + WIDTH, ty, tz),
     		v3 = RenderUtils.newV3(tx, ty - WIDTH, tz), v4 = RenderUtils.newV3(tx, ty + WIDTH, tz);

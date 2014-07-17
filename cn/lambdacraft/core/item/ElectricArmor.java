@@ -26,7 +26,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.ISpecialArmor;
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -34,7 +34,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  * 
  */
-public abstract class ElectricArmor extends CBCGenericArmor implements
+public abstract class ElectricArmor extends LCGenericArmor implements
 		ICustomEnItem, ISpecialArmor {
 
 	protected int tier = 1, transferLimit = 100, maxCharge;

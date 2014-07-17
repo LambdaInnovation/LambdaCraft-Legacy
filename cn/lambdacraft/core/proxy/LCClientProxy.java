@@ -25,8 +25,8 @@ import net.minecraft.client.Minecraft;
 
 import org.lwjgl.input.Keyboard;
 
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.CBCPlayer;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.LCPlayer;
 import cn.lambdacraft.core.client.key.KeyUse;
 import cn.lambdacraft.deathmatch.client.renderer.RenderEmptyBlock;
 import cn.liutils.core.client.register.LIKeyProcess;
@@ -38,7 +38,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
  * @author WeAthFolD, Mkpoli, HopeAsd
  * 
  */
-public class ClientProxy extends Proxy {
+public class LCClientProxy extends LCCommonProxy {
 	
 	private final String PATH_TRACKS[] = { "hla", "hlb", "hlc" } ;
 	
@@ -49,9 +49,9 @@ public class ClientProxy extends Proxy {
 	public void init() {
 		super.init();
 		
-		CBCPlayer cbcPlayer = new CBCPlayer();
+		LCPlayer cbcPlayer = new LCPlayer();
 		RenderingRegistry.registerBlockHandler(new RenderEmptyBlock());
-		ClientProps.loadProps(CBCMod.config);
+		LCClientProps.loadProps(LCMod.config);
 		
 		//Records copy
 		File file;
@@ -71,6 +71,7 @@ public class ClientProxy extends Proxy {
 	
 	@Override
 	public void preInit() {
+		super.preInit();
 		LIKeyProcess.addKey("key.cbcuse", Keyboard.KEY_F, true, new KeyUse());
 	}
 	
@@ -102,7 +103,7 @@ public class ClientProxy extends Proxy {
            int bytesum = 0; 
            int byteread = 0; 
            if(file.canRead()) {
-        	   CBCMod.log.fine("Dest file already exists : " + newPath);
+        	   LCMod.log.fine("Dest file already exists : " + newPath);
         	   return file;
            }
            if (inStream.available() != 0) { //文件存在时 
@@ -118,11 +119,11 @@ public class ClientProxy extends Proxy {
                inStream.close(); 
                fs.close();
            } else {
-        	   CBCMod.log.severe("LambdaCraft didn't find the source file while trying to copy to" + newPath);
+        	   LCMod.log.severe("LambdaCraft didn't find the source file while trying to copy to" + newPath);
            }
        } 
        catch (Exception e) { 
-    	   CBCMod.log.severe("Exceptions occured while copying a single file to " + newPath); 
+    	   LCMod.log.severe("Exceptions occured while copying a single file to " + newPath); 
            e.printStackTrace(); 
        } 
        return file;

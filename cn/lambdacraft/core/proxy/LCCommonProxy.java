@@ -17,10 +17,12 @@ package cn.lambdacraft.core.proxy;
 import java.util.HashSet;
 import java.util.Set;
 
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.event.LCEventListener;
+import cn.lambdacraft.core.event.LCTickEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -30,7 +32,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
  * @author WeAthFOlD, Mkpoli, HopeAsd
  * 
  */
-public class Proxy {
+public class LCCommonProxy {
 
 	public static Set<String> languages = new HashSet();
 	
@@ -77,7 +79,7 @@ public class Proxy {
 		for (String s : addition) {
 			sb.append(s).append("\n");
 		}
-		CBCMod.log.severe(sb.toString());
+		LCMod.log.severe(sb.toString());
 	}
 
 	public static void logExceptionMessage(Entity entity, String... addition) {
@@ -90,7 +92,7 @@ public class Proxy {
 		for (String s : addition) {
 			sb.append(s).append("\n");
 		}
-		CBCMod.log.severe(sb.toString());
+		LCMod.log.severe(sb.toString());
 	}
 
 	public void displayError(String error) {
@@ -100,6 +102,8 @@ public class Proxy {
 	}
 
 	public void preInit() {
+		MinecraftForge.EVENT_BUS.register(new LCEventListener());
+		FMLCommonHandler.instance().bus().register(new LCTickEvents());
 	}
 
 }

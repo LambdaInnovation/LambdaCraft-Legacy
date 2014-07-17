@@ -41,14 +41,14 @@ public class CRGuiElements {
 		public Object getServerContainer(EntityPlayer player, World world,
 				int x, int y, int z) {
 			return new ContainerWeaponCrafter(player.inventory,
-					(TileWeaponCrafter) world.getBlockTileEntity(x, y, z));
+					(TileWeaponCrafter) world.getTileEntity(x, y, z));
 		}
 
 		@Override
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
 			return new GuiWeaponCrafter(player.inventory,
-					(TileWeaponCrafter) world.getBlockTileEntity(x, y, z));
+					(TileWeaponCrafter) world.getTileEntity(x, y, z));
 		}
 	}
 
@@ -58,14 +58,14 @@ public class CRGuiElements {
 		public Object getServerContainer(EntityPlayer player, World world,
 				int x, int y, int z) {
 			return new ContainerElCrafter(player.inventory,
-					(TileElCrafter) world.getBlockTileEntity(x, y, z));
+					(TileElCrafter) world.getTileEntity(x, y, z));
 		}
 
 		@Override
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
 			return new GuiElectricCrafter(player.inventory,
-					(TileElCrafter) world.getBlockTileEntity(x, y, z));
+					(TileElCrafter) world.getTileEntity(x, y, z));
 		}
 	}
 
@@ -75,14 +75,14 @@ public class CRGuiElements {
 		public Object getServerContainer(EntityPlayer player, World world,
 				int x, int y, int z) {
 			return new ContainerGenerator(
-					(TileGeneratorFire) world.getBlockTileEntity(x, y, z),
+					(TileGeneratorFire) world.getTileEntity(x, y, z),
 					player.inventory);
 		}
 
 		@Override
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
-			return new GuiGenFire((TileGeneratorFire) world.getBlockTileEntity(
+			return new GuiGenFire((TileGeneratorFire) world.getTileEntity(
 					x, y, z), player.inventory);
 		}
 	}
@@ -93,14 +93,14 @@ public class CRGuiElements {
 		public Object getServerContainer(EntityPlayer player, World world,
 				int x, int y, int z) {
 			return new ContainerGeneratorLava(
-					(TileGeneratorLava) world.getBlockTileEntity(x, y, z),
+					(TileGeneratorLava) world.getTileEntity(x, y, z),
 					player.inventory);
 		}
 
 		@Override
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
-			return new GuiGenLava((TileGeneratorLava) world.getBlockTileEntity(
+			return new GuiGenLava((TileGeneratorLava) world.getTileEntity(
 					x, y, z), player.inventory);
 		}
 	}
@@ -111,7 +111,7 @@ public class CRGuiElements {
 		public Object getServerContainer(EntityPlayer player, World world,
 				int x, int y, int z) {
 			return new ContainerGeneratorSolar(
-					(TileGeneratorSolar) world.getBlockTileEntity(x, y, z),
+					(TileGeneratorSolar) world.getTileEntity(x, y, z),
 					player.inventory);
 		}
 
@@ -119,7 +119,7 @@ public class CRGuiElements {
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
 			return new GuiGenSolar(
-					(TileGeneratorSolar) world.getBlockTileEntity(x, y, z),
+					(TileGeneratorSolar) world.getTileEntity(x, y, z),
 					player.inventory);
 		}
 	}
@@ -129,7 +129,7 @@ public class CRGuiElements {
 		@Override
 		public Object getServerContainer(EntityPlayer player, World world,
 				int x, int y, int z) {
-			return new ContainerBatBox((TileBatBox) world.getBlockTileEntity(x,
+			return new ContainerBatBox((TileBatBox) world.getTileEntity(x,
 					y, z), player.inventory);
 		}
 
@@ -137,7 +137,7 @@ public class CRGuiElements {
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
 			return new GuiBatBox(
-					(TileBatBox) world.getBlockTileEntity(x, y, z),
+					(TileBatBox) world.getTileEntity(x, y, z),
 					player.inventory);
 		}
 

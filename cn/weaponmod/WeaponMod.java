@@ -24,6 +24,7 @@ import cn.weaponmod.network.MessageClicking;
 import cn.weaponmod.network.MessageDM;
 import cn.weaponmod.proxy.WMCommonProxy;
 import cn.weaponmod.proxy.WMGeneralProps;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -72,7 +73,6 @@ public class WeaponMod {
 		log.info("http://www.lambdacraft.cn");
 		
 		//TODO: Network Registration
-		MinecraftForge.EVENT_BUS.register(new WMEventListener());
 		netHandler.registerMessage(MessageDM.Handler.class, MessageDM.class, nextId++, Side.SERVER);
 		netHandler.registerMessage(MessageClicking.Handler.class, MessageClicking.class, nextId++, Side.SERVER);
 		

@@ -16,17 +16,18 @@ package cn.lambdacraft.crafting.item;
 
 import java.util.List;
 
-import cn.lambdacraft.core.item.CBCGenericItem;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
+import cn.lambdacraft.core.item.LCGenericItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
 
-public class ItemMaterial extends CBCGenericItem {
+public class ItemMaterial extends LCGenericItem {
 
-	private Icon icons[] = new Icon[10]; // 声明Icon对象数组
+	private IIcon icons[] = new IIcon[10]; // 声明Icon对象数组
 
 	public enum EnumMaterial {
 		BOX(0), AMMUNITION(1), ARMOR(2), ACCESSORIES(3), BIO(4), EXPLOSIVE(5), HEAVY(
@@ -46,8 +47,8 @@ public class ItemMaterial extends CBCGenericItem {
 
 	EnumMaterial mat = EnumMaterial.BOX; // 声明mat为材料枚举中的盒子
 
-	public ItemMaterial(int par1) {
-		super(par1);
+	public ItemMaterial() {
+		super();
 		this.hasSubtypes = true;
 		this.setUnlocalizedName("material"); // 默认UnlocalizedName
 	}
@@ -60,7 +61,7 @@ public class ItemMaterial extends CBCGenericItem {
 	 */
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister ir) {
+	public void registerIcons(IIconRegister ir) {
 		for (EnumMaterial i : EnumMaterial.values()) {
 			icons[i.id] = ir.registerIcon("lambdacraft:mat_" + i.toString());
 		}
@@ -89,12 +90,12 @@ public class ItemMaterial extends CBCGenericItem {
 	 * @return
 	 */
 	public ItemStack newStack(int stackSize, EnumMaterial mat) {
-		return new ItemStack(this.itemID, stackSize, mat.id);
+		return new ItemStack(this, stackSize, mat.id);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIconFromDamage(int par1) {
+	public IIcon getIconFromDamage(int par1) {
 		return this.icons[par1];
 	}
 
@@ -103,7 +104,7 @@ public class ItemMaterial extends CBCGenericItem {
 	/**
 	 * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
 	 */
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs,
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
 			List par3List) {
 		for (int i = 0; i < 10; i++)
 			par3List.add(new ItemStack(par1, 1, i));

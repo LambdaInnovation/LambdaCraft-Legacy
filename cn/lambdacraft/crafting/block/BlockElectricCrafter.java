@@ -14,14 +14,14 @@
  */
 package cn.lambdacraft.crafting.block;
 
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.proxy.GeneralProps;
-import cn.lambdacraft.crafting.block.tile.TileElCrafter;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.crafting.block.tile.TileElCrafter;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -31,13 +31,13 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class BlockElectricCrafter extends BlockWeaponCrafter {
 
-	public BlockElectricCrafter(int par1) {
-		super(par1);
-		setUnlocalizedName("elcrafter");
+	public BlockElectricCrafter() {
+		super();
+		setBlockName("elcrafter");
 	}
 
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerBlockIcons(IIconRegister par1IconRegister) {
 		iconSide = par1IconRegister.registerIcon("lambdacraft:ec_side");
 		iconTop = par1IconRegister.registerIcon("lambdacraft:ec_top");
 		iconBottom = par1IconRegister
@@ -48,7 +48,7 @@ public class BlockElectricCrafter extends BlockWeaponCrafter {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public Icon getIcon(int par1, int par2) {
+	public IIcon getIcon(int par1, int par2) {
 		if (par1 < 1)
 			return iconBottom;
 		if (par1 < 2)
@@ -61,17 +61,17 @@ public class BlockElectricCrafter extends BlockWeaponCrafter {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int idk, float what, float these, float are) {
-		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity == null || player.isSneaking()) {
 			return false;
 		}
-		player.openGui(CBCMod.instance, GeneralProps.GUI_ID_EL_CRAFTER, world,
+		player.openGui(LCMod.instance, LCGeneralProps.GUI_ID_EL_CRAFTER, world,
 				x, y, z);
 		return true;
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int v) {
 		return new TileElCrafter();
 	}
 

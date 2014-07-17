@@ -1,13 +1,13 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.crafting.register.CBCItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.crafting.register.CBCItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * .357 Magnum weapon class.
@@ -17,12 +17,12 @@ import net.minecraft.world.World;
  */
 public class Weapon_357 extends WeaponGeneralBullet_LC {
 
-	public Weapon_357(int par1) {
+	public Weapon_357() {
 
-		super(par1, CBCItems.ammo_357.itemID);
+		super(CBCItems.ammo_357);
 
 		setIAndU("weapon_357");
-		setCreativeTab(CBCMod.cct);
+		setCreativeTab(LCMod.cct);
 		setMaxStackSize(1);
 		setMaxDamage(7);
 		setNoRepair();
@@ -34,7 +34,7 @@ public class Weapon_357 extends WeaponGeneralBullet_LC {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_357");
 	}
 

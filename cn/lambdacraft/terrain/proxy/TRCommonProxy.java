@@ -12,21 +12,12 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.terrain.block;
-
-import net.minecraft.item.ItemBlock;
+package cn.lambdacraft.terrain.proxy;
 
 /**
- * @author WeAthFolD
+ * @author Administrator
  *
  */
-public class BlockItemPortal extends ItemBlock {
-
-	/**
-	 * @param par1
-	 */
-	public BlockItemPortal(int par1) {
-		super(par1);
-	}
-
+public class TRCommonProxy {
+	public void init() {}
 }

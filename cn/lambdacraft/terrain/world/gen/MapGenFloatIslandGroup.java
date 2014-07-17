@@ -1,6 +1,7 @@
 package cn.lambdacraft.terrain.world.gen;
 
 import cn.lambdacraft.terrain.register.XenBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.MapGenBase;
 
@@ -16,7 +17,7 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 	}
 
 	/** 这部分内容基本同单个浮岛生成 */
-	private void generateFloatIsland(World world, int genX, int genY, int genZ, byte[] par5ArrayOfByte, 
+	private void generateFloatIsland(World world, int genX, int genY, int genZ, Block[] par5ArrayOfBlock, 
 			                           int thisChunkX, int thisChunkZ, int height, int width)
     {
 		float[] noiseArray = new float[961];
@@ -188,7 +189,7 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 				{
 					if(noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] <= 0.5F && y2 > noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY)
 					{
-							par5ArrayOfByte[(x2 * 16 + z2) * 128 + y2] = (byte)XenBlocks.stone.blockID;
+							par5ArrayOfBlock[(x2 * 16 + z2) * 128 + y2] = XenBlocks.stone;
 					}
 				}
 			}
@@ -230,7 +231,7 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 						if(y2 < noiseArray2[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY
 						&& booleanArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31])
 						{
-								par5ArrayOfByte[(x2 * 16 + z2) * 128 + y2] = (byte)XenBlocks.stone.blockID;
+								par5ArrayOfBlock[(x2 * 16 + z2) * 128 + y2] = XenBlocks.stone;
 						}
 					}
 				}
@@ -248,12 +249,12 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 	 * @param secondGenX
 	 * @param secondGenY
 	 * @param secondGenZ
-	 * @param par5ArrayOfByte 包含该chunk所有blockID信息的一个byte数组
+	 * @param par5ArrayOfBlock 包含该chunk所有blockID信息的一个byte数组
 	 * @param thisChunkX 当前chunk的X坐标
 	 * @param thisChunkZ 当前chunk的Z坐标
 	 */
 	private void generateBridge(World world, int firstGenX, int firstGenY, int firstGenZ, int secondGenX, 
-			int secondGenY, int secondGenZ, byte[] par5ArrayOfByte, int thisChunkX, int thisChunkZ)
+			int secondGenY, int secondGenZ, Block[] par5ArrayOfBlock, int thisChunkX, int thisChunkZ)
 	{
 		if(!(Math.max(firstGenY, secondGenY) > 128))
 		{
@@ -313,14 +314,14 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + t * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + t * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfByte[(x * 16 + z) * 128 + y] = (byte)XenBlocks.stone.blockID;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 							if((firstGenY < secondGenY) 
 								&& (y <= (int)(downY + t * height) + heightOfBriage) && (y >= (int)(downY + t * height) - heightOfBriage)
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + t * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + t * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfByte[(x * 16 + z) * 128 + y] = (byte)XenBlocks.stone.blockID;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 						}
 					}
@@ -341,14 +342,14 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + t * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + t * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfByte[(x * 16 + z) * 128 + y] = (byte)XenBlocks.stone.blockID;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 							if((firstGenY < secondGenY) 
 								&& (y <= (int)(downY + (1.0F - t) * height) + heightOfBriage) && (y >= (int)(downY + (1.0F - t) * height) - heightOfBriage)
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + t * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + t * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfByte[(x * 16 + z) * 128 + y] = (byte)XenBlocks.stone.blockID;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 						}
 					}
@@ -369,14 +370,14 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + (1.0F - t) * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + (1.0F - t) * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfByte[(x * 16 + z) * 128 + y] = (byte)XenBlocks.stone.blockID;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 							if((firstGenY < secondGenY) 
 								&& (y <= (int)(downY + (1.0F - t) * height) + heightOfBriage) && (y >= (int)(downY + (1.0F - t) * height) - heightOfBriage)
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + (1.0F - t) * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + (1.0F - t) * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfByte[(x * 16 + z) * 128 + y] = (byte)XenBlocks.stone.blockID;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 						}
 					}
@@ -398,14 +399,14 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + (1.0F - t) * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + (1.0F - t) * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfByte[(x * 16 + z) * 128 + y] = (byte)XenBlocks.stone.blockID;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 							if((firstGenY < secondGenY) 
 								&& (y <= (int)(downY + t * height) + heightOfBriage) && (y >= (int)(downY + t * height) - heightOfBriage)
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + (1.0F - t) * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + (1.0F - t) * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfByte[(x * 16 + z) * 128 + y] = (byte)XenBlocks.stone.blockID;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 						}
 					}
@@ -415,7 +416,7 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 		}
 	}
     @Override
-	protected void recursiveGenerate(World world, int genChunkX, int genChunkZ, int thisChunkX, int thisChunkZ, byte[] par6ArrayOfByte)
+	protected void func_151538_a(World world, int genChunkX, int genChunkZ, int thisChunkX, int thisChunkZ, Block[] par6ArrayOfBlock)
     {
         if (this.rand.nextInt(300) == 0)
         {
@@ -511,7 +512,7 @@ public class MapGenFloatIslandGroup extends MapGenBase{
             {
 				if(island[i])
 				{
-					this.generateFloatIsland(world, xGroup[i], yGroup[i], zGroup[i], par6ArrayOfByte, thisChunkX, thisChunkZ, heightGroup[i], widthGroup[i]);
+					this.generateFloatIsland(world, xGroup[i], yGroup[i], zGroup[i], par6ArrayOfBlock, thisChunkX, thisChunkZ, heightGroup[i], widthGroup[i]);
 				}
 			}
             
@@ -523,7 +524,7 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 					{
 						this.generateBridge(world, xGroup[start] + widthGroup[start]/2, 
 						yGroup[start] + heightGroup[start]/2, zGroup[start] + widthGroup[start]/2,xGroup[end] + widthGroup[end]/2, 
-						yGroup[end] + heightGroup[end]/2, zGroup[end] + widthGroup[end]/2, par6ArrayOfByte, thisChunkX, thisChunkZ);
+						yGroup[end] + heightGroup[end]/2, zGroup[end] + widthGroup[end]/2, par6ArrayOfBlock, thisChunkX, thisChunkZ);
 					}
 					if(((start == 1) && (end == 4 || end == 5) && island[end])
 							|| ((start == 2) && (end == 6 || end == 7) && island[end])
@@ -531,13 +532,13 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 					{
 						this.generateBridge(world, xGroup[start] + widthGroup[start]/2, 
 						yGroup[start] + heightGroup[start]/2, zGroup[start] + widthGroup[start]/2,xGroup[end] + widthGroup[end]/2, 
-						yGroup[end] + heightGroup[end]/2, zGroup[end] + widthGroup[end]/2, par6ArrayOfByte, thisChunkX, thisChunkZ);
+						yGroup[end] + heightGroup[end]/2, zGroup[end] + widthGroup[end]/2, par6ArrayOfBlock, thisChunkX, thisChunkZ);
 					}
 					if ((start == (end - 6)) && (end >= 10) && island[end])
 					{
 						this.generateBridge(world, xGroup[start] + widthGroup[start]/2, 
 						yGroup[start] + heightGroup[start]/2, zGroup[start] + widthGroup[start]/2,xGroup[end] + widthGroup[end]/2, 
-						yGroup[end] + heightGroup[end]/2, zGroup[end] + widthGroup[end]/2, par6ArrayOfByte, thisChunkX, thisChunkZ);
+						yGroup[end] + heightGroup[end]/2, zGroup[end] + widthGroup[end]/2, par6ArrayOfBlock, thisChunkX, thisChunkZ);
 					}
 				}
 			}

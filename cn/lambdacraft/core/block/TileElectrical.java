@@ -19,13 +19,13 @@ import cn.lambdacraft.api.energy.events.EnergyTileLoadEvent;
 import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
 import cn.lambdacraft.api.energy.events.EnergyTileUnloadEvent;
 import cn.lambdacraft.api.energy.tile.IEnergyTile;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 
 /**
  * @author WeAthFolD
  * 
  */
-public abstract class TileElectrical extends CBCTileEntity implements
+public abstract class TileElectrical extends LCTileEntity implements
 		IEnergyTile {
 
 	public boolean addedToNet = false;
@@ -53,7 +53,7 @@ public abstract class TileElectrical extends CBCTileEntity implements
 	@Override
 	public void onTileUnload() {
 		super.onTileUnload();
-	    if ((CBCMod.proxy.isSimulating()) && (this.addedToNet)) {
+	    if ((LCMod.proxy.isSimulating()) && (this.addedToNet)) {
 	        MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(worldObj, this));
 	        this.addedToNet = true;
 	     }

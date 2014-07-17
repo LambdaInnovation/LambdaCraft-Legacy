@@ -14,7 +14,7 @@
  */
 package cn.lambdacraft.deathmatch.client.renderer;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.liutils.api.client.render.RendererSidedCube;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
@@ -46,13 +46,13 @@ public class RenderTileHeCharger extends RendererSidedCube {
 	@Override
 	public ResourceLocation getTexture(TileEntity te, int side, int metadata) {
 		if (side == 0 || side == 1)
-			return ClientProps.HECHARGER_TD_PATH;
+			return LCClientProps.HECHARGER_TD_PATH;
 		if (side == metadata)
-			return ClientProps.HECHARGER_MAIN_PATH;
+			return LCClientProps.HECHARGER_MAIN_PATH;
 		if (metadata == 5 || metadata == 3)
 			if (side == metadata - 2)
-				return ClientProps.HECHARGER_BACK_PATH;
-		return ClientProps.HECHARGER_SIDE_PATH;
+				return LCClientProps.HECHARGER_BACK_PATH;
+		return LCClientProps.HECHARGER_SIDE_PATH;
 	}
 
 }

@@ -1,12 +1,12 @@
 package cn.lambdacraft.deathmatch.item.ammos;
 
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 
 public class Ammo_argrenade extends ItemAmmo {
 
-	public Ammo_argrenade(int par1) {
-		super(par1);
-		setCreativeTab(CBCMod.cct);
+	public Ammo_argrenade() {
+		super();
+		setCreativeTab(LCMod.cct);
 		setIAndU("ammo_argrenade");
 		setMaxStackSize(10);
 	}

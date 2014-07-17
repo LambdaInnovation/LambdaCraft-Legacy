@@ -1,11 +1,11 @@
 package cn.lambdacraft.deathmatch.item.ammos;
 
-import cn.lambdacraft.core.item.CBCGenericItem;
+import cn.lambdacraft.core.item.LCGenericItem;
 
-public abstract class ItemAmmo extends CBCGenericItem {
+public abstract class ItemAmmo extends LCGenericItem {
 	
-	public ItemAmmo(int par1) {
-		super(par1);
+	public ItemAmmo() {
+		super();
 		setMaxStackSize(1);
 	}
 	

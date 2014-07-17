@@ -11,15 +11,14 @@ public class BiomeGenPlain extends BiomeGenBase{
 
 	public BiomeGenPlain(int par1) {
 		super(par1);
-		this.minHeight = -1.0F;
-		this.maxHeight = 0.2F;
+		this.setHeight(MainBiomes.height_xen_plain);
 		this.spawnableMonsterList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableWaterCreatureList.clear();
 		this.spawnableCaveCreatureList.clear();
-		this.topBlock = ((byte)XenBlocks.grass.blockID);
-		this.fillerBlock = ((byte)XenBlocks.dirt.blockID);
+		this.topBlock = XenBlocks.grass;
+		this.fillerBlock = XenBlocks.dirt;
 		this.setBiomeName("Xen Plain");
-		this.theBiomeDecorator = new BiomeDecoratorXen(this);
+		this.theBiomeDecorator = new BiomeDecoratorXen();
 	}
 }

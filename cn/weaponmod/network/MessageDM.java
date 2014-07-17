@@ -40,6 +40,8 @@ public class MessageDM implements IMessage {
 		this.newMode  = newMode;
 	}
 	
+	public MessageDM() {}
+	
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		slot = ByteBufUtils.readVarInt(buf, 1);

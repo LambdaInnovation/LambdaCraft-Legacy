@@ -26,7 +26,7 @@ import java.util.logging.Level;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import cn.liutils.api.register.Configurable;
 import cn.liutils.core.register.ConfigHandler;
 
@@ -39,7 +39,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
  * 
  * @author WeAthFolD
  */
-public class ClientProps {
+public class LCClientProps {
 	
 	@Configurable(category = "graphics", key = "alwaysCustomCrosshair", comment = "Always draw custom crosshair regardless of player wearing HEV or not.", defValue = "false")
 	public static boolean alwaysCustomCrossHair = false;
@@ -203,14 +203,14 @@ public class ClientProps {
 	}
 
 	public static void loadProps(Configuration config) {
-		ConfigHandler.loadConfigurableClass(CBCMod.config, ClientProps.class);
+		ConfigHandler.loadConfigurableClass(LCMod.config, LCClientProps.class);
 		
 		crosshairProps = new Properties();
 		final String absPath = "/assets/lambdacraft/";
-		URL src = ClientProps.class.getResource("/assets/lambdacraft/crosshairs/crosshairs.properties");
+		URL src = LCClientProps.class.getResource("/assets/lambdacraft/crosshairs/crosshairs.properties");
 		
 		sprayProps = new Properties();
-		URL src2 = ClientProps.class.getResource("/assets/lambdacraft/spray/sprays.properties");
+		URL src2 = LCClientProps.class.getResource("/assets/lambdacraft/spray/sprays.properties");
 		
 		File crFile = null, sprFile = null;
 		crFile = new File(src.getFile());
@@ -221,9 +221,9 @@ public class ClientProps {
 			crosshairProps.load(new InputStreamReader(new FileInputStream(crFile), Charsets.UTF_8));
 			sprayProps.load(new InputStreamReader(new FileInputStream(sprFile), Charsets.UTF_8));
 		} catch (IOException e) {
-			CBCMod.log.log(Level.SEVERE,"Unable to load crossfire/spray props from fileH %s", src);
+			LCMod.log.log(Level.SEVERE,"Unable to load crossfire/spray props from fileH %s", src);
 		} catch (NullPointerException e) {
-			CBCMod.log.log(Level.SEVERE, "Unable to find crossfire/spray props file.");
+			LCMod.log.log(Level.SEVERE, "Unable to find crossfire/spray props file.");
 		}
 		
 	}
@@ -253,7 +253,7 @@ public class ClientProps {
 	public static void setSprayId(int id) {
 		Property prop;
 		try {
-			prop = CBCMod.config.get("graphics", "Spray_ID", "0");
+			prop = LCMod.config.get("graphics", "Spray_ID", "0");
 			prop.set(id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -273,16 +273,16 @@ public class ClientProps {
 		sprayA = a;
 		Property prop;
 		try {
-			prop = CBCMod.config.get("graphics", "Spray_R", "255");
+			prop = LCMod.config.get("graphics", "Spray_R", "255");
 			prop.set(r);
 			
-			prop = CBCMod.config.get("graphics", "Spray_G", "255");
+			prop = LCMod.config.get("graphics", "Spray_G", "255");
 			prop.set(g);
 			
-			prop = CBCMod.config.get("graphics", "Spray_B", "255");
+			prop = LCMod.config.get("graphics", "Spray_B", "255");
 			prop.set(b);
 			
-			prop = CBCMod.config.get("graphics", "Spray_A", "255");
+			prop = LCMod.config.get("graphics", "Spray_A", "255");
 			prop.set(a);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -298,13 +298,13 @@ public class ClientProps {
 		xHairB = b;
 		Property prop;
 		try {
-			prop = CBCMod.config.get("graphics", "CrossHair_R", "255");
+			prop = LCMod.config.get("graphics", "CrossHair_R", "255");
 			prop.set(r);
 			
-			prop = CBCMod.config.get("graphics", "CrossHair_G", "255");
+			prop = LCMod.config.get("graphics", "CrossHair_G", "255");
 			prop.set(g);
 			
-			prop = CBCMod.config.get("graphics", "CrossHair_B", "255");
+			prop = LCMod.config.get("graphics", "CrossHair_B", "255");
 			prop.set(b);
 		} catch(Exception e) {
 			e.printStackTrace();

@@ -16,7 +16,7 @@ package cn.lambdacraft.crafting.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.crafting.block.container.ContainerGenerator;
 import cn.lambdacraft.crafting.block.tile.TileGeneratorFire;
 import cn.lambdacraft.crafting.register.CBCBlocks;
@@ -69,7 +69,7 @@ public class GuiGenFire extends LIGuiContainer {
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		String guiName = CBCBlocks.genFire.getLocalizedName();
-		this.fontRenderer.drawString(guiName, 7, 7, 0xff9944);
+		this.fontRendererObj.drawString(guiName, 7, 7, 0xff9944);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
 
@@ -79,7 +79,7 @@ public class GuiGenFire extends LIGuiContainer {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		bindTexture(ClientProps.GUI_GENFIRE_PATH);
+		bindTexture(LCClientProps.GUI_GENFIRE_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);

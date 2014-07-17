@@ -117,7 +117,7 @@ public class RecipeWeapons {
 			return null;
 
 		for (RecipeCrafter r : recipes[page]) {
-			if (is.itemID == r.output.itemID)
+			if (is.getItem() == r.output.getItem())
 				return r;
 		}
 		return null;
@@ -128,7 +128,7 @@ public class RecipeWeapons {
 			return null;
 
 		for (RecipeCrafter r : advancedRecipes[page]) {
-			if (is.itemID == r.output.itemID)
+			if (is.getItem() == r.output.getItem())
 				return r;
 		}
 		return null;
@@ -139,7 +139,7 @@ public class RecipeWeapons {
 			return null;
 
 		for (RecipeCrafter r : recipeEC[page]) {
-			if (is.itemID == r.output.itemID)
+			if (is.getItem() == r.output.getItem())
 				return r;
 		}
 		return null;

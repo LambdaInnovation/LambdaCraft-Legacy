@@ -5,8 +5,8 @@ import java.util.HashMap;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.biome.BiomeGenBase;
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.proxy.GeneralProps;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.proxy.LCGeneralProps;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
 import cn.lambdacraft.mob.entity.EntityBarnacle;
@@ -16,7 +16,7 @@ import cn.lambdacraft.mob.entity.EntityHoundeye;
 import cn.lambdacraft.mob.entity.EntitySentry;
 import cn.lambdacraft.mob.entity.EntityShockwave;
 import cn.lambdacraft.mob.entity.EntitySnark;
-import cn.lambdacraft.mob.network.NetSentrySync;
+import cn.lambdacraft.mob.network.MessageSentry;
 import cn.lambdacraft.mob.register.CBCMobBlocks;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.util.BlockPos;
@@ -31,7 +31,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "LambdaCraft|Living", name = "LambdaCraft Living", version = CBCMod.VERSION, dependencies = CBCMod.DEPENDENCY_CORE)
+@Mod(modid = "LambdaCraft|Living", name = "LambdaCraft Living", version = LCMod.VERSION, dependencies = LCMod.DEPENDENCY_CORE)
 public class ModuleMob {
 
 	/**
@@ -54,11 +54,11 @@ public class ModuleMob {
 
 	@EventHandler()
 	public void init(FMLInitializationEvent Init) {
-		CBCMobItems.init(CBCMod.config);
-		CBCMobBlocks.init(CBCMod.config);
+		CBCMobItems.init(LCMod.config);
+		CBCMobBlocks.init(LCMod.config);
 
 		try {
-			boolean spawnOverworld = CBCMod.config.get("general", "spawnInOverworld", true).getBoolean(true);
+			boolean spawnOverworld = LCMod.config.get("general", "spawnInOverworld", true).getBoolean(true);
 			if(spawnOverworld){
 				EntityRegistry.addSpawn(EntityHeadcrab.class, 7, 0, 50, EnumCreatureType.monster, GENERIC_GEN);
 				EntityRegistry.addSpawn(EntityHoundeye.class, 10, 0, 70, EnumCreatureType.monster, GENERIC_GEN);
@@ -70,24 +70,24 @@ public class ModuleMob {
 		
 		//EntityRegistry.addSpawn(EntityBarnacle.class, 5, 0, 65, EnumCreatureType.monster, BARNACLE_GEN);
 
-		CBCMod.netHandler.registerMessage(NetSentrySync.Handler.class, NetSentrySync.class, CBCMod.getUniqueNetChannel(), Side.CLIENT);
+		LCMod.netHandler.registerMessage(MessageSentry.Handler.class, MessageSentry.class, LCMod.getUniqueNetChannel(), Side.CLIENT);
 		
 		EntityRegistry.registerModEntity(EntitySnark.class, "snark",
-				GeneralProps.ENT_ID_SNARK, CBCMod.instance, 48, 3, true);
+				LCGeneralProps.ENT_ID_SNARK, LCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityHeadcrab.class, "headcrab",
-				GeneralProps.ENT_ID_HEADCRAB, CBCMod.instance, 48, 3, true);
+				LCGeneralProps.ENT_ID_HEADCRAB, LCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityBarnacle.class, "barnacle",
-				GeneralProps.ENT_ID_BARNACLE, CBCMod.instance, 84, 5, false);
+				LCGeneralProps.ENT_ID_BARNACLE, LCMod.instance, 84, 5, false);
 		EntityRegistry.registerModEntity(EntityHLZombie.class, "hlzombie",
-				GeneralProps.ENT_ID_ZOMBIE, CBCMod.instance, 48, 3, true);
+				LCGeneralProps.ENT_ID_ZOMBIE, LCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntitySentry.class, "turret",
-				GeneralProps.ENT_ID_TURRET, CBCMod.instance, 48, 3, true);
+				LCGeneralProps.ENT_ID_TURRET, LCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityHoundeye.class, "houndeye",
-				GeneralProps.ENT_ID_HOUNDEYE, CBCMod.instance, 48, 3, true);
+				LCGeneralProps.ENT_ID_HOUNDEYE, LCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityShockwave.class, "shockwave",
-				GeneralProps.ENT_ID_SHOCKWAVE, CBCMod.instance, 32, 3, false);
+				LCGeneralProps.ENT_ID_SHOCKWAVE, LCMod.instance, 32, 3, false);
 		EntityRegistry.registerModEntity(EntityAlienSlave.class, "vortigaunt",
-				GeneralProps.ENT_ID_VORTIGAUNT, CBCMod.instance, 48, 3, true);
+				LCGeneralProps.ENT_ID_VORTIGAUNT, LCMod.instance, 48, 3, true);
 		proxy.init();
 	}
 

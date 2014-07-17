@@ -17,7 +17,7 @@ package cn.lambdacraft.mob.entity;
 import java.util.List;
 
 import cn.lambdacraft.api.entity.IEntityLink;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.GenericUtils;
@@ -284,7 +284,7 @@ public class EntitySnark extends LIEntityMob implements IEntityLink<EntityPlayer
 
 	@Override
 	public ResourceLocation getTexture() {
-		return ClientProps.SQUEAK_MOB_PATH;
+		return LCClientProps.SQUEAK_MOB_PATH;
 	}
 
 }

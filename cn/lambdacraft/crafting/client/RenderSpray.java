@@ -34,7 +34,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.crafting.entity.EntitySpray;
 import cn.liutils.api.client.util.RenderUtils;
 import cpw.mods.fml.relauncher.Side;
@@ -65,10 +65,10 @@ public class RenderSpray extends Render {
 	private void loadTexture(int title_id) {
 		if (title_id >= 2) {
 			// 从custom文件夹下载入制定文件名的bitmap
-			RenderUtils.loadTexture(ClientProps.getSprayPath(title_id - 2));
+			RenderUtils.loadTexture(LCClientProps.getSprayPath(title_id - 2));
 		} else
 			// 普通喷漆
-			RenderUtils.loadTexture(ClientProps.SPRY_PATH[title_id]);
+			RenderUtils.loadTexture(LCClientProps.SPRY_PATH[title_id]);
 	}
 
 	/**

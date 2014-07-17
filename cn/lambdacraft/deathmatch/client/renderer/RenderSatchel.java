@@ -7,7 +7,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.deathmatch.entity.EntitySatchel;
 import cn.liutils.api.client.util.RenderUtils;
 
@@ -31,7 +31,7 @@ public class RenderSatchel extends RenderEntity {
 				.createVectorHelper(-w1, -h, w2), v7 = Vec3.createVectorHelper(
 				w1, -h, w2), v8 = Vec3.createVectorHelper(w1, -h, -w2);
 
-		RenderUtils.loadTexture(ClientProps.SATCHEL_TOP_PATH);
+		RenderUtils.loadTexture(LCClientProps.SATCHEL_TOP_PATH);
 		t.startDrawingQuads();
 		addVertex(v1, 0, 0);
 		addVertex(v2, 0, 1);
@@ -39,7 +39,7 @@ public class RenderSatchel extends RenderEntity {
 		addVertex(v4, 1, 0);
 		t.draw();
 
-		RenderUtils.loadTexture(ClientProps.SATCHEL_BOTTOM_PATH);
+		RenderUtils.loadTexture(LCClientProps.SATCHEL_BOTTOM_PATH);
 		t.startDrawingQuads();
 		addVertex(v7, 1, 1);
 		addVertex(v6, 0, 1);
@@ -47,7 +47,7 @@ public class RenderSatchel extends RenderEntity {
 		addVertex(v8, 1, 0);
 		t.draw();
 
-		RenderUtils.loadTexture(ClientProps.SATCHEL_SIDE2_PATH);
+		RenderUtils.loadTexture(LCClientProps.SATCHEL_SIDE2_PATH);
 		t.startDrawingQuads();
 		addVertex(v1, 0, 0);
 		addVertex(v5, 1, 0);
@@ -60,7 +60,7 @@ public class RenderSatchel extends RenderEntity {
 		addVertex(v3, 0, 1);
 		t.draw();
 
-		RenderUtils.loadTexture(ClientProps.SATCHEL_SIDE_PATH);
+		RenderUtils.loadTexture(LCClientProps.SATCHEL_SIDE_PATH);
 		t.startDrawingQuads();
 		addVertex(v2, 0, 0);
 		addVertex(v6, 1, 0);

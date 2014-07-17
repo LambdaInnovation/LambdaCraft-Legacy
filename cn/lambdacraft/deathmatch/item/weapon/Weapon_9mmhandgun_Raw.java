@@ -4,17 +4,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 
 public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 
-	public Weapon_9mmhandgun_Raw(int par1) {
+	public Weapon_9mmhandgun_Raw() {
 
-		super(par1, CBCItems.ammo_9mm.itemID);
+		super(CBCItems.ammo_9mm);
 
 		setUnlocalizedName("weapon_9mmhandgun");
-		setCreativeTab(CBCMod.cct);
+		setCreativeTab(LCMod.cct);
 		setMaxStackSize(1);
 		setMaxDamage(18);
 		iconName = "weapon_9mmhandgun";

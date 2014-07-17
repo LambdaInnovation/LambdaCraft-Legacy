@@ -14,7 +14,7 @@
  */
 package cn.lambdacraft.crafting.item;
 
-import cn.lambdacraft.core.item.CBCGenericItem;
+import cn.lambdacraft.core.item.LCGenericItem;
 import cn.lambdacraft.crafting.entity.EntitySpray;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,14 +28,15 @@ import net.minecraft.world.World;
  * @author mkpoli
  * 
  */
-public class ItemSpray extends CBCGenericItem {
+public class ItemSpray extends LCGenericItem {
 
 	private int title_id; // 喷漆的ID
 
-	public ItemSpray(int par1, int title_id) {
-		super(par1);
+	public ItemSpray(int title_id) {
+		super();
 		this.title_id = title_id;
-		setIAndU("spray" + this.title_id);
+		setUnlocalizedName("spray" + this.title_id);
+		setTextureName("lambdacraft:spray" + this.title_id);
 		setMaxStackSize(1);
 		setMaxDamage(10);
 	}

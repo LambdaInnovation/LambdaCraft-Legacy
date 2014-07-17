@@ -21,7 +21,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cn.lambdacraft.mob.register.CBCMobBlocks;
 import cn.liutils.api.client.render.RendererSidedCube;
@@ -41,10 +41,10 @@ public class RenderSentryRay extends RendererSidedCube {
 	@Override
 	public ResourceLocation getTexture(TileEntity te, int side, int metadata) {
 		if(side == metadata)
-			return ClientProps.SS_MAIN_PATH[((TileSentryRay)te).isActivated ? 0 : 1];
+			return LCClientProps.SS_MAIN_PATH[((TileSentryRay)te).isActivated ? 0 : 1];
 		if(side == 0 || side == 1)
-			return ClientProps.SS_SIDE_PATH[1];
-		return ClientProps.SS_SIDE_PATH[0];
+			return LCClientProps.SS_SIDE_PATH[1];
+		return LCClientProps.SS_SIDE_PATH[0];
 	}
 
 	@Override

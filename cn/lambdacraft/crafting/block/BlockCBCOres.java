@@ -16,13 +16,12 @@ package cn.lambdacraft.crafting.block;
 
 import java.util.Random;
 
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.misc.CBCAchievements;
-
 import net.minecraft.block.BlockOre;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.misc.LCAchievements;
 
 /**
  * @author mkpoli
@@ -31,23 +30,18 @@ import net.minecraft.world.World;
 public class BlockCBCOres extends BlockOre {
 	private int type;
 
-	public BlockCBCOres(int par1, int type) {
-		super(par1);
+	public BlockCBCOres(int type) {
+		super();
 		this.type = type;
-		setCreativeTab(CBCMod.cctMisc);
+		setCreativeTab(LCMod.cctMisc);
 		setHardness(type == 0 ? 5.0F : 2.0F);
-		setUnlocalizedName(type == 0 ? "uranium" : type == 1 ? "tin" : "copper");
+		setBlockName(type == 0 ? "uranium" : type == 1 ? "tin" : "copper");
 	}
 
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerBlockIcons(IIconRegister par1IconRegister) {
 		blockIcon = par1IconRegister.registerIcon("lambdacraft:"
 				+ (type == 0 ? "uranium" : type == 1 ? "tin" : "copper"));
-	}
-
-	@Override
-	public int idDropped(int par1, Random par2Random, int par3) {
-		return this.blockID;
 	}
 
 	@Override
@@ -58,7 +52,7 @@ public class BlockCBCOres extends BlockOre {
 	@Override
 	public void onBlockHarvested(World par1World, int par2, int par3, int par4,
 			int par5, EntityPlayer par6EntityPlayer) {
-		CBCAchievements.getAchievement(par6EntityPlayer,
-				CBCAchievements.oreAchievements[this.type]);
+		LCAchievements.getAchievement(par6EntityPlayer,
+				LCAchievements.oreAchievements[this.type]);
 	}
 }

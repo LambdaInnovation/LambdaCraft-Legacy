@@ -16,6 +16,7 @@ package cn.lambdacraft.crafting.block.tile;
 
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -76,8 +77,8 @@ public class TileGeneratorFire extends TileGeneratorBase implements IInventory {
 			this.maxBurnTime = this.tickLeft;
 			if (maxBurnTime == 0)
 				return;
-			if (slots[0].itemID == Item.bucketLava.itemID) {
-				slots[0].itemID = Item.bucketEmpty.itemID;
+			if (slots[0].getItem() == Items.lava_bucket) {
+				slots[0] = new ItemStack(Items.bucket);
 			} else {
 				if (--slots[0].stackSize <= 1)
 					slots[0] = null;
@@ -98,7 +99,7 @@ public class TileGeneratorFire extends TileGeneratorBase implements IInventory {
 			byte count = nbt.getByte("count" + i);
 			if (id == 0)
 				continue;
-			ItemStack is = new ItemStack(id, count, damage);
+			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
 			slots[i] = is;
 		}
 	}
@@ -112,7 +113,7 @@ public class TileGeneratorFire extends TileGeneratorBase implements IInventory {
 		for (int i = 0; i < slots.length; i++) {
 			if (slots[i] == null)
 				continue;
-			nbt.setShort("id" + i, (short) slots[i].itemID);
+			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
 			nbt.setByte("count" + i, (byte) slots[i].stackSize);
 			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
 		}
@@ -164,32 +165,30 @@ public class TileGeneratorFire extends TileGeneratorBase implements IInventory {
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
 		slots[i] = itemstack;
 	}
-
-	@Override
-	public String getInvName() {
-		return "cbc.tile.genfire";
-	}
-
-	@Override
-	public boolean isInvNameLocalized() {
-		return false;
-	}
-
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
 
 	@Override
-	public void openChest() {
-	}
-
-	@Override
-	public void closeChest() {
-	}
-
-	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
+	}
+
+	@Override
+	public String getInventoryName() {
+		return "cbc.tile.genfire";
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		return false;
+	}
+
+	@Override
+	public void openInventory() {}
+
+	@Override
+	public void closeInventory() {
 	}
 }

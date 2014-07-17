@@ -29,7 +29,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.entity.IEntityLink;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.GenericUtils;
@@ -229,7 +229,7 @@ public class EntityHoundeye extends LIEntityMob implements IEntityLink<EntityLiv
 
 	@Override
 	public ResourceLocation getTexture() {
-		return ClientProps.HOUNDEYE_PATH;
+		return LCClientProps.HOUNDEYE_PATH;
 	}
 
 }

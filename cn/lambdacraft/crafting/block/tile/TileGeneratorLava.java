@@ -17,6 +17,7 @@ package cn.lambdacraft.crafting.block.tile;
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
 import cn.lambdacraft.api.energy.item.IEnItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -67,9 +68,9 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 		int energyReq = maxStorage - bucketCnt;
 
 		if (energyReq >= 1 && slots[0] != null) {
-			if (slots[0].itemID == Item.bucketLava.itemID) {
+			if (slots[0].getItem() == Items.lava_bucket) {
 				this.setInventorySlotContents(0, new ItemStack(
-						Item.bucketEmpty, 1, 0));
+						Items.bucket, 1, 0));
 				bucketCnt += 1;
 			}
 		}
@@ -118,7 +119,7 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 			byte count = nbt.getByte("count" + i);
 			if (id == 0)
 				continue;
-			ItemStack is = new ItemStack(id, count, damage);
+			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
 			slots[i] = is;
 		}
 		bucketCnt = nbt.getShort("bucket");
@@ -133,7 +134,7 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 		for (int i = 0; i < slots.length; i++) {
 			if (slots[i] == null)
 				continue;
-			nbt.setShort("id" + i, (short) slots[i].itemID);
+			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
 			nbt.setByte("count" + i, (byte) slots[i].stackSize);
 			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
 		}
@@ -157,26 +158,12 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 	}
 
 	@Override
-	public String getInvName() {
+	public String getInventoryName() {
 		return "cbc.tile.genlava";
 	}
-
-	@Override
-	public boolean isInvNameLocalized() {
-		return false;
-	}
-
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
-	}
-
-	@Override
-	public void openChest() {
-	}
-
-	@Override
-	public void closeChest() {
 	}
 	
 	@Override
@@ -185,6 +172,24 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 			return true;
 		else
 			return (itemstack.getItem() instanceof IEnItem);
+	}
+
+	@Override
+	public boolean hasCustomInventoryName() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void openInventory() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeInventory() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

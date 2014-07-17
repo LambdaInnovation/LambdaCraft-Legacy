@@ -18,10 +18,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_RPG;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
@@ -59,7 +59,7 @@ public class EntityRPGDot extends EntityThrowable {
 	public void onUpdate() {
 		if (worldObj.isRemote || getThrower() == null)
 			return;
-		ItemStack currentItem = getThrower().getCurrentItemOrArmor(0);
+		ItemStack currentItem = getThrower().getHeldItem();
 		if (currentItem == null
 				|| !Weapon_RPG.class.isInstance(currentItem.getItem())) {
 			setDead();
@@ -80,7 +80,7 @@ public class EntityRPGDot extends EntityThrowable {
 			posX = result.hitVec.xCoord;
 			posY = result.hitVec.yCoord;
 			posZ = result.hitVec.zCoord;
-			if(result.typeOfHit == EnumMovingObjectType.ENTITY) {
+			if(result.typeOfHit == MovingObjectType.ENTITY) {
 				double distance = result.entityHit.getDistance(begin.posX, begin.posY, begin.posZ);
 				distance -= Math.sqrt(result.entityHit.width * result.entityHit.width * result.entityHit.height) * 0.25;
 				end = begin.move(distance);

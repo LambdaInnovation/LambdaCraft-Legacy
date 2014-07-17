@@ -28,7 +28,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * @author Mkpoli
  * 
  */
-public class CBCAchievements {
+public class LCAchievements {
 
 	public static Achievement[] oreAchievements = new Achievement[3];
 
@@ -82,7 +82,7 @@ public class CBCAchievements {
 		return conf.get("achivement", nam, def).getString();
 	}
 
-	public CBCAchievements() {
+	public LCAchievements() {
 
 	}
 

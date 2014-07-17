@@ -11,15 +11,14 @@ public class BiomeGenHill extends BiomeGenBase{
 
 	public BiomeGenHill(int par1) {
 		super(par1);
-		this.minHeight = -0.5F;
-		this.maxHeight = 0.5F;
+		this.setHeight(MainBiomes.height_xen_hill);
 		this.spawnableMonsterList.clear();
 		this.spawnableCreatureList.clear();
 		this.spawnableWaterCreatureList.clear();
 		this.spawnableCaveCreatureList.clear();
-		this.topBlock = ((byte)XenBlocks.grass.blockID);
-		this.fillerBlock = ((byte)XenBlocks.dirt.blockID);
+		this.topBlock = XenBlocks.grass;
+		this.fillerBlock = XenBlocks.dirt;
 		this.setBiomeName("Xen Hill");
-		this.theBiomeDecorator = new BiomeDecoratorXen(this);
+		this.theBiomeDecorator = new BiomeDecoratorXen();
 	}
 }

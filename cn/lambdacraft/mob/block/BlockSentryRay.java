@@ -16,8 +16,9 @@ package cn.lambdacraft.mob.block;
 
 import java.util.Random;
 
-import cn.lambdacraft.core.block.CBCBlockContainer;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.block.LCBlockContainer;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cpw.mods.fml.relauncher.Side;
@@ -32,7 +33,7 @@ import net.minecraft.world.World;
  * @author WeAthFolD
  *
  */
-public class BlockSentryRay extends CBCBlockContainer {
+public class BlockSentryRay extends LCBlockContainer {
 
 	public static final float HEIGHT = 0.1F, WIDTH = 0.2F;
 			
@@ -42,7 +43,7 @@ public class BlockSentryRay extends CBCBlockContainer {
 	 */
 	public BlockSentryRay() {
 		super(Material.rock);
-		this.setCreativeTab(null);
+		this.setCreativeTab(LCMod.cct);
 		setBlockTextureName("lambdacraft:ss_1");
 	}
 	
@@ -96,7 +97,7 @@ public class BlockSentryRay extends CBCBlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return ClientProps.RENDER_TYPE_EMPTY;
+		return LCClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	

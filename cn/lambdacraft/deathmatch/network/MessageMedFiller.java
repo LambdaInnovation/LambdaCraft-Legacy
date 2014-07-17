@@ -14,62 +14,61 @@
  */
 package cn.lambdacraft.deathmatch.network;
 
+import io.netty.buffer.ByteBuf;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.misc.CBCNetHandler;
-import cn.lambdacraft.core.proxy.GeneralProps;
+import cn.lambdacraft.core.proxy.LCGeneralProps;
 import cn.lambdacraft.deathmatch.block.TileMedkitFiller;
 import cn.lambdacraft.deathmatch.block.TileMedkitFiller.EnumMedFillerBehavior;
-import cn.liutils.api.register.IChannelProcess;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 /**
  * @author WeAthFolD
  * 
  */
-public class NetMedFillerClient implements IChannelProcess {
-
-	public static void sendPacket(TileMedkitFiller te) {
-		ByteArrayOutputStream bos = CBCNetHandler.getStream(
-				GeneralProps.NET_ID_MEDFILLER_CL, 10);
-		DataOutputStream outputStream = new DataOutputStream(bos);
-
-		try {
-			outputStream.writeInt(te.xCoord);
-			outputStream.writeShort(te.yCoord);
-			outputStream.writeInt(te.zCoord);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = GeneralProps.NET_CHANNEL_SERVER;
-		packet.data = bos.toByteArray();
-		packet.length = bos.size();
-		PacketDispatcher.sendPacketToServer(packet);
+public class MessageMedFiller implements IMessage {
+	
+	public int x, y, z;
+	
+	public MessageMedFiller() {}
+	
+	public MessageMedFiller(TileMedkitFiller te) {
+		x = te.xCoord;
+		y = te.yCoord;
+		z = te.zCoord;
 	}
 
 	@Override
-	public void onPacketData(DataInputStream stream, Player player) {
-		World world = ((EntityPlayerMP) player).worldObj;
+	public void fromBytes(ByteBuf buf) {
+		x = ByteBufUtils.readVarInt(buf, 4);
+		y = ByteBufUtils.readVarInt(buf, 4);
+		z = ByteBufUtils.readVarInt(buf, 4);
+	}
 
-		int x, y, z;
+	@Override
+	public void toBytes(ByteBuf buf) {
+		ByteBufUtils.writeVarInt(buf, x, 4);
+		ByteBufUtils.writeVarInt(buf, y, 4);
+		ByteBufUtils.writeVarInt(buf, z, 4);
+	}
+	
+	public static class Handler implements IMessageHandler<MessageMedFiller, IMessage> {
 
-		try {
-			x = stream.readInt();
-			y = stream.readShort();
-			z = stream.readInt();
-			TileEntity te = world.getBlockTileEntity(x, y, z);
+		@Override
+		public IMessage onMessage(MessageMedFiller message, MessageContext ctx) {
+			World world = ctx.getServerHandler().playerEntity.worldObj;
+			TileEntity te = world.getTileEntity(message.x, message.y, message.z);
 			if (te == null || !(te instanceof TileMedkitFiller))
-				throw new RuntimeException(
-						"Cannot't get the right tileEntity of medkit filler.");
+				throw new RuntimeException("Cannot't get the right tileEntity of medkit filler.");
 			else {
 
 				TileMedkitFiller tt = (TileMedkitFiller) te;
@@ -80,11 +79,9 @@ public class NetMedFillerClient implements IChannelProcess {
 					value++;
 				tt.currentBehavior = EnumMedFillerBehavior.values()[value];
 			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			return null;
 		}
-
+		
 	}
 
 }

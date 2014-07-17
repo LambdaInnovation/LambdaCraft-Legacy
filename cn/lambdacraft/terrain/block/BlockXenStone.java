@@ -1,22 +1,25 @@
 package cn.lambdacraft.terrain.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import cn.lambdacraft.core.block.CBCBlock;
+import net.minecraft.client.renderer.texture.IIconRegister;
 
 /**
  * Xen石
  * @author F
  *
  */
-public class BlockXenStone extends CBCBlock {
+public class BlockXenStone extends Block {
 
-	public BlockXenStone(int par1) 
+	public BlockXenStone() 
 	{
-		super(par1, Material.rock);
-		this.setUnlocalizedName("xenstone");
-		this.setIconName("xen_stone");
+		super(Material.rock);
+		this.setBlockName("xenstone");
+		this.setBlockTextureName("lambdacraft:xen_stone");
 		this.setHardness(2.0F);
 		this.setResistance(10.0F);
-		this.setStepSound(soundStoneFootstep);
+		this.setStepSound(soundTypeStone);
 	}
 }

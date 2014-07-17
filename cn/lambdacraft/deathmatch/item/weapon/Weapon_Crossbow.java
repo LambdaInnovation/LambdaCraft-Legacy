@@ -1,14 +1,14 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.ISpecialCrosshair;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityCrossbowArrow;
 import cn.weaponmod.api.WMInformation;
@@ -27,13 +27,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 		IModdable, IZoomable, ISpecialCrosshair {
 
-	public Icon[] sideIcons = new Icon[6];
+	public IIcon[] sideIcons = new IIcon[6];
 
-	public Weapon_Crossbow(int par1) {
-		super(par1, CBCItems.ammo_bow.itemID);
+	public Weapon_Crossbow() {
+		super(CBCItems.ammo_bow);
 
 		setUnlocalizedName("weapon_crossbow");
-		setCreativeTab(CBCMod.cct);
+		setCreativeTab(LCMod.cct);
 		setMaxStackSize(1);
 		setMaxDamage(6);
 		setNoRepair();
@@ -48,7 +48,7 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister reg) {
+	public void registerIcons(IIconRegister reg) {
 		super.registerIcons(reg);
 		for (int i = 0; i < 6; i++) {
 			sideIcons[i] = reg.registerIcon("lambdacraft:crossbow_side" + i);

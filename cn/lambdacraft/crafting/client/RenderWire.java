@@ -18,12 +18,12 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.crafting.block.tile.TileWire;
 import cn.liutils.api.client.util.RenderUtils;
 
@@ -157,11 +157,11 @@ public class RenderWire extends TileEntitySpecialRenderer {
 			GL11.glPushMatrix();
 			if (side == -1) {
 				if (a == 1 && theArray[dirs[i].getOpposite().ordinal()])
-					RenderUtils.loadTexture(ClientProps.WIRE_MAIN_PATH);
+					RenderUtils.loadTexture(LCClientProps.WIRE_MAIN_PATH);
 				else
-					RenderUtils.loadTexture(ClientProps.WIRE_SIDE_PATH);
+					RenderUtils.loadTexture(LCClientProps.WIRE_SIDE_PATH);
 			} else {
-				RenderUtils.loadTexture(ClientProps.WIRE_SIDE_PATH2);
+				RenderUtils.loadTexture(LCClientProps.WIRE_SIDE_PATH2);
 			}
 
 			t.startDrawingQuads();

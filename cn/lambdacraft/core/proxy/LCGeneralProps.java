@@ -23,7 +23,7 @@ import cn.liutils.core.register.ConfigHandler;
  * 
  * @author WeAthFolD
  */
-public class GeneralProps {
+public class LCGeneralProps {
 
 	@Configurable(key = "ignoreBlockDestroy", defValue = "false", comment = "Ignore all block destruction within the mod.")
 	public static boolean ignoreBlockDestroy;
@@ -74,7 +74,7 @@ public class GeneralProps {
 	public static final int CAT_GENERIC = 0;
 
 	public static void loadProps(Configuration config) {
-		ConfigHandler.loadConfigurableClass(config, GeneralProps.class);
+		ConfigHandler.loadConfigurableClass(config, LCGeneralProps.class);
 	}
 
 }

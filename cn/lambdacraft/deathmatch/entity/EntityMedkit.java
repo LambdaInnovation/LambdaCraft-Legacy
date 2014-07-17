@@ -76,8 +76,8 @@ public class EntityMedkit extends Entity {
 			if (eff != null) {
 				PotionEffect ef = player.getActivePotionEffect(Potion.potionTypes[eff.getPotionID()]);
 				if(ef != null) {
-					ef.duration += eff.duration;
-					player.addPotionEffect(ef);
+					int add = ef.getDuration();
+					player.addPotionEffect(new PotionEffect(eff.getPotionID(), add + eff.getDuration(), eff.getAmplifier()));
 				} else
 					player.addPotionEffect(eff);
 			}

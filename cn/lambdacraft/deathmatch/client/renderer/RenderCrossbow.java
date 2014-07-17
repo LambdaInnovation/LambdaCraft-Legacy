@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.deathmatch.client.model.ModelCrossbow;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.client.render.RenderModelItem;
@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class RenderCrossbow extends RenderModelItem {
 
 	public RenderCrossbow() {
-		super(new ModelCrossbow(), ClientProps.CROSSBOW_PATH);
+		super(new ModelCrossbow(), LCClientProps.CROSSBOW_PATH);
 		//教练用debugger实在是太方便了！
 		setOffset(-0.004F, 0.316F, -0.454F);
 		setRotation(0F, 173.95F, 0F);

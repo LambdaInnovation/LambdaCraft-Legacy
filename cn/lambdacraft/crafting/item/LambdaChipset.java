@@ -14,13 +14,14 @@
  */
 package cn.lambdacraft.crafting.item;
 
-import cn.lambdacraft.core.item.CBCGenericItem;
+import cn.lambdacraft.core.item.LCGenericItem;
 
-public class LambdaChipset extends CBCGenericItem {
+public class LambdaChipset extends LCGenericItem {
 
-	public LambdaChipset(int par1) {
-		super(par1);
-		setIAndU("lambdachip");
+	public LambdaChipset() {
+		super();
+		setUnlocalizedName("lambdachip");
+		setTextureName("lambdacraft:lambdachip");
 	}
 
 }

@@ -25,7 +25,7 @@ import cn.lambdacraft.api.energy.tile.IEnEmitter;
 import cn.lambdacraft.api.energy.tile.IEnergySink;
 import cn.lambdacraft.api.energy.tile.IEnergySource;
 import cn.lambdacraft.api.energy.tile.IEnergyTile;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import cn.lambdacraft.core.world.WorldData;
 
 public final class EnergyNet {
@@ -48,7 +48,7 @@ public final class EnergyNet {
 	}
 
 	public static void onTick(World world) {
-		CBCMod.proxy.profilerStartSection("LC");
+		LCMod.proxy.profilerStartSection("LC");
 
 		EnergyNet energyNet = getForWorld(world);
 
@@ -67,7 +67,7 @@ public final class EnergyNet {
 		if ((apiErrorCooldown > 0) && (world.provider.dimensionId == 0))
 			apiErrorCooldown -= 1;
 
-		CBCMod.proxy.profilerEndSection();
+		LCMod.proxy.profilerEndSection();
 	}
 
 	public void addTileEntity(TileEntity addedTileEntity) {
@@ -102,7 +102,7 @@ public final class EnergyNet {
 			boolean alreadyRemoved = !((IEnergyTile) removedTileEntity)
 					.isAddedToEnergyNet();
 
-			CBCMod.log.warning(new StringBuilder().append("removing ")
+			LCMod.log.warning(new StringBuilder().append("removing ")
 					.append(removedTileEntity)
 					.append(" from the EnergyNet failed, already removed: ")
 					.append(alreadyRemoved).toString());
@@ -140,7 +140,7 @@ public final class EnergyNet {
 
 	public int emitEnergyFrom(IEnergySource energySource, int amount) {
 		if (!energySource.isAddedToEnergyNet()) {
-			CBCMod.log.warning(new StringBuilder()
+			LCMod.log.warning(new StringBuilder()
 					.append("EnergyNet.emitEnergyFrom: ").append(energySource)
 					.append(" is not added to the enet").toString());
 			return amount;
@@ -226,7 +226,7 @@ public final class EnergyNet {
 										.append(",").append(te.zCoord)
 										.toString();
 							}
-							CBCMod.log
+							LCMod.log
 									.warning(new StringBuilder()
 											.append("API ERROR: ")
 											.append(energySink)

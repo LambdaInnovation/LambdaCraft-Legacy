@@ -16,7 +16,7 @@ import cn.liutils.api.util.GenericUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class CBCPlayer {
+public class LCPlayer {
 
 	public static final float LJ_VEL_RADIUS = 1.5F, BHOP_VEL_SCALE = 0.003F, SPEED_REDUCE_SCALE = 0.0005F;
 	private float lastTickRotationYaw;
@@ -35,7 +35,7 @@ public class CBCPlayer {
 	ArmorHEV hevHead = DMItems.armorHEVHelmet, hevChest = DMItems.armorHEVChestplate,
 			hevBoots = DMItems.armorHEVBoot, hevLeggings = DMItems.armorHEVLeggings;
 	
-	public CBCPlayer() {
+	public LCPlayer() {
 		gameSettings = Minecraft.getMinecraft().gameSettings;
 	}
 

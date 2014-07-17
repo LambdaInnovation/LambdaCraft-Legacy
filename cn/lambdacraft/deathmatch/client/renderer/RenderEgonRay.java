@@ -12,7 +12,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.deathmatch.entity.fx.EntityEgonRay;
 import cn.liutils.api.util.Motion3D;
 
@@ -37,7 +37,7 @@ public class RenderEgonRay extends RenderEntity {
 		if (!egon.draw)
 			return;
 		Motion3D motion = new Motion3D(egon);
-		MovingObjectPosition trace = egon.worldObj.clip(motion.asVec3(egon.worldObj), 
+		MovingObjectPosition trace = egon.worldObj.rayTraceBlocks(motion.asVec3(egon.worldObj), 
 				motion.move(100.0F).asVec3(egon.worldObj));
 		Vec3 end = (trace == null) ? motion.asVec3(egon.worldObj)
 				: trace.hitVec;
@@ -81,7 +81,7 @@ public class RenderEgonRay extends RenderEntity {
 		GL11.glRotatef(270.0F - egon.rotationYaw, 0.0F, 1.0F, 0.0F); // 左右旋转
 		GL11.glRotatef(egon.rotationPitch, 0.0F, 0.0F, -1.0F); // 上下旋转
 		
-		Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.EGON_BEAM_PATH1);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LCClientProps.EGON_BEAM_PATH1);
 		tessellator.startDrawingQuads();
 		tessellator.setColorRGBA(204, 204, 204, 110);
 		tessellator.setBrightness(15728880);
@@ -98,7 +98,7 @@ public class RenderEgonRay extends RenderEntity {
 		tessellator.draw();
 		
 		int rnd = (int) (rand.nextFloat() * 3);
-		Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.EGON_BEAM_PATH[rnd]);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LCClientProps.EGON_BEAM_PATH[rnd]);
 		tessellator.startDrawingQuads();
 		tessellator.setColorRGBA(160, 141, 204, 220);
 		tessellator.setBrightness(15728880);

@@ -14,7 +14,7 @@
  */
 package cn.lambdacraft.mob.entity;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.GenericUtils;
 import net.minecraft.entity.Entity;
@@ -263,7 +263,7 @@ public class EntityHLZombie extends LIEntityMob {
 
 	@Override
 	public ResourceLocation getTexture() {
-		return ClientProps.ZOMBIE_MOB_PATH;
+		return LCClientProps.ZOMBIE_MOB_PATH;
 	}	
     
 }

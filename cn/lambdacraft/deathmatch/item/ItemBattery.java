@@ -27,10 +27,10 @@ import net.minecraft.world.World;
  */
 public class ItemBattery extends ElectricItem {
 
-	public ItemBattery(int par1) {
-		super(par1);
+	public ItemBattery() {
+		super();
 		setUnlocalizedName("hevbattery");
-		this.setIconName("battery");
+		this.setTextureName("lambdacraft:battery");
 		this.tier = 2;
 		this.transferLimit = 128;
 		this.maxCharge = EntityBattery.EU_PER_BATTERY;

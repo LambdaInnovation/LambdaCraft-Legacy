@@ -15,13 +15,14 @@
 package cn.lambdacraft.deathmatch.block;
 
 import cn.lambdacraft.api.tile.IUseable;
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.block.CBCBlockContainer;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.block.LCBlockContainer;
 import cn.lambdacraft.core.client.key.UsingUtils;
-import cn.lambdacraft.core.proxy.ClientProps;
-import cn.lambdacraft.core.proxy.GeneralProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.LCGeneralProps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +36,7 @@ import net.minecraft.world.World;
  * @author Administrator
  * 
  */
-public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
+public class BlockHealthCharger extends LCBlockContainer implements IUseable {
 
 	protected final float WIDTH = 0.3F, HEIGHT = 0.4F, LENGTH = 0.08F;
 
@@ -43,23 +44,23 @@ public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
 	 * @param par1
 	 * @param par2Material
 	 */
-	public BlockHealthCharger(int par1) {
-		super(par1, Material.rock);
-		this.setUnlocalizedName("healthcharger");
-		this.setIconName("health");
+	public BlockHealthCharger() {
+		super(Material.rock);
+		this.setBlockName("healthcharger");
+		this.setBlockTextureName("lambdacraft:health");
 		this.setHardness(2.0F);
-		this.setGuiId(GeneralProps.GUI_ID_HEALTH);
+		this.setGuiId(LCGeneralProps.GUI_ID_HEALTH);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int v) {
 		return new TileHealthCharger();
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return ClientProps.RENDER_TYPE_EMPTY;
+		return LCClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	/**
@@ -69,9 +70,9 @@ public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
 	 */
 	@Override
 	public void onNeighborBlockChange(World par1World, int par2, int par3,
-			int par4, int par5) {
+			int par4, Block par5) {
 		TileHealthCharger te = (TileHealthCharger) par1World
-				.getBlockTileEntity(par2, par3, par4);
+				.getTileEntity(par2, par3, par4);
 		if (par1World.isBlockIndirectlyGettingPowered(par2, par3, par4)) {
 			te.isRSActivated = true;
 		} else {
@@ -82,18 +83,18 @@ public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int idk, float what, float these, float are) {
-		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (tileEntity == null || player.isSneaking()) {
 			return false;
 		}
-		player.openGui(CBCMod.instance, GeneralProps.GUI_ID_HEALTH, world, x,
+		player.openGui(LCMod.instance, LCGeneralProps.GUI_ID_HEALTH, world, x,
 				y, z);
 		return true;
 	}
 
 	@Override
-	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
-		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
+	public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
+		TileEntity tileEntity = world.getTileEntity(x, y, z);
 		if (!(tileEntity instanceof TileHealthCharger)) {
 			super.breakBlock(world, x, y, z, par5, par6);
 			return;
@@ -171,7 +172,7 @@ public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
 	public void onBlockUse(World world, EntityPlayer player, int bx, int by,
 			int bz) {
 
-		TileEntity te = world.getBlockTileEntity(bx, by, bz);
+		TileEntity te = world.getTileEntity(bx, by, bz);
 		if (te == null)
 			return;
 		TileHealthCharger te2 = (TileHealthCharger) te;
@@ -187,7 +188,7 @@ public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
 	@Override
 	public void onBlockStopUsing(World world, EntityPlayer player, int bx,
 			int by, int bz) {
-		TileEntity te = world.getBlockTileEntity(bx, by, bz);
+		TileEntity te = world.getTileEntity(bx, by, bz);
 		if (te == null)
 			return;
 		TileHealthCharger te2 = (TileHealthCharger) te;

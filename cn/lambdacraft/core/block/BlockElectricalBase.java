@@ -22,7 +22,7 @@ import net.minecraft.world.World;
  * @author WeAthFolD
  * 
  */
-public class BlockElectricalBase extends CBCBlockContainer {
+public class BlockElectricalBase extends LCBlockContainer {
 
 	private Class<? extends TileEntity> generatorType;
 

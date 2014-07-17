@@ -17,8 +17,8 @@ package cn.lambdacraft.deathmatch.entity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import cn.weaponmod.api.WeaponHelper;
 
@@ -50,13 +50,12 @@ public class EntityHGrenade extends EntityThrowable {
 		if (worldObj.isRemote)
 			return;
 
-		int id = this.worldObj
-				.getBlockId(par1.blockX, par1.blockY, par1.blockZ);
+		Block block = this.worldObj.getBlock(par1.blockX, par1.blockY, par1.blockZ);
 		
 		double collideStrengh = 1.0;
 		// 碰撞代码
-		if (par1.typeOfHit == EnumMovingObjectType.TILE) {
-			if (!Block.blocksList[id].isCollidable())
+		if (par1.typeOfHit == MovingObjectType.BLOCK) {
+			if (!block.isCollidable())
 				return;
 			switch (par1.sideHit) {
 

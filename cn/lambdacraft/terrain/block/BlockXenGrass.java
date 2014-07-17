@@ -4,52 +4,53 @@ import java.util.Random;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.Icon;
-import cn.lambdacraft.core.block.CBCBlock;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
+import net.minecraft.util.IIcon;
 import cn.lambdacraft.terrain.register.XenBlocks;
 /**
  * Xen草方块
  * @author F
  *
  */
-public class BlockXenGrass extends CBCBlock{
+public class BlockXenGrass extends Block{
 
 	@SideOnly(Side.CLIENT)
-    private Icon iconGrassTop;
+    private IIcon iconGrassTop;
     @SideOnly(Side.CLIENT)
-    private Icon iconGrassSide;
+    private IIcon iconGrassSide;
     @SideOnly(Side.CLIENT)
-    private Icon iconGrassBottom;
+    private IIcon iconGrassBottom;
 	
-	public BlockXenGrass(int par1) 
+	public BlockXenGrass() 
 	{
-		super(par1, Material.rock);
-		this.setUnlocalizedName("xengrass");
-		this.setIconName("xen_grass");
+		super(Material.grass);
+		this.setBlockName("xengrass");
+		this.setBlockTextureName("lambdacraft:xen_grass");
 		this.setHardness(0.6F);
-		this.setStepSound(soundGrassFootstep);
+		this.setStepSound(soundTypeGrass);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int par1, int par2)
+	public IIcon getIcon(int par1, int par2)
     {
         return par1 == 1 ? this.iconGrassTop : (par1 == 0 ? this.iconGrassBottom : this.iconGrassSide);
     }
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
-		this.iconGrassTop = par1IconRegister.registerIcon("lambdacraft:" + "xen_grass_top");
-		this.iconGrassSide = par1IconRegister.registerIcon("lambdacraft:" + "xen_grass_side");
-		this.iconGrassBottom = par1IconRegister.registerIcon("lambdacraft:" + "xen_dirt");
+	public void registerBlockIcons(IIconRegister par1IconRegister) {
+		this.iconGrassTop = par1IconRegister.registerIcon(this.getTextureName() + "_top");
+		this.iconGrassSide = par1IconRegister.registerIcon(this.getTextureName() + "_side");
+		this.iconGrassBottom = par1IconRegister.registerIcon("lambdacraft:xen_dirt");
 	}
 	
 	@Override
-	public int idDropped(int par1, Random par2Random, int par3)
-	{
-		return XenBlocks.dirt.blockID;
-	}
+	public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    {
+        return Item.getItemFromBlock(XenBlocks.dirt);
+    }
 }

@@ -324,6 +324,8 @@ public class WeaponHelper {
 
 		//TODO:Use original explosion
 		Explosion explosion = new Explosion(world, entity, posX, posY, posZ, strengh);
+		explosion.doExplosionA();
+		explosion.doExplosionB(true);
 		
 		if (additionalDamage <= 0)
 			return;

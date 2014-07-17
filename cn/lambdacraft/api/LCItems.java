@@ -16,7 +16,7 @@ package cn.lambdacraft.api;
 
 import java.util.logging.Level;
 
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -39,7 +39,7 @@ public class LCItems {
 					.get((Object) null);
 			return var2 instanceof ItemStack ? (ItemStack) var2 : null;
 		} catch (Exception var3) {
-			CBCMod.log.log(Level.ALL, "Exception occurred while getting mod's item, info:" + var3);
+			LCMod.log.log(Level.ALL, "Exception occurred while getting mod's item, info:" + var3);
 			return null;
 		}
 	}
@@ -50,7 +50,7 @@ public class LCItems {
 					.get((Object) null);
 			return var2 instanceof ItemStack ? (ItemStack) var2 : null;
 		} catch (Exception var3) {
-			CBCMod.log.log(Level.ALL, "Exception occurred while getting mod's item, info:" + var3);
+			LCMod.log.log(Level.ALL, "Exception occurred while getting mod's item, info:" + var3);
 			return null;
 		}
 	}
@@ -61,7 +61,7 @@ public class LCItems {
 					.get((Object) null);
 			return var2 instanceof ItemStack ? (ItemStack) var2 : null;
 		} catch (Exception var3) {
-			CBCMod.log.log(Level.ALL, "Exception occurred while getting mod's item, info:" + var3);
+			LCMod.log.log(Level.ALL, "Exception occurred while getting mod's item, info:" + var3);
 			return null;
 		}
 	}

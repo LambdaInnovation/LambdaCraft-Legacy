@@ -17,9 +17,10 @@ package cn.lambdacraft.deathmatch.entity;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import cn.lambdacraft.deathmatch.entity.fx.EntityCrossbowStill;
 import cn.liutils.api.util.Motion3D;
@@ -57,7 +58,7 @@ public class EntityCrossbowArrow extends EntityThrowable {
 			if(isExplosive)
 				Explode();
 			else {
-				if(var1.typeOfHit == EnumMovingObjectType.ENTITY) {
+				if(var1.typeOfHit == MovingObjectType.ENTITY) {
 					if(damage <= 3)
 						setDead();
 					WeaponHelper.doEntityAttack(var1.entityHit, DamageSource.causeMobDamage(getThrower()), damage);
@@ -68,9 +69,10 @@ public class EntityCrossbowArrow extends EntityThrowable {
 					damage *= 0.6;
 				}
 				else {
-					int blockId = worldObj.getBlockId(var1.blockX, var1.blockY, var1.blockZ);
-					if(blockId == Block.thinGlass.blockID || blockId == Block.glass.blockID) {
-						worldObj.destroyBlock(var1.blockX, var1.blockY, var1.blockZ, false);
+					Block block = worldObj.getBlock(var1.blockX, var1.blockY, var1.blockZ);
+					if(block == Blocks.glass_pane || block == Blocks.glass) {
+						//worldObj.destroyBlock(var1.blockX, var1.blockY, var1.blockZ, false);
+						//TODO:destroy it!
 					} else { 
 						this.setDead();
 						worldObj.spawnEntityInWorld(

@@ -16,7 +16,7 @@ package cn.lambdacraft.mob.client.renderer;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -45,7 +45,7 @@ public class RenderShockwave extends Render {
 			float f, float f1) {
 		Tessellator t = Tessellator.instance;
 		int tickTime = entity.ticksExisted;
-		Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.SHOCKWAVE_PATH);
+		Minecraft.getMinecraft().renderEngine.bindTexture(LCClientProps.SHOCKWAVE_PATH);
 		renderWave(t, x, y + 0.1, z, tickTime * 0.48F);
 		renderWave(t, x, y + 0.24, z, tickTime * 0.48F);
 		if(tickTime > 5) {

@@ -20,9 +20,10 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.deathmatch.block.TileMedkitFiller;
-import cn.lambdacraft.deathmatch.network.NetMedFillerClient;
+import cn.lambdacraft.deathmatch.network.MessageMedFiller;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.liutils.api.client.gui.LIGuiButton;
 import cn.liutils.api.client.gui.LIGuiContainer;
@@ -109,7 +110,7 @@ public class GuiMedFiller extends LIGuiContainer {
 	@Override
 	public void onButtonClicked(LIGuiButton button) {
 		if (button.name == "behavior") {
-			NetMedFillerClient.sendPacket(te);
+			LCMod.netHandler.sendToServer(new MessageMedFiller(te));
 		}
 	}
 
@@ -118,10 +119,10 @@ public class GuiMedFiller extends LIGuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		// String blockName = DMBlocks.medkitFiller.getLocalizedName();
 		String blockName = DMBlocks.medkitFiller.getLocalizedName();
-		fontRenderer.drawString(EnumChatFormatting.RED + blockName,
-				100 - fontRenderer.getStringWidth(blockName) / 2, 2, 0xffffff);
+		fontRendererObj.drawString(EnumChatFormatting.RED + blockName,
+				100 - fontRendererObj.getStringWidth(blockName) / 2, 2, 0xffffff);
 		blockName = StatCollector.translateToLocal("container.inventory");
-		fontRenderer.drawString(EnumChatFormatting.DARK_GRAY + blockName, 8,
+		fontRendererObj.drawString(EnumChatFormatting.DARK_GRAY + blockName, 8,
 				85, 0xffffff);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
@@ -136,7 +137,7 @@ public class GuiMedFiller extends LIGuiContainer {
 	protected void drawGuiContainerBackgroundLayer(float f, int a, int j) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		mc.renderEngine.bindTexture(ClientProps.GUI_MEDFILLER_PATH);
+		mc.renderEngine.bindTexture(LCClientProps.GUI_MEDFILLER_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);

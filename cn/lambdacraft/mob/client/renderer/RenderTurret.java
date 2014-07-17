@@ -19,7 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.mob.client.model.ModelTurret;
 import cn.lambdacraft.mob.entity.EntitySentry;
 import cn.liutils.api.client.render.LIRenderMob;
@@ -45,7 +45,7 @@ public class RenderTurret extends LIRenderMob {
 		EntitySentry turret = (EntitySentry) entity;
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_CULL_FACE);
-		loadTexture(ClientProps.TURRET_PATH);
+		loadTexture(LCClientProps.TURRET_PATH);
 		super.doRender(entity, par2, par4, par6, par8, f1);
 		GL11.glTranslatef((float) par2, (float) par4 + turret.height - turret.deathTime * 0.06F,(float) par6);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);

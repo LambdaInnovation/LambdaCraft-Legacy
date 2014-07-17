@@ -7,10 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.CBCPlayer;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.LCPlayer;
 import cn.lambdacraft.core.energy.EnergyNet;
-import cn.lambdacraft.core.misc.CBCAchievements;
+import cn.lambdacraft.core.misc.LCAchievements;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -25,9 +25,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author Administrator
  *
  */
-public class CBCEventListener {
-	
-	private CBCPlayer player = new CBCPlayer();
+public class LCEventListener {
 
 	@SubscribeEvent
 	public void onCraft(ItemCraftedEvent event) {
@@ -40,36 +38,17 @@ public class CBCEventListener {
 		ItemStack item = event.smelting;
 		if (!player.worldObj.isRemote) {
 			if (item.getItem() == CBCItems.ingotSteel) {
-				CBCAchievements.getAchievement(player,
-						CBCAchievements.ohMyTeeth);
+				LCAchievements.getAchievement(player,
+						LCAchievements.ohMyTeeth);
 			} else if (item.getItem() == CBCItems.ingotUranium) {
-				CBCAchievements.getAchievement(player,
-						CBCAchievements.radioactiveBeryl);
+				LCAchievements.getAchievement(player,
+						LCAchievements.radioactiveBeryl);
 			} else if (item.getItem() == CBCItems.halfLife01
 					|| item.getItem() == CBCItems.halfLife02
 					|| item.getItem() == CBCItems.halfLife03) {
-				CBCAchievements.getAchievement(player, CBCAchievements.letsMoe);
+				LCAchievements.getAchievement(player, LCAchievements.letsMoe);
 			}
 		}
 	}
 	
-	@SubscribeEvent
-	public void onWorldTick(WorldTickEvent event) {
-		CBCMod.proxy.profilerStartSection("LambdaCraft");
-		
-		World world = event.world;
-		
-		CBCMod.proxy.profilerEndStartSection("EnergyNet");
-		EnergyNet.onTick(world);
-		
-		CBCMod.proxy.profilerEndSection();
-	}
-	
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	public void onClientTick(ClientTickEvent event) {
-		if(event.phase == Phase.START)
-			player.tickStart();
-		else player.tickEnd();
-	}
 }

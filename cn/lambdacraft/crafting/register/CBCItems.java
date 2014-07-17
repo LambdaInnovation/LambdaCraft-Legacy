@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-import net.minecraft.block.Block;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,13 +14,12 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.item.CBCGenericItem;
-import cn.lambdacraft.core.proxy.GeneralProps;
+import cn.lambdacraft.core.item.LCGenericItem;
 import cn.lambdacraft.crafting.item.Bullet_9mm;
 import cn.lambdacraft.crafting.item.Bullet_steelbow;
 import cn.lambdacraft.crafting.item.HLSpray;
@@ -46,8 +46,6 @@ import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.lambdacraft.terrain.register.XenBlocks;
-import cn.liutils.core.register.Config;
-import cn.liutils.core.register.ConfigHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -67,10 +65,10 @@ public class CBCItems {
 
 	public static ItemBullet bullet_9mm, bullet_steelbow;
 
-	public static CBCGenericItem ingotSteel;
+	public static LCGenericItem ingotSteel;
 
 	public static ItemMaterial materials;
-	public static CBCGenericItem lambdaChip;
+	public static LCGenericItem lambdaChip;
 	public static SteelBar ironBar;
 	public static IngotUranium ingotUranium;
 	public static LCRecord halfLife01, halfLife02, halfLife03;
@@ -85,48 +83,70 @@ public class CBCItems {
 	 * 
 	 * @param conf
 	 */
-	public static void init(Config conf) {
+	public static void init(Configuration conf) {
 
-		ammo_uranium = new Ammo_uranium(ConfigHandler.getItemId(conf, 
-				"itemAmmo_uranium", 0));
-		ammo_9mm = new Ammo_9mm(ConfigHandler.getItemId(conf, "itemAmmo_9mm", 0));
-		ammo_9mm2 = new Ammo_9mm2(ConfigHandler.getItemId(conf, "itemAmmo_9mm2", 0));
-		ammo_357 = new Ammo_357(ConfigHandler.getItemId(conf, "itemAmmo_357", 0));
-		ammo_bow = new Ammo_bow(ConfigHandler.getItemId(conf, "itemAmmo_bow", 0));
-		ammo_rpg = new Ammo_rpg(ConfigHandler.getItemId(conf, "itemAmmo_RPG", 0));
-		ammo_argrenade = new Ammo_argrenade(ConfigHandler.getItemId(conf, "itemAmmo_ARGrenade", 0));
-		ammo_shotgun = new Ammo_shotgun(ConfigHandler.getItemId(conf, "itemBullet_Shotgun", 0));
+		ammo_uranium = new Ammo_uranium();
+		ammo_9mm = new Ammo_9mm();
+		ammo_9mm2 = new Ammo_9mm2();
+		ammo_357 = new Ammo_357();
+		ammo_bow = new Ammo_bow();
+		ammo_rpg = new Ammo_rpg();
+		ammo_argrenade = new Ammo_argrenade();
+		ammo_shotgun = new Ammo_shotgun();
 		
-		bullet_9mm = new Bullet_9mm(ConfigHandler.getItemId(conf, "itemBullet_9mm",
-				0));
-		bullet_steelbow = new Bullet_steelbow(ConfigHandler.getItemId(conf, 
-				"steelbow", 0));
+		bullet_9mm = new Bullet_9mm();
+		bullet_steelbow = new Bullet_steelbow();
 
-		materials = new ItemMaterial(ConfigHandler.getItemId(conf, "mat_a", 0));
+		materials = new ItemMaterial();
 
-		ironBar = new SteelBar(ConfigHandler.getItemId(conf, "ironBar", 0));
-		lambdaChip = new CBCGenericItem(ConfigHandler.getItemId(conf, "lambdachip", 0)).setIAndU("lambdachip");
+		ironBar = new SteelBar();
+		lambdaChip = new LCGenericItem().setIAndU("lambdachip");
 		
-		ingotUranium = new IngotUranium(ConfigHandler.getItemId(conf, "ingotUranium", 0));
-		ingotSteel = new CBCGenericItem(ConfigHandler.getItemId(conf, "itemRefinedIronIngot", 0)).setIAndU("steel");
+		ingotUranium = new IngotUranium();
+		ingotSteel = new LCGenericItem().setIAndU("steel");
 
-		halfLife01 = new LCRecord(ConfigHandler.getItemId(conf, "halfLife01", GeneralProps.CAT_MISC), "hla", 0);
-		halfLife02 = new LCRecord(ConfigHandler.getItemId(conf, "halfLife02", GeneralProps.CAT_MISC), "hlb", 1);
-		halfLife03 = new LCRecord(ConfigHandler.getItemId(conf, "halfLife03", GeneralProps.CAT_MISC), "hlc", 2);
+		halfLife01 = new LCRecord("hla", 0);
+		halfLife02 = new LCRecord("hlb", 1);
+		halfLife03 = new LCRecord("hlc", 2);
 		
-		spray1 = new ItemSpray(ConfigHandler.getItemId(conf, "spray1", GeneralProps.CAT_MISC), 0);
-		spray2 = new ItemSpray(ConfigHandler.getItemId(conf, "spray2", GeneralProps.CAT_MISC), 1);
+		spray1 = new ItemSpray(0);
+		spray2 = new ItemSpray(1);
 		
-		spray = new HLSpray(ConfigHandler.getItemId(conf, "spray", GeneralProps.CAT_MISC));
+		spray = new HLSpray();
 
-		tin = new CBCGenericItem(ConfigHandler.getItemId(conf, "tin", GeneralProps.CAT_MISC)).setIAndU("tin");
-		copper = new CBCGenericItem(ConfigHandler.getItemId(conf, "copper", GeneralProps.CAT_MISC)).setIAndU("copper");
-		chip = new CBCGenericItem(ConfigHandler.getItemId(conf, "chip", GeneralProps.CAT_MISC)).setIAndU("chip");
-		xenCrystal = new CBCGenericItem(ConfigHandler.getItemId(conf, "xencrystal", GeneralProps.CAT_MISC)).setIAndU("xencrystal");
+		tin = new LCGenericItem().setIAndU("tin");
+		copper = new LCGenericItem().setIAndU("copper");
+		chip = new LCGenericItem().setIAndU("chip");
+		xenCrystal = new LCGenericItem().setIAndU("xencrystal");
 		
-		if(!CBCMod.ic2Installed) {
-			battery = new ItemBattery(ConfigHandler.getItemId(conf, "battery", 3));
-		}
+		battery = new ItemBattery();
+		
+		GameRegistry.registerItem(ammo_uranium, "ammo_uranium");
+		GameRegistry.registerItem(ammo_9mm, "ammo_9mm");
+		GameRegistry.registerItem(ammo_9mm2, "ammo_9mm2");
+		GameRegistry.registerItem(ammo_357, "ammo_357");
+		GameRegistry.registerItem(ammo_bow, "ammo_bow");
+		GameRegistry.registerItem(ammo_rpg, "ammo_rpg");
+		GameRegistry.registerItem(ammo_argrenade, "ammo_argrenade");
+		GameRegistry.registerItem(ammo_shotgun, "ammo_shotgun");
+		GameRegistry.registerItem(bullet_9mm, "bullet_9mm");
+		GameRegistry.registerItem(bullet_steelbow, "bullet_steelbow");
+		GameRegistry.registerItem(materials, "materials");
+		GameRegistry.registerItem(ironBar, "ironBar");
+		GameRegistry.registerItem(lambdaChip, "lambdaChip");
+		GameRegistry.registerItem(ingotUranium, "ingotUranium");
+		GameRegistry.registerItem(ingotSteel, "ingotSteel");
+		GameRegistry.registerItem(halfLife01, "halfLife01");
+		GameRegistry.registerItem(halfLife02, "halfLife02");
+		GameRegistry.registerItem(halfLife03, "halfLife03");
+		GameRegistry.registerItem(spray1, "spray1");
+		GameRegistry.registerItem(spray2, "spray2");
+		GameRegistry.registerItem(spray, "spray");
+		GameRegistry.registerItem(tin, "lc_tin");
+		GameRegistry.registerItem(copper, "lc_copper");
+		GameRegistry.registerItem(chip, "lc_chip");
+		GameRegistry.registerItem(xenCrystal, "xenCrystal");
+		GameRegistry.registerItem(battery, "lc_battery");
 	}
 
 	/**
@@ -157,35 +177,35 @@ public class CBCItems {
 				CBCItems.materials, 1, 7), iSmaterials_1_8 = new ItemStack(
 				CBCItems.materials, 1, 8), iSmaterials_1_9 = new ItemStack(
 				CBCItems.materials, 1, 9), iSredstone = new ItemStack(
-				Item.redstone), 
-				iSlightStoneDust = new ItemStack(Item.glowstone),
-				iStnt = new ItemStack(Block.tnt), iSblockLapis = new ItemStack(
-				Block.blockLapis), iSdiamond = new ItemStack(Item.diamond), iSblazePowder = new ItemStack(
-				Item.blazePowder), iSglass = new ItemStack(Block.glass), iSlambdaChip = new ItemStack(
-				CBCItems.lambdaChip), iScoal = new ItemStack(Item.coal), iSgunpowder = new ItemStack(
-				Item.gunpowder), iSingotGold = new ItemStack(Item.ingotGold), iSblockRedstone = new ItemStack(
-				Block.blockRedstone), iSfurnace = new ItemStack(
-				Block.furnaceIdle), iSchest = new ItemStack(Block.chest), iSweaponCrafter = new ItemStack(
+				Items.redstone), 
+				iSlightStoneDust = new ItemStack(Items.glowstone_dust),
+				iStnt = new ItemStack(Blocks.tnt), iSblockLapis = new ItemStack(
+				Blocks.lapis_block), iSdiamond = new ItemStack(Items.diamond), iSblazePowder = new ItemStack(
+				Items.blaze_powder), iSglass = new ItemStack(Blocks.glass), iSlambdaChip = new ItemStack(
+				CBCItems.lambdaChip), iScoal = new ItemStack(Items.coal), iSgunpowder = new ItemStack(
+				Items.gunpowder), iSingotGold = new ItemStack(Items.gold_ingot), iSblockRedstone = new ItemStack(
+				Blocks.redstone_block), iSfurnace = new ItemStack(
+				Blocks.furnace), iSchest = new ItemStack(Blocks.chest), iSweaponCrafter = new ItemStack(
 				CBCBlocks.weaponCrafter), iSadvCrafter = new ItemStack(
 				CBCBlocks.advCrafter), iSwire = new ItemStack(CBCBlocks.wire), iSemerald = new ItemStack(
-				Item.emerald), iSchip = new ItemStack(chip), iSelectricCrafter = new ItemStack(
+				Items.emerald), iSchip = new ItemStack(chip), iSelectricCrafter = new ItemStack(
 				CBCBlocks.elCrafter), iSbattery = new ItemStack(battery), iSgenFire = new ItemStack(
 				CBCBlocks.genFire), iSstorageS = new ItemStack(
 				CBCBlocks.storageS), iSstorageL = new ItemStack(
 				CBCBlocks.storageL), iSgenLava = new ItemStack(
 				CBCBlocks.genLava), iSbucketEmpty = new ItemStack(
-				Item.bucketEmpty), iSgenSolar = new ItemStack(
+				Items.bucket), iSgenSolar = new ItemStack(
 				CBCBlocks.genSolar), iSnetherQuartz = new ItemStack(
-				Item.netherQuartz), sfspieye = new ItemStack(
-				Item.fermentedSpiderEye), srotten = new ItemStack(
-				Item.rottenFlesh), smagma = new ItemStack(Item.magmaCream), sendereye = new ItemStack(
-				Item.eyeOfEnder), smedkit = new ItemStack(DMItems.medkit);
+				Items.nether_star), sfspieye = new ItemStack(
+				Items.fermented_spider_eye), srotten = new ItemStack(
+				Items.rotten_flesh), smagma = new ItemStack(Items.magma_cream), sendereye = new ItemStack(
+				Items.ender_eye), smedkit = new ItemStack(DMItems.medkit);
 
 		Object input[][] = {
 				{ "ABA", "AAA", 'A', "ingotTin", 'B', iSglass },
 				{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSblockRedstone, 'C', "blockRefinedIron", 'D', iSfurnace, 'E', iSchest },
 				{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSdiamond, 'C', iSweaponCrafter, 'D', "ingotCopper", 'E', "blockRefinedIron" },
-				{ "ABA", "ABA", "ABA", 'A', Block.cloth, 'B', "ingotCopper" },
+				{ "ABA", "ABA", "ABA", 'A', Blocks.wool, 'B', "ingotCopper" },
 				{ "ABA", "CDC", "AEA", 'A', iSlightStoneDust, 'B', iSemerald, 'C', iSdiamond, 'D', iSchip, 'E', iSglass },
 				{ "ABA", "CDC", "EAE", 'A', iSglass, 'B', iSwire, 'C', iSlambdaChip, 'D', iSadvCrafter, 'E', iSlightStoneDust },
 				{ "ABA", "ACA", "ACA", 'A', "ingotTin", 'B', iSwire, 'C', iSlightStoneDust },
@@ -224,22 +244,19 @@ public class CBCItems {
 				new ItemStack(spray)
 		};
 		
-		if(!CBCMod.ic2Installed) {
-			//Add LC Only Recipes
-			Object[][] input2 = {
-					{ " A ", "BCB", "DED", 'A', iSstorageS, 'B', iSglass, 'C', "blockRefinedIron", 'D', iSblockLapis, 'E', iSfurnace },
-					{ " A ", "BCB", "DED", 'A', iSglass, 'B', iSblazePowder, 'C', iSbucketEmpty, 'D', "ingotRefinedIron", 'E', iSgenFire },
-					{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSnetherQuartz, 'C', iSchip, 'D', "ingotRefinedIron", 'E', iSgenFire },
-			};
-			
-			ItemStack[] output2 = { iSgenFire, iSgenLava, iSgenSolar };
-			addOreRecipes(output2, input2);
-		}
+		Object[][] input2 = {
+				{ " A ", "BCB", "DED", 'A', iSstorageS, 'B', iSglass, 'C', "blockRefinedIron", 'D', iSblockLapis, 'E', iSfurnace },
+				{ " A ", "BCB", "DED", 'A', iSglass, 'B', iSblazePowder, 'C', iSbucketEmpty, 'D', "ingotRefinedIron", 'E', iSgenFire },
+				{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSnetherQuartz, 'C', iSchip, 'D', "ingotRefinedIron", 'E', iSgenFire },
+		};
+		
+		ItemStack[] output2 = { iSgenFire, iSgenLava, iSgenSolar };
+		addOreRecipes(output2, input2);
 		addOreRecipes(output, input);
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(halfLife01), lambdaChip, Item.diamond);
-		GameRegistry.addShapelessRecipe(new ItemStack(halfLife02), lambdaChip, Item.emerald);
-		GameRegistry.addShapelessRecipe(new ItemStack(halfLife03), lambdaChip, Item.eyeOfEnder);
+		GameRegistry.addShapelessRecipe(new ItemStack(halfLife01), lambdaChip, Items.diamond);
+		GameRegistry.addShapelessRecipe(new ItemStack(halfLife02), lambdaChip, Items.emerald);
+		GameRegistry.addShapelessRecipe(new ItemStack(halfLife03), lambdaChip, Items.ender_eye);
 		GameRegistry.addShapelessRecipe(new ItemStack(XenBlocks.crystal), iSlightStoneDust, iSdiamond);
 		GameRegistry.addShapelessRecipe(new ItemStack(DMItems.weapon_crowbar_el), lambdaChip, new ItemStack(DMItems.weapon_crowbar));
 		GameRegistry.addShapelessRecipe(iSstorageL, CBCBlocks.storageS, lambdaChip);
@@ -266,11 +283,11 @@ public class CBCItems {
 		
 
 		//Smelting
-		GameRegistry.addSmelting(Item.ingotIron.itemID, new ItemStack(ingotSteel.itemID, 1, 0), 3.0F);
-		GameRegistry.addSmelting(CBCBlocks.uraniumOre.blockID, new ItemStack(ingotUranium), 5);
-		GameRegistry.addSmelting(CBCBlocks.oreCopper.blockID, new ItemStack(copper), 2);
-		GameRegistry.addSmelting(CBCBlocks.oreTin.blockID, new ItemStack(tin), 2);
-		GameRegistry.addSmelting(XenBlocks.crystal.blockID, new ItemStack(xenCrystal), 3);
+		GameRegistry.addSmelting(Items.iron_ingot, new ItemStack(ingotSteel, 1, 0), 3.0F);
+		GameRegistry.addSmelting(CBCBlocks.uraniumOre, new ItemStack(ingotUranium), 5);
+		GameRegistry.addSmelting(CBCBlocks.oreCopper, new ItemStack(copper), 2);
+		GameRegistry.addSmelting(CBCBlocks.oreTin, new ItemStack(tin), 2);
+		GameRegistry.addSmelting(XenBlocks.crystal, new ItemStack(xenCrystal), 3);
 		
 		//ChestGen
 		WeightedRandomChestContent gens_dungeon[] = {
@@ -278,7 +295,7 @@ public class CBCItems {
 				new WeightedRandomChestContent(new ItemStack(halfLife02), 1, 1, 5),
 				new WeightedRandomChestContent(new ItemStack(halfLife03), 1, 1, 5),
 				new WeightedRandomChestContent(new ItemStack(ironBar), 3, 8, 50),
-				new WeightedRandomChestContent(new ItemStack(DMItems.physCalibur), 1, 1, 1),
+				new WeightedRandomChestContent(new ItemStack(DMItems.physExcalibur), 1, 1, 1),
 				new WeightedRandomChestContent(new ItemStack(DMItems.weapon_crowbar_el), 1, 1, 10)
 		};
 		for(WeightedRandomChestContent gen : gens_dungeon) {
@@ -288,7 +305,7 @@ public class CBCItems {
 		
 		WeightedRandomChestContent gens_desert[] = {
 				new WeightedRandomChestContent(new ItemStack(ironBar), 3, 8, 50),
-				new WeightedRandomChestContent(new ItemStack(DMItems.physCalibur), 1, 1, 1),
+				new WeightedRandomChestContent(new ItemStack(DMItems.physExcalibur), 1, 1, 1),
 				new WeightedRandomChestContent(new ItemStack(DMItems.weapon_crowbar_el), 1, 1, 10),
 				new WeightedRandomChestContent(new ItemStack(spray), 1, 1, 4),
 				new WeightedRandomChestContent(new ItemStack(lambdaChip), 2, 5, 3)
@@ -334,7 +351,7 @@ public class CBCItems {
 						while (iterator.hasNext()) {
 							ItemStack itemstack1 = (ItemStack) iterator.next();
 
-							if (itemstack.itemID == itemstack1.itemID) {
+							if (itemstack.getItem() == itemstack1.getItem()) {
 								flag = true;
 								arraylist.remove(itemstack1);
 								break;
@@ -369,7 +386,7 @@ public class CBCItems {
 			for (int i = 0; i < 3; i++)
 				for (int j = 0; j < 3; j++) {
 					ItemStack s = inv.getStackInRowAndColumn(i, j);
-					if (s != null && s.itemID == source.itemID) {
+					if (s != null && s.getItem() == source.getItem()) {
 						if (item != null)
 							return null;
 						item = s;
@@ -471,9 +488,9 @@ public class CBCItems {
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack s = inv.getStackInSlot(i);
 				if (s != null) {
-					if (s.itemID == itemToRepair.itemID) {
+					if (s.getItem() == itemToRepair) {
 						b1 = true;
-					} else if (s.itemID == repairMat.itemID) {
+					} else if (s.getItem() == repairMat.getItem()) {
 						b2 = true;
 					}
 				}
@@ -488,12 +505,12 @@ public class CBCItems {
 			for (int i = 0; i < inv.getSizeInventory(); i++) {
 				ItemStack s = inv.getStackInSlot(i);
 				if (s != null) {
-					if (s.itemID == itemToRepair.itemID) {
+					if (s.getItem() == itemToRepair) {
 						if (theItem != null) {
 							return null;
 						}
 						theItem = s;
-					} else if (s.itemID == repairMat.itemID)
+					} else if (s.getItem() == repairMat.getItem())
 						++cntRep;
 				}
 			}

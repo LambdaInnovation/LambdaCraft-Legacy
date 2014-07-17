@@ -18,7 +18,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.proxy.Proxy;
+import cn.lambdacraft.core.proxy.LCCommonProxy;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
@@ -29,13 +29,13 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
  * @author WeAthFolD
  * 
  */
-public class NetSentrySync implements IMessage {
+public class MessageSentry implements IMessage {
 	
 	int x, y, z;
 	int lx, ly, lz;
 	boolean isValid;
 	
-	public NetSentrySync(TileSentryRay tile) {
+	public MessageSentry(TileSentryRay tile) {
 		isValid = !(tile.linkedBlock == null);
 		x = tile.xCoord;
 		y = tile.yCoord;
@@ -46,6 +46,8 @@ public class NetSentrySync implements IMessage {
 			lz = tile.linkedBlock.zCoord;
 		}
 	}
+	
+	public MessageSentry() {}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
@@ -71,10 +73,10 @@ public class NetSentrySync implements IMessage {
 		}
 	}
 	
-	public static class Handler implements IMessageHandler<NetSentrySync, IMessage> {
+	public static class Handler implements IMessageHandler<MessageSentry, IMessage> {
 
 		@Override
-		public IMessage onMessage(NetSentrySync message, MessageContext ctx) {
+		public IMessage onMessage(MessageSentry message, MessageContext ctx) {
 			int x = message.x, y = message.y, z = message.z;
 			World world = ((EntityPlayer)ctx.getServerHandler().playerEntity).worldObj;
 			TileEntity te = world.getTileEntity(x, y, z);
@@ -89,7 +91,7 @@ public class NetSentrySync implements IMessage {
 				z = message.lz;
 				te = world.getTileEntity(x, y, z);
 				if (te == null || !(te instanceof TileSentryRay)) {
-					Proxy.logExceptionMessage(te, "Couldn't find the right partner TileEntity.");
+					LCCommonProxy.logExceptionMessage(te, "Couldn't find the right partner TileEntity.");
 					return null;
 				}
 				ray.linkedBlock = (TileSentryRay) te;

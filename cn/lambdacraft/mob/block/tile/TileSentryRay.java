@@ -27,11 +27,11 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import cn.lambdacraft.mob.ModuleMob;
 import cn.lambdacraft.mob.block.BlockSentryRay;
 import cn.lambdacraft.mob.entity.EntitySentry;
-import cn.lambdacraft.mob.network.NetSentrySync;
+import cn.lambdacraft.mob.network.MessageSentry;
 import cn.liutils.api.util.BlockPos;
 import cn.liutils.api.util.GenericUtils;
 import cn.weaponmod.api.WeaponHelper;
@@ -94,7 +94,7 @@ public class TileSentryRay extends TileEntity {
 			TileEntity te = worldObj.getTileEntity(linkedX, linkedY, linkedZ);
 			if (te != null && te instanceof TileSentryRay) {
 				linkedBlock = (TileSentryRay) te;
-				CBCMod.netHandler.sendToDimension(new NetSentrySync(this), worldObj.provider.dimensionId);
+				LCMod.netHandler.sendToDimension(new MessageSentry(this), worldObj.provider.dimensionId);
 			}
 			linkedX = linkedY = linkedZ = 0;
 		}
@@ -116,7 +116,7 @@ public class TileSentryRay extends TileEntity {
 							linkedBlock = t;
 							ModuleMob.tileMap.remove(player);
 							player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.GREEN + StatCollector.translateToLocal("sentry.successful.name")));
-							CBCMod.netHandler.sendToDimension(new NetSentrySync(this), worldObj.provider.dimensionId);
+							LCMod.netHandler.sendToDimension(new MessageSentry(this), worldObj.provider.dimensionId);
 							isActivated = true;
 						} else {
 							player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED +StatCollector.translateToLocal( "sentry.toofar.name")));
@@ -149,7 +149,7 @@ public class TileSentryRay extends TileEntity {
 		}
 		if (++tickSinceLastUpdate > 20) {
 			tickSinceLastUpdate = 0;
-			CBCMod.netHandler.sendToDimension(new NetSentrySync(this), worldObj.provider.dimensionId);
+			LCMod.netHandler.sendToDimension(new MessageSentry(this), worldObj.provider.dimensionId);
 		}
 	}
 

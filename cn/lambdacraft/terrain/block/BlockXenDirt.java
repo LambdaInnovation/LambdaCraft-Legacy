@@ -1,21 +1,29 @@
 package cn.lambdacraft.terrain.block;
 
+import java.util.Random;
+
+import cn.lambdacraft.terrain.register.XenBlocks;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import cn.lambdacraft.core.block.CBCBlock;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
 
 /**
  * Xen土
  * @author F
  *
  */
-public class BlockXenDirt extends CBCBlock {
+public class BlockXenDirt extends Block {
 
-	public BlockXenDirt(int par1)
+	public BlockXenDirt()
 	{
-		super(par1, Material.rock);
-		this.setUnlocalizedName("xendirt");
-		this.setIconName("xen_dirt");
+		super(Material.rock);
+		this.setBlockName("xendirt");
+		this.setBlockTextureName("lambdacraft:xen_dirt");
 		this.setHardness(0.5F);
-		this.setStepSound(soundGravelFootstep);
+		this.setStepSound(soundTypeGravel);
 	}
 }

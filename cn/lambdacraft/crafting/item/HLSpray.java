@@ -18,22 +18,24 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.world.World;
-
-import cn.lambdacraft.core.item.CBCGenericItem;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.item.LCGenericItem;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.crafting.entity.EntitySpray;
 
 /**
  * @author mkpoli
  * 
  */
-public class HLSpray extends CBCGenericItem {
+public class HLSpray extends LCGenericItem {
 	
-	public HLSpray(int par1) {
-		super(par1);
+	public HLSpray() {
+		super();
 		setMaxStackSize(1);
 		setMaxDamage(10);
-		setIAndU("hlspray");
+		setCreativeTab(LCMod.cctMisc);
+		setUnlocalizedName("hlspray");
+		setTextureName("lambdacraft:hlspray");
 	}
 	
 	@Override
@@ -49,7 +51,7 @@ public class HLSpray extends CBCGenericItem {
 		// 创建Facing(3D) to Direction(2D)数组传递第Side个对象为in
 		int direction = Direction.facingToDirection[side];
 		// 创建EntityArt实例
-		EntitySpray entity = new EntitySpray(world, x, y, z, direction, ClientProps.getSprayId() + 2, player);
+		EntitySpray entity = new EntitySpray(world, x, y, z, direction, LCClientProps.getSprayId() + 2, player);
 		// 判断是否被放置在了可用的表面
 		if (entity.onValidSurface()) {
 			if (!world.isRemote) {

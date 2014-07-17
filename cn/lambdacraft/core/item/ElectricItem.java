@@ -17,7 +17,7 @@ package cn.lambdacraft.core.item;
 import java.util.List;
 
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
@@ -33,7 +33,7 @@ import net.minecraft.util.StatCollector;
  * @author WeAthFolD
  * 
  */
-public abstract class ElectricItem extends CBCGenericItem implements
+public abstract class ElectricItem extends LCGenericItem implements
 		ICustomEnItem {
 
 	protected int tier = 1, transferLimit = 100, maxCharge;
@@ -41,7 +41,7 @@ public abstract class ElectricItem extends CBCGenericItem implements
 	public ElectricItem() {
 		super();
 		setMaxStackSize(1);
-		setCreativeTab(CBCMod.cct);
+		setCreativeTab(LCMod.cct);
 	}
 
 	public void setMaxCharge(int p) {

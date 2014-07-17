@@ -17,34 +17,38 @@ package cn.lambdacraft.core.item;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import cn.lambdacraft.core.CBCMod;
+import net.minecraft.util.StatCollector;
+import cn.lambdacraft.core.LCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * 通用盔甲类。
+ * LambdaCraft通用物品类。
+ * 
+ * @author WeAthFolD, mkpoli
+ * 
  */
-public class CBCGenericArmor extends ItemArmor {
+public class LCGenericItem extends Item {
 
-	private String iconName = "";
 	protected String description;
 	protected boolean useDescription = false;
-
 	/**
-	 * @param id
-	 * @param mat
-	 * @param renderIndex
-	 * @param armorType
+	 * @param par1
 	 */
-	public CBCGenericArmor(ArmorMaterial mat, int renderIndex,
-			int armorType) {
-		super(mat, renderIndex, armorType);
-		setCreativeTab(CBCMod.cct);
+	public LCGenericItem() {
+		super();
+		setCreativeTab(LCMod.cctMisc);
+	}
+	
+	public LCGenericItem setIAndU(String name) {
+		setUnlocalizedName(name);
+		setTextureName("lambdacraft:" + name);
+		return this;
 	}
 
-	public CBCGenericArmor setDescription(String d) {
+	public LCGenericItem setDescription(String d) {
 		this.description = d;
 		useDescription = true;
 		return this;
@@ -57,5 +61,10 @@ public class CBCGenericArmor extends ItemArmor {
 		if (useDescription)
 			par3List.add(description);
 	}
-
+	
+    public String getLocalizedName(ItemStack par1ItemStack)
+    {
+        String s = this.getUnlocalizedName(par1ItemStack);
+        return s == null ? "" : StatCollector.translateToLocal(s);
+    }
 }

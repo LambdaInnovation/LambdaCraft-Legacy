@@ -24,13 +24,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 
 /**
  * @author WeAthFolD
  * 
  */
-public abstract class CBCBlockContainer extends BlockContainer {
+public abstract class LCBlockContainer extends BlockContainer {
 
 	protected int guiId = -1;
 	protected static final Random rand = new Random();
@@ -39,12 +39,12 @@ public abstract class CBCBlockContainer extends BlockContainer {
 	 * @param par1
 	 * @param par2Material
 	 */
-	public CBCBlockContainer(Material mat) {
+	public LCBlockContainer(Material mat) {
 		super(mat);
-		setCreativeTab(CBCMod.cct);
+		setCreativeTab(LCMod.cct);
 	}
 
-	public CBCBlockContainer setGuiId(int id) {
+	public LCBlockContainer setGuiId(int id) {
 		this.guiId = id;
 		return this;
 	}
@@ -56,7 +56,7 @@ public abstract class CBCBlockContainer extends BlockContainer {
 		if (guiId == -1 || tileEntity == null || player.isSneaking()) {
 			return false;
 		}
-		player.openGui(CBCMod.instance, guiId, world, x, y, z);
+		player.openGui(LCMod.instance, guiId, world, x, y, z);
 		return true;
 	}
 

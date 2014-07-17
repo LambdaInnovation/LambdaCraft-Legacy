@@ -24,14 +24,14 @@ public class WMClientProxy extends WMCommonProxy{
 	@Override
 	public void preInit() { 
 		super.preInit();
+		LIKeyProcess.addKey(mc.gameSettings.keyBindAttack, false, new KeyClicking(true));
+		LIKeyProcess.addKey(mc.gameSettings.keyBindUseItem, false, new KeyClicking(false));
+		LIKeyProcess.addKey("reload", Keyboard.KEY_R, false, new KeyReload());
 	}
 	
 	@Override
 	public void init() {
 		
-		LIKeyProcess.addKey(mc.gameSettings.keyBindAttack, false, new KeyClicking(true));
-		LIKeyProcess.addKey(mc.gameSettings.keyBindUseItem, false, new KeyClicking(false));
-		LIKeyProcess.addKey("reload", Keyboard.KEY_R, false, new KeyReload());
 		if(WeaponMod.DEBUG) {
 			KeyMoving.addProcess(new Debug_ProcessorWeapon());
 		}

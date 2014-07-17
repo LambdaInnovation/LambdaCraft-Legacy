@@ -14,13 +14,13 @@
  */
 package cn.lambdacraft.crafting.block;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
-import net.minecraft.world.World;
 
 /**
  * 高级武器合成机！
@@ -30,13 +30,13 @@ import net.minecraft.world.World;
  */
 public class BlockAdvWeaponCrafter extends BlockWeaponCrafter {
 
-	public BlockAdvWeaponCrafter(int par1) {
-		super(par1);
-		setUnlocalizedName("advcrafter");
+	public BlockAdvWeaponCrafter() {
+		super();
+		setBlockName("advcrafter");
 	}
 
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerBlockIcons(IIconRegister par1IconRegister) {
 		iconSide = par1IconRegister.registerIcon("lambdacraft:advcrafter_side");
 		iconTop = par1IconRegister.registerIcon("lambdacraft:advcrafter_top");
 		iconBottom = par1IconRegister.registerIcon("lambdacraft:advcrafter_bottom");
@@ -46,7 +46,7 @@ public class BlockAdvWeaponCrafter extends BlockWeaponCrafter {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public Icon getIcon(int par1, int par2) {
+	public IIcon getIcon(int par1, int par2) {
 		if (par1 < 1)
 			return iconBottom;
 		if (par1 < 2)
@@ -57,7 +57,7 @@ public class BlockAdvWeaponCrafter extends BlockWeaponCrafter {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int g) {
 		return new TileWeaponCrafter().setAdvanced(true);
 	}
 

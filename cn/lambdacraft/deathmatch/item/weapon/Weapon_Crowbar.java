@@ -1,23 +1,22 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import cn.lambdacraft.core.CBCMod;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.ItemSword;
+import cn.lambdacraft.core.LCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.item.EnumToolMaterial;
-import net.minecraft.item.ItemSword;
 
 public class Weapon_Crowbar extends ItemSword {
 
-	public Weapon_Crowbar(int item_id) {
-		super(item_id, EnumToolMaterial.IRON);
+	public Weapon_Crowbar() {
+		super(ToolMaterial.IRON);
 		setUnlocalizedName("weapon_crowbar");
-		setCreativeTab(CBCMod.cct);
+		setCreativeTab(LCMod.cct);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister
 				.registerIcon("lambdacraft:weapon_crowbar");
 	}

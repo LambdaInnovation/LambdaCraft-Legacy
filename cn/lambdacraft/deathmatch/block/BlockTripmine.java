@@ -3,25 +3,22 @@
  */
 package cn.lambdacraft.deathmatch.block;
 
-import static net.minecraftforge.common.ForgeDirection.EAST;
-import static net.minecraftforge.common.ForgeDirection.NORTH;
-import static net.minecraftforge.common.ForgeDirection.SOUTH;
-import static net.minecraftforge.common.ForgeDirection.WEST;
-
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.proxy.ClientProps;
+import net.minecraftforge.common.util.ForgeDirection;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -36,17 +33,17 @@ public class BlockTripmine extends BlockContainer {
 
 	public static final float HEIGHT = 0.15F, WIDTH = 0.28F, RAY_RAD = 0.025F;
 
-	public BlockTripmine(int par1) {
+	public BlockTripmine() {
 
-		super(par1, Material.circuits);
-		setCreativeTab(CBCMod.cct);
+		super(Material.circuits);
+		setCreativeTab(LCMod.cct);
 		setTickRandomly(true);
-		setUnlocalizedName("tripmine");
+		setBlockName("tripmine");
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerBlockIcons(IIconRegister par1IconRegister) {
 		this.blockIcon = par1IconRegister
 				.registerIcon("lambdacraft:blockTripmine");
 	}
@@ -68,7 +65,7 @@ public class BlockTripmine extends BlockContainer {
 	public void updateRayRange(World par1World, int par2, int par3, int par4) {
 		Motion3D begin = new Motion3D(par2, par3, par4, 0, 0, 0);
 		int meta = par1World.getBlockMetadata(par2, par3, par4);
-		TileTripmine tileEntity = (TileTripmine) par1World.getBlockTileEntity(
+		TileTripmine tileEntity = (TileTripmine) par1World.getTileEntity(
 				par2, par3, par4);
 		if (tileEntity == null)
 			return;
@@ -83,7 +80,7 @@ public class BlockTripmine extends BlockContainer {
 		Motion3D end = new Motion3D(begin).move(20.0);
 		Vec3 vec1 = begin.asVec3(par1World).addVector(0.0, 0.5, 0.0), vec2 = end
 				.asVec3(par1World).addVector(0.0, 0.5, 0.0);
-		MovingObjectPosition result = par1World.clip(vec1, vec2);
+		MovingObjectPosition result = par1World.rayTraceBlocks(vec1, vec2);
 		if (result == null) {
 			tileEntity.setEndCoords((int) end.posX, (int) end.posY,
 					(int) end.posZ);
@@ -101,21 +98,21 @@ public class BlockTripmine extends BlockContainer {
 
 	@Override
 	public void onNeighborBlockChange(World par1World, int par2, int par3,
-			int par4, int par5) {
+			int par4, Block par5) {
 
 		int var7 = par1World.getBlockMetadata(par2, par3, par4);
 		Boolean var8 = false;
 		// Check if the block still could exist
-		if (!par1World.isBlockSolidOnSide(par2 - 1, par3, par4, SOUTH)
+		if (!par1World.isSideSolid(par2 - 1, par3, par4, ForgeDirection.SOUTH)
 				&& var7 == 5)
 			var8 = true;
-		if (!par1World.isBlockSolidOnSide(par2 + 1, par3, par4, NORTH)
+		if (!par1World.isSideSolid(par2 + 1, par3, par4, ForgeDirection.NORTH)
 				&& var7 == 4)
 			var8 = true;
-		if (!par1World.isBlockSolidOnSide(par2, par3, par4 - 1, EAST)
+		if (!par1World.isSideSolid(par2, par3, par4 - 1, ForgeDirection.EAST)
 				&& var7 == 3)
 			var8 = true;
-		if (!par1World.isBlockSolidOnSide(par2, par3, par4 + 1, WEST)
+		if (!par1World.isSideSolid(par2, par3, par4 + 1, ForgeDirection.WEST)
 				&& var7 == 2)
 			var8 = true;
 		if (var8) {
@@ -127,7 +124,7 @@ public class BlockTripmine extends BlockContainer {
 
 	@Override
 	public void breakBlock(World par1World, int par2, int par3, int par4,
-			int par5, int par6) {
+			Block par5, int par6) {
 		int var10 = par1World.getBlockMetadata(par2, par3, par4) & 3;
 		int i = (var10 == 3 || var10 == 1) ? par2 : par4;
 		super.breakBlock(par1World, par2, par3, par4, par5, par6);
@@ -142,22 +139,22 @@ public class BlockTripmine extends BlockContainer {
 	}
 
 	@Override
-	public int idDropped(int par1, Random par2Random, int par3) {
-		return 0;
+	public Item getItemDropped(int par1, Random par2Random, int par3) {
+		return null;
 	}
 
 	@Override
 	public boolean canPlaceBlockOnSide(World par1World, int par2, int par3,
 			int par4, int par5) {
 		ForgeDirection dir = ForgeDirection.getOrientation(par5);
-		return (dir == NORTH && par1World.isBlockSolidOnSide(par2, par3,
-				par4 + 1, NORTH))
-				|| (dir == SOUTH && par1World.isBlockSolidOnSide(par2, par3,
-						par4 - 1, SOUTH))
-				|| (dir == WEST && par1World.isBlockSolidOnSide(par2 + 1, par3,
-						par4, WEST))
-				|| (dir == EAST && par1World.isBlockSolidOnSide(par2 - 1, par3,
-						par4, EAST));
+		return (dir == ForgeDirection.NORTH && par1World.isSideSolid(par2, par3,
+				par4 + 1, ForgeDirection.NORTH))
+				|| (dir == ForgeDirection.SOUTH && par1World.isSideSolid(par2, par3,
+						par4 - 1, ForgeDirection.SOUTH))
+				|| (dir == ForgeDirection.WEST && par1World.isSideSolid(par2 + 1, par3,
+						par4, ForgeDirection.WEST))
+				|| (dir == ForgeDirection.EAST && par1World.isSideSolid(par2 - 1, par3,
+						par4, ForgeDirection.EAST));
 	}
 
 	@Override
@@ -194,24 +191,24 @@ public class BlockTripmine extends BlockContainer {
 		byte var10 = 0;
 
 		if (par5 == 2
-				&& par1World.isBlockSolidOnSide(par2, par3, par4 + 1, WEST,
+				&& par1World.isSideSolid(par2, par3, par4 + 1, ForgeDirection.WEST,
 						true)) {
 			var10 = 2;
 		}
 
 		if (par5 == 3
-				&& par1World.isBlockSolidOnSide(par2, par3, par4 - 1, EAST,
+				&& par1World.isSideSolid(par2, par3, par4 - 1, ForgeDirection.EAST,
 						true)) {
 			var10 = 3;
 		}
 
 		if (par5 == 4
-				&& par1World.isBlockSolidOnSide(par2 + 1, par3, par4, NORTH,
+				&& par1World.isSideSolid(par2 + 1, par3, par4, ForgeDirection.NORTH,
 						true)) {
 			var10 = 4;
 		}
 
-		if (par5 == 5 && par1World.isBlockSolidOnSide(par2 - 1, par3, par4, SOUTH,
+		if (par5 == 5 && par1World.isSideSolid(par2 - 1, par3, par4, ForgeDirection.SOUTH,
 						true)) {
 			var10 = 5;
 		}
@@ -228,7 +225,7 @@ public class BlockTripmine extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return ClientProps.RENDER_TYPE_EMPTY;
+		return LCClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	@Override
@@ -242,7 +239,7 @@ public class BlockTripmine extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World world, int v) {
 		return new TileTripmine();
 	}
 

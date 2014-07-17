@@ -14,14 +14,16 @@
  */
 package cn.lambdacraft.deathmatch.proxy;
 
-/**
- * @author WeAthFolD
- * 
- */
+import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraftforge.common.MinecraftForge;
+import cn.lambdacraft.deathmatch.event.DMEventListener;
+import cn.lambdacraft.deathmatch.event.DMTickEvents;
+
 public class Proxy {
 
 	public void preInit() {
-		
+		MinecraftForge.EVENT_BUS.register(new DMEventListener());
+		FMLCommonHandler.instance().bus().register(new DMTickEvents());
 	}
 	
 	public void init() {

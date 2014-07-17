@@ -26,8 +26,8 @@ import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 /**
+ * Message for player control keys.
  * @author WeAthFolD
- *
  */
 public class MessageClicking implements IMessage {
 	
@@ -43,14 +43,16 @@ public class MessageClicking implements IMessage {
 		this.type = type;
 	}
 	
+	public MessageClicking() {}
+	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		type = ByteBufUtils.readVarInt(buf, 1);
+		type = buf.readByte();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeVarInt(buf, type, 1);
+		buf.writeByte(type);
 	}
 	
 	public static class Handler implements IMessageHandler<MessageClicking, IMessage> {
@@ -77,7 +79,7 @@ public class MessageClicking implements IMessage {
 				
 			}
 			if(wrong)
-				WeaponMod.log.info("Coudn't find the right left clicking Item instance...");
+				WeaponMod.log.info("Coudn't find the correct player-controlling Item instance...");
 			return null;
 		}
 		

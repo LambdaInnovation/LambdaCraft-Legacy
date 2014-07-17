@@ -14,33 +14,28 @@
  */
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.LCMod;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 
 /**
  * @author WeAthFolD
  *
  */
-public class ItemPhysicalCalibur extends Weapon_Crowbar {
+public class ItemPhysicalExcalibur extends Weapon_Crowbar {
 
 	/**
 	 * @param item_id
 	 */
-	public ItemPhysicalCalibur(int item_id) {
-		super(item_id);
-		setCreativeTab(CBCMod.cctMisc);
+	public ItemPhysicalExcalibur() {
+		super();
+		setCreativeTab(LCMod.cctMisc);
 		setUnlocalizedName("physcalibur");
 	}
-	
-	@Override
-    public float getDamageVsEntity(Entity par1Entity, ItemStack itemStack)
-    {
-        return 18;
-    }
 	
 	@Override
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase attackedEntity, EntityLivingBase player)
@@ -55,6 +50,8 @@ public class ItemPhysicalCalibur extends Weapon_Crowbar {
 				* MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI)
 				* f;
 		double motionY = 0.5;
+		attackedEntity.attackTime = -1;
+		attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(player), 10);
 		attackedEntity.addVelocity(motionX, motionY, motionZ);
     	EntityLightningBolt bolt = new EntityLightningBolt(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ);
     	attackedEntity.worldObj.spawnEntityInWorld(bolt);

@@ -1,7 +1,7 @@
 package cn.lambdacraft.mob.item;
 
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.item.CBCGenericItem;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.item.LCGenericItem;
 import cn.lambdacraft.mob.entity.EntitySnark;
 import cn.lambdacraft.mob.util.MobHelper;
 import net.minecraft.entity.Entity;
@@ -9,20 +9,20 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class LCMobSpawner extends CBCGenericItem {
+public class LCMobSpawner extends LCGenericItem {
 
 	protected Class<? extends Entity> entClass = EntitySnark.class;
 	
 	public LCMobSpawner() {
 		super();
-		this.setCreativeTab(CBCMod.cct);
+		this.setCreativeTab(LCMod.cct);
 		setUnlocalizedName("snark");
 		setTextureName("lambdacraft:snark");
 	}
 	
 	public LCMobSpawner(Class<? extends Entity> entityClass, String name) {
 		super();
-		setCreativeTab(CBCMod.cct);
+		setCreativeTab(LCMod.cct);
 		entClass = entityClass;
 		setUnlocalizedName(name);
 		setTextureName("lambdacraft:" + name);

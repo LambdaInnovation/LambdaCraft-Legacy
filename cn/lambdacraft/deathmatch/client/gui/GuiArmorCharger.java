@@ -16,15 +16,15 @@ package cn.lambdacraft.deathmatch.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.proxy.LCClientProps;
 import cn.lambdacraft.deathmatch.block.TileArmorCharger;
-import cn.lambdacraft.deathmatch.network.NetChargerClient;
+import cn.lambdacraft.deathmatch.network.MessageCharger;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.liutils.api.client.gui.LIGuiButton;
 import cn.liutils.api.client.gui.LIGuiContainer;
 import cn.liutils.api.client.gui.LIGuiPart;
 import cn.liutils.api.client.gui.IGuiTip;
-
 import net.minecraft.inventory.Container;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -108,7 +108,7 @@ public class GuiArmorCharger extends LIGuiContainer {
 	public void onButtonClicked(LIGuiButton button) {
 		if (button.name == "redstone") {
 			te.nextBehavior();
-			NetChargerClient.sendChargerPacket(te);
+			LCMod.netHandler.sendToServer(new MessageCharger(te));
 		}
 	}
 
@@ -118,8 +118,8 @@ public class GuiArmorCharger extends LIGuiContainer {
 		String blockName = EnumChatFormatting.DARK_GRAY
 				+ StatCollector.translateToLocal(DMBlocks.armorCharger
 						.getLocalizedName());
-		fontRenderer.drawString(blockName,
-				88 - fontRenderer.getStringWidth(blockName) / 2, 5, 0x969494);
+		fontRendererObj.drawString(blockName,
+				88 - fontRendererObj.getStringWidth(blockName) / 2, 5, 0x969494);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
 
@@ -132,7 +132,7 @@ public class GuiArmorCharger extends LIGuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture(ClientProps.GUI_ARMORCHARGER_PATH);
+		mc.renderEngine.bindTexture(LCClientProps.GUI_ARMORCHARGER_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
@@ -142,7 +142,7 @@ public class GuiArmorCharger extends LIGuiContainer {
 		this.drawTexturedModalRect(x + 80, y + 28, 176, 0, length, 10);
 
 		if (te.isCharging) {
-			int height = (int) (te.worldObj.getWorldTime() % 43);
+			int height = (int) (te.getWorldObj().getWorldTime() % 43);
 			this.drawTexturedModalRect(x + 29, y + 21, 176, 56, 43, height);
 		}
 	}

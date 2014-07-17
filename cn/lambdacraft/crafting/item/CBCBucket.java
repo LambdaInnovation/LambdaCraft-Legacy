@@ -14,10 +14,12 @@
  */
 package cn.lambdacraft.crafting.item;
 
-import cn.lambdacraft.core.CBCMod;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
+import cn.lambdacraft.core.LCMod;
 
 /**
  * @author WeAthFolD
@@ -31,16 +33,16 @@ public class CBCBucket extends ItemBucket {
 	 * @param par1
 	 * @param flowLiquidID
 	 */
-	public CBCBucket(int par1, int flowLiquidID, String unlocalizedName) {
-		super(par1, flowLiquidID);
-		this.setCreativeTab(CBCMod.cctMisc);
-		this.setContainerItem(Item.bucketEmpty);
+	public CBCBucket(Block flowLiquidID, String unlocalizedName) {
+		super(flowLiquidID);
+		this.setCreativeTab(LCMod.cctMisc);
+		this.setContainerItem(Items.bucket);
 		this.setUnlocalizedName(unlocalizedName);
 		name = unlocalizedName;
 	}
 	
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:" + name);
 	}
 

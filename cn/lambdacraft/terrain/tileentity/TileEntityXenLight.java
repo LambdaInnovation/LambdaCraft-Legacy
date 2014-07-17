@@ -18,6 +18,7 @@ import java.util.List;
 
 import cn.lambdacraft.terrain.register.XenBlocks;
 import cn.liutils.api.util.GenericUtils;
+import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 
@@ -39,17 +40,17 @@ public class TileEntityXenLight extends TileEntity {
      */
     @Override
 	public void updateEntity() {
-    	int blockId = worldObj.getBlockId(xCoord, yCoord, zCoord);
+    	Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
     	++tickSinceChange;
     	++ticksExisted;
-    	if(blockId == XenBlocks.light_on.blockID) {
+    	if(block == XenBlocks.light_on) {
     		isLighting = true;
     		if(++tickSinceLastUpdate >= TICKRATE) {
     			tickSinceLastUpdate = 0;
     			List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.
     				getBoundingBox(xCoord - 2, yCoord - 2, zCoord - 2, xCoord + 3, yCoord + 3, zCoord + 3), GenericUtils.selectorPlayer);
     			if(list != null && list.size() > 0) {
-    				worldObj.setBlock(xCoord, yCoord, zCoord, XenBlocks.light_off.blockID, 0, 3);
+    				worldObj.setBlock(xCoord, yCoord, zCoord, XenBlocks.light_off, 0, 3);
     				tickSinceChange = 0;
     			}
     		}
@@ -60,7 +61,7 @@ public class TileEntityXenLight extends TileEntity {
     			List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.
         				getBoundingBox(xCoord - 2, yCoord - 2, zCoord - 2, xCoord + 3, yCoord + 3, zCoord + 3), GenericUtils.selectorPlayer);
         		if(list == null || list.size() == 0) {
-        			worldObj.setBlock(xCoord, yCoord, zCoord, XenBlocks.light_on.blockID, 0, 3);
+        			worldObj.setBlock(xCoord, yCoord, zCoord, XenBlocks.light_on, 0, 3);
         			tickSinceChange = 0;
         		}
     		}

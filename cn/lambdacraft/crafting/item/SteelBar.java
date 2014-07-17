@@ -14,13 +14,14 @@
  */
 package cn.lambdacraft.crafting.item;
 
-import cn.lambdacraft.core.item.CBCGenericItem;
+import cn.lambdacraft.core.item.LCGenericItem;
 
-public class SteelBar extends CBCGenericItem {
+public class SteelBar extends LCGenericItem {
 
-	public SteelBar(int par1) {
-		super(par1);
-		setIAndU("steelbar");
+	public SteelBar() {
+		super();
+		setUnlocalizedName("steelbar");
+		setTextureName("lambdacraft:steelbar");
 	}
 
 }
