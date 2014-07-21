@@ -14,17 +14,17 @@
  */
 package cn.lambdacraft.crafting;
 
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.misc.LCAchievements;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.misc.CBCAchievements;
+import cn.lambdacraft.core.misc.CBCNetHandler;
+import cn.lambdacraft.core.proxy.GeneralProps;
+import cn.lambdacraft.core.proxy.Proxy;
 import cn.lambdacraft.crafting.block.container.CRGuiElements;
 import cn.lambdacraft.crafting.command.CommandSpray;
 import cn.lambdacraft.crafting.command.CommandXHairColor;
 import cn.lambdacraft.crafting.entity.EntitySpray;
 import cn.lambdacraft.crafting.item.ItemMaterial.EnumMaterial;
-import cn.lambdacraft.crafting.network.MessageCrafter;
+import cn.lambdacraft.crafting.network.NetCrafterClient;
 import cn.lambdacraft.crafting.recipe.RecipeCrafter;
 import cn.lambdacraft.crafting.recipe.RecipeRepair;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
@@ -34,6 +34,9 @@ import cn.lambdacraft.crafting.world.CBCWorldGen;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.lambdacraft.mob.register.CBCMobItems;
+import cn.liutils.core.client.register.LISoundRegistry;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -42,15 +45,16 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 /**
  * @author Administrator
  * 
  */
-@Mod(modid = "LambdaCraft|World", name = "LambdaCraft World", version = LCMod.VERSION, dependencies = LCMod.DEPENDENCY_CORE)
+@Mod(modid = "LambdaCraft|World", name = "LambdaCraft World", version = CBCMod.VERSION, dependencies = CBCMod.DEPENDENCY_CORE)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class ModuleCrafting {
 	
 	@SidedProxy(clientSide = "cn.lambdacraft.crafting.proxy.ClientProxy", serverSide = "cn.lambdacraft.crafting.proxy.Proxy")
@@ -61,30 +65,36 @@ public class ModuleCrafting {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent Init) {
-		GameRegistry.registerWorldGenerator(new CBCWorldGen(), 4);
-		//TODO：检查权重
-		CBCBlocks.init(LCMod.config);
-		CBCItems.init(LCMod.config);
+		GameRegistry.registerWorldGenerator(new CBCWorldGen());
+		if (Proxy.isRendering()) {
+			for (String s : SND_ENTITIES) {
+				LISoundRegistry.addSoundPath("lambdacraft", "entities/" + s);
+			}
+		}
+		
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent Init) {
+		CBCBlocks.init(CBCMod.config);
+		CBCItems.init(CBCMod.config);
 		
-		LCAchievements.init(LCMod.config);
-		LCMod.guiHandler.addGuiElement(LCGeneralProps.GUI_ID_CRAFTER,
+		CBCAchievements.init(CBCMod.config);
+		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_CRAFTER,
 				new CRGuiElements.ElementCrafter());
-		LCMod.guiHandler.addGuiElement(LCGeneralProps.GUI_ID_GENFIRE,
+		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_GENFIRE,
 				new CRGuiElements.ElementGenFire());
-		LCMod.guiHandler.addGuiElement(LCGeneralProps.GUI_ID_GENLAVA,
+		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_GENLAVA,
 				new CRGuiElements.ElementGenLava());
-		LCMod.guiHandler.addGuiElement(LCGeneralProps.GUI_ID_GENSOLAR,
+		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_GENSOLAR,
 				new CRGuiElements.ElementGenSolar());
-		LCMod.guiHandler.addGuiElement(LCGeneralProps.GUI_ID_BATBOX,
+		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_BATBOX,
 				new CRGuiElements.ElementBatbox());
-		LCMod.guiHandler.addGuiElement(LCGeneralProps.GUI_ID_EL_CRAFTER,
+		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_EL_CRAFTER,
 				new CRGuiElements.ElementElCrafter());
-		LCMod.netHandler.registerMessage(MessageCrafter.Handler.class, MessageCrafter.class, LCMod.getUniqueNetChannel(), Side.SERVER);
-		EntityRegistry.registerModEntity(EntitySpray.class, "lc_spray", LCGeneralProps.ENT_ID_ART, LCMod.instance, 64, 1000, false);
+		CBCNetHandler.addChannel(GeneralProps.NET_ID_CRAFTER_CL,
+				new NetCrafterClient());
+		EntityRegistry.registerModEntity(EntitySpray.class, "lc_spray", GeneralProps.ENT_ID_ART, CBCMod.instance, 64, 1000, false);
 		proxy.init();
 	}
 
@@ -106,7 +116,7 @@ public class ModuleCrafting {
 
 		// 这个是普通合成机的武器合成表
 		RecipeCrafter wpnRecipes[] = {
-				new RecipeCrafter(new ItemStack(DMItems.weapon_crowbar), 700,new ItemStack(CBCItems.ironBar, 2),CBCItems.materials.newStack(1, EnumMaterial.ACCESSORIES),new ItemStack(Items.dye, 1, 1)),
+				new RecipeCrafter(new ItemStack(DMItems.weapon_crowbar), 700,new ItemStack(CBCItems.ironBar, 2),CBCItems.materials.newStack(1, EnumMaterial.ACCESSORIES),new ItemStack(Item.dyePowder, 1, 1)),
 				new RecipeCrafter(new ItemStack(DMItems.weapon_9mmhandgun),1200, CBCItems.materials.newStack(2,EnumMaterial.PISTOL)),
 				new RecipeCrafter(new ItemStack(DMItems.weapon_357), 1400,CBCItems.materials.newStack(3, EnumMaterial.PISTOL),CBCItems.materials.newStack(2, EnumMaterial.ACCESSORIES)),
 				new RecipeCrafter(new ItemStack(DMItems.weapon_9mmAR), 2700,CBCItems.materials.newStack(3, EnumMaterial.LIGHT),CBCItems.materials.newStack(1, EnumMaterial.ACCESSORIES)),

@@ -106,8 +106,8 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 				inventory[1] = null;
 		}
 
-		//if (++this.tickUpdate > 3)
-		//	this.onInventoryChanged();
+		if (++this.tickUpdate > 3)
+			this.onInventoryChanged();
 	}
 	
 	protected void onECNetLoad() {
@@ -134,7 +134,7 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 	}
 
 	@Override
-	public String getInventoryName() {
+	public String getInvName() {
 		return "lambdacraft:elcrafter";
 	}
 

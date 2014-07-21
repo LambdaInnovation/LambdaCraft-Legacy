@@ -16,13 +16,15 @@ package cn.lambdacraft.deathmatch.item.weapon;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -30,8 +32,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
 import cn.weaponmod.api.feature.IModdable;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -40,15 +40,15 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustomEnItem, IModdable {
 
 
-	public Weapon_Crowbar_Electrical() {
-		super();
+	public Weapon_Crowbar_Electrical(int item_id) {
+		super(item_id);
 		this.setUnlocalizedName("weapon_elcrowbar");
 		this.setMaxDamage(10000);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister par1IconRegister) {
+	public void registerIcons(IconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_crowbar");
 	}
 	
@@ -58,13 +58,13 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustom
 	}
 
 	@Override
-	public Item getChargedItem(ItemStack itemStack) {
-		return this;
+	public int getChargedItemId(ItemStack itemStack) {
+		return this.itemID;
 	}
 
 	@Override
-	public Item getEmptyItem(ItemStack itemStack) {
-		return this;
+	public int getEmptyItemId(ItemStack itemStack) {
+		return this.itemID;
 	}
 
 	@Override
@@ -77,11 +77,11 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustom
 		return 2;
 	}
 
-    //@Override TODO:aaaaa
-	//public float getDamageVsEntity(Entity par1Entity,ItemStack i)
-   // {
-    //    return 6;
-   // }
+    @Override
+	public float getDamageVsEntity(Entity par1Entity,ItemStack i)
+    {
+        return 6;
+    }
     
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -163,7 +163,8 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustom
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+	public void getSubItems(int par1, CreativeTabs par2CreativeTabs,
+			List par3List) {
 		par3List.add(new ItemStack(par1, 1, 0));
 		ItemStack chargedItem = new ItemStack(par1, 1, 9999);
 		par3List.add(chargedItem);

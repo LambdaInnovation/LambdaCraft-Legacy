@@ -2,9 +2,16 @@ package cn.lambdacraft.crafting.block;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.block.CBCBlockContainer;
+import cn.lambdacraft.core.proxy.GeneralProps;
+import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,34 +19,28 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.block.LCBlockContainer;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
-import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockWeaponCrafter extends LCBlockContainer {
+public class BlockWeaponCrafter extends CBCBlockContainer {
 
-	public IIcon iconSide, iconTop, iconBottom, iconMain;
+	public Icon iconSide, iconTop, iconBottom, iconMain;
 
 	public enum CrafterIconType {
 
 		CRAFTING, NOMATERIAL, NONE;
 	}
 
-	public BlockWeaponCrafter() {
-		super(Material.iron);
-		setBlockName("crafter");
+	public BlockWeaponCrafter(int par1) {
+		super(par1, Material.iron);
+		setUnlocalizedName("crafter");
 		setHardness(2.0F);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public IIcon getIcon(int par1, int par2) {
+	public Icon getIcon(int par1, int par2) {
 		if (par1 < 1)
 			return iconBottom;
 		if (par1 < 2)
@@ -50,7 +51,7 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 	}
 
 	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
+	public void registerIcons(IconRegister par1IconRegister) {
 		iconSide = par1IconRegister.registerIcon("lambdacraft:crafter_side");
 		iconTop = par1IconRegister.registerIcon("lambdacraft:crafter_top");
 		iconBottom = par1IconRegister
@@ -62,17 +63,17 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int idk, float what, float these, float are) {
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
+		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
 		if (tileEntity == null || player.isSneaking()) {
 			return false;
 		}
-		player.openGui(LCMod.instance, LCGeneralProps.GUI_ID_CRAFTER, world, x,
+		player.openGui(CBCMod.instance, GeneralProps.GUI_ID_CRAFTER, world, x,
 				y, z);
 		return true;
 	}
 
 	@Override
-	public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
+	public void breakBlock(World world, int x, int y, int z, int par5, int par6) {
 		dropItems(world, x, y, z);
 		super.breakBlock(world, x, y, z, par5, par6);
 	}
@@ -84,7 +85,8 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 	@Override
 	public void randomDisplayTick(World par1World, int par2, int par3,
 			int par4, Random par5Random) {
-		TileWeaponCrafter te = (TileWeaponCrafter) par1World.getTileEntity(par2, par3, par4);
+		TileWeaponCrafter te = (TileWeaponCrafter) par1World
+				.getBlockTileEntity(par2, par3, par4);
 		if (te.isBurning) {
 			int l = par1World.getBlockMetadata(par2, par3, par4);
 			float f = par2 + 0.5F;
@@ -119,7 +121,7 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 
 	private void dropItems(World world, int x, int y, int z) {
 
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
+		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
 		if (!(tileEntity instanceof IInventory)) {
 			return;
 		}
@@ -133,7 +135,7 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 				float rz = rand.nextFloat() * 0.8F + 0.1F;
 
 				EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z
-						+ rz, new ItemStack(item.getItem(), item.stackSize,
+						+ rz, new ItemStack(item.itemID, item.stackSize,
 						item.getItemDamage()));
 
 				if (item.hasTagCompound()) {
@@ -178,7 +180,7 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int g) {
+	public TileEntity createNewTileEntity(World world) {
 		return new TileWeaponCrafter();
 	}
 

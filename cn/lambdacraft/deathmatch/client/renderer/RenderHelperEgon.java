@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.deathmatch.client.model.ModelEgonBackpack;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.client.render.PlayerRenderHelper;
@@ -23,25 +23,37 @@ public class RenderHelperEgon implements PlayerRenderHelper {
 
 	ModelEgonBackpack bp = new ModelEgonBackpack();
 	
+	/**
+	 * 
+	 */
 	public RenderHelperEgon() {
 	}
 
+	/* (non-Javadoc)
+	 * @see cn.liutils.api.client.render.PlayerRenderHelper#isActivated(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World)
+	 */
 	@Override
 	public boolean isActivated(EntityPlayer player, World world) {
 		ItemStack is = player.getCurrentEquippedItem();
 		Minecraft mc = Minecraft.getMinecraft();
-		return mc.gameSettings.thirdPersonView != 0 && is != null && is.getItem() == DMItems.weapon_egon;
+		return mc.gameSettings.thirdPersonView != 0 && is != null && is.itemID == DMItems.weapon_egon.itemID;
 	}
 
+	/* (non-Javadoc)
+	 * @see cn.liutils.api.client.render.PlayerRenderHelper#renderHead(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World)
+	 */
 	@Override
 	public void renderHead(EntityPlayer player, World world) {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see cn.liutils.api.client.render.PlayerRenderHelper#renderBody(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World)
+	 */
 	@Override
 	public void renderBody(EntityPlayer player, World world) {
 		GL11.glPushMatrix();
-		RenderUtils.loadTexture(LCClientProps.EGON_BACKPACK);
+		RenderUtils.loadTexture(ClientProps.EGON_BACKPACK);
 		
 		GL11.glTranslated(0.0F, -0.1F, -0.35F);
 		GL11.glScalef(1.0F, -1.0F, -1.0F);

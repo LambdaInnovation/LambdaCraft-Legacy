@@ -5,7 +5,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.liutils.api.client.util.RenderUtils;
 
 public class RenderMuzzleFlash {
@@ -29,7 +29,7 @@ public class RenderMuzzleFlash {
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		
 		GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE_MINUS_SRC_COLOR);
-		RenderUtils.loadTexture(LCClientProps.getRandomMuzzleFlash());
+		RenderUtils.loadTexture(ClientProps.getRandomMuzzleFlash());
 		
 		GL11.glTranslated(tx, ty + 0.1F, tz + 0.1F);
 		GL11.glRotatef(45, 0.0F, 0.0F, 1.0F);

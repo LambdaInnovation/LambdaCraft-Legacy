@@ -22,8 +22,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -32,9 +30,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.common.ForgeDirection;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.EntityUtils;
@@ -115,7 +112,7 @@ public class EntityBarnacle extends LIEntityMob {
 			if(--tickBreaking <= 0) {
 				Motion3D begin = new Motion3D(posX, posY, posZ, 0.0, -1.0, 0.0);
 				Vec3 vec1 = begin.asVec3(worldObj), vec2 = begin.move(30.0).asVec3(worldObj);
-				MovingObjectPosition trace = worldObj.rayTraceBlocks(vec1, vec2);
+				MovingObjectPosition trace = worldObj.clip(vec1, vec2);
 				double distance = trace != null ? (posY - trace.hitVec.yCoord) : 30;
 				if(tentacleLength < distance)
 					tentacleLength += 0.05;
@@ -170,13 +167,13 @@ public class EntityBarnacle extends LIEntityMob {
 		}
 		
 		//Check if barnacle could still exist
-		if(worldObj.getBlock(MathHelper.floor_double(posX), (int)posY + 1, MathHelper.floor_double(posZ)) == Blocks.air) {
+		if(worldObj.getBlockId(MathHelper.floor_double(posX), (int)posY + 1, MathHelper.floor_double(posZ)) == 0) {
 			//TryAttach
 			if(ticksExisted < 10) {
 				Motion3D mo = new Motion3D(this);
-				MovingObjectPosition result = worldObj.rayTraceBlocks(mo.asVec3(worldObj), mo.asVec3(worldObj).addVector(0.0, 40.0, 0.0));
-				if(result != null && worldObj.isSideSolid(result.blockX, result.blockY, result.blockZ, ForgeDirection.DOWN)) {
-					if(worldObj.isBlockNormalCubeDefault(result.blockX, result.blockY, result.blockZ, false)) {
+				MovingObjectPosition result = worldObj.clip(mo.asVec3(worldObj), mo.asVec3(worldObj).addVector(0.0, 40.0, 0.0));
+				if(result != null && worldObj.isBlockSolidOnSide(result.blockX, result.blockY, result.blockZ, ForgeDirection.DOWN)) {
+					if(worldObj.isBlockNormalCube(result.blockX, result.blockY, result.blockZ)) {
 						this.setPosition(result.blockX + 0.5, result.blockY - 1.0, result.blockZ + 0.5);
 						AxisAlignedBB box = AxisAlignedBB.getAABBPool().getAABB(posX - 2, posY - 2, posZ - 2, posX + 2, posY + 2, posZ + 2);
 						List list = worldObj.getEntitiesWithinAABBExcludingEntity(this, box, selectorMyself);
@@ -194,7 +191,7 @@ public class EntityBarnacle extends LIEntityMob {
 		} else detach = false;
 		
 		//Disappear if in peaceful
-		if(!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.PEACEFUL)
+		if(!worldObj.isRemote && worldObj.difficultySetting == 0)
 			this.setDead();
 	}
 	
@@ -210,7 +207,7 @@ public class EntityBarnacle extends LIEntityMob {
 			dataWatcher.updateObject(12, Byte.valueOf((byte)tentacleLength));
 			dataWatcher.updateObject(14, Byte.valueOf((byte)tickBreaking));
 			if(this.pullingEntity != null)
-				dataWatcher.updateObject(13, Integer.valueOf(pullingEntity.getEntityId()));
+				dataWatcher.updateObject(13, Integer.valueOf(pullingEntity.entityId));
 			else dataWatcher.updateObject(13, Integer.valueOf(0));
 		}
 	}
@@ -233,7 +230,7 @@ public class EntityBarnacle extends LIEntityMob {
 		e.onGround = false;
 		tickBreaking = 300;
 		pullingEntityMap.put(e, this);
-		int entityid = pullingEntity == null ? 0 : pullingEntity.getEntityId();
+		int entityid = pullingEntity == null ? 0 : pullingEntity.entityId;
 		dataWatcher.updateObject(12, Byte.valueOf((byte) entityid));
 		timesEaten = tickBeforeLastAttack = 0;
 	}
@@ -245,14 +242,14 @@ public class EntityBarnacle extends LIEntityMob {
 	}
 	
     @Override
-	public EntityItem func_145778_a(Item par1, int par2, float par3)
+	public EntityItem dropItemWithOffset(int par1, int par2, float par3)
     {
         return this.entityDropItem(new ItemStack(par1, par2, 1), par3);
     }
     
     @Override
-    public Item getDropItem() {
-    	return CBCMobItems.dna;
+    public int getDropItemId() {
+    	return CBCMobItems.dna.itemID;
     }
 
 	/* (non-Javadoc)

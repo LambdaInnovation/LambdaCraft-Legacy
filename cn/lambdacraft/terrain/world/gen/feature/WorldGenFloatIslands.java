@@ -92,15 +92,15 @@ public class WorldGenFloatIslands extends WorldGenerator{
 					{
 						if(y1 == height * 0.5F - 1 && !noGrass)
 						{
-							world.setBlock(x + x1, y + y1, z + z1, XenBlocks.grass, 0, 2);
+							world.setBlock(x + x1, y + y1, z + z1, XenBlocks.grass.blockID, 0, 2);
 						}
 						else if((y1 == height * 0.5F - 2 || y1 == height * 0.5F - 3)&& !noGrass)
 						{
-							world.setBlock(x + x1, y + y1, z + z1, XenBlocks.dirt, 0, 2);
+							world.setBlock(x + x1, y + y1, z + z1, XenBlocks.dirt.blockID, 0, 2);
 						}
 						else
 						{
-							world.setBlock(x + x1, y + y1, z + z1, XenBlocks.stone, 0, 2);
+							world.setBlock(x + x1, y + y1, z + z1, XenBlocks.stone.blockID, 0, 2);
 						}
 					}
 				}

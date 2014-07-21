@@ -1,19 +1,13 @@
 package cn.weaponmod.proxy;
 
-import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cn.weaponmod.events.ItemControlHandler;
-import cn.weaponmod.events.WMEventListener;
-import cn.weaponmod.events.WMTickEvents;
+import cn.weaponmod.events.WMTickHandler;
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 public class WMCommonProxy {
-	
-	public ItemControlHandler controlHandler_client = new ItemControlHandler(),
-			controlHandler_server = new ItemControlHandler();
 
 	public void preInit() {
-		MinecraftForge.EVENT_BUS.register(new WMEventListener());
-		FMLCommonHandler.instance().bus().register(new WMTickEvents());
+		TickRegistry.registerTickHandler(new WMTickHandler(), Side.CLIENT);
 	}
 
 	public void init() {}

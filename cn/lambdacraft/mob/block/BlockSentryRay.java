@@ -16,15 +16,13 @@ package cn.lambdacraft.mob.block;
 
 import java.util.Random;
 
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.block.LCBlockContainer;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.block.CBCBlockContainer;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -33,7 +31,7 @@ import net.minecraft.world.World;
  * @author WeAthFolD
  *
  */
-public class BlockSentryRay extends LCBlockContainer {
+public class BlockSentryRay extends CBCBlockContainer {
 
 	public static final float HEIGHT = 0.1F, WIDTH = 0.2F;
 			
@@ -41,10 +39,10 @@ public class BlockSentryRay extends LCBlockContainer {
 	 * @param par1
 	 * @param par2Material
 	 */
-	public BlockSentryRay() {
-		super(Material.rock);
-		this.setCreativeTab(LCMod.cct);
-		setBlockTextureName("lambdacraft:ss_1");
+	public BlockSentryRay(int par1) {
+		super(par1, Material.rock);
+		this.setCreativeTab(null);
+		setIconName("ss_1");
 	}
 	
 	@Override
@@ -81,23 +79,23 @@ public class BlockSentryRay extends LCBlockContainer {
 	}
 	
     @Override
-	public Item getItemDropped(int par1, Random par2Random, int par3)
+	public int idDropped(int par1, Random par2Random, int par3)
     {
-    	return CBCMobItems.sentrySyncer;
+    	return CBCMobItems.sentrySyncer.itemID;
     }
 
 	/* (non-Javadoc)
 	 * @see net.minecraft.block.ITileEntityProvider#createNewTileEntity(net.minecraft.world.World)
 	 */
 	@Override
-	public TileEntity createNewTileEntity(World world, int v) {
+	public TileEntity createNewTileEntity(World world) {
 		return new TileSentryRay();
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return LCClientProps.RENDER_TYPE_EMPTY;
+		return ClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	

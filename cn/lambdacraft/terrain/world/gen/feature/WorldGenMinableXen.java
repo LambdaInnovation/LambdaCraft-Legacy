@@ -14,27 +14,29 @@ import net.minecraft.world.gen.feature.WorldGenerator;
  */
 public class WorldGenMinableXen extends WorldGenerator
 {
-    private Block minableBlock;
+    /** The block ID of the ore to be placed using this generator. */
+    private int minableBlockId;
     private int minableBlockMeta = 0;
+
     /** The number of blocks to generate. */
     private int numberOfBlocks;
-    private Block targetBlock;
+    private int targetBlock;
 
-    public WorldGenMinableXen(Block par1, int par2)
+    public WorldGenMinableXen(int par1, int par2)
     {
-        this(par1, par2, XenBlocks.stone);
+        this(par1, par2, XenBlocks.stone.blockID);
     }
 
-    public WorldGenMinableXen(Block par1, int par2, Block par3)
+    public WorldGenMinableXen(int par1, int par2, int par3)
     {
-        this.minableBlock = par1;
+        this.minableBlockId = par1;
         this.numberOfBlocks = par2;
         this.targetBlock = par3;
     }
 
-    public WorldGenMinableXen(Block block, int meta, int number, Block target)
+    public WorldGenMinableXen(int id, int meta, int number, int target)
     {
-        this(block, number, target);
+        this(id, number, target);
         minableBlockMeta = meta;
     }
 
@@ -80,9 +82,10 @@ public class WorldGenMinableXen extends WorldGenerator
                             {
                                 double d14 = (i3 + 0.5D - d8) / (d10 / 2.0D);
 
-                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && par1World.getBlock(k2, l2, i3).isReplaceableOreGen(par1World, k2, l2, i3, targetBlock))
+                                Block block = Block.blocksList[par1World.getBlockId(k2, l2, i3)];
+                                if (d12 * d12 + d13 * d13 + d14 * d14 < 1.0D && (block != null && block.isGenMineableReplaceable(par1World, k2, l2, i3, targetBlock)))
                                 {
-                                    par1World.setBlock(k2, l2, i3, this.minableBlock, minableBlockMeta, 2);
+                                    par1World.setBlock(k2, l2, i3, this.minableBlockId, minableBlockMeta, 2);
                                 }
                             }
                         }

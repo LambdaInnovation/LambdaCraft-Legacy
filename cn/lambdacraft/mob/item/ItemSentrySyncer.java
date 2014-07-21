@@ -17,9 +17,9 @@ package cn.lambdacraft.mob.item;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.item.LCGenericItem;
+import net.minecraftforge.common.ForgeDirection;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.item.CBCGenericItem;
 import cn.lambdacraft.mob.ModuleMob;
 import cn.lambdacraft.mob.register.CBCMobBlocks;
 import cn.liutils.api.util.BlockPos;
@@ -28,16 +28,15 @@ import cn.liutils.api.util.BlockPos;
  * @author WeAthFolD
  *
  */
-public class ItemSentrySyncer extends LCGenericItem {
+public class ItemSentrySyncer extends CBCGenericItem {
 
 	/**
 	 * @param par1
 	 */
-	public ItemSentrySyncer() {
-		super();
-		this.setCreativeTab(LCMod.cct);
-		setUnlocalizedName("syncer");
-		setTextureName("lambdacraft:syncer");
+	public ItemSentrySyncer(int par1) {
+		super(par1);
+		this.setCreativeTab(CBCMod.cct);
+		this.setIAndU("syncer");
 	}
 	
 	@Override
@@ -50,8 +49,8 @@ public class ItemSentrySyncer extends LCGenericItem {
 			par4 += dir.offsetX;
 			par5 += dir.offsetY;
 			par6 += dir.offsetZ;
-			ModuleMob.placeMap.put(new BlockPos(par4, par5, par6, CBCMobBlocks.sentryRay), par2EntityPlayer);
-			par3World.setBlock(par4, par5, par6, CBCMobBlocks.sentryRay, par7, 0x03);
+			ModuleMob.placeMap.put(new BlockPos(par4, par5, par6, CBCMobBlocks.sentryRay.blockID), par2EntityPlayer);
+			par3World.setBlock(par4, par5, par6, CBCMobBlocks.sentryRay.blockID, par7, 0x03);
 		}
     	return false;
     }

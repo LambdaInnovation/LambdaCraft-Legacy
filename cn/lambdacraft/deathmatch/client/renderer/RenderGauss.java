@@ -17,7 +17,7 @@ package cn.lambdacraft.deathmatch.client.renderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.deathmatch.client.model.ModelGauss;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.client.model.IItemModel;
@@ -34,7 +34,7 @@ public class RenderGauss extends RenderModelItem {
 	static IItemModel model = new ModelGauss();
 
 	public RenderGauss() {
-		super(model, LCClientProps.GAUSS_ITEM_PATH);
+		super(model, ClientProps.GAUSS_ITEM_PATH);
 		this.setInventorySpin(false);
 		this.setOffset(0.0F, 1.5F, 0.0F);
 		this.setInvScale(0.8F);

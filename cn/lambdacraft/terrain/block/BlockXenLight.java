@@ -18,13 +18,11 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.block.*;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.terrain.register.XenBlocks;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenLight;
 
@@ -32,21 +30,21 @@ import cn.lambdacraft.terrain.tileentity.TileEntityXenLight;
  * @author WeAthFolD
  *
  */
-public class BlockXenLight extends LCBlockContainer {
+public class BlockXenLight extends CBCBlockContainer {
 
 	private boolean isBright;
 
-	public BlockXenLight( boolean bright) {
-		super(Material.cloth);
+	public BlockXenLight(int par1, boolean bright) {
+		super(par1, Material.cloth);
 		isBright = bright;
-		this.setStepSound(soundTypeCloth);
-		this.setBlockName("xenLight");
-		this.setBlockTextureName("lambdacraft:xenlight");
-		this.setLightLevel(isBright ? 0.7F : 0.0F);
+		this.setStepSound(Block.soundClothFootstep);
+		this.setUnlocalizedName("xenLight");
+		this.setIconName("xenlight");
+		this.setLightValue(isBright ? 0.7F : 0.0F);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World var1, int var2) {
+	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityXenLight();
 	}
 	
@@ -65,21 +63,21 @@ public class BlockXenLight extends LCBlockContainer {
      * redstoneTorchOff, and vice versa. Most blocks only match themselves.
      */
     @Override
-	public boolean isAssociatedBlock(Block par1)
+	public boolean isAssociatedBlockID(int par1)
     {
-        return par1 == XenBlocks.light_on || par1 == XenBlocks.light_off;
+        return par1 == XenBlocks.light_on.blockID || par1 == XenBlocks.light_off.blockID;
     }
     
     @Override
-	public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+	public int idDropped(int par1, Random par2Random, int par3)
     {
-        return Item.getItemFromBlock(XenBlocks.light_on);
+    	return XenBlocks.light_on.blockID;
     }
     
     @Override
 	public int getRenderType()
     {
-        return LCClientProps.RENDER_TYPE_EMPTY;
+        return ClientProps.RENDER_TYPE_EMPTY;
     }
     
     /**
@@ -95,10 +93,9 @@ public class BlockXenLight extends LCBlockContainer {
      * their own) Args: x, y, z, neighbor blockID
      */
     @Override
-    public void onNeighborBlockChange(World world, int par2, int par3, int par4, Block par5) {
-    	if(world.getBlock(par2, par3 - 1, par4) == Blocks.air){
+    public void onNeighborBlockChange(World world, int par2, int par3, int par4, int par5) {
+    	if(world.getBlockId(par2, par3 - 1, par4) == 0)
     		world.setBlockToAir(par2, par3, par4);
-    	}
     }
 
 }

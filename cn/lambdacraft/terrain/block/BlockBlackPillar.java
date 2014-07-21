@@ -1,11 +1,9 @@
 package cn.lambdacraft.terrain.block;
 
-import cn.lambdacraft.core.LCMod;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.util.Icon;
+import cn.lambdacraft.core.block.CBCBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -14,47 +12,34 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author F
  *
  */
-public class BlockBlackPillar extends Block{
+public class BlockBlackPillar extends CBCBlock{
 
 	@SideOnly(Side.CLIENT)
-    private IIcon iconPillar;
+    private Icon iconPillar;
     @SideOnly(Side.CLIENT)
-    private IIcon iconPillarSide;
+    private Icon iconPillarSide;
 	
-	public BlockBlackPillar() 
+	public BlockBlackPillar(int par1) 
 	{
-		super(Material.rock);
-		this.setBlockName("xenblackpillar");
-		this.setBlockTextureName("lambdacraft:xen_black_pillar");
-		this.setBlockUnbreakable();
+		super(par1, Material.rock);
+		this.setUnlocalizedName("xenblackpillar");
+		this.setIconName("xen_black_pillar");
+		this.setHardness(-1.0F);
 		this.setResistance(2000.0F);
-		this.setStepSound(soundTypeStone);
+		this.setStepSound(soundStoneFootstep);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister p_149651_1_)
-	{
-	    this.iconPillar = p_149651_1_.registerIcon(this.getTextureName());
-	    this.iconPillarSide = p_149651_1_.registerIcon(this.getTextureName() + "_side");
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-    public IIcon getIcon(IBlockAccess par1, int x, int y, int z, int side)
+	public Icon getIcon(int par1, int par2)
     {
-        return this.getIcon(side, par1.getBlockMetadata(x, y, z));
+        return par1 == 1 ? this.iconPillar : (par1 == 0 ? this.iconPillar : this.iconPillarSide);
     }
 	
-	@Override
 	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int side, int meta)
-	{
-	     if(side == 1 || side == 0){
-	    	 return iconPillar;
-	     }else{
-	    	 return iconPillarSide;
-	     }
+	@Override
+	public void registerIcons(IconRegister par1IconRegister) {
+		this.iconPillar = par1IconRegister.registerIcon("lambdacraft:" + "xen_black_pillar");
+		this.iconPillarSide = par1IconRegister.registerIcon("lambdacraft:" + "xen_black_pillar_side");
 	}
-	
 }

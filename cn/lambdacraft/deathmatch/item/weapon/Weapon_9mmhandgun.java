@@ -14,8 +14,8 @@ import net.minecraft.world.World;
  */
 public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
 
-	public Weapon_9mmhandgun() {
-		super();
+	public Weapon_9mmhandgun(int par1) {
+		super(par1);
 	}
 
 	@Override

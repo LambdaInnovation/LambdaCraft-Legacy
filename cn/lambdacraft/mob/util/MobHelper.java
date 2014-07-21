@@ -2,16 +2,18 @@ package cn.lambdacraft.mob.util;
 
 import java.util.List;
 
+import cn.lambdacraft.api.entity.IEntityLink;
+
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cn.lambdacraft.api.entity.IEntityLink;
 
 public final class MobHelper {
 
@@ -48,7 +50,7 @@ public final class MobHelper {
 			if (entityliving instanceof IEntityLink) {
 				((IEntityLink) entityliving).setLinkedEntity(thrower);
 			}
-            //entityliving.onSpawnWithEgg((EntityLivingData)null);
+            entityliving.onSpawnWithEgg((EntityLivingData)null);
 			par0World.spawnEntityInWorld(entity);
 			entityliving.playLivingSound();
 		}
@@ -75,7 +77,7 @@ public final class MobHelper {
                     entity.setLocationAndAngles(par2, par4, par6, MathHelper.wrapAngleTo180_float(par0World.rand.nextFloat() * 360.0F), 0.0F);
                     entityliving.rotationYawHead = entityliving.rotationYaw;
                     entityliving.renderYawOffset = entityliving.rotationYaw;
-                    //entityliving.onSpawnWithEgg((EntityLivingData)null);
+                    entityliving.onSpawnWithEgg((EntityLivingData)null);
                     if (entityliving instanceof IEntityLink && thrower != null) {
         				((IEntityLink) entityliving).setLinkedEntity(thrower);
         			}

@@ -3,7 +3,7 @@
  */
 package cn.lambdacraft.deathmatch.client.renderer;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
@@ -27,13 +27,13 @@ public class RenderEmptyBlock implements ISimpleBlockRenderingHandler {
 	}
 
 	@Override
-	public boolean shouldRender3DInInventory(int v) {
+	public boolean shouldRender3DInInventory() {
 		return false;
 	}
 
 	@Override
 	public int getRenderId() {
-		return LCClientProps.RENDER_TYPE_EMPTY;
+		return ClientProps.RENDER_TYPE_EMPTY;
 	}
 
 }

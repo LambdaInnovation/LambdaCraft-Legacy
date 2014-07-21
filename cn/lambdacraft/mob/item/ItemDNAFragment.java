@@ -16,15 +16,15 @@ package cn.lambdacraft.mob.item;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.Icon;
 import net.minecraft.util.StatCollector;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -32,7 +32,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class ItemDNAFragment extends Item {
 
-	IIcon[] icons = new IIcon[6];
+	Icon[] icons = new Icon[6];
 	public static final String[] descriptions = new String[] {
 		"headcrab",
 		"barnacle",
@@ -45,8 +45,8 @@ public class ItemDNAFragment extends Item {
 	/**
 	 * @param par1
 	 */
-	public ItemDNAFragment() {
-		super();
+	public ItemDNAFragment(int par1) {
+		super(par1);
 		setUnlocalizedName("dna");
 		setCreativeTab(CreativeTabs.tabMisc);
 		this.hasSubtypes = true;
@@ -54,7 +54,7 @@ public class ItemDNAFragment extends Item {
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IIconRegister ir) {
+	public void registerIcons(IconRegister ir) {
 		for(int i = 0; i < 6; i++) {
 			icons[i] = ir.registerIcon("lambdacraft:dna" + i);
 		}
@@ -65,7 +65,7 @@ public class ItemDNAFragment extends Item {
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
-    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list)
+    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List list)
     {
     	for(int i = 0; i < 6; i ++)
     		list.add(new ItemStack(par1, 1, i));
@@ -83,7 +83,7 @@ public class ItemDNAFragment extends Item {
     /**
      * Gets an icon index based on an item's damage value
      */
-    public IIcon getIconFromDamage(int i)
+    public Icon getIconFromDamage(int i)
     {
     	return icons[i];
     }

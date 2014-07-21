@@ -25,11 +25,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.entity.EntityTrailFX;
 import cn.liutils.api.util.GenericUtils;
@@ -52,7 +52,7 @@ public class EntityHornet extends EntityThrowable {
 		if (worldObj.isRemote)
 			worldObj.spawnEntityInWorld(new EntityTrailFX(worldObj, this)
 					.setSampleFreq(1).setTrailWidth(0.1F)
-					.setTextures(LCClientProps.HORNET_TRAIL_PATH, null)
+					.setTextures(ClientProps.HORNET_TRAIL_PATH, null)
 					.setDecayTime(20).setHasLight(false));
 	}
 
@@ -122,9 +122,9 @@ public class EntityHornet extends EntityThrowable {
 	protected void onImpact(MovingObjectPosition m) {
 		if (this.ticksExisted > 200)
 			this.setDead();
-		if (m.typeOfHit == MovingObjectType.BLOCK) {
-			Block bID = worldObj.getBlock(m.blockX, m.blockY, m.blockZ);
-			if(bID.getCollisionBoundingBoxFromPool(worldObj, m.blockX, m.blockY, m.blockZ) != null) {
+		if (m.typeOfHit == EnumMovingObjectType.TILE) {
+			int bID = worldObj.getBlockId(m.blockX, m.blockY, m.blockZ);
+			if(Block.blocksList[bID].getCollisionBoundingBoxFromPool(worldObj, m.blockX, m.blockY, m.blockZ) != null) {
 				switch (m.sideHit) {
 				case 0:
 					this.motionY = -0.05F;

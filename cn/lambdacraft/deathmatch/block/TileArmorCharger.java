@@ -20,8 +20,8 @@ import cn.lambdacraft.api.LCDirection;
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
 import cn.lambdacraft.core.block.TileElectricStorage;
 import cn.lambdacraft.core.util.EnergyUtils;
+
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -162,20 +162,20 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 		if (currentEnergy < ENERGY_MAX
 				&& !(!this.isRSActivated && currentBehavior == EnumBehavior.RECEIVEONLY)) {
 			for (int i = 4; i < 7; i++) {
-				ItemStack stack = slots[i];
-				if (stack == null)
+				ItemStack sl = slots[i];
+				if (sl == null)
 					continue;
-				if (stack.getItem() == Items.redstone) {
+				if (sl.itemID == Item.redstone.itemID) {
 					if (energyReq > 500) {
 						this.decrStackSize(i, 1);
 					}
 					currentEnergy += 500;
-				} else if (stack.getItem() instanceof ICustomEnItem) {
-					ICustomEnItem item = (ICustomEnItem) stack.getItem();
-					if (!item.canProvideEnergy(stack))
+				} else if (sl.getItem() instanceof ICustomEnItem) {
+					ICustomEnItem item = (ICustomEnItem) sl.getItem();
+					if (!item.canProvideEnergy(sl))
 						continue;
 					int cn = energyReq < 128 ? energyReq : 128;
-					cn = item.discharge(stack, cn, 2, false, false);
+					cn = item.discharge(sl, cn, 2, false, false);
 					currentEnergy += cn;
 				}
 			}
@@ -224,8 +224,13 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 	}
 
 	@Override
-	public String getInventoryName() {
+	public String getInvName() {
 		return "armorcharger";
+	}
+
+	@Override
+	public boolean isInvNameLocalized() {
+		return true;
 	}
 
 	@Override
@@ -238,6 +243,15 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
 				zCoord + 0.5) <= 64;
 	}
+
+	@Override
+	public void openChest() {
+	}
+
+	@Override
+	public void closeChest() {
+	}
+
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		if (i <= 3 && !(itemstack.getItem() instanceof ICustomEnItem))
@@ -257,7 +271,7 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 			byte count = nbt.getByte("count" + i);
 			if (id == 0)
 				continue;
-			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
+			ItemStack is = new ItemStack(id, count, damage);
 			slots[i] = is;
 		}
 		currentEnergy = nbt.getInteger("energy");
@@ -273,7 +287,7 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 		for (int i = 0; i < 7; i++) {
 			if (slots[i] == null)
 				continue;
-			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
+			nbt.setShort("id" + i, (short) slots[i].itemID);
 			nbt.setByte("count" + i, (byte) slots[i].stackSize);
 			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
 		}
@@ -289,19 +303,6 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 	@Override
 	public int getMaxSafeInput() {
 		return 128;
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		return true;
-	}
-
-	@Override
-	public void openInventory() {
-	}
-
-	@Override
-	public void closeInventory() {
 	}
 
 

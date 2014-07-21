@@ -16,7 +16,7 @@ package cn.lambdacraft.api.hud;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.Icon;
 
 /**
  * 实现它以提供一个武器有头戴显示提示。
@@ -26,7 +26,7 @@ import net.minecraft.util.IIcon;
  */
 public interface IHudTip {
 	
-	public IIcon getRenderingIcon(ItemStack itemStack, EntityPlayer player);
+	public Icon getRenderingIcon(ItemStack itemStack, EntityPlayer player);
 	
 	public int getTextureSheet(ItemStack itemStack);
 	

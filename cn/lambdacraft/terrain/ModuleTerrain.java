@@ -16,8 +16,7 @@ package cn.lambdacraft.terrain;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.config.Configuration;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
 import cn.lambdacraft.mob.entity.EntityBarnacle;
 import cn.lambdacraft.mob.entity.EntityHeadcrab;
@@ -26,6 +25,7 @@ import cn.lambdacraft.terrain.register.XenBlocks;
 import cn.lambdacraft.terrain.world.WorldProviderXenContinent;
 import cn.lambdacraft.terrain.world.biome.MainBiomes;
 import cn.liutils.api.register.Configurable;
+import cn.liutils.core.register.Config;
 import cn.liutils.core.register.ConfigHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -35,16 +35,18 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 /**
  * @author mkpoli F
  *
  */
-@Mod(modid = "LambdaCraft|Terrain", name = "LambdaCraft Terrain", version = LCMod.VERSION, dependencies = LCMod.DEPENDENCY_CORE)
+@Mod(modid = "LambdaCraft|Terrain", name = "LambdaCraft Terrain", version = CBCMod.VERSION, dependencies = CBCMod.DEPENDENCY_CORE)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
 public class ModuleTerrain {
 	
-	public static final String DEPENCY_TERRAIN = "required-after:LambdaCraft|World@" + LCMod.VERSION;
+	public static final String DEPENCY_TERRAIN = "required-after:LambdaCraft|World@" + CBCMod.VERSION;
 	
 	@Configurable(key = "xenContinentDimensionID", defValue = "5")
 	public static int xenContinentDimensionID;
@@ -67,11 +69,8 @@ public class ModuleTerrain {
 	@Configurable(key = "xenStonePlainBiomeId", defValue = "34")
 	public static int xenStonePlainBiomeId;
 	
-	@Configurable(key = "xenPlainInDefaultWorldBiomeId", defValue = "35")
-	public static int xenPlainInDefaultWorldBiomeId;
-	
-	@SidedProxy(clientSide = "cn.lambdacraft.terrain.proxy.TRClientProxy", serverSide = "cn.lambdacraft.terrain.proxy.TRCommonProxy")
-	public static cn.lambdacraft.terrain.proxy.TRCommonProxy proxy;
+	@SidedProxy(clientSide = "cn.lambdacraft.terrain.proxy.ClientProxy", serverSide = "cn.lambdacraft.terrain.proxy.Proxy")
+	public static cn.lambdacraft.terrain.proxy.Proxy proxy;
 	
 	@Instance("LambdaCraft|Terrain")
 	public static ModuleTerrain instance;
@@ -82,8 +81,8 @@ public class ModuleTerrain {
 	
 	@EventHandler()
 	public void Init(FMLInitializationEvent Init) {
-		loadProps(LCMod.config);
-		XenBlocks.init(LCMod.config);
+		loadProps(CBCMod.config);
+		XenBlocks.init(CBCMod.config);
 		proxy.init();
 		DimensionManager.registerProviderType(xenContinentDimensionID, WorldProviderXenContinent.class, true);
 		DimensionManager.registerDimension(xenContinentDimensionID, xenContinentDimensionID);
@@ -102,7 +101,7 @@ public class ModuleTerrain {
 	public void serverStarting(FMLServerStartingEvent event) {
 	}
 	
-	private static void loadProps(Configuration config) {
-		ConfigHandler.loadConfigurableClass(LCMod.config, ModuleTerrain.class);
+	private static void loadProps(Config config) {
+		ConfigHandler.loadConfigurableClass(CBCMod.config, ModuleTerrain.class);
 	}
 }

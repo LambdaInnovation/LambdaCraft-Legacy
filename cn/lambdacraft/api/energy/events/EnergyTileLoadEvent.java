@@ -28,7 +28,7 @@ public class EnergyTileLoadEvent extends EnergyTileEvent {
 	public static World theWorld;
 
 	public EnergyTileLoadEvent(IEnergyTile energyTile) {
-		super(((TileEntity)energyTile).getWorldObj(), energyTile);
+		super(((TileEntity)energyTile).worldObj, energyTile);
 	}
 
 	public EnergyTileLoadEvent(World world, IEnergyTile energyTile) {

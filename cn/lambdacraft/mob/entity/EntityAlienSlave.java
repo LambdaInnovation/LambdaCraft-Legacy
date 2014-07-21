@@ -23,14 +23,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.BlockPos;
@@ -98,7 +97,7 @@ public class EntityAlienSlave extends LIEntityMob {
 		} else {
 			dataWatcher.updateObject(20, isCharging? (byte)1 : (byte)0);
 			dataWatcher.updateObject(21, (short)chargeTick);
-			dataWatcher.updateObject(22, entityToAttack == null ? 0 : entityToAttack.getEntityId());
+			dataWatcher.updateObject(22, entityToAttack == null ? 0 : entityToAttack.entityId);
 			
 			//Path movement
 			if(this.entityToAttack != null ) {
@@ -197,14 +196,14 @@ public class EntityAlienSlave extends LIEntityMob {
 	}
 	
     @Override
-	public EntityItem func_145778_a(Item par1, int par2, float par3)
+	public EntityItem dropItemWithOffset(int par1, int par2, float par3)
     {
         return this.entityDropItem(new ItemStack(par1, par2, 4), par3);
     }
     
     @Override
-    public Item getDropItem() {
-    	return CBCMobItems.dna;
+    public int getDropItemId() {
+    	return CBCMobItems.dna.itemID;
     }
 	
 	@Override
@@ -265,7 +264,7 @@ public class EntityAlienSlave extends LIEntityMob {
 
 	@Override
 	public ResourceLocation getTexture() {
-		return LCClientProps.VORTIGAUNT_PATH;
+		return ClientProps.VORTIGAUNT_PATH;
 	}
 
 

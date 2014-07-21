@@ -13,19 +13,10 @@
  */
 package cn.weaponmod.events;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.Phase;
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import cn.weaponmod.WeaponMod;
-import cn.weaponmod.api.weapon.IZoomable;
 import cn.weaponmod.api.weapon.WeaponGeneral;
-import cn.weaponmod.proxy.WMClientProxy;
 
 /**
  * @author WeAthFolD
@@ -33,7 +24,7 @@ import cn.weaponmod.proxy.WMClientProxy;
  */
 public class WMEventListener {
 
-	  @SubscribeEvent
+	  @ForgeSubscribe
 	  public void onInteract(EntityInteractEvent event)
 	  {
 		  ItemStack curItem = event.entityPlayer.getCurrentEquippedItem();
@@ -44,6 +35,5 @@ public class WMEventListener {
               	  event.setCanceled(true);
 		  }
 	  }
-	 
 	
 }

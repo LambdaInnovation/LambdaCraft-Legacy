@@ -3,7 +3,6 @@ package cn.lambdacraft.terrain.world.gen.feature;
 import java.util.Random;
 
 import cn.lambdacraft.terrain.register.XenBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -20,7 +19,7 @@ public class WorldGenAmethyst extends WorldGenerator
 
             if (par1World.isAirBlock(i1, j1, k1) && canLightStay(par1World, i1, j1, k1))
             {
-                par1World.setBlock(i1, j1, k1, XenBlocks.amethyst, 0, 2);
+                par1World.setBlock(i1, j1, k1, XenBlocks.amethyst.blockID, 0, 2);
             }
         }
 
@@ -29,8 +28,8 @@ public class WorldGenAmethyst extends WorldGenerator
     
     private boolean canLightStay(World world, int par3, int par4, int par5)
     {
-    	Block block= world.getBlock(par3, par4 + 1, par5);
-    	if(block == XenBlocks.dirt || block == XenBlocks.stone || block == XenBlocks.grass)
+    	int id = world.getBlockId(par3, par4 + 1, par5);
+    	if(id == XenBlocks.dirt.blockID || id == XenBlocks.stone.blockID || id == XenBlocks.grass.blockID)
     	{
     		return true;
     	}

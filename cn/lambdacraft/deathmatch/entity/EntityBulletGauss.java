@@ -2,14 +2,12 @@ package cn.lambdacraft.deathmatch.entity;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -66,7 +64,7 @@ public class EntityBulletGauss extends EntityBullet {
 		if (worldObj.isRemote)
 			return;
 		switch (par1.typeOfHit) {
-		case BLOCK:
+		case TILE:
 			doBlockCollision(par1);
 			this.setDead();
 			break;
@@ -195,10 +193,9 @@ public class EntityBulletGauss extends EntityBullet {
 	private int getFrontBlockCount(MovingObjectPosition result) {
 
 		Vec3 side = getSideByMotion();
-		Block block = worldObj.getBlock(result.blockX + (int) side.xCoord, 
-				result.blockY + (int) side.yCoord, 
-				result.blockZ + (int) side.zCoord);
-		return 1 + ((block == Blocks.air || block == Blocks.water)? 1 : 0);
+		return 1 + (worldObj.getBlockId(result.blockX + (int) side.xCoord,
+				result.blockY + (int) side.yCoord, result.blockZ
+						+ (int) side.zCoord) > 0 ? 1 : 0);
 
 	}
 

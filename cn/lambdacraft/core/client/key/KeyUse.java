@@ -14,8 +14,7 @@
  */
 package cn.lambdacraft.core.client.key;
 
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.network.MessageKeyUsing;
+import cn.lambdacraft.core.network.NetKeyUsing;
 import cn.lambdacraft.deathmatch.proxy.ClientProxy;
 import cn.liutils.api.client.register.IKeyProcess;
 import net.minecraft.client.Minecraft;
@@ -25,7 +24,7 @@ import net.minecraft.item.ItemStack;
 /**
  * 使用按键的处理类，负责发包和功能性函数。
  * 
- * @see cn.lambdacraft.core.network.MessageKeyUsing
+ * @see cn.lambdacraft.core.network.NetKeyUsing
  * @see cn.lambdacraft.api.tile.IUseable
  * @author WeAthFolD
  * 
@@ -44,8 +43,7 @@ public class KeyUse implements IKeyProcess {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		if (player == null)
 			return;
-		LCMod.netHandler.sendToServer(new MessageKeyUsing(true));
-		
+		NetKeyUsing.sendUsingPacket(true);
 	}
 
 	
@@ -61,11 +59,11 @@ public class KeyUse implements IKeyProcess {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		if (player == null)
 			return;
-		LCMod.netHandler.sendToServer(new MessageKeyUsing(false));
+		NetKeyUsing.sendUsingPacket(false);
 		ItemStack armorStack = player.inventory.armorInventory[3];
 		if (armorStack == null)
 			return;
-		ClientProxy.fth.flag = !ClientProxy.fth.flag;
+		ClientProxy.cth.flag = !ClientProxy.cth.flag;
 		//if (armorStack.itemID == DMItems.armorHEVHelmet.itemID)
 		//	player.sendChatToPlayer(StatCollector.translateToLocal("flashlight.status.name") + (ClientProxy.cth.flag ? StatCollector.translateToLocal("flashlight.status.on.name") : StatCollector.translateToLocal("flashlight.status.off.name")));
 	}

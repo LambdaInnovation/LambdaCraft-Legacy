@@ -7,31 +7,31 @@ import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+
 import cn.lambdacraft.core.item.ElectricArmor;
-import cn.lambdacraft.core.proxy.LCClientProps;
-import cn.lambdacraft.deathmatch.item.ArmorHEV.EnumAttachment;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.deathmatch.register.DMItems;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.EnumHelper;
 
 public class ArmorHEV extends ElectricArmor {
 
 	public static int reductionAmount[] = { 5, 8, 5, 4 };
-	protected static ArmorMaterial material = ArmorMaterial.DIAMOND;
-			//EnumHelper.addArmorMaterial("armorHEV", 100000, reductionAmount, 0);
+	protected static EnumArmorMaterial material = EnumHelper.addArmorMaterial(
+			"armorHEV", 100000, reductionAmount, 0);
 	private static ArmorProperties propChest = new ArmorProperties(3, 0.4,
 			200), propDefault = new ArmorProperties(2, 0.3, 150),
 			propNone = new ArmorProperties(2, 0.0, 0),
@@ -41,33 +41,26 @@ public class ArmorHEV extends ElectricArmor {
 					200) , propDefault_defense = new ArmorProperties(2, 0.4, 150),
 					propShoe_defense = new ArmorProperties(2, 0.35, 125);
 	protected static String hevMark = "IV";
-	protected IIcon theIcon;
 	
-	public ArmorHEV(int armorType) {
-		super(material, 2, armorType);
+	public ArmorHEV(int par1, int armorType) {
+		super(par1, material, 2, armorType);
 		setUnlocalizedName("hev" + this.armorType);
-		this.setTextureName("lambdacraft:hev" + armorType);
+		this.setIconName("hev" + armorType);
 		this.setMaxCharge(100000);
 		this.setTier(2);
 		this.setTransferLimit(128);
 		this.setEnergyPerDamage(500);
 	}
 
-    /**
-     * Gets an icon index based on an item's damage value and the given render pass
-     */
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamageForRenderPass(int par1, int par2)
-    {
-        return par2 == 1 ? this.theIcon : super.getIconFromDamageForRenderPass(par1, par2);
-    }
-	
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister par1IconRegister)
-    {
-        super.registerIcons(par1IconRegister);
-        theIcon = par1IconRegister.registerIcon("lambdacraft:hev" + armorType);
-    }
+	@Override
+	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
+			int layer) {
+		if (stack.getItem().itemID == DMItems.armorHEVLeggings.itemID) {
+			return ClientProps.HEV_ARMOR_PATH[1];
+		} else {
+			return ClientProps.HEV_ARMOR_PATH[0];
+		}
+	}
 
 	@Override
 	public boolean canProvideEnergy(ItemStack itemStack) {
@@ -129,7 +122,7 @@ public class ArmorHEV extends ElectricArmor {
 		GL11.glColor4f(1.0F,1.0F,1.0F,1.0F);
 		GL11.glDisable(3008);
 		GL11.glDisable(2929);
-		eg.bindTexture(LCClientProps.HEV_MASK_PATH);
+		eg.bindTexture(ClientProps.HEV_MASK_PATH);
 		t.startDrawingQuads();
 		t.setColorRGBA(255, 255, 255, 50);
 		t.addVertexWithUV(0.0D, j, -90D, 0.0D, 1.0D);

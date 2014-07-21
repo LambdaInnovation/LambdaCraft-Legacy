@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
@@ -15,7 +14,7 @@ import cn.weaponmod.api.WMInformation;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.information.InformationBullet;
 import cn.weaponmod.api.information.InformationWeapon;
-import cn.weaponmod.events.ItemControlHandler;
+import cn.weaponmod.events.ItemHelper;
 import cn.weaponmod.proxy.WMClientProxy;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,8 +29,8 @@ public abstract class WeaponGeneralBullet extends WeaponGeneral implements IRelo
 	public int jamTime; //卡弹声音播放时间间隔
 	public boolean isAutomatic = true; //是否自动武器（影响射击方式）
 
-	public WeaponGeneralBullet(Item ammo) {
-		super(ammo);
+	public WeaponGeneralBullet(int par1, int par2ammoID) {
+		super(par1, par2ammoID);
 		setMaxStackSize(1);
 		upLiftRadius = 5.5F;
 		recoverRadius = 0.6F;
@@ -190,8 +189,8 @@ public abstract class WeaponGeneralBullet extends WeaponGeneral implements IRelo
 			if (WeaponHelper.hasAmmo(this, player))
 				player.worldObj.playSoundAtEntity(player, getSoundReload(),
 						0.5F, 1.0F);
-			ItemControlHandler.stopUsingItem(player, true);
-			ItemControlHandler.stopUsingItem(player, false);
+			ItemHelper.stopUsingItem(player, true);
+			ItemHelper.stopUsingItem(player, false);
 			inf.isReloading = true;
 			inf.setLastTick(false);
 			inf.setLastTick(true);
@@ -236,7 +235,7 @@ public abstract class WeaponGeneralBullet extends WeaponGeneral implements IRelo
 				this.onBulletWpnShoot(stack, world, player, information, left);
 			//information.isReloading = false;
 			if (isAutomatic)
-				ItemControlHandler.setItemInUse(player, stack, 500, left);
+				ItemHelper.setItemInUse(player, stack, 500, left);
 		} else 
 			onSetReload(stack, player); //要自动上弹么？
 		return;

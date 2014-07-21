@@ -14,19 +14,19 @@
  */
 package cn.lambdacraft.crafting.block;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.core.block.BlockElectricalBase;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.proxy.GeneralProps;
 import cn.lambdacraft.crafting.block.tile.TileGeneratorLava;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 
 /**
  * @author WeAthFolD
@@ -34,15 +34,15 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class BlockGeneratorLava extends BlockElectricalBase {
 
-	public IIcon iconSide, iconTop, iconBottom, iconMain;
+	public Icon iconSide, iconTop, iconBottom, iconMain;
 	private ForgeDirection[] dirs = ForgeDirection.values();
 
-	public BlockGeneratorLava() {
-		super(Material.rock);
+	public BlockGeneratorLava(int par1) {
+		super(par1, Material.rock);
 		setHardness(2.0F);
 		setTileType(TileGeneratorLava.class);
-		setGuiId(LCGeneralProps.GUI_ID_GENLAVA);
-		setBlockName("genLava");
+		setGuiId(GeneralProps.GUI_ID_GENLAVA);
+		setUnlocalizedName("genLava");
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class BlockGeneratorLava extends BlockElectricalBase {
 	}
 
 	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
+	public void registerIcons(IconRegister par1IconRegister) {
 		iconSide = par1IconRegister.registerIcon("lambdacraft:genlava_side");
 		iconTop = par1IconRegister.registerIcon("lambdacraft:genlava_top");
 		iconBottom = par1IconRegister
@@ -83,7 +83,7 @@ public class BlockGeneratorLava extends BlockElectricalBase {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public IIcon getIcon(int par1, int par2) {
+	public Icon getIcon(int par1, int par2) {
 		if (par1 < 1)
 			return iconBottom;
 		if (par1 < 2)
