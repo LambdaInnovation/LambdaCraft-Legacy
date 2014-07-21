@@ -21,7 +21,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
@@ -120,8 +119,8 @@ public class ContainerMedFiller extends Container {
 				} else if (stackInSlot.getItem() instanceof ItemMedkit) {
 					if (!this.mergeItemStack(stackInSlot, 3, 4, false))
 						return null;
-				} else if (stackInSlot.getItem() == Items.redstone
-						|| stackInSlot.getItem() == Items.glowstone_dust) {
+				} else if (stackInSlot.itemID == Item.redstone.itemID
+						|| stackInSlot.itemID == Item.glowstone.itemID) {
 					if (!this.mergeItemStack(stackInSlot, 4, 5, false))
 						return null;
 				} else if (!this.mergeItemStack(stackInSlot, 5, 6, false))

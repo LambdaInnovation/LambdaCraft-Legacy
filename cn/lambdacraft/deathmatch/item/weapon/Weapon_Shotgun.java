@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.util.GenericUtils;
@@ -16,13 +16,13 @@ import cn.weaponmod.proxy.WMClientProxy;
 
 public class Weapon_Shotgun extends WeaponGeneralBullet_LC {
 
-	public Weapon_Shotgun() {
+	public Weapon_Shotgun(int par1) {
 
-		super(CBCItems.ammo_shotgun);
+		super(par1, CBCItems.ammo_shotgun.itemID);
 
 		setIAndU("weapon_shotgun");
 		setMaxDamage(9);
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 		setReloadTime(10);
 		setJamTime(20);
 		setLiftProps(18F, 1.5F);
@@ -54,7 +54,7 @@ public class Weapon_Shotgun extends WeaponGeneralBullet_LC {
 		}
 
 		this.setWpnStackDamage(par1ItemStack,dmg  - 1 + WeaponHelper.consumeAmmo(player, this, 1));
-		if(getWpnStackDamage(par1ItemStack) <= 0 || WeaponHelper.getAmmoCapacity(ammoItem, player.inventory) == 0) {
+		if(getWpnStackDamage(par1ItemStack) <= 0 || WeaponHelper.getAmmoCapacity(ammoID, player.inventory) == 0) {
 			information.isReloading = false;
 			player.playSound(this.getSoundReloadFinish(), 0.5F, 1.0F);
 		} else {

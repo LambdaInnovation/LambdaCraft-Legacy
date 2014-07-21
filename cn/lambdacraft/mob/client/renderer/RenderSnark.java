@@ -5,7 +5,7 @@ package cn.lambdacraft.mob.client.renderer;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.mob.client.model.ModelSnark;
 import cn.liutils.api.client.render.RenderModelItem;
 
@@ -20,7 +20,7 @@ public class RenderSnark extends RenderModelItem {
 	 * @param texture
 	 */
 	public RenderSnark() {
-		super(new ModelSnark(), LCClientProps.SQUEAK_MOB_PATH);
+		super(new ModelSnark(), ClientProps.SQUEAK_MOB_PATH);
 		this.setRotation(0F, -195F, 0F);
 		this.setScale(1.4F);
 		this.setOffset(0F, 1.35F, -.15F);

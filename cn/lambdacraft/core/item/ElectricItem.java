@@ -17,12 +17,12 @@ package cn.lambdacraft.core.item;
 import java.util.List;
 
 import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
@@ -33,15 +33,15 @@ import net.minecraft.util.StatCollector;
  * @author WeAthFolD
  * 
  */
-public abstract class ElectricItem extends LCGenericItem implements
+public abstract class ElectricItem extends CBCGenericItem implements
 		ICustomEnItem {
 
 	protected int tier = 1, transferLimit = 100, maxCharge;
 
-	public ElectricItem() {
-		super();
+	public ElectricItem(int id) {
+		super(id);
 		setMaxStackSize(1);
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 	}
 
 	public void setMaxCharge(int p) {
@@ -101,13 +101,13 @@ public abstract class ElectricItem extends LCGenericItem implements
 	}
 
 	@Override
-	public Item getChargedItem(ItemStack itemStack) {
-		return this;
+	public int getChargedItemId(ItemStack itemStack) {
+		return this.itemID;
 	}
 
 	@Override
-	public Item getEmptyItem(ItemStack itemStack) {
-		return this;
+	public int getEmptyItemId(ItemStack itemStack) {
+		return this.itemID;
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public abstract class ElectricItem extends LCGenericItem implements
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
+	public void getSubItems(int par1, CreativeTabs par2CreativeTabs,
 			List par3List) {
 		par3List.add(new ItemStack(par1, 1, 0));
 		ItemStack chargedItem = new ItemStack(par1, 1, 0);

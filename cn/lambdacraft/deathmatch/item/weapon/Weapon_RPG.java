@@ -4,9 +4,10 @@ import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.Icon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
@@ -20,8 +21,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class Weapon_RPG extends Weapon_RPG_Raw implements IModdable {
 
 
-	public Weapon_RPG() {
-		super();
+	public Weapon_RPG(int par1) {
+		super(par1);
 	}
 	
 	@Override
@@ -64,17 +65,17 @@ public class Weapon_RPG extends Weapon_RPG_Raw implements IModdable {
 		tips[0] = new IHudTip() {
 
 			@Override
-			public IIcon getRenderingIcon(ItemStack itemStack,
+			public Icon getRenderingIcon(ItemStack itemStack,
 					EntityPlayer player) {
-				if(ammoItem != null){
-					return ammoItem.getIconIndex(itemStack);
+				if(Item.itemsList[ammoID] != null){
+					return Item.itemsList[ammoID].getIconIndex(itemStack);
 				}
 				return null;
 			}
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return String.valueOf(WeaponHelper.getAmmoCapacity(ammoItem, player.inventory));
+				return String.valueOf(WeaponHelper.getAmmoCapacity(ammoID, player.inventory));
 			}
 
 			@Override

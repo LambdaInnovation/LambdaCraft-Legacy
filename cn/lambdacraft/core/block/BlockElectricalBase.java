@@ -22,7 +22,7 @@ import net.minecraft.world.World;
  * @author WeAthFolD
  * 
  */
-public class BlockElectricalBase extends LCBlockContainer {
+public class BlockElectricalBase extends CBCBlockContainer {
 
 	private Class<? extends TileEntity> generatorType;
 
@@ -30,8 +30,8 @@ public class BlockElectricalBase extends LCBlockContainer {
 	 * @param par1
 	 * @param mat
 	 */
-	public BlockElectricalBase(Material mat) {
-		super(mat);
+	public BlockElectricalBase(int par1, Material mat) {
+		super(par1, mat);
 		this.setHardness(2.0F);
 	}
 
@@ -48,7 +48,7 @@ public class BlockElectricalBase extends LCBlockContainer {
 	 * .world.World)
 	 */
 	@Override
-	public TileEntity createNewTileEntity(World world, int v2) {
+	public TileEntity createNewTileEntity(World world) {
 		try {
 			return generatorType.getConstructor().newInstance();
 		} catch (Exception e) {

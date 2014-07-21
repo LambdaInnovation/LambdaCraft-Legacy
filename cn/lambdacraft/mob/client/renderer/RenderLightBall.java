@@ -14,7 +14,7 @@
  */
 package cn.lambdacraft.mob.client.renderer;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.liutils.api.client.render.RenderIcon;
 import net.minecraft.entity.Entity;
 
@@ -25,7 +25,7 @@ import net.minecraft.entity.Entity;
 public class RenderLightBall extends RenderIcon {
 
 	public RenderLightBall() {
-		super(LCClientProps.LIGHT_BALL_PATH);
+		super(ClientProps.LIGHT_BALL_PATH);
 		this.setEnableDepth(false);
 		this.setSize(1.5F);
 	}

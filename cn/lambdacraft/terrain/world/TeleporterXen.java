@@ -6,13 +6,12 @@ import java.util.List;
 import java.util.Random;
 
 import cn.lambdacraft.terrain.register.XenBlocks;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.LongHashMap;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.PortalPosition;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
 /**
@@ -96,9 +95,9 @@ public class TeleporterXen extends Teleporter
 
                     for (int i2 = this.worldServerInstance.getActualHeight() - 1; i2 >= 0; --i2)
                     {
-                        if (this.worldServerInstance.getBlock(k1, i2, l1) == XenBlocks.xenPortal)
+                        if (this.worldServerInstance.getBlockId(k1, i2, l1) == XenBlocks.xenPortal.blockID)
                         {
-                            while (this.worldServerInstance.getBlock(k1, i2 - 1, l1) == XenBlocks.xenPortal)
+                            while (this.worldServerInstance.getBlockId(k1, i2 - 1, l1) == XenBlocks.xenPortal.blockID)
                             {
                                 --i2;
                             }
@@ -292,7 +291,7 @@ public class TeleporterXen extends Teleporter
                                         j4 = k2 + l3;
                                         int l4 = j2 + (i4 - 1) * k3 - j3 * l2;
 
-                                        if (l3 < 0 && !this.worldServerInstance.getBlock(k4, j4, l4).getMaterial().isSolid() || l3 >= 0 && !this.worldServerInstance.isAirBlock(k4, j4, l4))
+                                        if (l3 < 0 && !this.worldServerInstance.getBlockMaterial(k4, j4, l4).isSolid() || l3 >= 0 && !this.worldServerInstance.isAirBlock(k4, j4, l4))
                                         {
                                             continue label274;
                                         }
@@ -350,7 +349,7 @@ public class TeleporterXen extends Teleporter
                                         k4 = k2 + i4;
                                         j4 = j2 + (j3 - 1) * k3;
 
-                                        if (i4 < 0 && !this.worldServerInstance.getBlock(l3, k4, j4).getMaterial().isSolid() || i4 >= 0 && !this.worldServerInstance.isAirBlock(l3, k4, j4))
+                                        if (i4 < 0 && !this.worldServerInstance.getBlockMaterial(l3, k4, j4).isSolid() || i4 >= 0 && !this.worldServerInstance.isAirBlock(l3, k4, j4))
                                         {
                                             continue label222;
                                         }
@@ -413,8 +412,8 @@ public class TeleporterXen extends Teleporter
                     j3 = j5 + l2;
                     i4 = j2 + i3;
                     flag = l2 == 0 && k2 == 0 && i3 == 0;
-                    this.worldServerInstance.setBlock(k3, j3, i4, l2 == -1 ? XenBlocks.desertedDirt : flag ? XenBlocks.xenPortal : Blocks.air, 0, 2);
-                    this.worldServerInstance.notifyBlocksOfNeighborChange(k3, j3, i4, this.worldServerInstance.getBlock(k3, j3, i4));
+                    this.worldServerInstance.setBlock(k3, j3, i4, l2 == -1 ? XenBlocks.desertedDirt.blockID : flag ? XenBlocks.xenPortal.blockID : 0, 0, 2);
+                    this.worldServerInstance.notifyBlocksOfNeighborChange(k3, j3, i4, this.worldServerInstance.getBlockId(k3, j3, i4));
                 }
             }
         }

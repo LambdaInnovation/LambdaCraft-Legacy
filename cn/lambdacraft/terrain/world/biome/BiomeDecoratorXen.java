@@ -2,7 +2,7 @@ package cn.lambdacraft.terrain.world.biome;
 
 import java.util.Random;
 
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.terrain.register.XenBlocks;
 import cn.lambdacraft.terrain.world.gen.feature.WorldGenAmethyst;
 import cn.lambdacraft.terrain.world.gen.feature.WorldGenLights;
@@ -42,10 +42,10 @@ public class BiomeDecoratorXen extends BiomeDecorator {
     public WorldGenerator slimeGen;
     public WorldGenerator xenSandGen;
 
-    public BiomeDecoratorXen()
+    public BiomeDecoratorXen(BiomeGenBase par1BiomeGenBase)
     {
-    	super();
-        this.crystalGen = new WorldGenMinableXen(XenBlocks.crystal, 8);
+    	super(par1BiomeGenBase);
+        this.crystalGen = new WorldGenMinableXen(XenBlocks.crystal.blockID, 8);
         this.lightGen = new WorldGenLights();
         this.amethystGen = new WorldGenAmethyst();
         this.xenSandGen = new WorldGenXenSand(7);
@@ -55,12 +55,12 @@ public class BiomeDecoratorXen extends BiomeDecorator {
      * Decorates the world. Calls code that was formerly (pre-1.8) in ChunkProviderGenerate.populate
      */
     @Override
-	public void decorateChunk(World par1World, Random par2Random, BiomeGenBase biomeGenBase, int par3, int par4)
+	public void decorate(World par1World, Random par2Random, int par3, int par4)
     {
         if (this.currentWorld != null)
         {
            // throw new RuntimeException("Already decorating!!");
-        	LCMod.log.severe("XenDecorator Already Decorating!");
+        	CBCMod.log.severe("XenDecorator Already Decorating!");
         }
         else
         {
@@ -68,7 +68,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
             this.randomGenerator = par2Random;
             this.chunk_X = par3;
             this.chunk_Z = par4;
-            this.genDecorations(biomeGenBase);
+            this.decorate();
             this.currentWorld = null;
             this.randomGenerator = null;
             
@@ -79,7 +79,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
      * The method that does the work of actually decorating chunks
      */
     @Override
-	protected void genDecorations(BiomeGenBase biomeGenBase)
+	protected void decorate()
     {
        this.generateOres();
        

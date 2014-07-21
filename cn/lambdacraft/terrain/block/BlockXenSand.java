@@ -1,25 +1,21 @@
 package cn.lambdacraft.terrain.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import cn.lambdacraft.core.block.CBCBlock;
 
 /**
  * Xen沙
  * @author F
  *
  */
-public class BlockXenSand extends Block {
+public class BlockXenSand extends CBCBlock {
 
-	public BlockXenSand()
+	public BlockXenSand(int par1)
 	{
-		super(Material.sand);
-		this.setBlockName("xensand");
-		this.setBlockTextureName("lambdacraft:xen_sand");
+		super(par1, Material.sand);
+		this.setUnlocalizedName("xensand");
+		this.setIconName("xen_sand");
 		this.setHardness(0.5F);
-		this.setStepSound(soundTypeSand);
+		this.setStepSound(soundSandFootstep);
 	}
-	
 }

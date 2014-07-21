@@ -20,7 +20,7 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.deathmatch.block.TileHealthCharger;
 import cn.liutils.api.client.gui.LIGuiButton;
 import cn.liutils.api.client.gui.LIGuiContainer;
@@ -124,7 +124,7 @@ public class GuiHealthCharger extends LIGuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		mc.renderEngine.bindTexture(LCClientProps.GUI_HECHARGER_PATH);
+		mc.renderEngine.bindTexture(ClientProps.GUI_HECHARGER_PATH);
 		if (te.currentEnergy == 0) {
 			this.drawTexturedModalRect(9, 7, 190, 0, 60, 72);
 		} else super.drawGuiContainerForegroundLayer(par1, par2);
@@ -139,7 +139,7 @@ public class GuiHealthCharger extends LIGuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		mc.renderEngine.bindTexture(LCClientProps.GUI_HECHARGER_PATH);
+		mc.renderEngine.bindTexture(ClientProps.GUI_HECHARGER_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);

@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.common.ForgeDirection;
 import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRay;
 import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRayColored;
 import cn.lambdacraft.deathmatch.entity.fx.GaussParticleFX;

@@ -9,12 +9,6 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.WeakHashMap;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import cn.lambdacraft.api.LCDirection;
 import cn.lambdacraft.api.energy.events.EnergyTileLoadEvent;
 import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
@@ -25,8 +19,16 @@ import cn.lambdacraft.api.energy.tile.IEnEmitter;
 import cn.lambdacraft.api.energy.tile.IEnergySink;
 import cn.lambdacraft.api.energy.tile.IEnergySource;
 import cn.lambdacraft.api.energy.tile.IEnergyTile;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.world.WorldData;
+
+
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
 
 public final class EnergyNet {
 
@@ -48,7 +50,7 @@ public final class EnergyNet {
 	}
 
 	public static void onTick(World world) {
-		LCMod.proxy.profilerStartSection("LC");
+		CBCMod.proxy.profilerStartSection("LC");
 
 		EnergyNet energyNet = getForWorld(world);
 
@@ -67,7 +69,7 @@ public final class EnergyNet {
 		if ((apiErrorCooldown > 0) && (world.provider.dimensionId == 0))
 			apiErrorCooldown -= 1;
 
-		LCMod.proxy.profilerEndSection();
+		CBCMod.proxy.profilerEndSection();
 	}
 
 	public void addTileEntity(TileEntity addedTileEntity) {
@@ -102,7 +104,7 @@ public final class EnergyNet {
 			boolean alreadyRemoved = !((IEnergyTile) removedTileEntity)
 					.isAddedToEnergyNet();
 
-			LCMod.log.warning(new StringBuilder().append("removing ")
+			CBCMod.log.warning(new StringBuilder().append("removing ")
 					.append(removedTileEntity)
 					.append(" from the EnergyNet failed, already removed: ")
 					.append(alreadyRemoved).toString());
@@ -140,7 +142,7 @@ public final class EnergyNet {
 
 	public int emitEnergyFrom(IEnergySource energySource, int amount) {
 		if (!energySource.isAddedToEnergyNet()) {
-			LCMod.log.warning(new StringBuilder()
+			CBCMod.log.warning(new StringBuilder()
 					.append("EnergyNet.emitEnergyFrom: ").append(energySource)
 					.append(" is not added to the enet").toString());
 			return amount;
@@ -218,15 +220,15 @@ public final class EnergyNet {
 							if ((energySink instanceof TileEntity)) {
 								TileEntity te = (TileEntity) energySink;
 								c = new StringBuilder()
-										.append(te.getWorldObj() == null ? "unknown"
+										.append(te.worldObj == null ? "unknown"
 												: Integer
-														.valueOf(te.getWorldObj().provider.dimensionId))
+														.valueOf(te.worldObj.provider.dimensionId))
 										.append(":").append(te.xCoord)
 										.append(",").append(te.yCoord)
 										.append(",").append(te.zCoord)
 										.toString();
 							}
-							LCMod.log
+							CBCMod.log
 									.warning(new StringBuilder()
 											.append("API ERROR: ")
 											.append(energySink)
@@ -277,7 +279,7 @@ public final class EnergyNet {
 			energyPath.totalEnergyConducted += energyInjected;
 
 			if (energyInjected > energyPath.minInsulationEnergyAbsorption) {
-				List<EntityLiving> entitiesNearEnergyPath = ((TileEntity) energySource).getWorldObj()
+				List<EntityLiving> entitiesNearEnergyPath = ((TileEntity) energySource).worldObj
 						.getEntitiesWithinAABB(EntityLiving.class,
 								AxisAlignedBB.getBoundingBox(
 										energyPath.minX - 1,
@@ -683,18 +685,18 @@ public final class EnergyNet {
 			MinecraftForge.EVENT_BUS.register(this);
 		}
 
-		@SubscribeEvent
+		@ForgeSubscribe
 		public void onEnergyTileLoad(EnergyTileLoadEvent event) {
 			EnergyNet.getForWorld(event.world).addTileEntity((TileEntity) event.energyTile);
 		}
 
-		@SubscribeEvent
+		@ForgeSubscribe
 		public void onEnergyTileUnload(EnergyTileUnloadEvent event) {
 			EnergyNet.getForWorld(event.world).removeTileEntity(
 					(TileEntity) event.energyTile);
 		}
 
-		@SubscribeEvent
+		@ForgeSubscribe
 		public void onEnergyTileSource(EnergyTileSourceEvent event) {
 			event.amount = EnergyNet.getForWorld(event.world).emitEnergyFrom(
 					(IEnergySource) event.energyTile, event.amount);

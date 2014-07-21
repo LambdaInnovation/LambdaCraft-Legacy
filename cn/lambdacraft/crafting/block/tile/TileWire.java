@@ -16,7 +16,7 @@ package cn.lambdacraft.crafting.block.tile;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.common.ForgeDirection;
 import cn.lambdacraft.api.LCDirection;
 import cn.lambdacraft.api.energy.tile.IEnConductor;
 import cn.lambdacraft.api.energy.tile.IEnergyTile;
@@ -48,7 +48,7 @@ public class TileWire extends TileElectrical implements IEnConductor {
 	public void updateSides() {
 		ForgeDirection[] dirs = ForgeDirection.values();
 		for (int i = 0; i < 6; i++) {
-			TileEntity ent = worldObj.getTileEntity(xCoord
+			TileEntity ent = worldObj.getBlockTileEntity(xCoord
 					+ dirs[i].offsetX, yCoord + dirs[i].offsetY, zCoord
 					+ dirs[i].offsetZ);
 			if (ent != null && ent instanceof IEnergyTile) {

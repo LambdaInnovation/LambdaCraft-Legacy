@@ -18,7 +18,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 
 /**
@@ -27,11 +27,11 @@ import cn.lambdacraft.crafting.register.CBCItems;
  */
 public class Weapon_9mmAR_Raw extends WeaponGeneralBullet_LC {
 
-	public Weapon_9mmAR_Raw() {
+	public Weapon_9mmAR_Raw(int par1) {
 
-		super(CBCItems.ammo_9mm2);
+		super(par1, CBCItems.ammo_9mm2.itemID);
 		setIAndU("weapon_9mmar");
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 		setMaxDamage(51);
 
 		setReloadTime(60);

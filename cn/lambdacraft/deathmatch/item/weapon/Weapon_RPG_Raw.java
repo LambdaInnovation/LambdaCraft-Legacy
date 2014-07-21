@@ -18,19 +18,20 @@ import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityRocket;
 import cn.lambdacraft.deathmatch.util.InformationRPG;
 import cn.weaponmod.api.WMInformation;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.information.InformationBullet;
-import cn.weaponmod.events.ItemControlHandler;
+import cn.weaponmod.events.ItemHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -41,11 +42,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 
 
-	public Weapon_RPG_Raw() {
-		super(CBCItems.ammo_rpg);
+	public Weapon_RPG_Raw(int par1) {
+		super(par1, CBCItems.ammo_rpg.itemID);
 
 		setIAndU("weapon_rpg");
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 		this.hasSubtypes = true;
 
 		setJamTime(20);
@@ -73,8 +74,8 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 						par3Entity, par1ItemStack));
 				WeaponHelper.consumeAmmo(par3Entity, this, 1);
 			}
-			ItemControlHandler.stopUsingItem(par3Entity, true);
-			ItemControlHandler.stopUsingItem(par3Entity, false);
+			ItemHelper.stopUsingItem(par3Entity, true);
+			ItemHelper.stopUsingItem(par3Entity, false);
 			information.isReloading = true;
 			information.setLastTick(false);
 			information.setLastTick(true);
@@ -155,17 +156,17 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 		tips[0] = new IHudTip() {
 
 			@Override
-			public IIcon getRenderingIcon(ItemStack itemStack,
+			public Icon getRenderingIcon(ItemStack itemStack,
 					EntityPlayer player) {
-				if(ammoItem != null){
-					return ammoItem.getIconIndex(itemStack);
+				if(Item.itemsList[ammoID] != null){
+					return Item.itemsList[ammoID].getIconIndex(itemStack);
 				}
 				return null;
 			}
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return String.valueOf(WeaponHelper.getAmmoCapacity(ammoItem, player.inventory));
+				return String.valueOf(WeaponHelper.getAmmoCapacity(ammoID, player.inventory));
 			}
 
 			@Override

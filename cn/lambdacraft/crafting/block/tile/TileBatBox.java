@@ -16,7 +16,6 @@ package cn.lambdacraft.crafting.block.tile;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -30,7 +29,8 @@ import cn.lambdacraft.crafting.register.CBCBlocks;
  * @author WeAthFolD, Rikka
  * 
  */
-public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergySink {
+public class TileBatBox extends TileGeneratorBase implements IInventory,
+		IEnergySink {
 
 	public ItemStack[] slots = new ItemStack[2];
 	public final int type;
@@ -100,7 +100,7 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 			byte count = nbt.getByte("count" + i);
 			if (id == 0)
 				continue;
-			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
+			ItemStack is = new ItemStack(id, count, damage);
 			slots[i] = is;
 		}
 	}
@@ -114,7 +114,7 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 		for (int i = 0; i < slots.length; i++) {
 			if (slots[i] == null)
 				continue;
-			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
+			nbt.setShort("id" + i, (short) slots[i].itemID);
 			nbt.setByte("count" + i, (byte) slots[i].stackSize);
 			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
 		}
@@ -192,8 +192,27 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 	}
 
 	@Override
+	public String getInvName() {
+		return (this.type == 0 ? CBCBlocks.storageS.getUnlocalizedName()
+				: CBCBlocks.storageL.getUnlocalizedName()) + ".name";
+	}
+
+	@Override
+	public boolean isInvNameLocalized() {
+		return false;
+	}
+
+	@Override
 	public int getInventoryStackLimit() {
 		return 64;
+	}
+
+	@Override
+	public void openChest() {
+	}
+
+	@Override
+	public void closeChest() {
 	}
 
 	@Override
@@ -223,21 +242,4 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
 	}
-
-	@Override
-	public String getInventoryName() {
-		return (this.type == 0 ? CBCBlocks.storageS.getUnlocalizedName()
-				: CBCBlocks.storageL.getUnlocalizedName()) + ".name";
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		return false;
-	}
-
-	@Override
-	public void openInventory() {}
-
-	@Override
-	public void closeInventory() {}
 }

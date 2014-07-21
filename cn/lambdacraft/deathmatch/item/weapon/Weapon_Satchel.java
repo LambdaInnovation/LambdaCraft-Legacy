@@ -3,17 +3,17 @@
  */
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.api.hud.IHudTipProvider;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.item.LCGenericItem;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.item.CBCGenericItem;
 import cn.lambdacraft.deathmatch.entity.EntitySatchel;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.feature.IModdable;
@@ -27,24 +27,24 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  * 
  */
-public class Weapon_Satchel extends LCGenericItem implements IHudTipProvider, IModdable, ISpecialUseable {
+public class Weapon_Satchel extends CBCGenericItem implements IHudTipProvider, IModdable, ISpecialUseable {
 
-	public IIcon iconSetting;
+	public Icon iconSetting;
 
-	public Weapon_Satchel() {
+	public Weapon_Satchel(int par1) {
 
-		super();
+		super(par1);
 		setUnlocalizedName("weapon_satchel");
-		setTextureName("lambdacraft:weapon_satchel");
+		setIconName("weapon_satchel");
 		this.hasSubtypes = true;
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 		setMaxStackSize(64);
 
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IIconRegister reg) {
+	public void registerIcons(IconRegister reg) {
 		super.registerIcons(reg);
 		iconSetting = reg.registerIcon("lambdacraft:weapon_satchel1");
 	}
@@ -54,7 +54,7 @@ public class Weapon_Satchel extends LCGenericItem implements IHudTipProvider, IM
 	/**
 	 * Gets an icon index based on an item's damage value
 	 */
-	public IIcon getIconFromDamage(int par1) {
+	public Icon getIconFromDamage(int par1) {
 		return par1 == 0 ? this.itemIcon : this.iconSetting;
 	}
 
@@ -128,14 +128,14 @@ public class Weapon_Satchel extends LCGenericItem implements IHudTipProvider, IM
 		tips[0] = new IHudTip() {
 
 			@Override
-			public IIcon getRenderingIcon(ItemStack itemStack,
+			public Icon getRenderingIcon(ItemStack itemStack,
 					EntityPlayer player) {
 				return Weapon_Satchel.this.getIconFromDamage(itemStack.getItemDamage());
 			}
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return String.valueOf(WeaponHelper.getAmmoCapacity(Weapon_Satchel.this, player.inventory));
+				return String.valueOf(WeaponHelper.getAmmoCapacity(itemID, player.inventory));
 			}
 
 			@Override

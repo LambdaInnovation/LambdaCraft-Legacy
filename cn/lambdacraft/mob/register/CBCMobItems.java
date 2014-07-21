@@ -1,9 +1,7 @@
 package cn.lambdacraft.mob.register;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.item.Item;
-import net.minecraftforge.common.config.Configuration;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
 import cn.lambdacraft.mob.entity.EntityHLZombie;
 import cn.lambdacraft.mob.entity.EntityHeadcrab;
@@ -14,6 +12,8 @@ import cn.lambdacraft.mob.item.ItemBarnaclePlacer;
 import cn.lambdacraft.mob.item.ItemDNAFragment;
 import cn.lambdacraft.mob.item.ItemSentrySyncer;
 import cn.lambdacraft.mob.item.LCMobSpawner;
+import cn.liutils.core.register.Config;
+import cn.liutils.core.register.ConfigHandler;
 
 public class CBCMobItems {
 
@@ -22,26 +22,27 @@ public class CBCMobItems {
 	public static ItemDNAFragment dna;
 	public static DispenserBehaviorSpawner dispenserBehaviorSpawner;
 
-	public static void init(Configuration conf) {
-		weapon_snark = new LCMobSpawner();
-		headcrab0w0 = new LCMobSpawner(EntityHeadcrab.class, "headcrab").setTextureName("lambdacraft:egg5");
-		barnacle = new ItemBarnaclePlacer();
-		zombie = new LCMobSpawner(EntityHLZombie.class, "hlzombie").setTextureName("lambdacraft:egg3");
-		turret = new LCMobSpawner(EntitySentry.class, "turret");
-		houndeye = new LCMobSpawner(EntityHoundeye.class, "houndeye").setTextureName("lambdacraft:egg1");
-		vortigaunt = new LCMobSpawner(EntityAlienSlave.class, "vortigaunt").setTextureName("lambdacraft:egg4");
-		sentrySyncer = new ItemSentrySyncer();
-		dna = new ItemDNAFragment();
-		
-		GameRegistry.registerItem(weapon_snark, "weapon_snark");
-		GameRegistry.registerItem(headcrab0w0, "headcrab0w0");
-		GameRegistry.registerItem(barnacle, "barnacle");
-		GameRegistry.registerItem(zombie, "lc_zombie");
-		GameRegistry.registerItem(turret, "lc_turret");
-		GameRegistry.registerItem(houndeye, "houndeye");
-		GameRegistry.registerItem(vortigaunt, "vortigaunt");
-		GameRegistry.registerItem(sentrySyncer, "sentrySyncer");
-		GameRegistry.registerItem(dna, "lc_dna");
+	public static void init(Config conf) {
+		weapon_snark = new LCMobSpawner(ConfigHandler.getItemId(conf, "snark",
+				1));
+		headcrab0w0 = new LCMobSpawner(ConfigHandler.getItemId(conf,
+				"headcrab", 1), EntityHeadcrab.class, "headcrab")
+				.setIconName("egg5");
+		barnacle = new ItemBarnaclePlacer(ConfigHandler.getItemId(conf,
+				"barnacle", 1)).setIconName("egg0");
+		zombie = new LCMobSpawner(ConfigHandler.getItemId(conf, "zombie", 1),
+				EntityHLZombie.class, "hlzombie").setIconName("egg3");
+		turret = new LCMobSpawner(ConfigHandler.getItemId(conf, "turret", 1),
+				EntitySentry.class, "turret");
+		houndeye = new LCMobSpawner(
+				ConfigHandler.getItemId(conf, "houndeye", 1),
+				EntityHoundeye.class, "houndeye").setIconName("egg1");
+		vortigaunt = new LCMobSpawner(ConfigHandler.getItemId(conf,
+				"vortigaunt", 1), EntityAlienSlave.class, "vortigaunt")
+				.setIconName("egg4");
+		sentrySyncer = new ItemSentrySyncer(ConfigHandler.getItemId(conf,
+				"syncer", 1));
+		dna = new ItemDNAFragment(ConfigHandler.getItemId(conf, "dna", 1));
 
 		dispenserBehaviorSpawner = new DispenserBehaviorSpawner();
 		BlockDispenser.dispenseBehaviorRegistry.putObject(weapon_snark, dispenserBehaviorSpawner);

@@ -80,7 +80,7 @@ public class EntityGaussRay extends Entity {
 	public void onUpdate() {
 		if(motion == null)
 			motion = new Motion3D(this, true);
-		MovingObjectPosition trace = this.worldObj.rayTraceBlocks(motion
+		MovingObjectPosition trace = this.worldObj.clip(motion
 				.asVec3(this.worldObj),
 				motion.move(100.0F).asVec3(this.worldObj));
 		Vec3 end = (trace == null) ? motion.asVec3(this.worldObj) : trace.hitVec;

@@ -14,14 +14,14 @@
  */
 package cn.lambdacraft.crafting.block;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.util.IIcon;
 import cn.lambdacraft.core.block.BlockElectricalBase;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.proxy.GeneralProps;
 import cn.lambdacraft.crafting.block.tile.TileGeneratorSolar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.util.Icon;
 
 /**
  * @author WeAthFolD
@@ -29,18 +29,18 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class BlockGeneratorSolar extends BlockElectricalBase {
 
-	public IIcon iconSide, iconTop, iconBottom;
+	public Icon iconSide, iconTop, iconBottom;
 
-	public BlockGeneratorSolar() {
-		super(Material.rock);
+	public BlockGeneratorSolar(int par1) {
+		super(par1, Material.rock);
 		this.setHardness(2.0F);
 		setTileType(TileGeneratorSolar.class);
-		setGuiId(LCGeneralProps.GUI_ID_GENSOLAR);
-		setBlockName("genSolar");
+		setGuiId(GeneralProps.GUI_ID_GENSOLAR);
+		setUnlocalizedName("genSolar");
 	}
 
 	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
+	public void registerIcons(IconRegister par1IconRegister) {
 		iconSide = par1IconRegister.registerIcon("lambdacraft:gensolar_main");
 		iconTop = par1IconRegister.registerIcon("lambdacraft:gensolar_top");
 		iconBottom = par1IconRegister
@@ -50,7 +50,7 @@ public class BlockGeneratorSolar extends BlockElectricalBase {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public IIcon getIcon(int par1, int par2) {
+	public Icon getIcon(int par1, int par2) {
 		if (par1 < 1)
 			return iconBottom;
 		if (par1 < 2)

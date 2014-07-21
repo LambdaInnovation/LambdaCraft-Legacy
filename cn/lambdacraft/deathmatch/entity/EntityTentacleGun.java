@@ -3,16 +3,16 @@
  */
 package cn.lambdacraft.deathmatch.entity;
 
+import cn.liutils.api.util.GenericUtils;
+import cn.liutils.api.util.Motion3D;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import cn.liutils.api.util.GenericUtils;
-import cn.liutils.api.util.Motion3D;
 
 /**
  * 藤壶枪的辅助实体。发出触手、移动玩家、冲撞判断等行为在此进行。
@@ -52,7 +52,7 @@ public class EntityTentacleGun extends Entity {
 	}
 	
 	private boolean canAttach(MovingObjectPosition pos) {
-		if(pos.typeOfHit == MovingObjectType.BLOCK)
+		if(pos.typeOfHit == EnumMovingObjectType.TILE)
 			return attachMode;
 		else {
 			Entity e = pos.entityHit;
@@ -101,7 +101,7 @@ public class EntityTentacleGun extends Entity {
 				++extendTick;
 				Motion3D motion = new Motion3D(player, true);
 				Vec3 vec0 = motion.asVec3(worldObj), vec1 = motion.move(1.5D).asVec3(worldObj);
-				MovingObjectPosition pos = worldObj.rayTraceBlocks(vec0, vec1);
+				MovingObjectPosition pos = worldObj.clip(vec0, vec1);
 				if(pos != null) {
 					isExtending = false;
 					if(canAttach(pos)) {
@@ -120,7 +120,7 @@ public class EntityTentacleGun extends Entity {
 				double tx, ty, tz;
 				if(attachMode) {
 					movedEntity = player;
-					if(target.typeOfHit == MovingObjectType.BLOCK) {
+					if(target.typeOfHit == EnumMovingObjectType.TILE) {
 						tx = target.blockX;
 						ty = target.blockY;
 						tz = target.blockZ;
@@ -139,7 +139,7 @@ public class EntityTentacleGun extends Entity {
 						tx - movedEntity.posX, ty - movedEntity.posY, tz - movedEntity.posZ);
 				move(movedEntity, dir, MOVE_SPEED);
 				
-				if(target.typeOfHit == MovingObjectType.BLOCK) {
+				if(target.typeOfHit == EnumMovingObjectType.TILE) {
 					targX = target.blockX;
 					targY = target.blockY;
 					targZ = target.blockZ;

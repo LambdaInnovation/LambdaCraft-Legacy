@@ -18,7 +18,7 @@ public class DMGuiElements {
 		public Object getServerContainer(EntityPlayer player, World world,
 				int x, int y, int z) {
 			return new ContainerArmorCharger(
-					(TileArmorCharger) world.getTileEntity(x, y, z),
+					(TileArmorCharger) world.getBlockTileEntity(x, y, z),
 					player.inventory);
 		}
 
@@ -26,9 +26,9 @@ public class DMGuiElements {
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
 			return new GuiArmorCharger(
-					(TileArmorCharger) world.getTileEntity(x, y, z),
+					(TileArmorCharger) world.getBlockTileEntity(x, y, z),
 					new ContainerArmorCharger((TileArmorCharger) world
-							.getTileEntity(x, y, z), player.inventory));
+							.getBlockTileEntity(x, y, z), player.inventory));
 		}
 	}
 
@@ -37,7 +37,7 @@ public class DMGuiElements {
 		public Object getServerContainer(EntityPlayer player, World world,
 				int x, int y, int z) {
 			return new ContainerHealthCharger(
-					(TileHealthCharger) world.getTileEntity(x, y, z),
+					(TileHealthCharger) world.getBlockTileEntity(x, y, z),
 					player.inventory);
 		}
 
@@ -45,9 +45,9 @@ public class DMGuiElements {
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
 			return new GuiHealthCharger(
-					(TileHealthCharger) world.getTileEntity(x, y, z),
+					(TileHealthCharger) world.getBlockTileEntity(x, y, z),
 					new ContainerHealthCharger(
-							(TileHealthCharger) world.getTileEntity(x, y,
+							(TileHealthCharger) world.getBlockTileEntity(x, y,
 									z), player.inventory));
 		}
 	}
@@ -57,7 +57,7 @@ public class DMGuiElements {
 		public Object getServerContainer(EntityPlayer player, World world,
 				int x, int y, int z) {
 			return new ContainerMedFiller(
-					(TileMedkitFiller) world.getTileEntity(x, y, z),
+					(TileMedkitFiller) world.getBlockTileEntity(x, y, z),
 					player.inventory);
 		}
 
@@ -65,9 +65,9 @@ public class DMGuiElements {
 		public Object getClientGui(EntityPlayer player, World world, int x,
 				int y, int z) {
 			return new GuiMedFiller(
-					(TileMedkitFiller) world.getTileEntity(x, y, z),
+					(TileMedkitFiller) world.getBlockTileEntity(x, y, z),
 					new ContainerMedFiller((TileMedkitFiller) world
-							.getTileEntity(x, y, z), player.inventory));
+							.getBlockTileEntity(x, y, z), player.inventory));
 		}
 	}
 

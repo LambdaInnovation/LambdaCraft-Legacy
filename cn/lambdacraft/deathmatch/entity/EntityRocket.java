@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.entity.EntityTrailFX;
 import cn.weaponmod.api.WeaponHelper;
@@ -49,8 +49,8 @@ public class EntityRocket extends EntityThrowable {
 		worldObj.spawnEntityInWorld(new EntityTrailFX(worldObj, this)
 				.setSampleFreq(1)
 				.setTrailWidth(0.4F)
-				.setTextures(LCClientProps.RPG_TRAIL_PATH[0],
-						LCClientProps.RPG_TRAIL_PATH[1]).setDoesRenderEnd(true)
+				.setTextures(ClientProps.RPG_TRAIL_PATH[0],
+						ClientProps.RPG_TRAIL_PATH[1]).setDoesRenderEnd(true)
 				.setDecayTime(20));
 	}
 

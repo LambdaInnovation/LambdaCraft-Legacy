@@ -1,17 +1,18 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityARGrenade;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.information.InformationBullet;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Icon;
+import net.minecraft.world.World;
 
 /**
  * 9mm Assault Rifle class. Mode I : Bullet, II : AR Grenade.
@@ -21,14 +22,14 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class Weapon_9mmAR extends Weapon_9mmAR_Raw {
 
-	public Weapon_9mmAR() {
-		super();
+	public Weapon_9mmAR(int par1) {
+		super(par1);
 	}
 
 	@Override
 	public boolean canShoot(EntityPlayer player, ItemStack is, boolean side) {
 		InformationBullet inf = (InformationBullet) this.getInformation(is, player.worldObj);
-		return side ? super.canShoot(player, is, side) : (player.capabilities.isCreativeMode || WeaponHelper.hasAmmo(CBCItems.ammo_argrenade, player));
+		return side ? super.canShoot(player, is, side) : (player.capabilities.isCreativeMode || WeaponHelper.hasAmmo(CBCItems.ammo_argrenade.itemID, player));
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class Weapon_9mmAR extends Weapon_9mmAR_Raw {
 	@Override
 	public boolean onConsumeAmmo(ItemStack stack, World world, EntityPlayer player, InformationBullet inf, boolean left) {
 		if(!left) {
-			WeaponHelper.consumeInventoryItem(player.inventory.mainInventory, CBCItems.ammo_argrenade, 1);
+			WeaponHelper.consumeInventoryItem(player.inventory.mainInventory, CBCItems.ammo_argrenade.itemID, 1);
 			return true;
 		}
 		return false;
@@ -68,17 +69,17 @@ public class Weapon_9mmAR extends Weapon_9mmAR_Raw {
 		tips[1] = new IHudTip() {
 
 			@Override
-			public IIcon getRenderingIcon(ItemStack itemStack,
+			public Icon getRenderingIcon(ItemStack itemStack,
 					EntityPlayer player) {
-				if(ammoItem != null){
-					return ammoItem.getIconIndex(itemStack);
+				if(Item.itemsList[ammoID] != null){
+					return Item.itemsList[ammoID].getIconIndex(itemStack);
 				}
 				return null;
 			}
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return (itemStack.getMaxDamage() - Weapon_9mmAR.this.getWpnStackDamage(itemStack)  - 1) + "|" + WeaponHelper.getAmmoCapacity(ammoItem, player.inventory);
+				return (itemStack.getMaxDamage() - Weapon_9mmAR.this.getWpnStackDamage(itemStack)  - 1) + "|" + WeaponHelper.getAmmoCapacity(ammoID, player.inventory);
 			}
 
 			@Override
@@ -91,14 +92,14 @@ public class Weapon_9mmAR extends Weapon_9mmAR_Raw {
 		tips[0] = new IHudTip() {
 
 			@Override
-			public IIcon getRenderingIcon(ItemStack itemStack,
+			public Icon getRenderingIcon(ItemStack itemStack,
 					EntityPlayer player) {
 				return CBCItems.ammo_argrenade.getIconIndex(itemStack);
 			}
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return String.valueOf(WeaponHelper.getAmmoCapacity(CBCItems.ammo_argrenade, player.inventory));
+				return String.valueOf(WeaponHelper.getAmmoCapacity(CBCItems.ammo_argrenade.itemID, player.inventory));
 			}
 
 			@Override

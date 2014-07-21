@@ -17,7 +17,7 @@ package cn.lambdacraft.crafting.block;
 import java.util.List;
 
 import cn.lambdacraft.core.block.BlockElectricalBase;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.crafting.block.tile.TileWire;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -36,11 +36,11 @@ public class BlockWire extends BlockElectricalBase {
 	
 	public static final float  WIDTH = 0.16666666F;
 
-	public BlockWire() {
-		super(Material.cake);
-		this.setBlockTextureName("wire");
-		this.setStepSound(Block.soundTypeCloth);
-		this.setBlockName("lambdacraft:wire");
+	public BlockWire(int par1) {
+		super(par1, Material.cake);
+		this.setIconName("wire");
+		this.setStepSound(Block.soundClothFootstep);
+		this.setUnlocalizedName("wire");
 		this.setHardness(1.0F);
 		this.setGuiId(-1);
 		this.setTileType(TileWire.class);
@@ -49,7 +49,7 @@ public class BlockWire extends BlockElectricalBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return LCClientProps.RENDER_TYPE_EMPTY;
+		return ClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class BlockWire extends BlockElectricalBase {
 	public void addCollisionBoxesToList(World world, int par2, int par3, int par4, AxisAlignedBB aabb, List list, Entity par7Entity)
     {
     	//super.addCollisionBoxesToList(world, par2, par3, par4, aabb, list, par7Entity);
-    	TileWire tile = (TileWire) world.getTileEntity(par2, par3, par4);
+    	TileWire tile = (TileWire) world.getBlockTileEntity(par2, par3, par4);
     	boolean[] arr = tile.renderSides;
     	float minA = 0.5F - WIDTH, maxA = 0.5F + WIDTH;
     	float
@@ -89,7 +89,7 @@ public class BlockWire extends BlockElectricalBase {
     
     @Override
 	public void setBlockBoundsBasedOnState(IBlockAccess ws, int x, int y, int z) {
-    	TileWire te = (TileWire) ws.getTileEntity(x, y, z);
+    	TileWire te = (TileWire) ws.getBlockTileEntity(x, y, z);
     	boolean[] arr = te.renderSides;
     	float minA = 0.5F - WIDTH, maxA = 0.5F + WIDTH;
     			minX = arr[4] ? 0.0F : minA;
