@@ -37,9 +37,9 @@ public class LCCommonProxy {
 	public static Set<String> languages = new HashSet();
 	
 	static {
-		languages.add("zh_CN");
-		languages.add("en_US");
-		languages.add("zh_TW");
+		// languages.add("zh_CN");
+		// languages.add("en_US");
+		// languages.add("zh_TW");
 	}
 
 	public void profilerStartSection(String section) {
@@ -63,11 +63,11 @@ public class LCCommonProxy {
 	}
 
 	public void init() {
-		for (String lang : languages) {
-			LanguageRegistry.instance().loadLocalization(
-					"/assets/lambdacraft/lang/" + lang + ".properties", lang,
-					false);
-		}
+		// for (String lang : languages) {
+		// 	LanguageRegistry.instance().loadLocalization(
+		// 			"/assets/lambdacraft/lang/" + lang + ".properties", lang,
+		// 			false);
+		// }
 	}
 
 	public static void logExceptionMessage(TileEntity te, String... addition) {
