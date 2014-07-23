@@ -72,12 +72,12 @@ public class ModuleCrafting {
 			}
 		}
 		
+		CBCBlocks.init(CBCMod.config);
+		CBCItems.init(CBCMod.config);
 	}
 
 	@EventHandler
 	public void init(FMLInitializationEvent Init) {
-		CBCBlocks.init(CBCMod.config);
-		CBCItems.init(CBCMod.config);
 		
 		CBCAchievements.init(CBCMod.config);
 		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_CRAFTER,

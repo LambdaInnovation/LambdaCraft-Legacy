@@ -14,10 +14,9 @@
  */
 package cn.lambdacraft.api.energy;
 
+import ic2.api.energy.tile.IEnergySource;
+
 import java.lang.reflect.Method;
-
-import cn.lambdacraft.api.energy.tile.IEnergySource;
-
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;

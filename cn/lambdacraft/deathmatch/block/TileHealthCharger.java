@@ -14,13 +14,11 @@
  */
 package cn.lambdacraft.deathmatch.block;
 
+import ic2.api.item.ISpecialElectricItem;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.block.TileElectricStorage;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -30,6 +28,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
+import cn.lambdacraft.core.block.TileElectricStorage;
 
 /**
  * 
@@ -126,11 +126,11 @@ public class TileHealthCharger extends TileElectricStorage implements
 					this.decrStackSize(2, 1);
 				}
 				currentEnergy += 500;
-			} else if (sl != null && sl.getItem() instanceof ICustomEnItem) {
-				ICustomEnItem item = (ICustomEnItem) sl.getItem();
+			} else if (sl != null && sl.getItem() instanceof ISpecialElectricItem) {
+				ISpecialElectricItem item = (ISpecialElectricItem) sl.getItem();
 				if (item.canProvideEnergy(sl)) {
 					int cn = energyReq < 128 ? energyReq : 128;
-					cn = item.discharge(sl, cn, 2, false, false);
+					cn = item.getManager(sl).discharge(sl, cn, 2, false, false);
 					currentEnergy += cn;
 				}
 			}
@@ -319,7 +319,7 @@ public class TileHealthCharger extends TileElectricStorage implements
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		if (i <= 3 && !(itemstack.getItem() instanceof ICustomEnItem))
+		if (i <= 3 && !(itemstack.getItem() instanceof ISpecialElectricItem))
 			return false;
 		return true;
 	}
@@ -370,7 +370,7 @@ public class TileHealthCharger extends TileElectricStorage implements
 
 	@Override
 	public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
+			ForgeDirection paramDirection) {
 		return !(getCurrentBehavior() == EnumBehavior.RECEIVEONLY && !this.isRSActivated);
 	}
 

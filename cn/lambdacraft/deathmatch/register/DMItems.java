@@ -72,8 +72,7 @@ public class DMItems {
 				"weapon_hornet", 1));
 		physCalibur = new ItemPhysicalCalibur(ConfigHandler.getItemId(conf, "physCalibur", 1));
 		
-		if(!CBCMod.ic2Installed) {
-			armorHEVHelmet = new ArmorHEV(ConfigHandler.getItemId(conf, "hevHelmet",
+		armorHEVHelmet = new ArmorHEV(ConfigHandler.getItemId(conf, "hevHelmet",
 				GeneralProps.CAT_EQUIPMENT), 0);
 			armorHEVChestplate = new ArmorHEV(ConfigHandler.getItemId(conf, 
 				"hevChestplate", 3), 1);
@@ -81,8 +80,6 @@ public class DMItems {
 				"hevLeggings", 3), 2);
 			armorHEVBoot = new ArmorHEV(ConfigHandler.getItemId(conf, "hevBoot", 3), 3);
 			weapon_crowbar_el = new Weapon_Crowbar_Electrical(ConfigHandler.getItemId(conf, "weapon_crowbar_el", 1));
-			
-		}
 		
 		attach = new ItemAttachment(ConfigHandler.getItemId(conf, "attaches",
 				3));

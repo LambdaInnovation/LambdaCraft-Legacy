@@ -14,12 +14,7 @@
  */
 package cn.lambdacraft.deathmatch.block;
 
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.block.TileElectricStorage;
-import cn.lambdacraft.core.util.EnergyUtils;
-import cn.lambdacraft.deathmatch.item.ItemMedkit;
-import cn.lambdacraft.deathmatch.item.ItemMedkit.EnumAddingType;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -27,6 +22,11 @@ import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
+import cn.lambdacraft.core.block.TileElectricStorage;
+import cn.lambdacraft.core.util.EnergyUtils;
+import cn.lambdacraft.deathmatch.item.ItemMedkit;
+import cn.lambdacraft.deathmatch.item.ItemMedkit.EnumAddingType;
 
 /**
  * @author WeAthFolD, Rikka
@@ -47,7 +47,7 @@ public class TileMedkitFiller extends TileElectricStorage implements IInventory 
 	public ItemStack slots[] = new ItemStack[6];
 	public EnumMedFillerBehavior currentBehavior = EnumMedFillerBehavior.NONE;
 
-	public enum EnumMedFillerBehavior {
+	public static enum EnumMedFillerBehavior {
 		NONE, RECEIVEONLY, EMIT;
 
 		@Override
@@ -67,7 +67,7 @@ public class TileMedkitFiller extends TileElectricStorage implements IInventory 
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		if (i == 5 && itemstack.getItem() instanceof ICustomEnItem)
+		if (i == 5 && itemstack.getItem() instanceof ISpecialElectricItem)
 			return true;
 		return false;
 	}
@@ -247,14 +247,14 @@ public class TileMedkitFiller extends TileElectricStorage implements IInventory 
 	}
 
 	@Override
-	public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
-		return this.currentEnergy < maxEnergy;
+	public int getMaxSafeInput() {
+		return 32;
 	}
 
 	@Override
-	public int getMaxSafeInput() {
-		return 32;
+	public boolean acceptsEnergyFrom(TileEntity emitter,
+			ForgeDirection direction) {
+		return true;
 	}
 
 

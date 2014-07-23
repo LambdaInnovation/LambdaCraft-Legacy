@@ -17,6 +17,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.StatCollector;
 import cn.liutils.api.client.register.IKeyProcess;
 import cn.weaponmod.api.feature.IModdable;
 import cn.weaponmod.network.NetDeathmatch;
@@ -58,7 +60,11 @@ public class KeyMode implements IKeyProcess {
 		int mode = wpn.getMode(itemStack);
 		mode = (maxModes - 1 <= mode) ? 0 : mode + 1;
 		NetDeathmatch.sendModePacket((byte) stackInSlot, (byte) 0, (byte) mode);
-
+		String s = wpn.getModeDescription(wpn.getMode(itemStack));
+		if(s != null)
+		((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("mode.new")
+				+ ": \u00a74"
+				+ StatCollector.translateToLocal(s)));
 	}
 
 }

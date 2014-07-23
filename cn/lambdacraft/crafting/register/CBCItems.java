@@ -1,5 +1,7 @@
 package cn.lambdacraft.crafting.register;
 
+import ic2.api.item.ISpecialElectricItem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -16,7 +18,6 @@ import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.item.CBCGenericItem;
 import cn.lambdacraft.core.proxy.GeneralProps;
@@ -124,9 +125,7 @@ public class CBCItems {
 		chip = new CBCGenericItem(ConfigHandler.getItemId(conf, "chip", GeneralProps.CAT_MISC)).setIAndU("chip");
 		xenCrystal = new CBCGenericItem(ConfigHandler.getItemId(conf, "xencrystal", GeneralProps.CAT_MISC)).setIAndU("xencrystal");
 		
-		if(!CBCMod.ic2Installed) {
-			battery = new ItemBattery(ConfigHandler.getItemId(conf, "battery", 3));
-		}
+		battery = new ItemBattery(ConfigHandler.getItemId(conf, "battery", 3));
 	}
 
 	/**
@@ -223,19 +222,16 @@ public class CBCItems {
 				new ItemStack(spray2),
 				new ItemStack(spray)
 		};
-		
-		if(!CBCMod.ic2Installed) {
-			//Add LC Only Recipes
-			Object[][] input2 = {
-					{ " A ", "BCB", "DED", 'A', iSstorageS, 'B', iSglass, 'C', "blockRefinedIron", 'D', iSblockLapis, 'E', iSfurnace },
-					{ " A ", "BCB", "DED", 'A', iSglass, 'B', iSblazePowder, 'C', iSbucketEmpty, 'D', "ingotRefinedIron", 'E', iSgenFire },
-					{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSnetherQuartz, 'C', iSchip, 'D', "ingotRefinedIron", 'E', iSgenFire },
-			};
-			
-			ItemStack[] output2 = { iSgenFire, iSgenLava, iSgenSolar };
-			addOreRecipes(output2, input2);
-		}
 		addOreRecipes(output, input);
+		
+		Object[][] input2 = {
+				{ " A ", "BCB", "DED", 'A', iSstorageS, 'B', iSglass, 'C', "blockRefinedIron", 'D', iSblockLapis, 'E', iSfurnace },
+				{ " A ", "BCB", "DED", 'A', iSglass, 'B', iSblazePowder, 'C', iSbucketEmpty, 'D', "ingotRefinedIron", 'E', iSgenFire },
+				{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSnetherQuartz, 'C', iSchip, 'D', "ingotRefinedIron", 'E', iSgenFire },
+		};
+		
+		ItemStack[] output2 = { iSgenFire, iSgenLava, iSgenSolar };
+		addOreRecipes(output2, input2);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife01), lambdaChip, Item.diamond);
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife02), lambdaChip, Item.emerald);
@@ -357,10 +353,10 @@ public class CBCItems {
 			ItemStack in = findIdentifyStack(inv);
 			if (in == null)
 				return null;
-			ICustomEnItem item = (ICustomEnItem) in.getItem();
-			ICustomEnItem item2 = (ICustomEnItem) is.getItem();
-			int energy = item.discharge(in, Integer.MAX_VALUE, 5, true, true);
-			item2.charge(is, energy, 5, true, false);
+			ISpecialElectricItem item = (ISpecialElectricItem) in.getItem();
+			ISpecialElectricItem item2 = (ISpecialElectricItem) is.getItem();
+			int energy = item.getManager(in).discharge(in, Integer.MAX_VALUE, 5, true, true);
+			item2.getManager(is).charge(is, energy, 5, true, false);
 			return is;
 		}
 

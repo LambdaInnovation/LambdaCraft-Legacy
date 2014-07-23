@@ -14,9 +14,11 @@
  */
 package cn.lambdacraft.core.item;
 
+import ic2.api.item.IElectricItemManager;
+import ic2.api.item.ISpecialElectricItem;
+
 import java.util.List;
 
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
 import cn.lambdacraft.core.CBCMod;
 
 import cpw.mods.fml.relauncher.Side;
@@ -33,8 +35,7 @@ import net.minecraft.util.StatCollector;
  * @author WeAthFolD
  * 
  */
-public abstract class ElectricItem extends CBCGenericItem implements
-		ICustomEnItem {
+public abstract class ElectricItem extends CBCGenericItem implements ISpecialElectricItem {
 
 	protected int tier = 1, transferLimit = 100, maxCharge;
 
@@ -115,47 +116,11 @@ public abstract class ElectricItem extends CBCGenericItem implements
 		return this.maxCharge;
 	}
 
-	@Override
-	public int discharge(ItemStack itemStack, int amount, int tier,
-			boolean ignoreTransferLimit, boolean simulate) {
-		if (getItemCharge(itemStack) == 0)
-			return 0;
-		int en = getItemCharge(itemStack);
-		if (!ignoreTransferLimit)
-			amount = this.getTransferLimit(itemStack);
-		if (en > amount) {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) - amount);
-			return amount;
-		} else {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) - en);
-			return en;
-		}
-	}
-
-	@Override
-	public int charge(ItemStack itemStack, int amount, int tier,
-			boolean ignoreTransferLimit, boolean simulate) {
-
-		int chg = getItemCharge(itemStack), lim = getTransferLimit(itemStack);
-		int en = this.maxCharge - chg - 1;
-		if (en == 0)
-			return 0;
-		if (!ignoreTransferLimit)
-			amount = lim > amount ? amount : lim;
-		en = en > amount ? amount : en;
-		if (!simulate)
-			setItemCharge(itemStack, chg + en);
-		return en;
-	}
-
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack par1ItemStack,
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-		if (this.canShowChargeToolTip(par1ItemStack))
 			par3List.add(StatCollector.translateToLocal("gui.curenergy.name")
 					+ " : " + getItemCharge(par1ItemStack) + "/"
 					+ this.maxCharge + " EU");
@@ -170,12 +135,7 @@ public abstract class ElectricItem extends CBCGenericItem implements
 		this.setItemCharge(chargedItem, maxCharge);
 		par3List.add(chargedItem);
 	}
-
-	@Override
-	public boolean canShowChargeToolTip(ItemStack itemStack) {
-		return true;
-	}
-
+	
 	public void setItemCharge(ItemStack stack, int charge) {
 		loadCompound(stack).setInteger(
 				"charge",
@@ -183,7 +143,7 @@ public abstract class ElectricItem extends CBCGenericItem implements
 						: charge) : 0);
 	}
 
-	protected int getItemCharge(ItemStack stack) {
+	public int getItemCharge(ItemStack stack) {
 		return loadCompound(stack).getInteger("charge");
 	}
 
@@ -205,7 +165,7 @@ public abstract class ElectricItem extends CBCGenericItem implements
 	@Override
 	//public void setItemDamageForStack(ItemStack stack, int damage) {
 	public void setDamage(ItemStack stack, int damage){
-		setItemCharge(stack, damage);
+		setItemCharge(stack, maxCharge - damage);
 	}
 
 	/**
@@ -234,8 +194,14 @@ public abstract class ElectricItem extends CBCGenericItem implements
 	}
 
 	@Override
-	public boolean canUse(ItemStack itemStack, int amount) {
-		return getItemCharge(itemStack) > 0;
+	public boolean canProvideEnergy(ItemStack itemStack) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public IElectricItemManager getManager(ItemStack itemStack) {
+		return LCElectItemManager.INSTANCE;
 	}
 
 }

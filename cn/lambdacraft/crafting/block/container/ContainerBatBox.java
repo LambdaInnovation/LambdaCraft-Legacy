@@ -14,15 +14,15 @@
  */
 package cn.lambdacraft.crafting.block.container;
 
-import cn.lambdacraft.api.energy.item.IEnItem;
-import cn.lambdacraft.crafting.block.tile.TileBatBox;
-import cn.lambdacraft.deathmatch.block.container.SlotElectricItem;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import cn.lambdacraft.crafting.block.tile.TileBatBox;
+import cn.lambdacraft.deathmatch.block.container.SlotElectricItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -89,7 +89,7 @@ public class ContainerBatBox extends Container {
 
 			// 将玩家物品栏中的物品放到TileEntity中
 			if (slot >= 2) {
-				if (stackInSlot.getItem() instanceof IEnItem) {
+				if (stackInSlot.getItem() instanceof ISpecialElectricItem) {
 					if (!this.mergeItemStack(stackInSlot, 0, 2, true)) {
 						return null;
 					}

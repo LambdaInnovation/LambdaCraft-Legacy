@@ -1,13 +1,13 @@
 package cn.lambdacraft.core.energy;
 
-import cn.lambdacraft.api.LCDirection;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
 
 public class EnergyTarget {
 	TileEntity tileEntity;
-	LCDirection direction;
+	ForgeDirection direction;
 
-	EnergyTarget(TileEntity tileEntity, LCDirection direction) {
+	EnergyTarget(TileEntity tileEntity, ForgeDirection direction) {
 		this.tileEntity = tileEntity;
 		this.direction = direction;
 	}

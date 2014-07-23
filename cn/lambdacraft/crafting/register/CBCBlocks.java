@@ -24,8 +24,6 @@ import cn.lambdacraft.crafting.block.tile.TileGeneratorMugen;
 import cn.lambdacraft.crafting.block.tile.TileGeneratorSolar;
 import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
 import cn.lambdacraft.crafting.block.tile.TileWire;
-import cn.lambdacraft.intergration.ic2.IC2Module;
-import cn.lambdacraft.intergration.ic2.tile.ItemBlockIC2;
 import cn.liutils.core.register.Config;
 import cn.liutils.core.register.ConfigHandler;
 
@@ -80,38 +78,18 @@ public class CBCBlocks {
 		GameRegistry.registerBlock(oreTin, "lc_oretin");
 		GameRegistry.registerBlock(oreCopper, "lc_orecopper");
 		
-		if(!CBCMod.ic2Installed) {
-			
-			elCrafter = new BlockElectricCrafter(ConfigHandler.getBlockId(conf,  "elCrafter", 0));
-			GameRegistry.registerBlock(elCrafter, "lc_elcrafter");
-			GameRegistry.registerTileEntity(TileElCrafter.class, "tile_entity_elcrafter");
-			
-			GameRegistry.registerBlock(wire, "lc_wire");
-			GameRegistry.registerBlock(storageS, "lc_storages");
-			GameRegistry.registerBlock(storageL, "lc_storagel");
-			
-			GameRegistry.registerBlock(genLava, "lc_genlava");
-			GameRegistry.registerBlock(genSolar, "lc_gensolar");
-			GameRegistry.registerBlock(genFire, "lc_genfire");
-			GameRegistry.registerBlock(genMugen, "lc_genmugen");
-			
-		} else {
-			if(IC2Module.placableBlocks) {
-				GameRegistry.registerBlock(wire, "lc_wire");
-				GameRegistry.registerBlock(storageS, "lc_storages");
-				GameRegistry.registerBlock(storageL, "lc_storagel");
-				
-				GameRegistry.registerBlock(genLava, "lc_genlava");
-				GameRegistry.registerBlock(genSolar, "lc_gensolar");
-				GameRegistry.registerBlock(genFire, "lc_genfire");
-				GameRegistry.registerBlock(genMugen, "lc_genmugen");
-			} else {
-				GameRegistry.registerBlock(wire, ItemBlockIC2.class, "lc_wire");
-				GameRegistry.registerBlock(storageS, ItemBlockIC2.class, "lc_storages");
-				GameRegistry.registerBlock(storageL, ItemBlockIC2.class, "lc_stogarel");
-			}
-			
-		}
+		elCrafter = new BlockElectricCrafter(ConfigHandler.getBlockId(conf,  "elCrafter", 0));
+		GameRegistry.registerBlock(elCrafter, "lc_elcrafter");
+		GameRegistry.registerTileEntity(TileElCrafter.class, "tile_entity_elcrafter");
+		
+		GameRegistry.registerBlock(wire, "lc_wire");
+		GameRegistry.registerBlock(storageS, "lc_storages");
+		GameRegistry.registerBlock(storageL, "lc_storagel");
+		
+		GameRegistry.registerBlock(genLava, "lc_genlava");
+		GameRegistry.registerBlock(genSolar, "lc_gensolar");
+		GameRegistry.registerBlock(genFire, "lc_genfire");
+		GameRegistry.registerBlock(genMugen, "lc_genmugen");
 		
 		MinecraftForge.setBlockHarvestLevel(uraniumOre, "pickaxe", 2);
 		MinecraftForge.setBlockHarvestLevel(blockRefined, "pickaxe", 1);

@@ -14,8 +14,7 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.api.energy.item.IEnItem;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -48,8 +47,8 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 		tryBurn();
 		if (currentEnergy > 0) {
 			if (this.slots[1] != null
-					&& slots[1].getItem() instanceof ICustomEnItem) {
-				currentEnergy -= ((ICustomEnItem) slots[1].getItem()).charge(slots[1], currentEnergy, 1, false, false);
+					&& slots[1].getItem() instanceof ISpecialElectricItem) {
+				currentEnergy -= ((ISpecialElectricItem) slots[1].getItem()).getManager(slots[1]).charge(slots[1], currentEnergy, 1, false, false);
 			}
 			int toConsume = 10 - sendEnergy(currentEnergy > 10 ? 10 : currentEnergy);
 			currentEnergy -= toConsume;
@@ -73,11 +72,6 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 				bucketCnt += 1;
 			}
 		}
-	}
-
-	@Override
-	public int getMaxEnergyOutput() {
-		return 10;
 	}
 
 	@Override
@@ -184,7 +178,18 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 		if (i == 0)
 			return true;
 		else
-			return (itemstack.getItem() instanceof IEnItem);
+			return (itemstack.getItem() instanceof ISpecialElectricItem);
+	}
+
+	@Override
+	public double getOfferedEnergy() {
+		return Math.min(currentEnergy, 10);
+	}
+
+	@Override
+	public void drawEnergy(double amount) {
+		currentEnergy -= amount;
+		if(currentEnergy < 0) currentEnergy = 0;
 	}
 
 }

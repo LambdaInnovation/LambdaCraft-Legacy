@@ -14,14 +14,14 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
+import ic2.api.energy.tile.IEnergySink;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.api.energy.tile.IEnergySink;
+import net.minecraftforge.common.ForgeDirection;
 import cn.lambdacraft.core.util.EnergyUtils;
 import cn.lambdacraft.crafting.register.CBCBlocks;
 
@@ -29,8 +29,7 @@ import cn.lambdacraft.crafting.register.CBCBlocks;
  * @author WeAthFolD, Rikka
  * 
  */
-public class TileBatBox extends TileGeneratorBase implements IInventory,
-		IEnergySink {
+public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergySink {
 
 	public ItemStack[] slots = new ItemStack[2];
 	public final int type;
@@ -59,7 +58,7 @@ public class TileBatBox extends TileGeneratorBase implements IInventory,
 			return;
 
 		// emit the energy frequently
-		int amt = this.getMaxEnergyOutput();
+		int amt = 32;
 		if (amt > currentEnergy)
 			amt = currentEnergy;
 		amt -= this.sendEnergy(amt);
@@ -79,9 +78,9 @@ public class TileBatBox extends TileGeneratorBase implements IInventory,
 		// charge the chargeable in slot1
 		if (currentEnergy > 0) {
 			ItemStack sl = slots[1];
-			if (sl != null && sl.getItem() instanceof ICustomEnItem) {
-				ICustomEnItem item = (ICustomEnItem) sl.getItem();
-				currentEnergy -= item.charge(sl, currentEnergy, type, false,
+			if (sl != null && sl.getItem() instanceof ISpecialElectricItem) {
+				ISpecialElectricItem item = (ISpecialElectricItem) sl.getItem();
+				currentEnergy -= item.getManager(sl).charge(sl, currentEnergy, type, false,
 						false);
 			}
 		}
@@ -121,8 +120,8 @@ public class TileBatBox extends TileGeneratorBase implements IInventory,
 	}
 
 	@Override
-	public int injectEnergy(LCDirection paramDirection, int paramInt) {
-		this.currentEnergy += paramInt;
+	public double injectEnergyUnits(ForgeDirection paramDirection, double amount) {
+		this.currentEnergy += amount;
 		if (currentEnergy > maxStorage) {
 			int amt = currentEnergy - maxStorage;
 			currentEnergy = maxStorage;
@@ -132,7 +131,7 @@ public class TileBatBox extends TileGeneratorBase implements IInventory,
 	}
 
 	@Override
-	public int demandsEnergy() {
+	public double demandedEnergyUnits() {
 		return getMaxEnergy() - getCurrentEnergy();
 	}
 
@@ -148,11 +147,6 @@ public class TileBatBox extends TileGeneratorBase implements IInventory,
 	 */
 	public int getMaxEnergy() {
 		return maxStorage;
-	}
-	
-	@Override
-	public int getMaxEnergyOutput() {
-		return type == 0 ? 32 : 128;
 	}
 	
 	@Override
@@ -216,8 +210,8 @@ public class TileBatBox extends TileGeneratorBase implements IInventory,
 	}
 
 	@Override
-	public boolean emitEnergyTo(TileEntity emTileEntity, LCDirection emDirection) {
-		return emDirection.toForgeDirection().ordinal() == this.blockMetadata;
+	public boolean emitsEnergyTo(TileEntity emTileEntity, ForgeDirection emDirection) {
+		return emDirection.ordinal() == this.blockMetadata;
 	}
 
 	@Override
@@ -233,13 +227,23 @@ public class TileBatBox extends TileGeneratorBase implements IInventory,
 
 	@Override
 	public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
+			ForgeDirection paramDirection) {
 		return currentEnergy < maxStorage
-				&& paramDirection.toForgeDirection().ordinal() != this.blockMetadata;
+				&& paramDirection.ordinal() != this.blockMetadata;
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
+	}
+
+	@Override
+	public double getOfferedEnergy() {
+		return Math.max(currentEnergy, type == 1 ? 32 : 128);
+	}
+
+	@Override
+	public void drawEnergy(double amount) {
+		if(amount > 0) currentEnergy -= amount;
 	}
 }

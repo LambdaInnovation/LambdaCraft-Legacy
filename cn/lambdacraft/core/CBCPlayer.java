@@ -110,7 +110,7 @@ public class CBCPlayer implements ITickHandler {
 			if (item instanceof ArmorHEV) {
 				ArmorHEV hev = (ArmorHEV) item;
 				if (ArmorHEV.hasAttach(slotChestplate, EnumAttachment.LONGJUMP))
-					if (hev.discharge(slotChestplate, 200, 2, true, false) == 200) {
+					if (hev.getManager(slotChestplate).discharge(slotChestplate, 200, 2, true, false) == 200) {
 						player.motionX = -MathHelper.sin(player.rotationYaw / 180.0F
 								* (float) Math.PI)
 								* MathHelper.cos(player.rotationPitch / 180.0F

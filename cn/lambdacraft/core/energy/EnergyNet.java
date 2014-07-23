@@ -1,5 +1,14 @@
 package cn.lambdacraft.core.energy;
 
+import ic2.api.energy.event.EnergyTileLoadEvent;
+import ic2.api.energy.event.EnergyTileUnloadEvent;
+import ic2.api.energy.tile.IEnergyAcceptor;
+import ic2.api.energy.tile.IEnergyConductor;
+import ic2.api.energy.tile.IEnergyEmitter;
+import ic2.api.energy.tile.IEnergySink;
+import ic2.api.energy.tile.IEnergySource;
+import ic2.api.energy.tile.IEnergyTile;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,34 +18,24 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.WeakHashMap;
 
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.events.EnergyTileLoadEvent;
-import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
-import cn.lambdacraft.api.energy.events.EnergyTileUnloadEvent;
-import cn.lambdacraft.api.energy.tile.IEnAcceptor;
-import cn.lambdacraft.api.energy.tile.IEnConductor;
-import cn.lambdacraft.api.energy.tile.IEnEmitter;
-import cn.lambdacraft.api.energy.tile.IEnergySink;
-import cn.lambdacraft.api.energy.tile.IEnergySource;
-import cn.lambdacraft.api.energy.tile.IEnergyTile;
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.world.WorldData;
-
-
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
+import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.world.WorldData;
 
 public final class EnergyNet {
 
 	public static final double minConductionLoss = 0.0001D;
-	private static final LCDirection[] lcdirections = LCDirection.values();
+	private static final ForgeDirection[] directions = ForgeDirection.values();
 	private static EventHandler eventHandler;
 	private final Map<IEnergySource, List<EnergyPath>> energySourceToEnergyPathMap = new WeakHashMap();
-	private final Map<EntityLiving, Integer> entityLivingToShockEnergyMap = new WeakHashMap();
+	private final Map<EntityLiving, Double> entityLivingToShockEnergyMap = new WeakHashMap();
 	private static int apiErrorCooldown = 0;
 
 	public static void initialize() {
@@ -73,12 +72,11 @@ public final class EnergyNet {
 	}
 
 	public void addTileEntity(TileEntity addedTileEntity) {
-		if ((!(addedTileEntity instanceof IEnergyTile))
-				|| (((IEnergyTile) addedTileEntity).isAddedToEnergyNet())) {
+		if ((!(addedTileEntity instanceof IEnergyTile))) {
 			return;
 		}
-
-		if ((addedTileEntity instanceof IEnAcceptor)) {
+		
+		if ((addedTileEntity instanceof IEnergyAcceptor)) {
 			List<EnergyPath> reverseEnergyPaths = discover(addedTileEntity,
 					true, 2147483647);
 
@@ -87,7 +85,7 @@ public final class EnergyNet {
 
 				if ((!this.energySourceToEnergyPathMap
 						.containsKey(energySource))
-						|| (energySource.getMaxEnergyOutput() <= reverseEnergyPath.loss)) {
+						|| (energySource.getOfferedEnergy() <= reverseEnergyPath.loss)) {
 					continue;
 				}
 				this.energySourceToEnergyPathMap.remove(energySource);
@@ -99,20 +97,15 @@ public final class EnergyNet {
 	}
 
 	public void removeTileEntity(TileEntity removedTileEntity) {
-		if ((!(removedTileEntity instanceof IEnergyTile))
-				|| (!((IEnergyTile) removedTileEntity).isAddedToEnergyNet())) {
-			boolean alreadyRemoved = !((IEnergyTile) removedTileEntity)
-					.isAddedToEnergyNet();
-
+		if ((!(removedTileEntity instanceof IEnergyTile))) {
 			CBCMod.log.warning(new StringBuilder().append("removing ")
 					.append(removedTileEntity)
-					.append(" from the EnergyNet failed, already removed: ")
-					.append(alreadyRemoved).toString());
+					.append(" from the EnergyNet failed.").toString());
 
 			return;
 		}
 
-		if ((removedTileEntity instanceof IEnAcceptor)) {
+		if ((removedTileEntity instanceof IEnergyAcceptor)) {
 			List<EnergyPath> reverseEnergyPaths = discover(removedTileEntity,
 					true, 2147483647);
 			Iterator it;
@@ -122,10 +115,10 @@ public final class EnergyNet {
 
 				if ((!this.energySourceToEnergyPathMap
 						.containsKey(energySource))
-						|| (energySource.getMaxEnergyOutput() <= reverseEnergyPath.loss)) {
+						|| (energySource.getOfferedEnergy() <= reverseEnergyPath.loss)) {
 					continue;
 				}
-				if ((removedTileEntity instanceof IEnConductor))
+				if ((removedTileEntity instanceof IEnergyConductor))
 					this.energySourceToEnergyPathMap.remove(energySource);
 				else
 					for (it = ((List) this.energySourceToEnergyPathMap
@@ -141,18 +134,12 @@ public final class EnergyNet {
 	}
 
 	public int emitEnergyFrom(IEnergySource energySource, int amount) {
-		if (!energySource.isAddedToEnergyNet()) {
-			CBCMod.log.warning(new StringBuilder()
-					.append("EnergyNet.emitEnergyFrom: ").append(energySource)
-					.append(" is not added to the enet").toString());
-			return amount;
-		}
 
 		if (!this.energySourceToEnergyPathMap.containsKey(energySource)) {
 			this.energySourceToEnergyPathMap.put(
 					energySource,
 					discover((TileEntity) energySource, false,
-							energySource.getMaxEnergyOutput()));
+							energySource.getOfferedEnergy()));
 		}
 
 		List activeEnergyPaths = new Vector();
@@ -164,7 +151,7 @@ public final class EnergyNet {
 
 			IEnergySink energySink = (IEnergySink) energyPath.target;
 
-			if ((energySink.demandsEnergy() > 0) && (energyPath.loss < amount)) {
+			if ((energySink.demandedEnergyUnits() > 0) && (energyPath.loss < amount)) {
 				totalInvLoss += 1.0D / energyPath.loss;
 				activeEnergyPaths.add(energyPath);
 			}
@@ -181,7 +168,7 @@ public final class EnergyNet {
 			totalInvLoss -= 1.0D / removedEnergyPath.loss;
 		}
 
-		Map<EnergyPath, Integer> suppliedEnergyPaths = new HashMap();
+		Map<EnergyPath, Double> suppliedEnergyPaths = new HashMap();
 		new Vector();
 
 		while ((!activeEnergyPaths.isEmpty()) && (amount > 0)) {
@@ -202,12 +189,11 @@ public final class EnergyNet {
 				int energyLoss = (int) Math.floor(energyPath.loss);
 
 				if (energyProvided > energyLoss) {
-					int energyReturned = energySink.injectEnergy(
-							energyPath.targetDirection, energyProvided
+					double energyReturned = energySink.injectEnergyUnits(energyPath.targetDirection, energyProvided
 									- energyLoss);
 
 					if ((energyReturned == 0)
-							&& (energySink.demandsEnergy() > 0)) {
+							&& (energySink.demandedEnergyUnits() > 0)) {
 						activeEnergyPaths.add(energyPath);
 						newTotalInvLoss += 1.0D / energyPath.loss;
 					} else if (energyReturned >= energyProvided - energyLoss) {
@@ -244,16 +230,16 @@ public final class EnergyNet {
 
 					energyConsumed += energyProvided - energyReturned;
 
-					int energyInjected = energyProvided - energyLoss
+					double energyInjected = energyProvided - energyLoss
 							- energyReturned;
 
 					if (!suppliedEnergyPaths.containsKey(energyPath))
 						suppliedEnergyPaths.put(energyPath,
-								Integer.valueOf(energyInjected));
+								Double.valueOf(energyInjected));
 					else
 						suppliedEnergyPaths.put(
 								energyPath,
-								Integer.valueOf(energyInjected
+								Double.valueOf(energyInjected
 										+ suppliedEnergyPaths.get(energyPath)
 												.intValue()));
 				} else {
@@ -272,9 +258,9 @@ public final class EnergyNet {
 			amount -= energyConsumed;
 		}
 
-		for (Map.Entry entry : suppliedEnergyPaths.entrySet()) {
+		for (Map.Entry<EnergyPath, Double> entry : suppliedEnergyPaths.entrySet()) {
 			EnergyPath energyPath = (EnergyPath) entry.getKey();
-			int energyInjected = ((Integer) entry.getValue()).intValue();
+			double energyInjected = entry.getValue();
 
 			energyPath.totalEnergyConducted += energyInjected;
 
@@ -290,9 +276,9 @@ public final class EnergyNet {
 										energyPath.maxZ + 2));
 
 				for (EntityLiving entityLiving : entitiesNearEnergyPath) {
-					int maxShockEnergy = 0;
+					double maxShockEnergy = 0;
 
-					for (IEnConductor energyConductor : energyPath.conductors) {
+					for (IEnergyConductor energyConductor : energyPath.conductors) {
 						TileEntity te = (TileEntity) energyConductor;
 
 						if (entityLiving.boundingBox
@@ -300,7 +286,7 @@ public final class EnergyNet {
 										te.xCoord - 1, te.yCoord - 1,
 										te.zCoord - 1, te.xCoord + 2,
 										te.yCoord + 2, te.zCoord + 2))) {
-							int shockEnergy = energyInjected
+							double shockEnergy = energyInjected
 									- energyConductor
 											.getInsulationEnergyAbsorption();
 
@@ -314,17 +300,16 @@ public final class EnergyNet {
 							.containsKey(entityLiving))
 						this.entityLivingToShockEnergyMap
 								.put(entityLiving,
-										Integer.valueOf(this.entityLivingToShockEnergyMap
+										Double.valueOf(this.entityLivingToShockEnergyMap
 												.get(entityLiving).intValue()
 												+ maxShockEnergy));
 					else {
-						this.entityLivingToShockEnergyMap.put(entityLiving,
-								Integer.valueOf(maxShockEnergy));
+						this.entityLivingToShockEnergyMap.put(entityLiving, Double.valueOf(maxShockEnergy));
 					}
 				}
 
 				if (energyInjected >= energyPath.minInsulationBreakdownEnergy) {
-					for (IEnConductor energyConductor : energyPath.conductors) {
+					for (IEnergyConductor energyConductor : energyPath.conductors) {
 						if (energyInjected >= energyConductor
 								.getInsulationBreakdownEnergy()) {
 							energyConductor.removeInsulation();
@@ -338,7 +323,7 @@ public final class EnergyNet {
 			}
 
 			if (energyInjected >= energyPath.minConductorBreakdownEnergy)
-				for (IEnConductor energyConductor : energyPath.conductors)
+				for (IEnergyConductor energyConductor : energyPath.conductors)
 					if (energyInjected >= energyConductor
 							.getConductorBreakdownEnergy())
 						energyConductor.removeConductor();
@@ -347,50 +332,10 @@ public final class EnergyNet {
 		return amount;
 	}
 
-	@Deprecated
-	public long getTotalEnergyConducted(TileEntity tileEntity) {
-		long ret = 0L;
-
-		if (((tileEntity instanceof IEnConductor))
-				|| ((tileEntity instanceof IEnergySink))) {
-			List<EnergyPath> reverseEnergyPaths = discover(tileEntity, true,
-					2147483647);
-
-			for (EnergyPath reverseEnergyPath : reverseEnergyPaths) {
-				IEnergySource energySource = (IEnergySource) reverseEnergyPath.target;
-
-				if ((!this.energySourceToEnergyPathMap
-						.containsKey(energySource))
-						|| (energySource.getMaxEnergyOutput() <= reverseEnergyPath.loss)) {
-					continue;
-				}
-				for (EnergyPath energyPath : this.energySourceToEnergyPathMap
-						.get(energySource)) {
-					if ((((tileEntity instanceof IEnergySink)) && (energyPath.target == tileEntity))
-							|| (((tileEntity instanceof IEnConductor)) && (energyPath.conductors
-									.contains(tileEntity)))) {
-						ret += energyPath.totalEnergyConducted;
-					}
-				}
-			}
-		}
-
-		if (((tileEntity instanceof IEnergySource))
-				&& (this.energySourceToEnergyPathMap.containsKey(tileEntity))) {
-			for (EnergyPath energyPath : this.energySourceToEnergyPathMap
-					.get(tileEntity)) {
-				ret += energyPath.totalEnergyConducted;
-			}
-
-		}
-
-		return ret;
-	}
-
 	public long getTotalEnergyEmitted(TileEntity tileEntity) {
 		long ret = 0L;
 
-		if ((tileEntity instanceof IEnConductor)) {
+		if ((tileEntity instanceof IEnergyConductor)) {
 			List<EnergyPath> reverseEnergyPaths = discover(tileEntity, true,
 					2147483647);
 
@@ -399,12 +344,12 @@ public final class EnergyNet {
 
 				if ((!this.energySourceToEnergyPathMap
 						.containsKey(energySource))
-						|| (energySource.getMaxEnergyOutput() <= reverseEnergyPath.loss)) {
+						|| (energySource.getOfferedEnergy() <= reverseEnergyPath.loss)) {
 					continue;
 				}
 				for (EnergyPath energyPath : this.energySourceToEnergyPathMap
 						.get(energySource)) {
-					if (((tileEntity instanceof IEnConductor))
+					if (((tileEntity instanceof IEnergyConductor))
 							&& (energyPath.conductors.contains(tileEntity))) {
 						ret += energyPath.totalEnergyConducted;
 					}
@@ -427,7 +372,7 @@ public final class EnergyNet {
 	public long getTotalEnergySunken(TileEntity tileEntity) {
 		long ret = 0L;
 
-		if (((tileEntity instanceof IEnConductor))
+		if (((tileEntity instanceof IEnergyConductor))
 				|| ((tileEntity instanceof IEnergySink))) {
 			List<EnergyPath> reverseEnergyPaths = discover(tileEntity, true,
 					2147483647);
@@ -437,13 +382,13 @@ public final class EnergyNet {
 
 				if ((!this.energySourceToEnergyPathMap
 						.containsKey(energySource))
-						|| (energySource.getMaxEnergyOutput() <= reverseEnergyPath.loss)) {
+						|| (energySource.getOfferedEnergy() <= reverseEnergyPath.loss)) {
 					continue;
 				}
 				for (EnergyPath energyPath : this.energySourceToEnergyPathMap
 						.get(energySource)) {
 					if ((((tileEntity instanceof IEnergySink)) && (energyPath.target == tileEntity))
-							|| (((tileEntity instanceof IEnConductor)) && (energyPath.conductors
+							|| (((tileEntity instanceof IEnergyConductor)) && (energyPath.conductors
 									.contains(tileEntity)))) {
 						ret += energyPath.totalEnergyConducted;
 					}
@@ -455,7 +400,7 @@ public final class EnergyNet {
 	}
 
 	private List<EnergyPath> discover(TileEntity emitter, boolean reverse,
-			int lossLimit) {
+			double lossLimit) {
 		Map<TileEntity, EnergyBlockLink> reachedTileEntities = new HashMap();
 		LinkedList tileEntitiesToCheck = new LinkedList();
 
@@ -480,8 +425,8 @@ public final class EnergyNet {
 					continue;
 				double additionalLoss = 0.0D;
 
-				if ((validReceiver.tileEntity instanceof IEnConductor)) {
-					additionalLoss = ((IEnConductor) validReceiver.tileEntity)
+				if ((validReceiver.tileEntity instanceof IEnergyConductor)) {
+					additionalLoss = ((IEnergyConductor) validReceiver.tileEntity)
 							.getConductionLoss();
 
 					if (additionalLoss < 0.0001D)
@@ -498,7 +443,7 @@ public final class EnergyNet {
 							new EnergyBlockLink(validReceiver.direction,
 									currentLoss + additionalLoss));
 
-					if ((validReceiver.tileEntity instanceof IEnConductor)) {
+					if ((validReceiver.tileEntity instanceof IEnergyConductor)) {
 						tileEntitiesToCheck.remove(validReceiver.tileEntity);
 						tileEntitiesToCheck.add(validReceiver.tileEntity);
 					}
@@ -525,18 +470,20 @@ public final class EnergyNet {
 				}
 
 				energyPath.target = tileEntity;
-				energyPath.targetDirection = energyBlockLink.lcdirection;
+				energyPath.targetDirection = energyBlockLink.direction;
 
 				if ((!reverse) && ((emitter instanceof IEnergySource))) {
 					while (true) {
 						if(energyBlockLink == null)
 							break;
-						tileEntity = energyBlockLink.lcdirection
-								.applyToTileEntity(tileEntity);
+						tileEntity = tileEntity.worldObj.getBlockTileEntity
+								(tileEntity.xCoord + energyPath.targetDirection.offsetX
+										, tileEntity.yCoord + energyPath.targetDirection.offsetY,
+										tileEntity.zCoord + energyPath.targetDirection.offsetZ);
 
 						if (tileEntity != emitter) {
-							if ((tileEntity instanceof IEnConductor)) {
-								IEnConductor energyConductor = (IEnConductor) tileEntity;
+							if ((tileEntity instanceof IEnergyConductor)) {
+								IEnergyConductor energyConductor = (IEnergyConductor) tileEntity;
 
 								if (tileEntity.xCoord < energyPath.minX)
 									energyPath.minX = tileEntity.xCoord;
@@ -655,29 +602,37 @@ public final class EnergyNet {
 			boolean reverse) {
 		List validReceivers = new LinkedList();
 
-		for (LCDirection lcdirection : lcdirections) {
-			TileEntity target = lcdirection.applyToTileEntity(emitter);
-			if ((!(target instanceof IEnergyTile))
-					|| (!((IEnergyTile) target).isAddedToEnergyNet()))
+		for (ForgeDirection lcdirection : directions) {
+			TileEntity target = getOffsetTile(emitter, lcdirection);
+			
+			if (!(target instanceof IEnergyTile))
 				continue;
-			LCDirection inverseDirection = lcdirection.getInverse();
+			ForgeDirection inverseDirection = lcdirection.getOpposite();
 
-			if (((reverse) || (!(emitter instanceof IEnEmitter)) || (!((IEnEmitter) emitter)
-					.emitEnergyTo(target, lcdirection)))
-					&& ((!reverse) || (!(emitter instanceof IEnAcceptor)) || (!((IEnAcceptor) emitter)
+			if (((reverse) || (!(emitter instanceof IEnergyEmitter)) || (!((IEnergyEmitter) emitter)
+					.emitsEnergyTo(target, lcdirection)))
+					&& ((!reverse) || (!(emitter instanceof IEnergyAcceptor)) || (!((IEnergyAcceptor) emitter)
 							.acceptsEnergyFrom(target, lcdirection)))) {
 				continue;
 			}
-			if (((reverse) || (!(target instanceof IEnAcceptor)) || (!((IEnAcceptor) target)
+			if (((reverse) || (!(target instanceof IEnergyAcceptor)) || (!((IEnergyAcceptor) target)
 					.acceptsEnergyFrom(emitter, inverseDirection)))
-					&& ((!reverse) || (!(target instanceof IEnEmitter)) || (!((IEnEmitter) target)
-							.emitEnergyTo(emitter, inverseDirection)))) {
+					&& ((!reverse) || (!(target instanceof IEnergyEmitter)) || (!((IEnergyEmitter) target)
+							.emitsEnergyTo(emitter, inverseDirection)))) {
 				continue;
 			}
 			validReceivers.add(new EnergyTarget(target, inverseDirection));
 		}
 
 		return validReceivers;
+	}
+	
+	private TileEntity getOffsetTile(TileEntity tile, ForgeDirection dir) {
+		return tile.worldObj.getBlockTileEntity(
+					tile.xCoord + dir.offsetX,
+					tile.yCoord + dir.offsetY,
+					tile.zCoord + dir.offsetZ
+				);
 	}
 
 	public static class EventHandler {

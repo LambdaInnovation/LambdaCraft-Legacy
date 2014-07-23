@@ -1,14 +1,14 @@
 package cn.lambdacraft.core.energy;
 
-import cn.lambdacraft.api.LCDirection;
+import net.minecraftforge.common.ForgeDirection;
 
 public class EnergyBlockLink {
 
-	LCDirection lcdirection;
+	ForgeDirection direction;
 	double loss;
 
-	EnergyBlockLink(LCDirection direction, double loss) {
-		this.lcdirection = direction;
+	EnergyBlockLink(ForgeDirection dir, double loss) {
+		this.direction = dir;
 		this.loss = loss;
 	}
 

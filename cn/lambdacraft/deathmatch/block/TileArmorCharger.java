@@ -14,12 +14,9 @@
  */
 package cn.lambdacraft.deathmatch.block;
 
-import java.util.HashSet;
+import ic2.api.item.ISpecialElectricItem;
 
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.block.TileElectricStorage;
-import cn.lambdacraft.core.util.EnergyUtils;
+import java.util.HashSet;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -27,6 +24,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
+import cn.lambdacraft.core.block.TileElectricStorage;
+import cn.lambdacraft.core.util.EnergyUtils;
 
 /**
  * @author WeAthFolD, Rikka
@@ -105,8 +105,8 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 				ItemStack arm = slots[i];
 				if (arm == null)
 					continue;
-				ICustomEnItem item = (ICustomEnItem) arm.getItem();
-				int e = item.discharge(arm, ENERGY_MAX - currentEnergy, 2,
+				ISpecialElectricItem item = (ISpecialElectricItem) arm.getItem();
+				int e = item.getManager(arm).discharge(arm, ENERGY_MAX - currentEnergy, 2,
 						false, false);
 				currentEnergy += e;
 			}
@@ -118,8 +118,8 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 				ItemStack arm = slots[i];
 				if (arm == null)
 					continue;
-				ICustomEnItem item = (ICustomEnItem) arm.getItem();
-				int e = item.charge(arm, currentEnergy > 128 ? 128
+				ISpecialElectricItem item = (ISpecialElectricItem) arm.getItem();
+				int e = item.getManager(arm).charge(arm, currentEnergy > 128 ? 128
 						: currentEnergy, 2, false, worldObj.isRemote);
 				currentEnergy -= e;
 				flag = flag || e > 0;
@@ -170,12 +170,12 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 						this.decrStackSize(i, 1);
 					}
 					currentEnergy += 500;
-				} else if (sl.getItem() instanceof ICustomEnItem) {
-					ICustomEnItem item = (ICustomEnItem) sl.getItem();
+				} else if (sl.getItem() instanceof ISpecialElectricItem) {
+					ISpecialElectricItem item = (ISpecialElectricItem) sl.getItem();
 					if (!item.canProvideEnergy(sl))
 						continue;
 					int cn = energyReq < 128 ? energyReq : 128;
-					cn = item.discharge(sl, cn, 2, false, false);
+					cn = item.getManager(sl).discharge(sl, cn, 2, false, false);
 					currentEnergy += cn;
 				}
 			}
@@ -254,7 +254,7 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		if (i <= 3 && !(itemstack.getItem() instanceof ICustomEnItem))
+		if (i <= 3 && !(itemstack.getItem() instanceof ISpecialElectricItem))
 			return false;
 		return true;
 	}
@@ -296,7 +296,7 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 
 	@Override
 	public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
+			ForgeDirection paramDirection) {
 		return !(currentBehavior == EnumBehavior.RECEIVEONLY && !this.isRSActivated);
 	}
 

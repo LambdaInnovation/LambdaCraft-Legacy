@@ -1,17 +1,17 @@
 package cn.lambdacraft.core.energy;
 
+import ic2.api.energy.tile.IEnergyConductor;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.tile.IEnConductor;
-
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
 
 public class EnergyPath {
 	TileEntity target = null;
-	LCDirection targetDirection;
-	Set<IEnConductor> conductors = new HashSet();
+	ForgeDirection targetDirection;
+	Set<IEnergyConductor> conductors = new HashSet();
 
 	int minX = 2147483647;
 	int minY = 2147483647;

@@ -16,6 +16,9 @@ package cn.lambdacraft.crafting.entity;
 
 import java.util.List;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import cn.lambdacraft.core.proxy.ClientProps;
 import cn.liutils.api.util.Color4I;
 
@@ -31,8 +34,9 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 /**
+ * 狼：Minecraft类是要在Server端生成的时候绝对不能引用的类，千万注意
+ * 如果要获取玩家实体，可以用dataWatcher
  * @author Mkpoli
- * 
  */
 public class EntitySpray extends Entity {
 
@@ -45,8 +49,6 @@ public class EntitySpray extends Entity {
 	public int block_pos_z;
 	public int title_id = -1;
 	public Color4I color;
-
-	private EntityPlayer player;
 
 	// 被框架自动调用
 	public EntitySpray(World world) {
@@ -69,7 +71,7 @@ public class EntitySpray extends Entity {
 		this.save_params();
 		this.initParams();
 
-		this.player = thePlayer;
+		//this.player = thePlayer;
 	}
 	
 	@Override
@@ -258,9 +260,13 @@ public class EntitySpray extends Entity {
 	}
 
 	// 判断被放置界面是否可用
+	/**
+	 * SPRAY的运行时维护不需要用到Player，因此也不需要加载player。
+	 * 对玩家的消息发送应该在物品实例中进行
+	 * 所以 TODO：改吧www
+	 * @return
+	 */
 	public boolean onValidSurface() {
-		if (player == null)
-			player = Minecraft.getMinecraft().thePlayer;
 		
 		// 如果碰撞箱不是空的返回false
 		if (!this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty()) {
@@ -312,11 +318,11 @@ public class EntitySpray extends Entity {
 						material2 = this.worldObj.getBlockMaterial(x , y, this.block_pos_z + 1);
 					}
 					if (!material.isSolid()) {
-						player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.nospace")));
+						//player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.nospace")));
 						return false;
 					}
 					if (material2.isLiquid()) {
-						player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.haswater")));
+						//player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.haswater")));
 						return false;
 			}
 		} else {
@@ -332,11 +338,11 @@ public class EntitySpray extends Entity {
 						material2 = this.worldObj.getBlockMaterial(x + i, y + j, this.block_pos_z + 1);
 					}
 					if (!material.isSolid()) {
-						player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.nospace")));
+						//player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.nospace")));
 						return false;
 					}
 					if (material2.isLiquid()) {
-						player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.haswater")));
+						//player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.haswater")));
 						return false;
 					}
 				}
@@ -351,7 +357,7 @@ public class EntitySpray extends Entity {
 				continue;
 			if (entity instanceof EntitySpray && ((EntitySpray) entity).block_pos_x == this.block_pos_x && ((EntitySpray) entity).block_pos_y == this.block_pos_y && ((EntitySpray) entity).block_pos_z == this.block_pos_z)
 				continue;
-			player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.beenblocked") + entity.getClass().getName()));
+			//player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spary.beenblocked") + entity.getClass().getName()));
 			return false;
 		}
 

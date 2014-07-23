@@ -14,16 +14,17 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
+import ic2.api.energy.event.EnergyTileLoadEvent;
+import ic2.api.energy.tile.IEnergySink;
+
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.events.EnergyTileLoadEvent;
 import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
-import cn.lambdacraft.api.energy.tile.IEnergySink;
 import cn.lambdacraft.core.util.EnergyUtils;
 import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.item.ItemMaterial;
@@ -209,31 +210,25 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 	}
 
 	public int sendEnergy(int amm) {
-		EnergyTileSourceEvent event = new EnergyTileSourceEvent(worldObj, this,
-				amm);
+		EnergyTileSourceEvent event = new EnergyTileSourceEvent(this, amm);
 		MinecraftForge.EVENT_BUS.post(event);
 		return event.amount;
 	}
 
 	@Override
 	public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
+			ForgeDirection paramDirection) {
 		return true;
 	}
 
 	@Override
-	public boolean isAddedToEnergyNet() {
-		return isLoad;
-	}
-
-	@Override
-	public int demandsEnergy() {
+	public double demandedEnergyUnits() {
 		return MAX_STORAGE - currentEnergy;
 	}
 
 	@Override
-	public int injectEnergy(LCDirection paramDirection, int paramInt) {
-		this.currentEnergy += paramInt;
+	public double injectEnergyUnits(ForgeDirection paramDirection, double amount) {
+		this.currentEnergy += amount;
 		if (currentEnergy > MAX_STORAGE) {
 			int amt = currentEnergy - MAX_STORAGE;
 			currentEnergy = MAX_STORAGE;

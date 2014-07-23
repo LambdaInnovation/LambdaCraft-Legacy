@@ -14,10 +14,10 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
+import ic2.api.energy.tile.IEnergySource;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.tile.IEnergySource;
+import net.minecraftforge.common.ForgeDirection;
 import cn.lambdacraft.core.block.TileElectrical;
 
 /**
@@ -64,8 +64,7 @@ public abstract class TileGeneratorBase extends TileElectrical implements IEnerg
 	}
 	
 	@Override
-	public boolean emitEnergyTo(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
+	public boolean emitsEnergyTo(TileEntity paramTileEntity, ForgeDirection paramDirection) {
 		return true;
 	}
 

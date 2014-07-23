@@ -14,8 +14,7 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.api.energy.item.IEnItem;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -70,11 +69,6 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 	}
 
 	@Override
-	public int getMaxEnergyOutput() {
-		return 5;
-	}
-
-	@Override
 	public int getSizeInventory() {
 		return 2;
 	}
@@ -99,7 +93,7 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 		if (i == 0)
 			return true;
 		else
-			return (itemstack.getItem() instanceof IEnItem);
+			return (itemstack.getItem() instanceof ISpecialElectricItem);
 	}
 
 	@Override
@@ -152,8 +146,8 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 		}
 		isEmitting = false;
 
-		if (currentEnergy > 0 && this.slots[0] != null && slots[0].getItem() instanceof ICustomEnItem) {
-			currentEnergy -= ((ICustomEnItem) slots[0].getItem()).charge(slots[0], currentEnergy, 1, false, false);
+		if (currentEnergy > 0 && this.slots[0] != null && slots[0].getItem() instanceof ISpecialElectricItem) {
+			currentEnergy -= ((ISpecialElectricItem) slots[0].getItem()).getManager(slots[0]).charge(slots[0], currentEnergy, 1, false, false);
 		}
 	}
 
@@ -170,6 +164,16 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 			nbt.setByte("count" + i, (byte) slots[i].stackSize);
 			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
 		}
+	}
+
+	@Override
+	public double getOfferedEnergy() {
+		return Math.min(currentEnergy, 32);
+	}
+
+	@Override
+	public void drawEnergy(double amount) {
+		currentEnergy -= amount;
 	}
 	
 	

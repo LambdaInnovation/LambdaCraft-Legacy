@@ -14,9 +14,10 @@
  */
 package cn.lambdacraft.core.block;
 
+import ic2.api.energy.tile.IEnergySink;
 import net.minecraft.nbt.NBTTagCompound;
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.tile.IEnergySink;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.ForgeDirection;
 
 /**
  * @author WeAthFolD, Rikka
@@ -54,7 +55,7 @@ public abstract class TileElectricStorage extends TileElectrical implements IEne
 	}
 
 	@Override
-	public int demandsEnergy() {
+	public double demandedEnergyUnits() {
 		return getMaxEnergy() - getCurrentEnergy();
 	}
 
@@ -81,8 +82,8 @@ public abstract class TileElectricStorage extends TileElectrical implements IEne
 	}
 
 	@Override
-	public int injectEnergy(LCDirection paramDirection, int paramInt) {
-		this.currentEnergy += paramInt;
+	public double injectEnergyUnits(ForgeDirection paramDirection, double amt) {
+		this.currentEnergy += amt;
 		if (currentEnergy > maxEnergy) {
 			currentEnergy = maxEnergy;
 			return currentEnergy - maxEnergy;

@@ -26,7 +26,6 @@ import cn.lambdacraft.core.misc.CBCNetHandler;
 import cn.lambdacraft.core.network.NetKeyUsing;
 import cn.lambdacraft.core.proxy.GeneralProps;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
-import cn.lambdacraft.intergration.ic2.IC2Module;
 import cn.liutils.api.register.LIGuiHandler;
 import cn.liutils.core.register.Config;
 import cpw.mods.fml.common.FMLLog;
@@ -97,7 +96,7 @@ public class CBCMod implements ITickHandler {
 	@SidedProxy(clientSide = "cn.lambdacraft.core.proxy.ClientProxy", serverSide = "cn.lambdacraft.core.proxy.Proxy")
 	public static cn.lambdacraft.core.proxy.Proxy proxy;
 
-	public static boolean ic2Installed = true;
+	public static boolean ic2Installed = false;
 	
 	public static LIGuiHandler guiHandler = new LIGuiHandler();
 
@@ -113,10 +112,15 @@ public class CBCMod implements ITickHandler {
 		log.info("Starting LambdaCraft " + CBCMod.VERSION);
 		log.info("Copyright (c) Lambda Innovation, 2013");
 		log.info("http://www.lambdacraft.cn");
-		
 
+		try {
+			ic2Installed = Class.forName("ic2.core.IC2") != null;
+		} catch (ClassNotFoundException e) {}
+		 
+		if(!ic2Installed)
+			EnergyNet.initialize();
+		
 		config = new Config(event.getSuggestedConfigurationFile());
-		EnergyNet.initialize();
 		proxy.preInit();
 		TickRegistry.registerTickHandler(this, Side.CLIENT);
 		TickRegistry.registerTickHandler(this, Side.SERVER);
@@ -131,7 +135,7 @@ public class CBCMod implements ITickHandler {
 	 */
 	@EventHandler()
 	public void init(FMLInitializationEvent Init) {
-		ic2Installed = IC2Module.init(config);
+		
 		log.fine("LambdaCraft IC2 Intergration Module STATE : " + ic2Installed);
 		// Blocks, Items, GUI Handler,Key Process.
 		NetworkRegistry.instance().registerGuiHandler(this, guiHandler);

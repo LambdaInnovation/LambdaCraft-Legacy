@@ -75,15 +75,4 @@ public class ItemBattery extends ElectricItem {
 				EntityBattery.EU_PER_BATTERY - itemStack.getItemDamage());
 		par0World.spawnEntityInWorld(entity);
 	}
-
-	@Override
-	public boolean canUse(ItemStack itemStack, int amount) {
-		return itemStack.getMaxDamage() - itemStack.getItemDamage() > 0;
-	}
-
-	@Override
-	public boolean canShowChargeToolTip(ItemStack itemStack) {
-		return true;
-	}
-
 }

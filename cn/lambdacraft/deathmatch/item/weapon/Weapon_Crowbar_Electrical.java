@@ -14,10 +14,11 @@
  */
 package cn.lambdacraft.deathmatch.item.weapon;
 
+import ic2.api.item.IElectricItemManager;
+import ic2.api.item.ISpecialElectricItem;
+
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -30,14 +31,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
+import cn.lambdacraft.core.item.LCElectItemManager;
 import cn.weaponmod.api.feature.IModdable;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
  *
  */
-public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustomEnItem, IModdable {
+public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecialElectricItem, IModdable {
 
 
 	public Weapon_Crowbar_Electrical(int item_id) {
@@ -92,7 +95,7 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustom
     @Override
 	public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase attackedEntity, EntityLivingBase par3EntityLiving)
     {
-        if(getMode(par1ItemStack) == 0 && discharge(par1ItemStack, 400, 2, true, false) == 400){
+        if(getMode(par1ItemStack) == 0 && getManager(par1ItemStack).discharge(par1ItemStack, 400, 2, true, false) == 400){
         	attackedEntity.hurtResistantTime = -1;
         	attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(par3EntityLiving), 5);
         	if(attackedEntity instanceof EntityCreeper && itemRand.nextFloat() >= 0.9) {
@@ -109,52 +112,12 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustom
 	public int getTransferLimit(ItemStack itemStack) {
 		return 128;
 	}
-
-	@Override
-	public int discharge(ItemStack itemStack, int amount, int tier,
-			boolean ignoreTransferLimit, boolean simulate) {
-		int en = getItemCharge(itemStack);
-		if (en == 0)
-			return 0;
-		if (!ignoreTransferLimit)
-			amount = this.getTransferLimit(itemStack);
-		if (en > amount) {
-			if (!simulate)
-				setItemCharge(itemStack, en - amount);
-			return amount;
-		} else {
-			if (!simulate)
-				setItemCharge(itemStack, 0);
-			return en;
-		}
-	}
-
-	@Override
-	public int charge(ItemStack itemStack, int amount, int tier,
-			boolean ignoreTransferLimit, boolean simulate) {
-
-		int en = 10000 - getItemCharge(itemStack) - 1;
-		if (en == 0)
-			return 0;
-		if (!ignoreTransferLimit)
-			amount = this.getTransferLimit(itemStack);
-		if (en > amount) {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) + amount);
-			return amount;
-		} else {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) + en);
-			return en;
-		}
-	}
 	
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack par1ItemStack,
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-		if (this.canShowChargeToolTip(par1ItemStack))
 			par3List.add(StatCollector.translateToLocal("gui.curenergy.name")
 					+ " : " + getItemCharge(par1ItemStack) + "/"
 					+ 10000 + " EU");
@@ -168,16 +131,6 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustom
 		par3List.add(new ItemStack(par1, 1, 0));
 		ItemStack chargedItem = new ItemStack(par1, 1, 9999);
 		par3List.add(chargedItem);
-	}
-
-	@Override
-	public boolean canUse(ItemStack itemStack, int amount) {
-		return itemStack.getItemDamage() < this.getMaxDamage();
-	}
-
-	@Override
-	public boolean canShowChargeToolTip(ItemStack itemStack) {
-		return true;
 	}
 	
 	private int getItemCharge(ItemStack itemStack) {
@@ -212,6 +165,11 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ICustom
 	@Override
 	public String getModeDescription(int mode) {
 		return "mode.elcrowbar" + mode;
+	}
+
+	@Override
+	public IElectricItemManager getManager(ItemStack itemStack) {
+		return LCElectItemManager.INSTANCE;
 	}
 
 }

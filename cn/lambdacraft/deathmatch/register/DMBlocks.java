@@ -26,24 +26,22 @@ public class DMBlocks {
 		GameRegistry.registerBlock(blockTripmine, "lc_blocktripmine");
 		GameRegistry.registerTileEntity(TileTripmine.class, "tile_entity_tripmine");
 
-		if (!CBCMod.ic2Installed) {
-			armorCharger = new BlockArmorCharger(ConfigHandler.getBlockId(conf, 
-					"armorCharger", 0));
-			healthCharger = new BlockHealthCharger(ConfigHandler.getBlockId(conf, 
-					"healthCharger", 0));
-			medkitFiller = new BlockMedkitFiller(ConfigHandler.getBlockId(conf, 
-					"medkitFiller", 0));
-			GameRegistry.registerBlock(armorCharger, "lc_armorcharger");
-			GameRegistry.registerBlock(healthCharger, "lc_healthcharger");
-			GameRegistry.registerBlock(medkitFiller, "lc_medfiller");
+		armorCharger = new BlockArmorCharger(ConfigHandler.getBlockId(conf, 
+				"armorCharger", 0));
+		healthCharger = new BlockHealthCharger(ConfigHandler.getBlockId(conf, 
+				"healthCharger", 0));
+		medkitFiller = new BlockMedkitFiller(ConfigHandler.getBlockId(conf, 
+				"medkitFiller", 0));
+		GameRegistry.registerBlock(armorCharger, "lc_armorcharger");
+		GameRegistry.registerBlock(healthCharger, "lc_healthcharger");
+		GameRegistry.registerBlock(medkitFiller, "lc_medfiller");
 
-			GameRegistry.registerTileEntity(TileArmorCharger.class,
-					"tile_entity_charger");
-			GameRegistry.registerTileEntity(TileHealthCharger.class,
-					"tile_entity_hcharger");
-			GameRegistry.registerTileEntity(TileMedkitFiller.class,
-					"tile_entity_medfiller");
-		}
+		GameRegistry.registerTileEntity(TileArmorCharger.class,
+				"tile_entity_charger");
+		GameRegistry.registerTileEntity(TileHealthCharger.class,
+				"tile_entity_hcharger");
+		GameRegistry.registerTileEntity(TileMedkitFiller.class,
+				"tile_entity_medfiller");
 
 	}
 }

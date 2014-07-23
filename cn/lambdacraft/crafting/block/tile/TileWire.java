@@ -14,12 +14,11 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
+import ic2.api.energy.tile.IEnergyConductor;
+import ic2.api.energy.tile.IEnergyTile;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.common.ForgeDirection;
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.tile.IEnConductor;
-import cn.lambdacraft.api.energy.tile.IEnergyTile;
 import cn.lambdacraft.core.block.TileElectrical;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -28,7 +27,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD, Rikka
  * 
  */
-public class TileWire extends TileElectrical implements IEnConductor {
+public class TileWire extends TileElectrical implements IEnergyConductor {
 
 	public boolean[] renderSides = new boolean[6];
 
@@ -59,13 +58,13 @@ public class TileWire extends TileElectrical implements IEnConductor {
 	}
 
 	@Override
-	public boolean acceptsEnergyFrom(TileEntity emitter, LCDirection direction) {
+	public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction) {
 		return true;
 	}
 
 	@Override
 	public double getConductionLoss() {
-		return 0.1;
+		return 0.0;
 	}
 
 	@Override
@@ -102,8 +101,8 @@ public class TileWire extends TileElectrical implements IEnConductor {
     }
 
 	@Override
-	public boolean emitEnergyTo(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
+	public boolean emitsEnergyTo(TileEntity paramTileEntity,
+			ForgeDirection paramDirection) {
 		return true;
 	}
 }
