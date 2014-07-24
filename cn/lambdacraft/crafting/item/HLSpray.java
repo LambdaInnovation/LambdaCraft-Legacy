@@ -24,41 +24,14 @@ import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.crafting.entity.EntitySpray;
 
 /**
+ * Custom spray.
  * @author mkpoli
- * 
  */
-public class HLSpray extends CBCGenericItem {
+public class HLSpray extends ItemSpray {
 
 	public HLSpray(int par1) {
-		super(par1);
-		setMaxStackSize(1);
-		setMaxDamage(10);
+		super(par1, ClientProps.getSprayId() + 2);
 		setIAndU("hlspray");
 	}
 
-	@Override
-	public boolean onItemUse(ItemStack item_stack, EntityPlayer player,
-			World world, int x, int y, int z, int side, float x_off,
-			float y_off, float z_off) {
-		//都说了实体要在服务端生成啊baka！！！！！！
-		if (!world.isRemote) {
-			// 对其他方块的上下表面使用时，不触发任何效果
-			if (side == 0 || side == 1)
-				return false;
-			// 创建Facing(3D) to Direction(2D)数组传递第Side个对象为in
-			int direction = Direction.facingToDirection[side];
-			// FIXME:
-			// 创建EntityArt实例
-			EntitySpray entity = new EntitySpray(world, x, y, z, direction, ClientProps.getSprayId() + 2, player);
-			System.err.println("entitycreated");
-			// 判断是否被放置在了可用的表面
-			if (entity.onValidSurface()) {
-				System.err.println("vailedface");
-				world.spawnEntityInWorld(entity); // 生成entity
-				world.playSoundAtEntity(player, "lambdacraft:entities.sprayer", 0.7f, 1);
-				item_stack.damageItem(1, player);
-			}
-		}
-		return true;
-	}
 }

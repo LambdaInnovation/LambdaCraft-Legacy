@@ -70,7 +70,7 @@ public class ClientProps {
 	public static int sprayA = 255;
 
 	@Configurable(category = "graphics", key = "Spray_ID", comment = "The id value of your custom spray, ranging from 0-9.", defValue = "0")
-	private static int sprayID = 255;
+	private static int sprayID = 0;
 	
 	public static Properties crosshairProps;
 	public static Properties sprayProps;
@@ -312,6 +312,7 @@ public class ClientProps {
 	}
 	
 	public static int getSprayId() {
+		System.err.println(sprayID);
 		return sprayID > 9 ? 9 : (sprayID < 0 ? 0 : sprayID);
 	}
 	
