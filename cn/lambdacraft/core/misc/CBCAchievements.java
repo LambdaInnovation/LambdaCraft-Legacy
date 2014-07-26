@@ -73,7 +73,7 @@ public class CBCAchievements {
 			letsMoe = (new Achievement(conf.getInteger("letsMoe", 104),
 					"letsMoe", 12, 12, CBCItems.halfLife01, (Achievement) null))
 					.registerAchievement();
-			System.out.println("finish achievements");
+//			System.out.println("finish achievements");
 			achpage = new AchievementPage("LambdaCraft", oreAchievements[0],
 
 			oreAchievements[1], oreAchievements[2], radioactiveBeryl,

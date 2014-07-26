@@ -42,11 +42,10 @@ public class EntityRPGDot extends EntityThrowable {
 
 	public EntityRPGDot(World par1World, EntityPlayer player) {
 		super(par1World, player);
-		System.out.println(player);
+//		System.out.println(player);
 		shooter = player;
 		updateDotPosition();
 	}
-
 	public EntityRPGDot(World world) {
 		super(world);
 	}
