@@ -21,6 +21,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.client.IItemRenderer;
 
@@ -41,7 +42,7 @@ public class RenderBulletWeapon implements IItemRenderer {
 	float tx = 0F, ty = 0F, tz = 0F;
 	float width = 0.0625F;
 	private WeaponGeneralBullet weaponType;
-	public String[] muzzleflash = { "" };
+	public ResourceLocation[] muzzleflash = {};
 	public float recoilRatio = 0.02F, upliftRatio = 1.0F;
 	
 	/**
@@ -51,7 +52,7 @@ public class RenderBulletWeapon implements IItemRenderer {
 	 */
 	public int reloadAnimStyle = 0;
 	
-	public RenderBulletWeapon(WeaponGeneralBullet weapon, float w, String[] tex) {
+	public RenderBulletWeapon(WeaponGeneralBullet weapon, float w, ResourceLocation[] tex) {
 		weaponType = weapon;
 		width = w / 2F;
 		muzzleflash = tex;
@@ -63,7 +64,7 @@ public class RenderBulletWeapon implements IItemRenderer {
 	}
 
 	public RenderBulletWeapon(WeaponGeneralBullet weapon, float width, float x,
-			float y, float z, String[] texPath) {
+			float y, float z, ResourceLocation[] texPath) {
 		this(weapon, width, texPath);
 		tx = x;
 		ty = y;
@@ -181,7 +182,7 @@ public class RenderBulletWeapon implements IItemRenderer {
 				texU, texV);
 	}
 
-	public static void renderMuzzleflashIn2d(Tessellator t, String texture,
+	public static void renderMuzzleflashIn2d(Tessellator t, ResourceLocation texture,
 			double tx, double ty, double tz) {
 
 		Vec3 a1 = RenderUtils.newV3(1.2, -0.4, -0.5), a2 = RenderUtils.newV3(
@@ -204,7 +205,6 @@ public class RenderBulletWeapon implements IItemRenderer {
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 		t.startDrawingQuads();
-		t.setColorRGBA_F(0.8F, .8F, .8F, 1.0F);
 		t.setBrightness(15728880);
 		addVertex(a1, u2, v2);
 		addVertex(a2, u2, v1);

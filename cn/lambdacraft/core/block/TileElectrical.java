@@ -30,10 +30,6 @@ public abstract class TileElectrical extends CBCTileEntity implements
 
 	public boolean addedToNet = false;
 	
-	
-	/**
-	 * 
-	 */
 	public TileElectrical() {
 
 	}
@@ -43,13 +39,13 @@ public abstract class TileElectrical extends CBCTileEntity implements
 		super.updateEntity();
 		if (!this.addedToNet) {
 			this.addedToNet = true;
-			if(worldObj.isRemote)
+			if(!worldObj.isRemote) //executes event only on server side
 				this.onElectricTileLoad();
 		}
 	}
 	
 	public boolean onElectricTileLoad() {
-		return MinecraftForge.EVENT_BUS.post(CBCMod.ic2Installed ? new ic2.api.energy.event.EnergyTileLoadEvent(this) : new EnergyTileLoadEvent(this));
+		return MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
 	}
 
 	@Override

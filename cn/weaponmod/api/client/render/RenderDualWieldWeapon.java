@@ -37,7 +37,7 @@ public class RenderDualWieldWeapon extends RenderModelBulletWeapon {
 	 * @param muzzleflashPath
 	 */
 	public RenderDualWieldWeapon(IItemModel mdl, WeaponGeneralBullet type,
-			ResourceLocation texture, String... muzzleflashPath) {
+			ResourceLocation texture, ResourceLocation... muzzleflashPath) {
 		super(mdl, type, texture, muzzleflashPath);
 	}
 	

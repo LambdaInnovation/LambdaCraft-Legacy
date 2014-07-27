@@ -37,7 +37,7 @@ import cn.weaponmod.events.ItemHelper;
  */
 public class RenderModelBulletWeapon extends RenderModelItem {
 
-	public String[] muzzleflash = {""};
+	public ResourceLocation[] muzzleflash = {};
 	public float tx = 0F, ty = 0F, tz = 0F;
 	protected WeaponGeneralBullet weaponType;
 	public float upliftRatio = 1.0F, recoilRatio = 0.02F;
@@ -47,7 +47,7 @@ public class RenderModelBulletWeapon extends RenderModelItem {
 	 * @param mdl
 	 * @param texture
 	 */
-	public RenderModelBulletWeapon(IItemModel mdl, WeaponGeneralBullet type, ResourceLocation texture, String ...muzzleflashPath) {
+	public RenderModelBulletWeapon(IItemModel mdl, WeaponGeneralBullet type, ResourceLocation texture, ResourceLocation ...muzzleflashPath) {
 		super(mdl, texture);
 		weaponType = type;
 		if(muzzleflashPath.length != 0)

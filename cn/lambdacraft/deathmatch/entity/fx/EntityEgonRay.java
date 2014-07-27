@@ -38,7 +38,7 @@ public class EntityEgonRay extends Entity {
 	public boolean renderThirdPerson;
 	public boolean draw = true;
 	public boolean isClient = false;
-	protected EntityPlayer thrower;
+	public EntityPlayer thrower;
 
 	public EntityEgonRay(World par1World, EntityPlayer ent, ItemStack itemStack) {
 		super(par1World);
@@ -85,8 +85,7 @@ public class EntityEgonRay extends Entity {
 
 		EntityPlayer ent = thrower;
 		this.setLocationAndAngles(ent.posX, ent.posY + ent.getEyeHeight(),
-				ent.posZ, ent.rotationYawHead, ent.rotationPitch);
-
+				ent.posZ, ent.rotationYaw, ent.rotationPitch);
 		float var3 = 0.4F;
 		this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F
 				* (float) Math.PI)

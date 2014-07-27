@@ -142,10 +142,9 @@ public class ClientProps {
 			URANIUM_MDL_PATH = src("lambdacraft:textures/entities/uranium.png"),
 			EGON_HEAD_PATH = src("lambdacraft:textures/entities/egon_head.png"),
 			EGON_BACKPACK = src("lambdacraft:textures/entities/egon_backpack.png"),
+			EGON_MUZZLE = src("lambdacraft:textures/entities/egon_muz.png"), 
 			XENPORTAL_PARTICLE_PATH[] = { src("lambdacraft:textures/entities/xin0.png"), src("lambdacraft:textures/entities/xin1.png") },
-			EGON_BEAM_PATH[] = {src("lambdacraft:textures/entities/plasma0.png"), 
-		src("lambdacraft:textures/entities/plasma1.png"), 
-		src("lambdacraft:textures/entities/plasma2.png")},
+			EGON_BEAM_PATH = src("lambdacraft:textures/entities/egon_beam.png"),
 			SS_SIDE_PATH[] = {
 					src("lambdacraft:textures/blocks/ss_side0.png"),
 					src("lambdacraft:textures/blocks/ss_side1.png") },
@@ -183,12 +182,14 @@ public class ClientProps {
 	}
 	
 	private static String mf = "lambdacraft:textures/muz/muz";
-	public static final String MUZZLEFLASH[] = {
-		mf + "1.png", mf + "2.png", mf + "3.png"
-	}, MUZZLEFLASH2[] = {
-		mf + "4.png", mf + "5.png", mf + "6.png"
-	}, MUZZLEFLASH3[] = {
-			mf + "1.png", mf + "3.png", mf + "7.png"
+	public static final ResourceLocation MUZZLEFLASH[] = {
+		src(mf + "1.png"), src(mf + "2.png"), src(mf + "3.png")
+	}, 
+	MUZZLEFLASH2[] = {
+		src(mf + "4.png"), src(mf + "5.png"), src(mf + "6.png")
+	}, 
+	MUZZLEFLASH3[] = {
+		src(mf + "1.png"), src(mf + "3.png"), src(mf + "7.png")
 	};
 	/**
 	 * 获取随机的一个火光贴图。

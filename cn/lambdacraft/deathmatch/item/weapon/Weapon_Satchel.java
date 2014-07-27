@@ -83,8 +83,10 @@ public class Weapon_Satchel extends CBCGenericItem implements IHudTipProvider, I
 				EntitySatchel ent = new EntitySatchel(world, player);
 				world.spawnEntityInWorld(ent);
 				nbt.setInteger("satchelCount", ++count);
-				if (!player.capabilities.isCreativeMode)
-					--stack.stackSize;
+				if (!player.capabilities.isCreativeMode) {
+					if(--stack.stackSize == 0)
+						player.destroyCurrentEquippedItem();
+				}
 				
 			} else { // Detonating mode
 				nbt.setBoolean("doesExplode", true);
