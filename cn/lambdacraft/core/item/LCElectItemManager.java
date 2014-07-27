@@ -30,7 +30,6 @@ public class LCElectItemManager implements IElectricItemManager {
 	public int charge(ItemStack itemStack, int amount, int tier, boolean ignoreTransferLimit, boolean simulate) {
 		int en = itemStack.getItemDamage();
 		int amt = GenericUtils.mini(amount, en, ignoreTransferLimit ? 100000 : getTransLimit(itemStack));
-//		System.out.println("Charging[" + en + ", " + amt + "]");
 		if(!simulate) itemStack.setItemDamage(en - amt);
 		return amt;
 	}
