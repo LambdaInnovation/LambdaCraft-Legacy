@@ -86,7 +86,8 @@ public class ModelXenAmethyst extends ModelBase implements ITileEntityModel {
 	public void render(TileEntity is, double x, double y, double z, float f1,
 			float scale, float f) {
 		GL11.glPushMatrix();
-		GL11.glTranslated(x + 0.5, y + 1.5, z + 0.5);
+//		GL11.glTranslated(x + 0.5, y + 1.5, z + 0.5);
+		GL11.glTranslated(x + 0.5, y + 1.6, z + 0.5);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
 		RenderUtils.loadTexture(ClientProps.AMETHYST_PATH);
 		Shape1.render(scale);

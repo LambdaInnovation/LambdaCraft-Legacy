@@ -23,19 +23,19 @@ import net.minecraft.world.World;
 
 /**
  * 
- * 喷漆的物品
+ * 喷漆
  * 
  * @author mkpoli
  * 
  */
 public class ItemSpray extends CBCGenericItem {
 
-	private int title_id; // 喷漆的ID
+	private int tId; // 喷漆的ID
 
-	public ItemSpray(int par1, int title_id) {
+	public ItemSpray(int par1, int tId) {
 		super(par1);
-		this.title_id = title_id;
-		setIAndU("spray" + this.title_id);
+		this.tId = tId;
+		setIAndU("spray" + this.tId);
 		setMaxStackSize(1);
 		setMaxDamage(10);
 	}
@@ -49,7 +49,7 @@ public class ItemSpray extends CBCGenericItem {
 				return false;
 			// 创建Facing(3D) to Direction(2D)数组传递第Side个对象为in
 			int direction = Direction.facingToDirection[side];
-			EntitySpray entity = new EntitySpray(world, x, y, z, direction, title_id, player);
+			EntitySpray entity = new EntitySpray(world, x, y, z, direction, tId, player);
 			// 判断是否被放置在了可用的表面
 			if (entity.onValidSurface()) {
 				System.err.println("GENERATING IN SERVER SIDE...");

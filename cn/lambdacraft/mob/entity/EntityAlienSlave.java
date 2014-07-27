@@ -129,7 +129,9 @@ public class EntityAlienSlave extends LIEntityMob {
 				if(worldObj.isRemote)
 					worldObj.spawnEntityInWorld(new EntityVortigauntRay(worldObj, this, entityToAttack));
 				boolean b = (WeaponHelper.traceBetweenEntities(this, entityToAttack) == null);
+				// System.out.println(b);
 				if(b) entityToAttack.attackEntityFrom(DamageSource.causeMobDamage(this), 6);
+				// else System.out.println();
 				this.playSound("lambdacraft:mobs.zapa", 0.5F, 1.0F);
 				this.playSound(GenericUtils.getRandomSound("lambdacraft:weapons.electro", 3), 0.5F, 1.0F);
 				lastAttackTick = ticksExisted;
@@ -154,9 +156,13 @@ public class EntityAlienSlave extends LIEntityMob {
 
 	@Override
 	protected void attackEntity(Entity par1Entity, float par2) {
+		/**
+		 * Check if the distance is between 3 and 16 and more than 40 ticks passed from ticksExisted and randomed and not running
+		 */
 		if(par2 >= 3.0F && par2 <= 16.0F && ticksExisted - lastAttackTick > 40 && rand.nextInt(5) == 0 && !isCharging) {
 			this.playSound("lambdacraft:mobs.zapd", 0.5F, 1.0F);
 			isCharging = true;
+//			super.attackEntity(par1Entity, par2);
 			chargeTick = 0;
 		} else {
 			super.attackEntity(par1Entity, par2);

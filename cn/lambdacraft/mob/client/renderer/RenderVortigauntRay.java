@@ -99,7 +99,6 @@ public class RenderVortigauntRay extends Render {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		// TODO 自动生成的方法存根
 		return null;
 	}
 

@@ -71,7 +71,7 @@ public class CommandSpray extends CommandBase {
 		} else if(astring[0].equals("id")){
 			if(astring.length != 2) {
 				if(astring.length == 1) {
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spray.id.name") + EnumChatFormatting.GREEN + ClientProps.getSprayId()));
+					ics.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spray.id.name") +  " "  + EnumChatFormatting.GREEN + ClientProps.getSprayId()));
 				} else
 					ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.argument.name")));
 			} else {

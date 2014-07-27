@@ -61,7 +61,7 @@ public class WeaponMod {
 	@SidedProxy(serverSide = "cn.weaponmod.proxy.WMCommonProxy", clientSide = "cn.weaponmod.proxy.WMClientProxy")
 	public static WMCommonProxy proxy;
 	
-	public static final boolean DEBUG = true; //请在编译时设置为false
+	public static final boolean DEBUG = false; //请在编译时设置为false
 
 	
 	/**

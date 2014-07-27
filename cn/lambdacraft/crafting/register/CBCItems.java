@@ -76,7 +76,7 @@ public class CBCItems {
 	public static IngotUranium ingotUranium;
 	public static LCRecord halfLife01, halfLife02, halfLife03;
 	public static ItemSpray spray1, spray2;
-	public static HLSpray spray;
+	public static HLSpray spray3;
 	public static Item tin, copper, chip, xenCrystal;
 
 	public static ItemBattery battery;
@@ -118,7 +118,7 @@ public class CBCItems {
 		spray1 = new ItemSpray(ConfigHandler.getItemId(conf, "spray1", GeneralProps.CAT_MISC), 0);
 		spray2 = new ItemSpray(ConfigHandler.getItemId(conf, "spray2", GeneralProps.CAT_MISC), 1);
 		
-		spray = new HLSpray(ConfigHandler.getItemId(conf, "spray", GeneralProps.CAT_MISC));
+		spray3 = new HLSpray(ConfigHandler.getItemId(conf, "spray", GeneralProps.CAT_MISC));
 
 		tin = new CBCGenericItem(ConfigHandler.getItemId(conf, "tin", GeneralProps.CAT_MISC)).setIAndU("tin");
 		copper = new CBCGenericItem(ConfigHandler.getItemId(conf, "copper", GeneralProps.CAT_MISC)).setIAndU("copper");
@@ -220,7 +220,7 @@ public class CBCItems {
 				new ItemStack(CBCMobItems.sentrySyncer, 2),
 				new ItemStack(spray1),
 				new ItemStack(spray2),
-				new ItemStack(spray)
+				new ItemStack(spray3)
 		};
 		addOreRecipes(output, input);
 		
@@ -254,7 +254,7 @@ public class CBCItems {
 				new ShapelessOreRecipe(materials.newStack(2, EnumMaterial.TECH), iSmaterials_1_0, iSdiamond, iSlambdaChip, iSlightStoneDust),
 				new RecipeRepair(spray1, iSredstone),
 				new RecipeRepair(spray2, iSredstone),
-				new RecipeRepair(spray, iSlightStoneDust)
+				new RecipeRepair(spray3, iSlightStoneDust)
 		};
 		for(IRecipe r : recipes)
 			GameRegistry.addRecipe(r);
@@ -286,7 +286,7 @@ public class CBCItems {
 				new WeightedRandomChestContent(new ItemStack(ironBar), 3, 8, 50),
 				new WeightedRandomChestContent(new ItemStack(DMItems.physCalibur), 1, 1, 1),
 				new WeightedRandomChestContent(new ItemStack(DMItems.weapon_crowbar_el), 1, 1, 10),
-				new WeightedRandomChestContent(new ItemStack(spray), 1, 1, 4),
+				new WeightedRandomChestContent(new ItemStack(spray3), 1, 1, 4),
 				new WeightedRandomChestContent(new ItemStack(lambdaChip), 2, 5, 3)
 		};
 		for(WeightedRandomChestContent gen : gens_desert) {

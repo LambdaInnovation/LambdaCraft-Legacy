@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.client;
+package cn.lambdacraft.crafting.client.renderer;
 
 import static org.lwjgl.opengl.GL11.GL_BLEND;
 import static org.lwjgl.opengl.GL11.GL_ONE;
@@ -63,10 +63,10 @@ public class RenderSpray extends Render {
 	 * 载入Texture
 	 */
 	private void loadTexture(int title_id) {
-		if (title_id >= 2) {
+		if (title_id >= 2)
 			// 从custom文件夹下载入制定文件名的bitmap
 			RenderUtils.loadTexture(ClientProps.getSprayPath(title_id - 2));
-		} else
+		else
 			// 普通喷漆
 			RenderUtils.loadTexture(ClientProps.SPRY_PATH[title_id]);
 	}
@@ -85,17 +85,17 @@ public class RenderSpray extends Render {
 	 */
 	public void renderEntity(EntitySpray entity, double pos_x, double pos_y, double pos_z) {
 		
-		if(entity.title_id < 0)
+		if(entity.tId < 0)
 			return;
 		
-		isHLSpray = (entity.title_id >= 2);
+		isHLSpray = (entity.tId >= 2);
 		glPushMatrix(); // 打开栈
 		
 		glEnable(GL_RESCALE_NORMAL);
 		glTranslatef((float) pos_x, (float) pos_y, (float) pos_z); // 把世界轴Transfer到Entity为原点的轴
 		glRotatef(entity.rotationYaw, 0.0F, 1.0F, 0.0F); // 沿y轴旋转rotationYaw度(根据朝向)
 		
-		loadTexture(entity.title_id);
+		loadTexture(entity.tId);
 		draw(entity); // 正式渲染
 		
 		glDisable(GL_RESCALE_NORMAL);
@@ -147,11 +147,11 @@ public class RenderSpray extends Render {
 			
 			glDisable(GL_BLEND);
 		} else {
-			start_x = -EntitySpray.GRIDS_WIDTHS[entity.title_id] / 2.0F;
-			start_y = EntitySpray.GRIDS_HEIGHTS[entity.title_id] / 2.0F;
+			start_x = -EntitySpray.GRIDS_WIDTHS[entity.tId] / 2.0F;
+			start_y = EntitySpray.GRIDS_HEIGHTS[entity.tId] / 2.0F;
 			
-			for (float i = 0; i < EntitySpray.GRIDS_WIDTHS[entity.title_id]; i++) { // i为从0到宽度的所有值
-				for (float j = 0; j < EntitySpray.GRIDS_HEIGHTS[entity.title_id]; j++) { // j为从0到高度的所有值
+			for (float i = 0; i < EntitySpray.GRIDS_WIDTHS[entity.tId]; i++) { // i为从0到宽度的所有值
+				for (float j = 0; j < EntitySpray.GRIDS_HEIGHTS[entity.tId]; j++) { // j为从0到高度的所有值
 
 					float left = start_x + i;
 					float right = left + 1;
@@ -165,10 +165,10 @@ public class RenderSpray extends Render {
 					float texture_top;
 					float texture_bottom;
 
-					texture_left = i / EntitySpray.GRIDS_WIDTHS[entity.title_id];
-					texture_right = (i + 1) / EntitySpray.GRIDS_WIDTHS[entity.title_id];
-					texture_top = j / EntitySpray.GRIDS_HEIGHTS[entity.title_id];
-					texture_bottom = (j + 1) / EntitySpray.GRIDS_HEIGHTS[entity.title_id];
+					texture_left = i / EntitySpray.GRIDS_WIDTHS[entity.tId];
+					texture_right = (i + 1) / EntitySpray.GRIDS_WIDTHS[entity.tId];
+					texture_top = j / EntitySpray.GRIDS_HEIGHTS[entity.tId];
+					texture_bottom = (j + 1) / EntitySpray.GRIDS_HEIGHTS[entity.tId];
 
 					Tessellator tessellator = Tessellator.instance;
 					tessellator.startDrawingQuads();
@@ -190,19 +190,19 @@ public class RenderSpray extends Render {
 		int y = MathHelper.floor_double(entity.posY + center_y);
 		int z = MathHelper.floor_double(entity.posZ);
 
-		if (entity.hanging_direction == 2) {
+		if (entity.hangingDirection == 2) {
 			x = MathHelper.floor_double(entity.posX - center_x);
 		}
 
-		if (entity.hanging_direction == 1) {
+		if (entity.hangingDirection == 1) {
 			z = MathHelper.floor_double(entity.posZ + center_x);
 		}
 
-		if (entity.hanging_direction == 0) {
+		if (entity.hangingDirection == 0) {
 			x = MathHelper.floor_double(entity.posX + center_x);
 		}
 
-		if (entity.hanging_direction == 3) {
+		if (entity.hangingDirection == 3) {
 			z = MathHelper.floor_double(entity.posZ - center_x);
 		}
 
