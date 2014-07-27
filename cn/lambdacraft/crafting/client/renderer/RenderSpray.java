@@ -63,10 +63,10 @@ public class RenderSpray extends Render {
 	 * 载入Texture
 	 */
 	private void loadTexture(int title_id) {
-		if (title_id >= 2) {
+		if (title_id >= 2)
 			// 从custom文件夹下载入制定文件名的bitmap
 			RenderUtils.loadTexture(ClientProps.getSprayPath(title_id - 2));
-		} else
+		else
 			// 普通喷漆
 			RenderUtils.loadTexture(ClientProps.SPRY_PATH[title_id]);
 	}

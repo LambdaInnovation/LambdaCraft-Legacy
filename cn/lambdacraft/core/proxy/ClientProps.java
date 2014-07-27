@@ -206,7 +206,7 @@ public class ClientProps {
 		ConfigHandler.loadConfigurableClass(CBCMod.config, ClientProps.class);
 		
 		crosshairProps = new Properties();
-		final String absPath = "/assets/lambdacraft/";
+//		final String absPath = "/assets/lambdacraft/";
 		URL src = ClientProps.class.getResource("/assets/lambdacraft/crosshairs/crosshairs.properties");
 		
 		sprayProps = new Properties();
@@ -244,8 +244,10 @@ public class ClientProps {
 			String s = sprayProps.getProperty(String.valueOf(id));
 			if (s == null)
 				return "";
+			// System.out.println("SPRAY PATH = " + spry_path + s);
 			return spry_path + s;
 		} catch (NullPointerException e) {
+			e.printStackTrace();
 		}
 		return "";
 	}
@@ -312,8 +314,8 @@ public class ClientProps {
 	}
 	
 	public static int getSprayId() {
-		System.err.println(sprayID);
-		return sprayID > 9 ? 9 : (sprayID < 0 ? 0 : sprayID);
+//		System.err.println(sprayID);
+		return sprayID < 0 ? 0 : sprayID;
 	}
 	
 	private static ResourceLocation src(String s) {

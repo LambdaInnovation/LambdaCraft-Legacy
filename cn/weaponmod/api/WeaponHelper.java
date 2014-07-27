@@ -225,10 +225,17 @@ public class WeaponHelper {
 	}
 	
 	public static MovingObjectPosition traceBetweenEntities(Entity e1, Entity e2) {
+//		if(e1.worldObj != e2.worldObj) return null;
+//		Vec3 v1 = e1.worldObj.getWorldVec3Pool().getVecFromPool(e1.posX, e1.posY, e1.posZ),
+//				v2 = e2.worldObj.getWorldVec3Pool().getVecFromPool(e2.posX, e2.posY, e2.posZ);
+//		MovingObjectPosition mop = e1.worldObj.clip(v1, v2);
+//		return mop;
 		if(e1.worldObj != e2.worldObj) return null;
-		Vec3 v1 = e1.worldObj.getWorldVec3Pool().getVecFromPool(e1.posX, e1.posY, e1.posZ),
-				v2 = e2.worldObj.getWorldVec3Pool().getVecFromPool(e2.posX, e2.posY, e2.posZ);
+		Vec3 v1 = e1.worldObj.getWorldVec3Pool().getVecFromPool(e1.posX, e1.posY + e1.getEyeHeight(), e1.posZ),
+				v2 = e2.worldObj.getWorldVec3Pool().getVecFromPool(e2.posX, e2.posY + e2.getEyeHeight(), e2.posZ);
 		MovingObjectPosition mop = e1.worldObj.clip(v1, v2);
+		// if (mop != null)
+			// System.out.println(mop.blockX + " " + mop.blockY + " " + mop.blockZ);
 		return mop;
 	}
 	
