@@ -18,14 +18,12 @@ import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.item.CBCGenericItem;
 import cn.lambdacraft.core.proxy.GeneralProps;
 import cn.lambdacraft.crafting.item.Bullet_9mm;
 import cn.lambdacraft.crafting.item.Bullet_steelbow;
 import cn.lambdacraft.crafting.item.HLSpray;
 import cn.lambdacraft.crafting.item.IngotUranium;
-import cn.lambdacraft.crafting.item.ItemBullet;
 import cn.lambdacraft.crafting.item.ItemMaterial;
 import cn.lambdacraft.crafting.item.ItemMaterial.EnumMaterial;
 import cn.lambdacraft.crafting.item.ItemSpray;
@@ -66,7 +64,7 @@ public class CBCItems {
 	public static Ammo_rpg ammo_rpg;
 	public static ItemAmmo ammo_argrenade, ammo_shotgun;
 
-	public static ItemBullet bullet_9mm, bullet_steelbow;
+	public static Item bullet_9mm, bullet_steelbow;
 
 	public static CBCGenericItem ingotSteel;
 

@@ -13,6 +13,7 @@
  */
 package cn.weaponmod.api;
 
+import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.command.IEntitySelector;
@@ -353,16 +354,16 @@ public class WeaponHelper {
 	public static void doRangeDamage(World world, DamageSource src, Vec3 pos, float strengh, double radius, Entity... exclusion) {
 		AxisAlignedBB par2 = AxisAlignedBB.getBoundingBox(pos.xCoord - 4, pos.yCoord - 4,
 				pos.zCoord - 4, pos.xCoord + 4, pos.yCoord + 4, pos.zCoord + 4);
-		List entitylist = world
+		List<Entity> entitylist = world
 				.getEntitiesWithinAABBExcludingEntity(null, par2);
-		if (entitylist.size() > 0) {
-			for (int i = 0; i < entitylist.size(); i++) {
-				Entity ent = (Entity) entitylist.get(i);
-				if (ent instanceof EntityLiving) {
-					double distance = pos.distanceTo(world.getWorldVec3Pool().getVecFromPool(ent.posX, ent.posY, ent.posZ));
-					int damage = (int) ((1 - distance / 6.928) * strengh);
-					ent.attackEntityFrom(src , damage);
-				}
+		Iterator<Entity> it = entitylist.iterator();
+		while(it.hasNext()) {
+			Entity ent = it.next();
+			if(ent instanceof EntityLiving) {
+				double distance = pos.distanceTo(world.getWorldVec3Pool().getVecFromPool(ent.posX, ent.posY, ent.posZ));
+				int damage = (int) ((1 - distance / 6.928) * strengh);
+				((EntityLiving) ent).attackTime = -1;
+				ent.attackEntityFrom(src , damage);
 			}
 		}
 	}

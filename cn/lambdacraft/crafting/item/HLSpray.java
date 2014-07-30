@@ -14,14 +14,7 @@
  */
 package cn.lambdacraft.crafting.item;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
-import net.minecraft.world.World;
-
-import cn.lambdacraft.core.item.CBCGenericItem;
 import cn.lambdacraft.core.proxy.ClientProps;
-import cn.lambdacraft.crafting.entity.EntitySpray;
 
 /**
  * Custom spray.

@@ -64,22 +64,22 @@ public class TileWire extends TileElectrical implements IEnergyConductor {
 
 	@Override
 	public double getConductionLoss() {
-		return 0.0;
+		return 1.0;
 	}
 
 	@Override
 	public int getInsulationEnergyAbsorption() {
-		return 128;
+		return 512;
 	}
 
 	@Override
 	public int getInsulationBreakdownEnergy() {
-		return 128;
+		return 512;
 	}
 
 	@Override
 	public int getConductorBreakdownEnergy() {
-		return 256;
+		return 512;
 	}
 
 	@Override

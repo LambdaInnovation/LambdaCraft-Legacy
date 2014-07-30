@@ -14,14 +14,11 @@
  */
 package cn.lambdacraft.core.item;
 
-import ic2.api.item.ICustomElectricItem;
 import ic2.api.item.IElectricItemManager;
 import ic2.api.item.ISpecialElectricItem;
 
 import java.util.List;
 
-
-import cn.lambdacraft.core.CBCMod;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

@@ -2,22 +2,15 @@ package cn.lambdacraft.deathmatch.client.renderer;
 
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Vec3;
-import net.minecraftforge.client.IItemRenderer.ItemRenderType;
 import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.deathmatch.client.model.ModelEgonHead;
-import cn.lambdacraft.deathmatch.item.weapon.InformationEnergy;
-import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.client.render.RenderModelItem;
-import cn.liutils.api.client.util.RenderUtils;
 import cn.weaponmod.api.client.render.RenderBulletWeapon;
-import cn.weaponmod.api.information.InformationWeapon;
 import cn.weaponmod.events.ItemHelper;
 
 /**

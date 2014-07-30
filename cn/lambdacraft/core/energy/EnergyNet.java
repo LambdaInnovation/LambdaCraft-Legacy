@@ -259,7 +259,7 @@ public final class EnergyNet {
 		}
 
 		for (Map.Entry<EnergyPath, Double> entry : suppliedEnergyPaths.entrySet()) {
-			EnergyPath energyPath = (EnergyPath) entry.getKey();
+			EnergyPath energyPath = entry.getKey();
 			double energyInjected = entry.getValue();
 
 			energyPath.totalEnergyConducted += energyInjected;

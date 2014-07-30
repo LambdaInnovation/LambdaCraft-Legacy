@@ -132,6 +132,7 @@ public class RenderBulletWeapon implements IItemRenderer {
 				.getInformation(item, entity.worldObj);
 		if (inf == null) {
 			RenderUtils.renderItemIn2d(item, width);
+			GL11.glPopMatrix();
 			return;
 		}
 		

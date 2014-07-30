@@ -14,12 +14,9 @@
  */
 package cn.lambdacraft.mob.entity;
 
-import cn.lambdacraft.mob.util.MobHelper;
-import cn.liutils.api.util.GenericUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 /**

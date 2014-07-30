@@ -1,11 +1,12 @@
 package cn.lambdacraft.crafting.item;
 
 import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.item.CBCGenericItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
 
-public class Bullet_steelbow extends ItemBullet {
+public class Bullet_steelbow extends CBCGenericItem {
 
 	public Bullet_steelbow(int id) {
 		super(id);

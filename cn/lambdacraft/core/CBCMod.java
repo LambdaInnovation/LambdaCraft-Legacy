@@ -33,6 +33,7 @@ import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -53,7 +54,7 @@ clientPacketHandlerSpec = @SidedPacketHandler(channels = { GeneralProps.NET_CHAN
 serverPacketHandlerSpec = @SidedPacketHandler(channels = { GeneralProps.NET_CHANNEL_SERVER }, packetHandler = CBCNetHandler.class))
 public class CBCMod implements ITickHandler {
 
-	public static final String VERSION = "1.7.8pre";
+	public static final String VERSION = "1.7.8";
 
 	public static final String DEPENCY_CRAFTING = "required-after:LambdaCraft|World@" + VERSION,
 			DEPENDENCY_CORE = "required-after:LambdaCraft@" + VERSION,
@@ -125,7 +126,12 @@ public class CBCMod implements ITickHandler {
 		TickRegistry.registerTickHandler(this, Side.CLIENT);
 		TickRegistry.registerTickHandler(this, Side.SERVER);
 		GeneralProps.loadProps(config);
-		
+		ModMetadata meta = event.getModMetadata();
+		meta.logoFile = "\\lambdacraft.png";
+		meta.description = "A minecraft mod re-making Half-Life worldview! Enjoy your experience" +
+				"crafting HEV and gauss, battling with headcrabs, and travelling to XEN!";
+		meta.url = "http://lambdacraft.cn";
+		meta.version = "1.7.8";
 	}
 
 	/**
@@ -140,7 +146,7 @@ public class CBCMod implements ITickHandler {
 		// Blocks, Items, GUI Handler,Key Process.
 		NetworkRegistry.instance().registerGuiHandler(this, guiHandler);
 		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMod", "LambdaCraft");
-		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMisc", "LambdaCraft:Misc");
+		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMisc", "LambdaCraft-Misc");
 		CBCNetHandler.addChannel(GeneralProps.NET_ID_USE, new NetKeyUsing());
 		proxy.init();
 	}

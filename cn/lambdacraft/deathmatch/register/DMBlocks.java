@@ -1,7 +1,6 @@
 package cn.lambdacraft.deathmatch.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.deathmatch.block.BlockArmorCharger;
 import cn.lambdacraft.deathmatch.block.BlockHealthCharger;
 import cn.lambdacraft.deathmatch.block.BlockMedkitFiller;

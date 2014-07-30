@@ -27,6 +27,7 @@ import cn.liutils.api.client.gui.IGuiTip;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 
 /**
  * @author WeAthFolD
@@ -40,7 +41,7 @@ public class GuiGenFire extends LIGuiContainer {
 
 		@Override
 		public String getHeadText() {
-			return EnumChatFormatting.RED + "curenergy.name";
+			return EnumChatFormatting.RED + StatCollector.translateToLocal("gui.curenergy.name");
 		}
 
 		@Override

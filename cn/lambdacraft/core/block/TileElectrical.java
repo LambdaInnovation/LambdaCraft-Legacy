@@ -25,8 +25,7 @@ import cn.lambdacraft.core.CBCMod;
  * @author WeAthFolD
  * 
  */
-public abstract class TileElectrical extends CBCTileEntity implements
-		IEnergyTile {
+public abstract class TileElectrical extends CBCTileEntity implements IEnergyTile {
 
 	public boolean addedToNet = false;
 	
@@ -51,15 +50,13 @@ public abstract class TileElectrical extends CBCTileEntity implements
 	@Override
 	public void onTileUnload() {
 		super.onTileUnload();
-	    if ((CBCMod.proxy.isSimulating()) && (this.addedToNet)) {
+	    if ((CBCMod.proxy.isSimulating()) && (this.addedToNet)) 
 	        MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
-	        this.addedToNet = true;
-	     }
 		this.addedToNet = false;
 	}
 
 	public int sendEnergy(int amm) {
-		if(CBCMod.ic2Installed) return 0;
+		if(CBCMod.ic2Installed) return amm;
 		int amount = 0;
 		EnergyTileSourceEvent event = new EnergyTileSourceEvent(this, amm);
 		MinecraftForge.EVENT_BUS.post(event);

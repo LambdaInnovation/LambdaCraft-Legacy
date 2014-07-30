@@ -22,8 +22,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.util.ChatMessageComponent;
-import net.minecraft.util.StatCollector;
 import cn.liutils.api.register.IChannelProcess;
 import cn.weaponmod.api.feature.IModdable;
 import cn.weaponmod.api.weapon.IReloaddable;

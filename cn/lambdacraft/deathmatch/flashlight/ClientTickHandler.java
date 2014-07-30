@@ -95,68 +95,10 @@ public class ClientTickHandler implements ITickHandler {
 				LightValue.addData(blockX, blockY, blockZ);
 				Minecraft.getMinecraft().theWorld.setLightValue(EnumSkyBlock.Block, blockX, blockY, blockZ, 15);
 				Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, blockX, blockY + 1, blockZ);
-				//Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, var9, var10 - 1, var11);
 				Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, blockX - 1, blockY, blockZ);
-				//Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, var9 + 1, var10, var11);
 				Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, blockX, blockY, blockZ - 1);
-				//Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, var9, var10, var11 + 1);
 			}
 		}
-		/*TODO:注意效率问题……
-		if (ticks >= 10) {
-			ticks = 0;
-			LightValue.resetAll2();
-			LightValue.emptyData2();
-			AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(player.posX - 10, player.posY - 10, player.posZ - 10, player.posX + 10, player.posY + 10, player.posZ + 10);
-			Iterator var2 = world.getEntitiesWithinAABBExcludingEntity(null, aabb, GenericUtils.selectorPlayer).iterator();
-			while (var2.hasNext()) {
-				Object var3 = var2.next();
 
-				if (var3 instanceof EntityPlayer) {
-					EntityLiving var4 = (EntityLiving) var3;
-					TODO:你偷懒了⑨，这里的效果是你一开灯所有玩家都开灯啊>. <
-					卧槽不会吧？
-					if (flag && CBCPlayer.armorStat[3] && var4.rayTrace(200.0D, 1.0F) != null) {
-						var5 = var4.rayTrace(200.0D, 1.0F).blockX;
-						int var6 = var4.rayTrace(200.0D, 1.0F).blockY;
-						int var7 = var4.rayTrace(200.0D, 1.0F).blockZ;
-						int var8 = var4.rayTrace(200.0D, 1.0F).sideHit;
-
-						if (var8 == 0) {
-							--var6;
-						} else if (var8 == 1) {
-							++var6; 
-						} else {
-							if (var8 == 2) {
-								--var7;
-							}
-
-							if (var8 == 3) {
-								++var7;
-							}
-
-							if (var8 == 4) {
-								--var5;
-							}
-
-							if (var8 == 5) {
-								++var5;
-							}
-						}
-
-						LightValue.addData2(var5, var6, var7);
-						Minecraft.getMinecraft().theWorld.setLightValue(EnumSkyBlock.Block, var5, var6, var7, 15);
-						Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, var5, var6 + 1, var7);
-						/*Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, var5, var6 - 1, var7);
-						Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, var5 - 1, var6, var7);
-						Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, var5 + 1, var6, var7);
-						Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, var5, var6, var7 - 1);
-						Minecraft.getMinecraft().theWorld.updateLightByType(EnumSkyBlock.Block, var5, var6, var7 + 1);
-					}
-				}
-			}
-		}
-		*/
-		
 	}
 }

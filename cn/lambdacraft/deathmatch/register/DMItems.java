@@ -1,7 +1,6 @@
 package cn.lambdacraft.deathmatch.register;
 
 import net.minecraft.item.Item;
-import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.proxy.GeneralProps;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
 import cn.lambdacraft.deathmatch.item.ItemAttachment;

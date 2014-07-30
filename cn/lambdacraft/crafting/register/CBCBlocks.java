@@ -4,7 +4,6 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.common.MinecraftForge;
-import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.block.BlockElectricalBase;
 import cn.lambdacraft.crafting.block.BlockAdvWeaponCrafter;
 import cn.lambdacraft.crafting.block.BlockBatBox;

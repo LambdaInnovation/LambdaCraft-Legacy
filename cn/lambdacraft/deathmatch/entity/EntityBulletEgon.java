@@ -56,7 +56,7 @@ public class EntityBulletEgon extends EntityBullet {
 			//检查以防破坏基岩等重要方块
 			if(Block.blocksList[blockID] != null) {
 				float hardness = Block.blocksList[blockID].getBlockHardness(worldObj, result.blockX, result.blockY, result.blockZ);
-				if(hardness > 0.0F && hardness < 5.0F)
+				if(hardness >= 0.0F && hardness < 5.0F)
 					worldObj.destroyBlock(result.blockX, result.blockY, result.blockZ, false);
 			} else worldObj.setBlock(result.blockX, result.blockY, result.blockZ, 0, 0, 3);
 		}

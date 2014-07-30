@@ -58,9 +58,7 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 			return;
 
 		// emit the energy frequently
-		int amt = 32;
-		if (amt > currentEnergy)
-			amt = currentEnergy;
+		int amt = Math.min(32, currentEnergy);
 		amt -= this.sendEnergy(amt);
 		currentEnergy -= amt;
 
@@ -122,11 +120,8 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 	@Override
 	public double injectEnergyUnits(ForgeDirection paramDirection, double amount) {
 		this.currentEnergy += amount;
-		if (currentEnergy > maxStorage) {
-			int amt = currentEnergy - maxStorage;
+		if (currentEnergy > maxStorage) 
 			currentEnergy = maxStorage;
-			return amt;
-		}
 		return 0;
 	}
 
@@ -239,7 +234,7 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 
 	@Override
 	public double getOfferedEnergy() {
-		return Math.max(currentEnergy, type == 1 ? 32 : 128);
+		return Math.min(currentEnergy, type == 1 ? 32 : 128);
 	}
 
 	@Override

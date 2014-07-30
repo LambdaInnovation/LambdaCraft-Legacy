@@ -114,7 +114,7 @@ public class Weapon_Satchel extends CBCGenericItem implements IHudTipProvider, I
     @Override
 	public boolean onBlockStartBreak(ItemStack itemstack, int i, int j, int k, EntityPlayer player)
     {
-    	return true;
+    	return !player.capabilities.isCreativeMode;
     }
     
     @Override

@@ -16,6 +16,8 @@ package cn.lambdacraft.crafting.client.gui;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
+
 import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.proxy.ClientProps;
@@ -40,7 +42,7 @@ public class GuiGenLava extends LIGuiContainer {
 
 		@Override
 		public String getHeadText() {
-			return EnumChatFormatting.RED + "curenergy.name";
+			return EnumChatFormatting.RED + StatCollector.translateToLocal("gui.curenergy.name");
 		}
 
 		@Override

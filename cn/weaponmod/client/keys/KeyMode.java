@@ -62,7 +62,7 @@ public class KeyMode implements IKeyProcess {
 		NetDeathmatch.sendModePacket((byte) stackInSlot, (byte) 0, (byte) mode);
 		String s = wpn.getModeDescription(wpn.getMode(itemStack));
 		if(s != null)
-		((EntityPlayer) player).sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("mode.new")
+		player.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("mode.new")
 				+ ": \u00a74"
 				+ StatCollector.translateToLocal(s)));
 	}

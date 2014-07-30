@@ -14,9 +14,7 @@
  */
 package cn.lambdacraft.core.proxy;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Properties;
@@ -207,24 +205,37 @@ public class ClientProps {
 		ConfigHandler.loadConfigurableClass(CBCMod.config, ClientProps.class);
 		
 		crosshairProps = new Properties();
-//		final String absPath = "/assets/lambdacraft/";
 		URL src = ClientProps.class.getResource("/assets/lambdacraft/crosshairs/crosshairs.properties");
 		
 		sprayProps = new Properties();
 		URL src2 = ClientProps.class.getResource("/assets/lambdacraft/spray/sprays.properties");
 		
-		File crFile = null, sprFile = null;
-		crFile = new File(src.getFile());
-		sprFile = new File(src2.getFile());
-		
+		InputStream stream = null;
 		
 		try {
-			crosshairProps.load(new InputStreamReader(new FileInputStream(crFile), Charsets.UTF_8));
-			sprayProps.load(new InputStreamReader(new FileInputStream(sprFile), Charsets.UTF_8));
-		} catch (IOException e) {
-			CBCMod.log.log(Level.SEVERE,"Unable to load crossfire/spray props from fileH %s", src);
-		} catch (NullPointerException e) {
-			CBCMod.log.log(Level.SEVERE, "Unable to find crossfire/spray props file.");
+			stream = src.openStream();
+			crosshairProps.load(new InputStreamReader(stream, Charsets.UTF_8));
+			CBCMod.log.log(Level.FINE, "Successfully loaded crosshair props from file " + src);
+		} catch (Exception e) {
+			CBCMod.log.log(Level.SEVERE,"Unable to load crosshair props from file " + src);
+		} finally {
+			try {
+			if(stream != null)
+				stream.close();
+			} catch(Exception e) {}
+		}
+		
+		try {
+			stream = src2.openStream();
+			sprayProps.load(new InputStreamReader(stream, Charsets.UTF_8));
+			CBCMod.log.log(Level.FINE, "Successfully loaded spray file from file " + src2);
+		} catch (Exception e) {
+			CBCMod.log.log(Level.SEVERE,"Unable to load spray props from file " + src2);
+		} finally {
+			try {
+				if(stream != null)
+					stream.close();
+			} catch(Exception e) {}
 		}
 		
 	}
@@ -243,14 +254,11 @@ public class ClientProps {
 	public static String getSprayPath(int id) {
 		try {
 			String s = sprayProps.getProperty(String.valueOf(id));
-			if (s == null)
-				return "";
-			// System.out.println("SPRAY PATH = " + spry_path + s);
-			return spry_path + s;
+			return spry_path + (s == null ? "nico.png" : s);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-		return "";
+		return spry_path + "nico.png";
 	}
 	
 	public static void setSprayId(int id) {
