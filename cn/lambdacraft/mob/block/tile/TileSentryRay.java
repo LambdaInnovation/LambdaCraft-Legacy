@@ -27,6 +27,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
+import net.minecraftforge.common.ForgeDirection;
 import cn.lambdacraft.mob.ModuleMob;
 import cn.lambdacraft.mob.block.BlockSentryRay;
 import cn.lambdacraft.mob.entity.EntitySentry;
@@ -66,6 +67,8 @@ public class TileSentryRay extends TileEntity {
 	};
 	
 	private int tickSinceLastActivate = 0;
+	
+	private static ForgeDirection dirs[] = ForgeDirection.values();
 
 	public void connectWith(TileSentryRay another) {
 		this.linkedBlock = another;
@@ -99,32 +102,38 @@ public class TileSentryRay extends TileEntity {
 			linkedX = linkedY = linkedZ = 0;
 		}
 		
-		// TODO:Check if touched, and notice the entity to activate
+		//Check if touched, and notice the entity to activate
 		if(!isLoaded) {
 			BlockPos bp = new BlockPos(this);
 			if(ModuleMob.placeMap.containsKey(bp)) {
 				EntityPlayer player = ModuleMob.placeMap.get(bp);
 				placerName = player.username;
-				TileSentryRay t = ModuleMob.tileMap.get(player);
-				if(t == null) {
+				TileSentryRay t = ModuleMob.tileMap.get(player); //Aquire the last ray block that player places
+				if(t == null) { 
 					ModuleMob.tileMap.put(player, this);
 					isActivated = false;
-					player.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.GREEN + StatCollector.translateToLocal("sentry.another.name")));
+					player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("sentry.another.name").setColor(EnumChatFormatting.GREEN));
 				} else {
 					if(t.worldObj.equals(worldObj)) {
-						if(t.getDistanceFrom(xCoord, yCoord, zCoord) <= 400.0) {
+						ForgeDirection dir1 = dirs[this.blockMetadata], dir2 = dirs[t.blockMetadata];
+						Vec3 v1 = worldObj.getWorldVec3Pool().getVecFromPool(xCoord + .5, yCoord + .5, zCoord + .5)
+								.addVector(dir1.offsetX, dir1.offsetY, dir1.offsetZ),
+								v2 = worldObj.getWorldVec3Pool().getVecFromPool(t.xCoord + .5, t.yCoord + .5, t.zCoord + .5)
+								.addVector(dir2.offsetX, dir2.offsetY, dir2.offsetZ);
+						MovingObjectPosition pos = worldObj.clip(v1, v2); //Peform a raytrace to see if there are blocks in the path
+						if(t.getDistanceFrom(xCoord, yCoord, zCoord) <= 400.0 && pos == null) { //Maxium 20 blocks away
 							linkedBlock = t;
 							ModuleMob.tileMap.remove(player);
-							player.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.GREEN + StatCollector.translateToLocal("sentry.successful.name")));
+							player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("sentry.successful.name").setColor(EnumChatFormatting.GREEN));
 							NetSentrySync.sendSyncPacket(this);
 							isActivated = true;
 						} else {
-							player.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.RED +StatCollector.translateToLocal( "sentry.toofar.name")));
+							player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("sentry.toofar.name").setColor(EnumChatFormatting.RED));
 							ModuleMob.tileMap.remove(player);
 						}
 					} else {
 						ModuleMob.tileMap.put(player, this);
-						player.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.RED + StatCollector.translateToLocal("sentry.diffdim.name")));
+						player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("sentry.diffdim.name").setColor(EnumChatFormatting.RED));
 					}
 				}
 			} else {

@@ -108,7 +108,7 @@ public class Weapon_Satchel extends CBCGenericItem implements IHudTipProvider, I
 
 	@Override
 	public String getModeDescription(int mode) {
-		return mode == 0 ? "mode.satchel1" : "mode.satchel2";
+		return mode == 0 ? "mode.satchel2" : "mode.satchel1";
 	}
 	
     @Override

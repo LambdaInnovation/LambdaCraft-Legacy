@@ -1,4 +1,4 @@
-﻿#Japanese Language File, 2014.7.20
+#Japanese Language File, 2014.7.20
 #Author : mkpoli, [A.C.]show
 #もしより良い翻訳が持っているならば、ぜひ我々に連絡します. (＞人＜;)
 #Items
@@ -146,7 +146,7 @@ spray.argument.name=引数のサイズ不正解。
 spray.format.name=入力値不法。
 spray.successful.name=編集成功。
 spray.id.name=目前スプレーid：
-spray.color.name=目前スプレー色： 
+spray.color.name=目前スプレー色：
 spary.nospace=スプレーできない：空間足りない
 spary.haswater=スプレーできない：周り水あり
 spary.beenblocked=スプレーできない：ブロックされ
@@ -177,11 +177,11 @@ sentry.another.name=近くにもう一つの探査レーザーを放置してく
 sentry.toofar.name=もう一つの発射機は遠くて、プロセスをキャンセル。
 #Attach
 attach.longjump.name=長いジャンプモジュール 　
-attach.bhop.name=高速移動モジュール 
-attach.falling.name=落ち保護モジュール 
-attach.electricity.name=電力強化モジュール 
-attach.defense.name=防御強化モジュール 
-attach.wpnmanage.name=武器管理モジュール 
+attach.bhop.name=高速移動モジュール
+attach.falling.name=落ち保護モジュール
+attach.electricity.name=電力強化モジュール
+attach.defense.name=防御強化モジュール
+attach.wpnmanage.name=武器管理モジュール
 #Entities
 entity.LambdaCraft.hlzombie.name=ヘッドクラブゾンビ
 entity.LambdaCraft.snark.name=スナーク

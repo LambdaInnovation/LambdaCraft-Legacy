@@ -263,14 +263,13 @@ public class ClientProps {
 	
 	public static void setSprayId(int id) {
 		Property prop;
+		sprayID = id;
 		try {
 			prop = CBCMod.config.getProperty("graphics", "Spray_ID", "0");
 			prop.set(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		sprayID = id;
 	}
 	
 	public static void setSprayColor(int r, int g, int b, int a) {
@@ -323,7 +322,6 @@ public class ClientProps {
 	}
 	
 	public static int getSprayId() {
-//		System.err.println(sprayID);
 		return sprayID < 0 ? 0 : sprayID;
 	}
 	

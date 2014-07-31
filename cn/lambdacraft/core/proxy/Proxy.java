@@ -64,7 +64,7 @@ public class Proxy {
 	public void init() {
 		for (String lang : languages) {
 			LanguageRegistry.instance().loadLocalization(
-					"/assets/lambdacraft/lang/" + lang + ".properties", lang,
+					"/assets/lambdacraft/lang/" + lang + ".lang", lang,
 					false);
 		}
 	}

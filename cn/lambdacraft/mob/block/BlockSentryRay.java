@@ -26,6 +26,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 
 /**
  * @author WeAthFolD
@@ -42,6 +43,7 @@ public class BlockSentryRay extends CBCBlockContainer {
 	public BlockSentryRay(int par1) {
 		super(par1, Material.rock);
 		this.setCreativeTab(null);
+		this.setHardness(1.0F);
 		setIconName("ss_1");
 	}
 	
@@ -107,6 +109,16 @@ public class BlockSentryRay extends CBCBlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+	
+	@Override
+	public void onNeighborBlockChange(World world, int par2, int par3,
+			int par4, int par5) {
+		super.onNeighborBlockChange(world, par2, par3, par4, par5);
+		int meta = world.getBlockMetadata(par2, par3, par4); //ForgeDirecton真的是个好东西~ 
+		ForgeDirection dir = ForgeDirection.values()[meta].getOpposite();
+		if(!world.isBlockNormalCubeDefault(par2 + dir.offsetX, par3 + dir.offsetY, par4 + dir.offsetZ, false))
+			world.destroyBlock(par2, par3, par4, true);
 	}
 
 }

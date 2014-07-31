@@ -50,10 +50,10 @@ public class CommandXHairColor extends CommandBase {
 		if(astring[0].equals("color")) {
 			if(astring.length != 4) {
 				if(astring.length == 1) {
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spray.color.name") + EnumChatFormatting.RED + ClientProps.sprayR + " " + 
-				EnumChatFormatting.GREEN + ClientProps.sprayG + " " + EnumChatFormatting.AQUA + ClientProps.sprayB));
+					ics.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions("spray.color.name",
+							ClientProps.xHairR, ClientProps.xHairG, ClientProps.xHairB));
 				} else 
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.argument.name")));
+					ics.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("spray.argument.name").setColor(EnumChatFormatting.RED));
 			} else {
 				try {
 					int r = Integer.valueOf(astring[1]);
@@ -61,12 +61,12 @@ public class CommandXHairColor extends CommandBase {
 					int b = Integer.valueOf(astring[3]);
 					ClientProps.setCrosshairColor(r, g, b);
 				} catch(NumberFormatException e) {
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.format.name")));
+					ics.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("spray.format.name").setColor(EnumChatFormatting.RED));
 				}
 				ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.GREEN + StatCollector.translateToLocal("spray.successful.name")));
 			}
 		} else {
-			ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + StatCollector.translateToLocal(getCommandUsage(ics))));
+			ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + getCommandUsage(ics)));
 		}	
 	}
 

@@ -30,7 +30,7 @@ import net.minecraft.world.World;
  */
 public class ItemSpray extends CBCGenericItem {
 
-	private int tId; // 喷漆的ID
+	protected int tId; // 喷漆的ID
 
 	public ItemSpray(int par1, int tId) {
 		super(par1);

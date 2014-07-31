@@ -103,7 +103,7 @@ public class Weapon_RPG extends Weapon_RPG_Raw implements IModdable {
 	
 	@Override
 	public String getModeDescription(int mode) {
-		return "mode.rpg" + mode;
+		return "mode.rpg" + (mode == 0 ? 1 : 0);
 	}
 	
 	@SideOnly(Side.CLIENT)

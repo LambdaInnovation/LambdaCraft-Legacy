@@ -53,10 +53,10 @@ public class CommandSpray extends CommandBase {
 		if(astring[0].equals("color")) {
 			if(astring.length != 4) {
 				if(astring.length == 1) {
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spray.color.name") + EnumChatFormatting.RED + ClientProps.sprayR + " " + 
-				EnumChatFormatting.GREEN + ClientProps.sprayG + " " + EnumChatFormatting.AQUA + ClientProps.sprayB));
+					notifyAdmins(ics, "spray.color.name", new Object[] { String.valueOf(ClientProps.sprayR) , String.valueOf(ClientProps.sprayG), 
+							String.valueOf(ClientProps.sprayB)} );
 				} else 
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.argument.name")));
+					ics.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("spray.argument.name").setColor(EnumChatFormatting.RED));
 			} else {
 				try {
 					int r = Integer.valueOf(astring[1]);
@@ -64,27 +64,27 @@ public class CommandSpray extends CommandBase {
 					int b = Integer.valueOf(astring[3]);
 					ClientProps.setSprayColor(r, g, b, 255);
 				} catch(NumberFormatException e) {
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.format.name")));
+					ics.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("spray.format.name").setColor(EnumChatFormatting.RED));
 				}
-				ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.GREEN + StatCollector.translateToLocal("spray.successful.name")));
+				ics.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("spray.successful.name").setColor(EnumChatFormatting.GREEN));
 			}
 		} else if(astring[0].equals("id")){
 			if(astring.length != 2) {
 				if(astring.length == 1) {
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(StatCollector.translateToLocal("spray.id.name") +  " "  + EnumChatFormatting.GREEN + ClientProps.getSprayId()));
+					notifyAdmins(ics, "spray.id.name", new Object[] {String.valueOf(ClientProps.getSprayId())});
 				} else
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.argument.name")));
+					ics.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("spray.argument.name").setColor(EnumChatFormatting.RED));
 			} else {
 				try {
 					int id = Integer.valueOf(astring[1]);
 					ClientProps.setSprayId(id);
 				} catch(NumberFormatException e) {
-					ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.format.name")));
+					ics.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("spray.format.name").setColor(EnumChatFormatting.RED));
 				}
-				ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.GREEN + StatCollector.translateToLocal("spray.successful.name")));
+				ics.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey("spray.successful.name").setColor(EnumChatFormatting.GREEN));
 			}
 		} else {
-			ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + StatCollector.translateToLocal(getCommandUsage(ics))));
+			ics.sendChatToPlayer(ChatMessageComponent.createFromText(EnumChatFormatting.RED + getCommandUsage(ics)));
 		}
 	}
 

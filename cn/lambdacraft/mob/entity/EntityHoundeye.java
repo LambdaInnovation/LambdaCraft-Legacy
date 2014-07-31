@@ -82,7 +82,7 @@ public class EntityHoundeye extends LIEntityMob implements IEntityLink<EntityLiv
 	public void onUpdate() {
 		super.onUpdate();
 		
-		if(!worldObj.isRemote && isCharging) {
+		if(!worldObj.isRemote && isCharging && !dead) {
 			if(++chargeTick > 50) {
 				worldObj.spawnEntityInWorld(new EntityShockwave(worldObj, this, posX, posY, posZ));
 				this.playSound(GenericUtils.getRandomSound("lambdacraft:mobs.he_blast", 3), 0.5F, 1.0F);

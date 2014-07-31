@@ -18,6 +18,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 import cn.lambdacraft.core.block.CBCBlockContainer;
 import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
@@ -77,6 +78,14 @@ public class BlockXenAmethyst extends CBCBlockContainer {
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
     	this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, 1.0F, 0.7F);
     }
+    
+	@Override
+	public void onNeighborBlockChange(World world, int par2, int par3,
+			int par4, int par5) {
+		super.onNeighborBlockChange(world, par2, par3, par4, par5);
+		if(!world.isBlockNormalCubeDefault(par2, par3 + 1, par4, false))
+			world.destroyBlock(par2, par3, par4, true);
+	}
 
 
 }

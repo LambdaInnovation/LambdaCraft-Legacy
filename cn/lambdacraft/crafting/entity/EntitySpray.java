@@ -86,7 +86,6 @@ public class EntitySpray extends EntityHanging {
 			this.zPosition = this.dataWatcher.getWatchableObjectInt(21);
 			this.tId = this.dataWatcher.getWatchableObjectInt(22);
 			this.loadColor();
-			this.initParams();
 		} else {
             if (!this.isDead && !this.onValidSurface())
             {

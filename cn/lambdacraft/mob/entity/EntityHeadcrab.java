@@ -112,7 +112,7 @@ public class EntityHeadcrab extends LIEntityMob implements
 	public void onUpdate() {
 		super.onUpdate();
 
-		if (attacher != null) {
+		if (!this.dead && attacher != null) {
 			if (attacher instanceof EntityPlayer)
 				this.setPositionAndRotation(attacher.posX,
 						attacher.posY + 0.05, attacher.posZ,
@@ -121,7 +121,7 @@ public class EntityHeadcrab extends LIEntityMob implements
 				this.setPositionAndRotation(attacher.posX, attacher.posY
 						+ attacher.height + 0.05, attacher.posZ,
 						attacher.rotationYaw, attacher.rotationPitch);
-			if (++tickSinceBite >= 15) {
+			if (++tickSinceBite >= 15) { //Drain health and indicate player stat
 				dataWatcher.updateObject(20, Integer.valueOf(attacher.entityId));
 				tickSinceBite = 0;
 				float health = attacher.getHealth() - 1;
@@ -196,26 +196,7 @@ public class EntityHeadcrab extends LIEntityMob implements
 	 */
 	@Override
 	protected Entity findPlayerToAttack() {
-		AxisAlignedBB boundingBox = AxisAlignedBB.getBoundingBox(posX - 8.0,
-				posY - 8.0, posZ - 8.0, posX + 8.0, posY + 8.0, posZ + 8.0);
-		List<EntityLivingBase> list = worldObj
-				.getEntitiesWithinAABBExcludingEntity(this, boundingBox,
-						selector);
-		EntityLivingBase entity = null;
-		double distance = 10000.0F;
-		for (EntityLivingBase s : list) {
-			if (s.getEntityName().equals(throwerName))
-				continue;
-			double dx = s.posX - posX, dy = s.posY - posY, dz = s.posZ - posZ;
-			double d = Math.sqrt(dx * dx + dy * dy + dz * dz);
-			if (d < distance) {
-				entity = s;
-				distance = d;
-			}
-		}
-		if (entity == null)
-			return null;
-		return entity;
+		return GenericUtils.getNearestEntityTo(this, GenericUtils.getEntitiesAround(this, 8.0F, selector));
 	}
 
 	/**
@@ -340,7 +321,6 @@ public class EntityHeadcrab extends LIEntityMob implements
 
 	@Override
 	protected double getKnockBackResistance() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

@@ -21,11 +21,11 @@ public class RenderEgon extends RenderModelItem {
 	public RenderEgon() {
 		super(new ModelEgonHead(), ClientProps.EGON_HEAD_PATH);
 		this.renderInventory = false;
-		this.setRotation(0F, 179.35F, 0F);
+		this.setRotation(5.0F, 173.42F, 0.0F);
 		this.inventorySpin = false;
-		this.setEquipOffset(0.438F, -0.152F, -0.172F);
+		this.setEquipOffset(0.318, -0.142, -0.142);
 		this.setOffset(0.0F, 0.2F, -0.302F);
-		this.setScale(2.45F);
+		this.setScale(2.46F);
 	}
 
 	Tessellator t = Tessellator.instance;
@@ -34,13 +34,12 @@ public class RenderEgon extends RenderModelItem {
 	public void renderEquipped(ItemStack item, RenderBlocks render,
 			EntityLivingBase entity, ItemRenderType type) {
 		super.renderEquipped(item, render, entity, type);
-		
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
 		if(entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
 			if(player.getCurrentEquippedItem() == item &&
 					ItemHelper.getUsingTickLeft(player, true) > 0) {
-				RenderBulletWeapon.renderMuzzleflashIn2d(Tessellator.instance, ClientProps.EGON_MUZZLE, 0.1F, -0.12F, -0.2F);
+				RenderBulletWeapon.renderMuzzleflashIn2d(Tessellator.instance, ClientProps.EGON_MUZZLE, 0.0F, -0.12F, -0.2F);
 			}
 		}
 	}

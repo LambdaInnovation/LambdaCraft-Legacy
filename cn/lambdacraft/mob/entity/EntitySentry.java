@@ -281,20 +281,22 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
     {
 		if(!worldObj.isRemote) {
 			if(!player.username.equals(placerName)) {
-				player.sendChatToPlayer(new ChatMessageComponent().addText(EnumChatFormatting.RED + StatCollector.translateToLocal("sentry.deny.name")));
+				player.sendChatToPlayer(new ChatMessageComponent().createFromTranslationKey
+						("sentry.deny.name")
+						.setColor(EnumChatFormatting.RED));
 				return false;
 			}
 			if(player.isSneaking()) {
 				attackPlayer = !attackPlayer;
-				StringBuilder b = new StringBuilder(StatCollector.translateToLocal("sentry.head.name")).append("\n");
-				b.append(EnumChatFormatting.WHITE).append(StatCollector.translateToLocal("sentry.id.name")).append(" : ").append(EnumChatFormatting.RED).append(this.entityId).append("\n");
-				b.append(EnumChatFormatting.WHITE).append(StatCollector.translateToLocal("sentry.attackstat.name")).append(" : ").append(EnumChatFormatting.RED).append(StatCollector.translateToLocal("sentry.attacktype" + (attackPlayer ? 1 : 0) + ".name")).append("\n");
-				player.sendChatToPlayer(new ChatMessageComponent().addText(b.toString()));
+				player.sendChatToPlayer(ChatMessageComponent.createFromTranslationWithSubstitutions
+						("sentry.attackstat" + (attackPlayer ? 1 : 0)  + ".name")
+						.setColor(attackPlayer ? EnumChatFormatting.RED : EnumChatFormatting.GREEN));
 			} else {
 				this.isActivated = !isActivated;
-				StringBuilder b = new StringBuilder(StatCollector.translateToLocal("sentry.head.name")).append("\n");
-				b.append((isActivated ? EnumChatFormatting.GREEN : EnumChatFormatting.RED)).append(StatCollector.translateToLocal("sentry.status" + (isActivated ? 1 : 0) + ".name"));
-				player.sendChatToPlayer(new ChatMessageComponent().addText(b.toString()));
+				player.sendChatToPlayer(ChatMessageComponent.createFromTranslationKey
+						("sentry.status" + (isActivated ? 1 : 0) + ".name")
+						.setColor(isActivated ? EnumChatFormatting.GREEN : EnumChatFormatting.RED));
+				
 				String s = isActivated ? "lambdacraft:mobs.tu_deploy" : "lambdacraft:mobs.tu_spindown";
 				this.playSound(s, 0.5F, 1.0F);
 			}
