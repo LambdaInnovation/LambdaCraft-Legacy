@@ -22,17 +22,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
-import cn.lambdacraft.core.LCMod;
+import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.mob.ModuleMob;
 import cn.lambdacraft.mob.block.BlockSentryRay;
 import cn.lambdacraft.mob.entity.EntitySentry;
-import cn.lambdacraft.mob.network.MessageSentry;
+import cn.lambdacraft.mob.network.NetSentrySync;
+import cn.liutils.api.command.LICommandBase;
 import cn.liutils.api.util.BlockPos;
+import cn.liutils.api.util.EntityUtils;
 import cn.liutils.api.util.GenericUtils;
 import cn.weaponmod.api.WeaponHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -67,6 +68,8 @@ public class TileSentryRay extends TileEntity {
 	};
 	
 	private int tickSinceLastActivate = 0;
+	
+	private static ForgeDirection dirs[] = ForgeDirection.values();
 
 	public void connectWith(TileSentryRay another) {
 		this.linkedBlock = another;
@@ -94,37 +97,43 @@ public class TileSentryRay extends TileEntity {
 			TileEntity te = worldObj.getTileEntity(linkedX, linkedY, linkedZ);
 			if (te != null && te instanceof TileSentryRay) {
 				linkedBlock = (TileSentryRay) te;
-				LCMod.netHandler.sendToDimension(new MessageSentry(this), worldObj.provider.dimensionId);
+				NetSentrySync.sendSyncPacket(this);
 			}
 			linkedX = linkedY = linkedZ = 0;
 		}
 		
-		// TODO:Check if touched, and notice the entity to activate
+		//Check if touched, and notice the entity to activate
 		if(!isLoaded) {
 			BlockPos bp = new BlockPos(this);
 			if(ModuleMob.placeMap.containsKey(bp)) {
 				EntityPlayer player = ModuleMob.placeMap.get(bp);
 				placerName = player.getCommandSenderName();
-				TileSentryRay t = ModuleMob.tileMap.get(player);
-				if(t == null) {
+				TileSentryRay t = ModuleMob.tileMap.get(player); //Aquire the last ray block that player places
+				if(t == null) { 
 					ModuleMob.tileMap.put(player, this);
 					isActivated = false;
-					player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.GREEN + StatCollector.translateToLocal("sentry.another.name")));
+					LICommandBase.sendChat(player, "sentry.another.name");
 				} else {
 					if(t.worldObj.equals(worldObj)) {
-						if(t.getDistanceFrom(xCoord, yCoord, zCoord) <= 400.0) {
+						ForgeDirection dir1 = dirs[this.blockMetadata], dir2 = dirs[t.blockMetadata];
+						Vec3 v1 = worldObj.getWorldVec3Pool().getVecFromPool(xCoord + .5, yCoord + .5, zCoord + .5)
+								.addVector(dir1.offsetX, dir1.offsetY, dir1.offsetZ),
+								v2 = worldObj.getWorldVec3Pool().getVecFromPool(t.xCoord + .5, t.yCoord + .5, t.zCoord + .5)
+								.addVector(dir2.offsetX, dir2.offsetY, dir2.offsetZ);
+						MovingObjectPosition pos = worldObj.rayTraceBlocks(v1, v2); //Peform a raytrace to see if there are blocks in the path
+						if(t.getDistanceFrom(xCoord, yCoord, zCoord) <= 400.0 && pos == null) { //Maxium 20 blocks away
 							linkedBlock = t;
 							ModuleMob.tileMap.remove(player);
-							player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.GREEN + StatCollector.translateToLocal("sentry.successful.name")));
-							LCMod.netHandler.sendToDimension(new MessageSentry(this), worldObj.provider.dimensionId);
+							LICommandBase.sendChat(player, "sentry.successful.name");
+							NetSentrySync.sendSyncPacket(this);
 							isActivated = true;
 						} else {
-							player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED +StatCollector.translateToLocal( "sentry.toofar.name")));
+							LICommandBase.sendChat(player, "sentry.toofar.name");
 							ModuleMob.tileMap.remove(player);
 						}
 					} else {
 						ModuleMob.tileMap.put(player, this);
-						player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal("sentry.diffdim.name")));
+						LICommandBase.sendChat(player, "sentry.diffdim.name");
 					}
 				}
 			} else {
@@ -142,14 +151,14 @@ public class TileSentryRay extends TileEntity {
 					.getVecFromPool(linkedBlock.xCoord, linkedBlock.yCoord,
 							linkedBlock.zCoord)
 					.addVector(offset.xCoord, offset.yCoord, offset.zCoord);
-			MovingObjectPosition result = WeaponHelper.rayTraceEntities( GenericUtils.selectorLiving, worldObj, vec0, vec1);
+			MovingObjectPosition result = GenericUtils.rayTraceEntities( GenericUtils.selectorLiving, worldObj, vec0, vec1);
 			if (result != null) {
 				this.noticeSentry();
 			}
 		}
 		if (++tickSinceLastUpdate > 20) {
 			tickSinceLastUpdate = 0;
-			LCMod.netHandler.sendToDimension(new MessageSentry(this), worldObj.provider.dimensionId);
+			NetSentrySync.sendSyncPacket(this);
 		}
 	}
 
@@ -202,7 +211,7 @@ public class TileSentryRay extends TileEntity {
 				.append(EnumChatFormatting.RED).append(sentry.getEntityId())
 				.append("\n").append(EnumChatFormatting.GREEN)
 				.append(StatCollector.translateToLocal("sentry.raydep.name"));
-		player.addChatMessage(new ChatComponentTranslation(sb.toString()));
+		LICommandBase.sendChat(player, sb.toString());
 	}
 
 	@Override

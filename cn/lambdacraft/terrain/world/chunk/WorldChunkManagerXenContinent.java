@@ -89,7 +89,7 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
 
         for (int i1 = 0; i1 < par4 * par5; ++i1)
         {
-            float f = (float)BiomeGenBase.getBiome(aint[i1]).getIntRainfall() / 65536.0F;
+            float f = BiomeGenBase.biomeList[aint[i1]].getIntRainfall() / 65536.0F;
 
             if (f > 1.0F)
             {
@@ -114,6 +114,36 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
     }
 
     /**
+     * Returns a list of temperatures to use for the specified blocks.  Args: listToReuse, x, y, width, length
+     */
+    @Override
+	public float[] getTemperatures(float[] par1ArrayOfFloat, int par2, int par3, int par4, int par5)
+    {
+        IntCache.resetIntCache();
+
+        if (par1ArrayOfFloat == null || par1ArrayOfFloat.length < par4 * par5)
+        {
+            par1ArrayOfFloat = new float[par4 * par5];
+        }
+
+        int[] aint = this.biomeIndexLayer.getInts(par2, par3, par4, par5);
+
+        for (int i1 = 0; i1 < par4 * par5; ++i1)
+        {
+            float f = BiomeGenBase.biomeList[aint[i1]].getIntTemperature() / 65536.0F;
+
+            if (f > 1.0F)
+            {
+                f = 1.0F;
+            }
+
+            par1ArrayOfFloat[i1] = f;
+        }
+
+        return par1ArrayOfFloat;
+    }
+
+    /**
      * Returns an array of biomes for the location input.
      */
     @Override
@@ -131,7 +161,7 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
         for (int i1 = 0; i1 < par4 * par5; ++i1)
         {
         	if (aint[i1] >= 0) {
-        		par1ArrayOfBiomeGenBase[i1] = BiomeGenBase.getBiome(aint[i1]);
+        		par1ArrayOfBiomeGenBase[i1] = BiomeGenBase.biomeList[aint[i1]];
         		} else {
         		par1ArrayOfBiomeGenBase[i1] = MainBiomes.xenVoid;
         		}
@@ -177,7 +207,7 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
             for (int i1 = 0; i1 < par4 * par5; ++i1)
             {
             	if (aint[i1] >= 0) {
-            		par1ArrayOfBiomeGenBase[i1] = BiomeGenBase.getBiome(aint[i1]);
+            		par1ArrayOfBiomeGenBase[i1] = BiomeGenBase.biomeList[aint[i1]];
             		} else {
             		par1ArrayOfBiomeGenBase[i1] = MainBiomes.xenVoid;
             		}
@@ -204,7 +234,7 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
 
         for (int j2 = 0; j2 < l1 * i2; ++j2)
         {
-            BiomeGenBase biomegenbase = BiomeGenBase.getBiome(aint[i1]);
+            BiomeGenBase biomegenbase = BiomeGenBase.biomeList[aint[j2]];
 
             if (!par4List.contains(biomegenbase))
             {
@@ -237,7 +267,7 @@ public class WorldChunkManagerXenContinent extends WorldChunkManager {
         {
             int l2 = l + k2 % l1 << 2;
             int i3 = i1 + k2 / l1 << 2;
-            BiomeGenBase biomegenbase = BiomeGenBase.getBiome(aint[i1]);
+            BiomeGenBase biomegenbase = BiomeGenBase.biomeList[aint[k2]];
 
             if (par4List.contains(biomegenbase) && (chunkposition == null || par5Random.nextInt(j2 + 1) == 0))
             {

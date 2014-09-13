@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -15,7 +15,7 @@ public class IngotUranium extends Item {
 
 	public IngotUranium() {
 		super();
-		setCreativeTab(LCMod.cctMisc);
+		setCreativeTab(CBCMod.cct);
 		setUnlocalizedName("ingotUranium");
 	}
 

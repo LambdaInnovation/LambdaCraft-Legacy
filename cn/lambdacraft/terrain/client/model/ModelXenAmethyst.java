@@ -21,7 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.liutils.api.client.model.ITileEntityModel;
 import cn.liutils.api.client.util.RenderUtils;
 
@@ -86,9 +86,10 @@ public class ModelXenAmethyst extends ModelBase implements ITileEntityModel {
 	public void render(TileEntity is, double x, double y, double z, float f1,
 			float scale, float f) {
 		GL11.glPushMatrix();
-		GL11.glTranslated(x + 0.5, y + 1.5, z + 0.5);
+//		GL11.glTranslated(x + 0.5, y + 1.5, z + 0.5);
+		GL11.glTranslated(x + 0.5, y + 1.6, z + 0.5);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
-		RenderUtils.loadTexture(LCClientProps.AMETHYST_PATH);
+		RenderUtils.loadTexture(ClientProps.AMETHYST_PATH);
 		Shape1.render(scale);
 		Shape2.render(scale);
 		Shape3.render(scale);

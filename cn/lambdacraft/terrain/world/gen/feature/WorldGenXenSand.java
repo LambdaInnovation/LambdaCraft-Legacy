@@ -4,7 +4,6 @@ import java.util.Random;
 
 import cn.lambdacraft.terrain.register.XenBlocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
@@ -34,11 +33,11 @@ public class WorldGenXenSand extends WorldGenerator
                 {
                     for (int i2 = par4 - b0; i2 <= par4 + b0; ++i2)
                     {
-                        Block j2 = par1World.getBlock(i1, i2, j1);
+                        int j2 = par1World.getBlockId(i1, i2, j1);
 
-                        if (j2 == XenBlocks.dirt || j2 == XenBlocks.grass)
+                        if (j2 == XenBlocks.dirt.blockID || j2 == XenBlocks.grass.blockID)
                         {
-                            par1World.setBlock(i1, i2, j1, XenBlocks.sand, 0, 2);
+                            par1World.setBlock(i1, i2, j1, XenBlocks.sand.blockID, 0, 2);
                         }
                     }
                 }

@@ -71,8 +71,7 @@ public class EntityCrossbowArrow extends EntityThrowable {
 				else {
 					Block block = worldObj.getBlock(var1.blockX, var1.blockY, var1.blockZ);
 					if(block == Blocks.glass_pane || block == Blocks.glass) {
-						//worldObj.destroyBlock(var1.blockX, var1.blockY, var1.blockZ, false);
-						//TODO:destroy it!
+						worldObj.destroyBlockInWorldPartially(var1.blockX, var1.blockY, var1.blockZ, 0, 0);
 					} else { 
 						this.setDead();
 						worldObj.spawnEntityInWorld(

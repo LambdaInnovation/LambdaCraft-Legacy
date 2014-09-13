@@ -14,19 +14,19 @@
  */
 package cn.lambdacraft.deathmatch.block;
 
+import ic2.api.item.ISpecialElectricItem;
+
 import java.util.HashSet;
 
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.block.TileElectricStorage;
-import cn.lambdacraft.core.util.EnergyUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import cn.lambdacraft.core.block.TileElectricStorage;
+import cn.lambdacraft.core.util.EnergyUtils;
 
 /**
  * @author WeAthFolD, Rikka
@@ -105,8 +105,8 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 				ItemStack arm = slots[i];
 				if (arm == null)
 					continue;
-				ICustomEnItem item = (ICustomEnItem) arm.getItem();
-				int e = item.discharge(arm, ENERGY_MAX - currentEnergy, 2,
+				ISpecialElectricItem item = (ISpecialElectricItem) arm.getItem();
+				int e = item.getManager(arm).discharge(arm, ENERGY_MAX - currentEnergy, 2,
 						false, false);
 				currentEnergy += e;
 			}
@@ -118,8 +118,8 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 				ItemStack arm = slots[i];
 				if (arm == null)
 					continue;
-				ICustomEnItem item = (ICustomEnItem) arm.getItem();
-				int e = item.charge(arm, currentEnergy > 128 ? 128
+				ISpecialElectricItem item = (ISpecialElectricItem) arm.getItem();
+				int e = item.getManager(arm).charge(arm, currentEnergy > 128 ? 128
 						: currentEnergy, 2, false, worldObj.isRemote);
 				currentEnergy -= e;
 				flag = flag || e > 0;
@@ -162,20 +162,20 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 		if (currentEnergy < ENERGY_MAX
 				&& !(!this.isRSActivated && currentBehavior == EnumBehavior.RECEIVEONLY)) {
 			for (int i = 4; i < 7; i++) {
-				ItemStack stack = slots[i];
-				if (stack == null)
+				ItemStack sl = slots[i];
+				if (sl == null)
 					continue;
-				if (stack.getItem() == Items.redstone) {
+				if (sl.getItem() == Items.redstone) {
 					if (energyReq > 500) {
 						this.decrStackSize(i, 1);
 					}
 					currentEnergy += 500;
-				} else if (stack.getItem() instanceof ICustomEnItem) {
-					ICustomEnItem item = (ICustomEnItem) stack.getItem();
-					if (!item.canProvideEnergy(stack))
+				} else if (sl.getItem() instanceof ISpecialElectricItem) {
+					ISpecialElectricItem item = (ISpecialElectricItem) sl.getItem();
+					if (!item.canProvideEnergy(sl))
 						continue;
 					int cn = energyReq < 128 ? energyReq : 128;
-					cn = item.discharge(stack, cn, 2, false, false);
+					cn = item.getManager(sl).discharge(sl, cn, 2, false, false);
 					currentEnergy += cn;
 				}
 			}
@@ -238,9 +238,10 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
 				zCoord + 0.5) <= 64;
 	}
+
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		if (i <= 3 && !(itemstack.getItem() instanceof ICustomEnItem))
+		if (i <= 3 && !(itemstack.getItem() instanceof ISpecialElectricItem))
 			return false;
 		return true;
 	}
@@ -251,15 +252,7 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		for (int i = 0; i < 7; i++) {
-			short id = nbt.getShort("id" + i), damage = nbt.getShort("damage"
-					+ i);
-			byte count = nbt.getByte("count" + i);
-			if (id == 0)
-				continue;
-			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
-			slots[i] = is;
-		}
+		slots = restoreInventory(nbt, "inv", slots.length);
 		currentEnergy = nbt.getInteger("energy");
 
 	}
@@ -270,19 +263,13 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		for (int i = 0; i < 7; i++) {
-			if (slots[i] == null)
-				continue;
-			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
-			nbt.setByte("count" + i, (byte) slots[i].stackSize);
-			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
-		}
+		storeInventory(nbt, slots, "inv");
 		nbt.setInteger("energy", currentEnergy);
 	}
 
 	@Override
 	public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
+			ForgeDirection paramDirection) {
 		return !(currentBehavior == EnumBehavior.RECEIVEONLY && !this.isRSActivated);
 	}
 
@@ -293,15 +280,20 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public void openInventory() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void closeInventory() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

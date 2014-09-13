@@ -1,14 +1,14 @@
 package cn.lambdacraft.crafting.item;
 
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.item.CBCGenericItem;
 
-public class Bullet_9mm extends ItemBullet {
+public class Bullet_9mm extends CBCGenericItem {
 
 	public Bullet_9mm() {
 		super();
-		setCreativeTab(LCMod.cctMisc);
-		setUnlocalizedName("bullet_9mm");
-		setTextureName("lambdacraft:bullet_9mm");
+		setCreativeTab(CBCMod.cct);
+		setIAndU("bullet_9mm");
 		setMaxStackSize(64);
 	}
 

@@ -14,6 +14,9 @@
  */
 package cn.lambdacraft.core.item;
 
+import ic2.api.item.IElectricItemManager;
+import ic2.api.item.ISpecialElectricItem;
+
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -25,8 +28,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.ISpecialArmor;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.LCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -34,8 +35,8 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  * 
  */
-public abstract class ElectricArmor extends LCGenericArmor implements
-		ICustomEnItem, ISpecialArmor {
+public abstract class ElectricArmor extends CBCGenericArmor implements
+	ISpecialElectricItem, ISpecialArmor {
 
 	protected int tier = 1, transferLimit = 100, maxCharge;
 
@@ -118,51 +119,11 @@ public abstract class ElectricArmor extends LCGenericArmor implements
 		return this.maxCharge;
 	}
 
-	@Override
-	public int discharge(ItemStack itemStack, int amount, int tier,
-			boolean ignoreTransferLimit, boolean simulate) {
-		if (getItemCharge(itemStack) == 0)
-			return 0;
-		int en = getItemCharge(itemStack);
-		if (!ignoreTransferLimit)
-			amount = this.getTransferLimit(itemStack);
-		if (en > amount) {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) - amount);
-			return amount;
-		} else {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) - en);
-			return en;
-		}
-	}
-
-	@Override
-	public int charge(ItemStack itemStack, int amount, int tier,
-			boolean ignoreTransferLimit, boolean simulate) {
-
-		int en = getMaxDamage(itemStack) - getItemCharge(itemStack) - 1;
-		if (en == 0)
-			return 0;
-		if (!ignoreTransferLimit)
-			amount = this.getTransferLimit(itemStack);
-		if (en > amount) {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) + amount);
-			return amount;
-		} else {
-			if (!simulate)
-				setItemCharge(itemStack, getItemCharge(itemStack) + en);
-			return en;
-		}
-	}
-
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack par1ItemStack,
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-		if (this.canShowChargeToolTip(par1ItemStack))
 			par3List.add(StatCollector.translateToLocal("gui.curenergy.name")
 					+ " : " + getItemCharge(par1ItemStack) + "/"
 					+ getMaxDamage(par1ItemStack) + " EU");
@@ -175,11 +136,6 @@ public abstract class ElectricArmor extends LCGenericArmor implements
 		ItemStack chargedItem = new ItemStack(par1, 1, 0);
 		this.setItemCharge(chargedItem, maxCharge);
 		par3List.add(chargedItem);
-	}
-
-	@Override
-	public boolean canShowChargeToolTip(ItemStack itemStack) {
-		return true;
 	}
 
 	protected void setItemCharge(ItemStack stack, int charge) {
@@ -210,7 +166,7 @@ public abstract class ElectricArmor extends LCGenericArmor implements
 	 */
 	@Override
 	public void setDamage(ItemStack stack, int damage) {
-		setItemCharge(stack, damage);
+		setItemCharge(stack, maxCharge - damage);
 	}
 
 	/**
@@ -236,18 +192,22 @@ public abstract class ElectricArmor extends LCGenericArmor implements
 	public int getTransferLimit(ItemStack itemStack) {
 		return this.transferLimit;
 	}
-
-	@Override
-	public boolean canUse(ItemStack itemStack, int amount) {
-		return getItemCharge(itemStack) > 0;
-	}
-
 	@Override
 	public void damageArmor(EntityLivingBase entity, ItemStack stack,
 			DamageSource source, int damage, int slot) {
-		this.discharge(stack, damage * this.energyPerDamage, 2, true, false);
+		getManager(stack).discharge(stack, damage * this.energyPerDamage, 2, true, false);
 		if(getItemCharge(stack) < this.energyPerDamage)
 			this.setItemCharge(stack, 0);
+	}
+
+	@Override
+	public boolean canProvideEnergy(ItemStack itemStack) {
+		return false;
+	}
+
+	@Override
+	public IElectricItemManager getManager(ItemStack itemStack) {
+		return LCElectItemManager.INSTANCE;
 	}
 
 }

@@ -18,7 +18,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.util.IIcon;
 import cn.lambdacraft.core.block.BlockElectricalBase;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.crafting.block.tile.TileGeneratorSolar;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -35,7 +35,7 @@ public class BlockGeneratorSolar extends BlockElectricalBase {
 		super(Material.rock);
 		this.setHardness(2.0F);
 		setTileType(TileGeneratorSolar.class);
-		setGuiId(LCGeneralProps.GUI_ID_GENSOLAR);
+		setGuiId(GeneralProps.GUI_ID_GENSOLAR);
 		setBlockName("genSolar");
 	}
 

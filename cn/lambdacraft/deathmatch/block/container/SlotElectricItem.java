@@ -1,6 +1,6 @@
 package cn.lambdacraft.deathmatch.block.container;
 
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -14,6 +14,6 @@ public class SlotElectricItem extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack par1ItemStack) {
-		return (par1ItemStack != null && par1ItemStack.getItem() instanceof ICustomEnItem);
+		return (par1ItemStack != null && par1ItemStack.getItem() instanceof ISpecialElectricItem);
 	}
 }

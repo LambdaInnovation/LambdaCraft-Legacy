@@ -30,7 +30,7 @@ public class EntityCrossbowStill extends Entity {
 	 */
 	public EntityCrossbowStill(World world, Motion3D motion, float yaw, float pitch) {
 		super(world);
-		Motion3D.setMotionToEntity(motion, this);
+		motion.applyToEntity(this);
 		this.setRotation(yaw, pitch);
 		this.onGround = false;
 	}

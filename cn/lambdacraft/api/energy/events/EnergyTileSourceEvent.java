@@ -14,7 +14,9 @@
  */
 package cn.lambdacraft.api.energy.events;
 
-import cn.lambdacraft.api.energy.tile.IEnergyTile;
+import ic2.api.energy.event.EnergyTileEvent;
+import ic2.api.energy.tile.IEnergyTile;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
@@ -27,11 +29,11 @@ public class EnergyTileSourceEvent extends EnergyTileEvent {
 	public int amount;
 	public World world;
 
-	public EnergyTileSourceEvent(World tworld, IEnergyTile energyTile,
+	public EnergyTileSourceEvent(IEnergyTile energyTile,
 			int amount) {
-		super(tworld, energyTile);
+		super(energyTile);
 		this.amount = amount;
-		this.world = tworld;
+		this.world = ((TileEntity)energyTile).getWorldObj();
 	}
 
 }

@@ -19,8 +19,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.crafting.block.tile.TileElCrafter;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -65,13 +65,13 @@ public class BlockElectricCrafter extends BlockWeaponCrafter {
 		if (tileEntity == null || player.isSneaking()) {
 			return false;
 		}
-		player.openGui(LCMod.instance, LCGeneralProps.GUI_ID_EL_CRAFTER, world,
+		player.openGui(CBCMod.instance, GeneralProps.GUI_ID_EL_CRAFTER, world,
 				x, y, z);
 		return true;
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int v) {
+	public TileEntity createNewTileEntity(World world, int i) {
 		return new TileElCrafter();
 	}
 

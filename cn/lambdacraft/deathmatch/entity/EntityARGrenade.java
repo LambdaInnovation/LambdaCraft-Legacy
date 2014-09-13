@@ -29,12 +29,10 @@ public class EntityARGrenade extends EntityThrowable {
 
 	public EntityARGrenade(World par1World, EntityLivingBase par2EntityLiving) {
 		super(par1World, par2EntityLiving);
-		System.out.println("Gen in s");
 	}
 
 	public EntityARGrenade(World world) {
 		super(world);
-		System.out.println("Gen in cs");
 	}
 
 	/**

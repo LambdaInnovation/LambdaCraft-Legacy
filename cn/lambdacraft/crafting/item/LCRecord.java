@@ -24,7 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -50,7 +50,7 @@ public class LCRecord extends ItemRecord {
 	 */
 	public LCRecord(String par2Str, int subID) {
 		super(par2Str);
-		setCreativeTab(LCMod.cctMisc);
+		setCreativeTab(CBCMod.cct);
 		setUnlocalizedName("lcrecord");
 		recID = subID;
 	}
@@ -82,8 +82,7 @@ public class LCRecord extends ItemRecord {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
-			List par3List) {
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
 		super.getSubItems(par1, par2CreativeTabs, par3List);
 	}
 

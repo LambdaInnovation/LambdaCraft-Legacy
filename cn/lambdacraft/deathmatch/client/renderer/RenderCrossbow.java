@@ -7,11 +7,12 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.client.model.ModelCrossbow;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.client.render.RenderModelItem;
 import cn.weaponmod.api.WMInformation;
+import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.api.information.InformationBullet;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -21,10 +22,10 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class RenderCrossbow extends RenderModelItem {
 
 	public RenderCrossbow() {
-		super(new ModelCrossbow(), LCClientProps.CROSSBOW_PATH);
+		super(new ModelCrossbow(), ClientProps.CROSSBOW_PATH);
 		//教练用debugger实在是太方便了！
 		setOffset(-0.004F, 0.316F, -0.454F);
-		setRotation(0F, 173.95F, 0F);
+		setStdRotation(0F, 173.95F, 0F);
 		setScale(1.65F);
 		this.setEquipOffset(0.906F, -0.364F, 0.058F);
 		this.setInvRotation(-43.450F, -40.556F, 25.936F);
@@ -38,7 +39,7 @@ public class RenderCrossbow extends RenderModelItem {
 			EntityLivingBase entity, ItemRenderType type) {
 		if(entity instanceof EntityPlayer) {
 			
-			InformationBullet inf = (InformationBullet) DMItems.weapon_crossbow.getInformation(item, entity.worldObj);
+			InfWeapon inf = (InfWeapon) DMItems.weapon_crossbow.getInformation(item, entity.worldObj);
 			boolean firstPerson = (entity == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) 
 					&& Minecraft.getMinecraft().currentScreen == null;
 			final float upliftRatio = 1.0F;
@@ -55,9 +56,10 @@ public class RenderCrossbow extends RenderModelItem {
 	
 	@Override
 	protected float getModelAttribute(ItemStack item, EntityLivingBase entity) {
+		/*
 		if(entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			InformationBullet inf = (InformationBullet) WMInformation.getInformation(item, true);
+			InfWeapon inf = (InfWeapon) WMInformation.getInformation(item, true);
 			if(inf != null) {
 				if(inf.isReloading)
 					return 0.0F;
@@ -65,7 +67,7 @@ public class RenderCrossbow extends RenderModelItem {
 					return 1.0F;
 			}
 			return 2.0F;
-		}
+		}*/
 		return 2.0F;
 	}
 

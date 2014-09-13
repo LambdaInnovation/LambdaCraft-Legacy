@@ -15,11 +15,11 @@
 package cn.lambdacraft.deathmatch.block;
 
 import cn.lambdacraft.api.tile.IUseable;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.block.LCBlockContainer;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.block.CBCBlockContainer;
 import cn.lambdacraft.core.client.key.UsingUtils;
-import cn.lambdacraft.core.proxy.LCClientProps;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.core.prop.GeneralProps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -36,7 +36,7 @@ import net.minecraft.world.World;
  * @author Administrator
  * 
  */
-public class BlockHealthCharger extends LCBlockContainer implements IUseable {
+public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
 
 	protected final float WIDTH = 0.3F, HEIGHT = 0.4F, LENGTH = 0.08F;
 
@@ -47,20 +47,20 @@ public class BlockHealthCharger extends LCBlockContainer implements IUseable {
 	public BlockHealthCharger() {
 		super(Material.rock);
 		this.setBlockName("healthcharger");
-		this.setBlockTextureName("lambdacraft:health");
+		this.setBlockTextureName("health");
 		this.setHardness(2.0F);
-		this.setGuiId(LCGeneralProps.GUI_ID_HEALTH);
+		this.setGuiId(GeneralProps.GUI_ID_HEALTH);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int v) {
+	public TileEntity createNewTileEntity(World world, int i) {
 		return new TileHealthCharger();
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return LCClientProps.RENDER_TYPE_EMPTY;
+		return ClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class BlockHealthCharger extends LCBlockContainer implements IUseable {
 		if (tileEntity == null || player.isSneaking()) {
 			return false;
 		}
-		player.openGui(LCMod.instance, LCGeneralProps.GUI_ID_HEALTH, world, x,
+		player.openGui(CBCMod.instance, GeneralProps.GUI_ID_HEALTH, world, x,
 				y, z);
 		return true;
 	}

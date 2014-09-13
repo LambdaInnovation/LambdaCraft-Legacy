@@ -22,7 +22,7 @@ import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenLight;
 import cn.liutils.api.client.model.ITileEntityModel;
 import cn.liutils.api.client.util.RenderUtils;
@@ -90,7 +90,7 @@ public class ModelXenLight extends ModelBase implements ITileEntityModel {
 		GL11.glPushMatrix();
 		GL11.glTranslated(x + 0.5, y + 1.5, z + 0.5);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
-		RenderUtils.loadTexture(LCClientProps.XENLIGHT_PATH);
+		RenderUtils.loadTexture(ClientProps.XENLIGHT_PATH);
 		Shape1.render(scale);
 		//说好的伸缩~
 		GL11.glRotated(12.5 * MathHelper.sin(tile.ticksExisted * 0.07F), 0.1, 1, -0.1);

@@ -6,23 +6,20 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.block.LCBlockContainer;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.block.CBCBlockContainer;
+import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockWeaponCrafter extends LCBlockContainer {
+public class BlockWeaponCrafter extends CBCBlockContainer {
 
 	public IIcon iconSide, iconTop, iconBottom, iconMain;
 
@@ -35,6 +32,7 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 		super(Material.iron);
 		setBlockName("crafter");
 		setHardness(2.0F);
+		setHarvestLevel("pickaxe", 1);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -66,14 +64,16 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 		if (tileEntity == null || player.isSneaking()) {
 			return false;
 		}
-		player.openGui(LCMod.instance, LCGeneralProps.GUI_ID_CRAFTER, world, x,
+		player.openGui(CBCMod.instance, GeneralProps.GUI_ID_CRAFTER, world, x,
 				y, z);
 		return true;
 	}
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
-		dropItems(world, x, y, z);
+		TileWeaponCrafter te = (TileWeaponCrafter) world.getTileEntity(x, y, z);
+		dropItems(world, x, y, z, te.inventory);
+		
 		super.breakBlock(world, x, y, z, par5, par6);
 	}
 
@@ -84,7 +84,8 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 	@Override
 	public void randomDisplayTick(World par1World, int par2, int par3,
 			int par4, Random par5Random) {
-		TileWeaponCrafter te = (TileWeaponCrafter) par1World.getTileEntity(par2, par3, par4);
+		TileWeaponCrafter te = (TileWeaponCrafter) par1World
+				.getTileEntity(par2, par3, par4);
 		if (te.isBurning) {
 			int l = par1World.getBlockMetadata(par2, par3, par4);
 			float f = par2 + 0.5F;
@@ -117,40 +118,6 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 		}
 	}
 
-	private void dropItems(World world, int x, int y, int z) {
-
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (!(tileEntity instanceof IInventory)) {
-			return;
-		}
-		TileWeaponCrafter inventory = (TileWeaponCrafter) tileEntity;
-
-		for (ItemStack item : inventory.inventory) {
-
-			if (item != null && item.stackSize > 0) {
-				float rx = rand.nextFloat() * 0.8F + 0.1F;
-				float ry = rand.nextFloat() * 0.8F + 0.1F;
-				float rz = rand.nextFloat() * 0.8F + 0.1F;
-
-				EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z
-						+ rz, new ItemStack(item.getItem(), item.stackSize,
-						item.getItemDamage()));
-
-				if (item.hasTagCompound()) {
-					entityItem.getEntityItem().setTagCompound(
-							(NBTTagCompound) item.getTagCompound().copy());
-				}
-
-				float factor = 0.05F;
-				entityItem.motionX = rand.nextGaussian() * factor;
-				entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
-				entityItem.motionZ = rand.nextGaussian() * factor;
-				world.spawnEntityInWorld(entityItem);
-				item.stackSize = 0;
-			}
-		}
-	}
-
 	/**
 	 * Called when the block is placed in the world.
 	 */
@@ -178,7 +145,7 @@ public class BlockWeaponCrafter extends LCBlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int g) {
+	public TileEntity createNewTileEntity(World world, int i) {
 		return new TileWeaponCrafter();
 	}
 

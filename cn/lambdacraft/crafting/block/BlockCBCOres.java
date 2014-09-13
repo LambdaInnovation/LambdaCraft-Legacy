@@ -20,8 +20,8 @@ import net.minecraft.block.BlockOre;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.misc.LCAchievements;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.misc.CBCAchievements;
 
 /**
  * @author mkpoli
@@ -33,9 +33,10 @@ public class BlockCBCOres extends BlockOre {
 	public BlockCBCOres(int type) {
 		super();
 		this.type = type;
-		setCreativeTab(LCMod.cctMisc);
+		setCreativeTab(CBCMod.cct);
 		setHardness(type == 0 ? 5.0F : 2.0F);
 		setBlockName(type == 0 ? "uranium" : type == 1 ? "tin" : "copper");
+		this.setHarvestLevel("pickaxe", type == 0 ? 2 : 1);
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class BlockCBCOres extends BlockOre {
 	@Override
 	public void onBlockHarvested(World par1World, int par2, int par3, int par4,
 			int par5, EntityPlayer par6EntityPlayer) {
-		LCAchievements.getAchievement(par6EntityPlayer,
-				LCAchievements.oreAchievements[this.type]);
+		CBCAchievements.getAchievement(par6EntityPlayer,
+				CBCAchievements.oreAchievements[this.type]);
 	}
 }

@@ -14,7 +14,7 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -64,7 +64,7 @@ public class TileGeneratorFire extends TileGeneratorBase implements IInventory {
 			int rev = sendEnergy(all);
 			currentEnergy -= (all - rev);
 			if (slots[1] != null) {
-				currentEnergy -= ((ICustomEnItem) slots[1].getItem()).charge(
+				currentEnergy -= ((ISpecialElectricItem) slots[1].getItem()).getManager(slots[1]).charge(
 						slots[1], currentEnergy, 2, false, false);
 			}
 		}
@@ -110,18 +110,7 @@ public class TileGeneratorFire extends TileGeneratorBase implements IInventory {
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		for (int i = 0; i < slots.length; i++) {
-			if (slots[i] == null)
-				continue;
-			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
-			nbt.setByte("count" + i, (byte) slots[i].stackSize);
-			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
-		}
-	}
-
-	@Override
-	public int getMaxEnergyOutput() {
-		return 5;
+		
 	}
 
 	@Override
@@ -165,19 +154,30 @@ public class TileGeneratorFire extends TileGeneratorBase implements IInventory {
 	public void setInventorySlotContents(int i, ItemStack itemstack) {
 		slots[i] = itemstack;
 	}
+
+	@Override
+	public String getInventoryName() {
+		return "cbc.tile.genfire";
+	}
+	
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
-
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
 	}
 
 	@Override
-	public String getInventoryName() {
-		return "cbc.tile.genfire";
+	public double getOfferedEnergy() {
+		return Math.max(5, currentEnergy);
+	}
+
+	@Override
+	public void drawEnergy(double amount) {
+		currentEnergy -= amount;
+		if(currentEnergy < 0) currentEnergy = 0;
 	}
 
 	@Override
@@ -186,7 +186,8 @@ public class TileGeneratorFire extends TileGeneratorBase implements IInventory {
 	}
 
 	@Override
-	public void openInventory() {}
+	public void openInventory() {
+	}
 
 	@Override
 	public void closeInventory() {

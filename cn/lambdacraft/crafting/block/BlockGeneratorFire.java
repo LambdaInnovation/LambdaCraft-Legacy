@@ -23,7 +23,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.core.block.BlockElectricalBase;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.crafting.block.tile.TileGeneratorFire;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -45,7 +45,7 @@ public class BlockGeneratorFire extends BlockElectricalBase {
 		super(Material.rock);
 		setHardness(2.0F);
 		setTileType(TileGeneratorFire.class);
-		setGuiId(LCGeneralProps.GUI_ID_GENFIRE);
+		setGuiId(GeneralProps.GUI_ID_GENFIRE);
 		setBlockName("genFire");
 	}
 

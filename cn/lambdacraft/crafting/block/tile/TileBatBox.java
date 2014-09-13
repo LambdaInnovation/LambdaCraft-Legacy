@@ -14,15 +14,15 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
+import ic2.api.energy.tile.IEnergySink;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.api.energy.tile.IEnergySink;
+import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.core.util.EnergyUtils;
 import cn.lambdacraft.crafting.register.CBCBlocks;
 
@@ -59,9 +59,7 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 			return;
 
 		// emit the energy frequently
-		int amt = this.getMaxEnergyOutput();
-		if (amt > currentEnergy)
-			amt = currentEnergy;
+		int amt = Math.min(32, currentEnergy);
 		amt -= this.sendEnergy(amt);
 		currentEnergy -= amt;
 
@@ -79,9 +77,9 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 		// charge the chargeable in slot1
 		if (currentEnergy > 0) {
 			ItemStack sl = slots[1];
-			if (sl != null && sl.getItem() instanceof ICustomEnItem) {
-				ICustomEnItem item = (ICustomEnItem) sl.getItem();
-				currentEnergy -= item.charge(sl, currentEnergy, type, false,
+			if (sl != null && sl.getItem() instanceof ISpecialElectricItem) {
+				ISpecialElectricItem item = (ISpecialElectricItem) sl.getItem();
+				currentEnergy -= item.getManager(sl).charge(sl, currentEnergy, type, false,
 						false);
 			}
 		}
@@ -121,18 +119,15 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 	}
 
 	@Override
-	public int injectEnergy(LCDirection paramDirection, int paramInt) {
-		this.currentEnergy += paramInt;
-		if (currentEnergy > maxStorage) {
-			int amt = currentEnergy - maxStorage;
+	public double injectEnergyUnits(ForgeDirection paramDirection, double amount) {
+		this.currentEnergy += amount;
+		if (currentEnergy > maxStorage) 
 			currentEnergy = maxStorage;
-			return amt;
-		}
 		return 0;
 	}
 
 	@Override
-	public int demandsEnergy() {
+	public double demandedEnergyUnits() {
 		return getMaxEnergy() - getCurrentEnergy();
 	}
 
@@ -148,11 +143,6 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 	 */
 	public int getMaxEnergy() {
 		return maxStorage;
-	}
-	
-	@Override
-	public int getMaxEnergyOutput() {
-		return type == 0 ? 32 : 128;
 	}
 	
 	@Override
@@ -192,13 +182,19 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 	}
 
 	@Override
+	public String getInventoryName() {
+		return (this.type == 0 ? CBCBlocks.storageS.getUnlocalizedName()
+				: CBCBlocks.storageL.getUnlocalizedName()) + ".name";
+	}
+
+	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
 
 	@Override
-	public boolean emitEnergyTo(TileEntity emTileEntity, LCDirection emDirection) {
-		return emDirection.toForgeDirection().ordinal() == this.blockMetadata;
+	public boolean emitsEnergyTo(TileEntity emTileEntity, ForgeDirection emDirection) {
+		return emDirection.ordinal() == this.blockMetadata;
 	}
 
 	@Override
@@ -214,9 +210,9 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 
 	@Override
 	public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
+			ForgeDirection paramDirection) {
 		return currentEnergy < maxStorage
-				&& paramDirection.toForgeDirection().ordinal() != this.blockMetadata;
+				&& paramDirection.ordinal() != this.blockMetadata;
 	}
 
 	@Override
@@ -225,9 +221,13 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 	}
 
 	@Override
-	public String getInventoryName() {
-		return (this.type == 0 ? CBCBlocks.storageS.getUnlocalizedName()
-				: CBCBlocks.storageL.getUnlocalizedName()) + ".name";
+	public double getOfferedEnergy() {
+		return Math.min(currentEnergy, type == 1 ? 32 : 128);
+	}
+
+	@Override
+	public void drawEnergy(double amount) {
+		if(amount > 0) currentEnergy -= amount;
 	}
 
 	@Override
@@ -236,8 +236,10 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 	}
 
 	@Override
-	public void openInventory() {}
+	public void openInventory() {
+	}
 
 	@Override
-	public void closeInventory() {}
+	public void closeInventory() {
+	}
 }

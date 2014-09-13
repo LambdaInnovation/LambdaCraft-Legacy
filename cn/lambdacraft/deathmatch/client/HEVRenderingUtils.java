@@ -16,12 +16,15 @@ package cn.lambdacraft.deathmatch.client;
 
 import java.util.HashMap;
 
+import javax.swing.Icon;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
@@ -30,8 +33,8 @@ import org.lwjgl.opengl.GL11;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.api.hud.IHudTipProvider;
 import cn.lambdacraft.api.hud.ISpecialCrosshair;
-import cn.lambdacraft.core.LCPlayer;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.CBCPlayer;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
 import cn.liutils.api.client.util.HudUtils;
 import cn.liutils.api.client.util.RenderUtils;
@@ -60,7 +63,7 @@ public class HEVRenderingUtils {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         GL11.glColor4f(1.0F, 0.5F, 0.0F, 0.6F);
-        engine.bindTexture(LCClientProps.HEV_HUD_PATH);
+        engine.bindTexture(ClientProps.HEV_HUD_PATH);
         
         GL11.glPushMatrix();
         
@@ -100,7 +103,7 @@ public class HEVRenderingUtils {
         
         //Other section
         drawArmorTip(player, engine, k, l);
-        if(LCPlayer.drawArmorTip)
+        if(CBCPlayer.drawArmorTip)
         	drawWeaponTip(player, engine, k, l);
  
         engine.bindTexture(engine.getResourceLocation(1)); 
@@ -117,14 +120,14 @@ public class HEVRenderingUtils {
 				h = ((ISpecialCrosshair)stack.getItem()).getHalfWidth();
 				int i = ((ISpecialCrosshair)stack.getItem()).getCrosshairID(stack);
 				if(i >= 0)
-					xhairPath = LCClientProps.xhair_path + "xhair" +  i + ".png";
+					xhairPath = ClientProps.xhair_path + "xhair" +  i + ".png";
 			} else
-				xhairPath = LCClientProps.getCrosshairPath(stack.getItem().getUnlocalizedName(stack));
+				xhairPath = ClientProps.getCrosshairPath(stack.getItem().getUnlocalizedName(stack));
 			
 			if(xhairPath == null)
-				xhairPath = LCClientProps.DEFAULT_XHAIR_PATH;
+				xhairPath = ClientProps.DEFAULT_XHAIR_PATH;
 		} else {
-			xhairPath = LCClientProps.DEFAULT_XHAIR_PATH;
+			xhairPath = ClientProps.DEFAULT_XHAIR_PATH;
 		}
 		GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_BLEND);
@@ -134,7 +137,7 @@ public class HEVRenderingUtils {
 		RenderUtils.loadTexture(xhairPath);
 		Tessellator t = Tessellator.instance;
         t.startDrawingQuads();
-        t.setColorRGBA(LCClientProps.xHairR, LCClientProps.xHairG, LCClientProps.xHairB, 255);
+        t.setColorRGBA(ClientProps.xHairR, ClientProps.xHairG, ClientProps.xHairB, 255);
         t.addVertexWithUV(par1 + 0, par2 + 2*h, -90, 0, 1);
         t.addVertexWithUV(par1 + 2*h, par2 + 2*h, -90, 1, 1);
         t.addVertexWithUV(par1 + 2*h, par2 + 0, -90, 1, 0);
@@ -155,7 +158,7 @@ public class HEVRenderingUtils {
 			ArmorHEV hev;
 			if(is != null && is.getItem() instanceof ArmorHEV) {
 				hev = (ArmorHEV) is.getItem();
-				int energy = hev.discharge(is, Integer.MAX_VALUE, 0, true, true);
+				int energy = hev.getManager(is).discharge(is, Integer.MAX_VALUE, 0, true, true);
 				int heightToDraw = energy * 16 / is.getMaxDamage();
 				int height = l - 65 - i * 16;
 				if (is.getItemSpriteNumber() == 0) {
@@ -166,7 +169,7 @@ public class HEVRenderingUtils {
 				//xOffset = (int) (xOffset * 0.7);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.9F);
 				HudUtils.drawTexturedModelRectFromIcon(tx + xOffset, height, hev.getIcon(is, 0), 16, 16);
-				renderEngine.bindTexture(LCClientProps.HEV_HUD_PATH);
+				renderEngine.bindTexture(ClientProps.HEV_HUD_PATH);
 				
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
 				HudUtils.drawTexturedModalRect(tx2 + xOffset, height + 16 - heightToDraw, 286, 64, 8, 16, 34, 64); //overlay
@@ -206,7 +209,7 @@ public class HEVRenderingUtils {
 				HudUtils.drawTexturedModelRectFromIcon(k - 30, startHeight, icon, 20, 20);
 				GL11.glColor4f(1.0F, 0.5F, 0.0F, 0.6F);
 				//Bind the texture by Rikka0_0
-				RenderUtils.loadTexture(LCClientProps.HEV_HUD_PATH);
+				RenderUtils.loadTexture(ClientProps.HEV_HUD_PATH);
 			}
 			drawTipStringAt(s, width, startHeight);
 			startHeight += 18;

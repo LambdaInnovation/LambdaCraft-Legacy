@@ -51,22 +51,22 @@ public class UsingUtils {
 	/**
 	 * 在键位被按下的时候调用方块的使用函数。 **内部函数，一般不建议在你的方块类中调用。**
 	 * 
-	 * @param bPos
+	 * @param block
 	 *            要调用的方块
 	 * @param world
 	 * @param player
 	 */
-	public static void useBlock(BlockPos bPos, World world, EntityPlayer player) {
-		if (!(bPos.block instanceof IUseable))
+	public static void useBlock(BlockPos block, World world, EntityPlayer player) {
+		if (!(block.block instanceof IUseable))
 			return;
-		if (bPos.equals(getCurrentUsingBlock(world, player))) {
-			if (player.getDistance(bPos.x, bPos.y, bPos.z) > 8.0) {
+		if (block.equals(getCurrentUsingBlock(world, player))) {
+			if (player.getDistance(block.x, block.y, block.z) > 8.0) {
 				stopUsingBlock(world, player);
 			}
 			return;
 		}
-		((IUseable) bPos.block).onBlockUse(world, player,
-				bPos.x, bPos.y, bPos.z);
+		((IUseable) block.block).onBlockUse(world, player,
+				block.x, block.y, block.z);
 	}
 
 	/**
@@ -76,10 +76,10 @@ public class UsingUtils {
 	 * @param player
 	 */
 	public static void stopUsingBlock(World world, EntityPlayer player) {
-		BlockPos pos = getCurrentUsingBlock(world, player);
-		if (pos != null) {
-			((IUseable) pos.block).onBlockStopUsing(
-					world, player, pos.x, pos.y, pos.z);
+		BlockPos block = getCurrentUsingBlock(world, player);
+		if (block != null) {
+			((IUseable) block.block).onBlockStopUsing(
+					world, player, block.x, block.y, block.z);
 		}
 		NBTTagCompound nbt = player.getEntityData();
 		nbt.setInteger("usingX", -1);

@@ -24,7 +24,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.mob.entity.EntityVortigauntRay;
 import cn.liutils.api.client.util.RenderUtils;
 
@@ -70,7 +70,7 @@ public class RenderVortigauntRay extends Render {
 		GL11.glTranslatef((float) d0, (float) d1, (float) d2);
 		// GL11.glRotatef(angle, 1.0F, 0, 0);
 		int rand = RenderUtils.rand.nextInt(3);
-		Minecraft.getMinecraft().renderEngine.bindTexture(LCClientProps.VORTIGAUNT_RAY_PATH[rand]);
+		Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.VORTIGAUNT_RAY_PATH[rand]);
 
 		
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
@@ -99,7 +99,6 @@ public class RenderVortigauntRay extends Render {
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		// TODO 自动生成的方法存根
 		return null;
 	}
 

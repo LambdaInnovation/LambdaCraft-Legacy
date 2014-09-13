@@ -14,17 +14,17 @@
  */
 package cn.lambdacraft.crafting.block.container;
 
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.crafting.block.tile.TileGeneratorSolar;
-import cn.lambdacraft.deathmatch.block.container.SlotElectricItem;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import cn.lambdacraft.crafting.block.tile.TileGeneratorSolar;
+import cn.lambdacraft.deathmatch.block.container.SlotElectricItem;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -89,7 +89,7 @@ public class ContainerGeneratorSolar extends Container {
 
 			// 将玩家物品栏中的物品放到TileEntity中
 			if (slot >= 1) {
-				if (!(stackInSlot.getItem() instanceof ICustomEnItem))
+				if (!(stackInSlot.getItem() instanceof ISpecialElectricItem))
 					return null;
 				if (!this.mergeItemStack(stackInSlot, 0, 1, true)) {
 					return null;

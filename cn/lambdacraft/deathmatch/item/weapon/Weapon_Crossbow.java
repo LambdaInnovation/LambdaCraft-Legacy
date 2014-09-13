@@ -1,14 +1,15 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.ISpecialCrosshair;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityCrossbowArrow;
 import cn.weaponmod.api.WMInformation;
@@ -33,7 +34,7 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 		super(CBCItems.ammo_bow);
 
 		setUnlocalizedName("weapon_crossbow");
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 		setMaxStackSize(1);
 		setMaxDamage(6);
 		setNoRepair();

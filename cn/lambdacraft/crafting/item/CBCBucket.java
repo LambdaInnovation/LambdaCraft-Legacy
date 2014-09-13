@@ -17,9 +17,8 @@ package cn.lambdacraft.crafting.item;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 
 /**
  * @author WeAthFolD
@@ -33,9 +32,9 @@ public class CBCBucket extends ItemBucket {
 	 * @param par1
 	 * @param flowLiquidID
 	 */
-	public CBCBucket(Block flowLiquidID, String unlocalizedName) {
-		super(flowLiquidID);
-		this.setCreativeTab(LCMod.cctMisc);
+	public CBCBucket(Block flowLiquid, String unlocalizedName) {
+		super(flowLiquid);
+		this.setCreativeTab(CBCMod.cct);
 		this.setContainerItem(Items.bucket);
 		this.setUnlocalizedName(unlocalizedName);
 		name = unlocalizedName;

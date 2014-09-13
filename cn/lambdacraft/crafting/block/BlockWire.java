@@ -17,7 +17,7 @@ package cn.lambdacraft.crafting.block;
 import java.util.List;
 
 import cn.lambdacraft.core.block.BlockElectricalBase;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.block.tile.TileWire;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -38,9 +38,9 @@ public class BlockWire extends BlockElectricalBase {
 
 	public BlockWire() {
 		super(Material.cake);
-		this.setBlockTextureName("wire");
+		this.setBlockTextureName("lambdacraft:wire");
 		this.setStepSound(Block.soundTypeCloth);
-		this.setBlockName("lambdacraft:wire");
+		this.setBlockName("wire");
 		this.setHardness(1.0F);
 		this.setGuiId(-1);
 		this.setTileType(TileWire.class);
@@ -49,7 +49,7 @@ public class BlockWire extends BlockElectricalBase {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return LCClientProps.RENDER_TYPE_EMPTY;
+		return ClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	@Override

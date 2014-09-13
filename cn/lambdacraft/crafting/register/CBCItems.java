@@ -1,9 +1,12 @@
 package cn.lambdacraft.crafting.register;
 
+import ic2.api.item.ISpecialElectricItem;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+import net.minecraft.block.Block;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -18,13 +21,11 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.item.LCGenericItem;
+import cn.lambdacraft.core.item.CBCGenericItem;
 import cn.lambdacraft.crafting.item.Bullet_9mm;
 import cn.lambdacraft.crafting.item.Bullet_steelbow;
 import cn.lambdacraft.crafting.item.HLSpray;
 import cn.lambdacraft.crafting.item.IngotUranium;
-import cn.lambdacraft.crafting.item.ItemBullet;
 import cn.lambdacraft.crafting.item.ItemMaterial;
 import cn.lambdacraft.crafting.item.ItemMaterial.EnumMaterial;
 import cn.lambdacraft.crafting.item.ItemSpray;
@@ -63,17 +64,17 @@ public class CBCItems {
 	public static Ammo_rpg ammo_rpg;
 	public static ItemAmmo ammo_argrenade, ammo_shotgun;
 
-	public static ItemBullet bullet_9mm, bullet_steelbow;
+	public static Item bullet_9mm, bullet_steelbow;
 
-	public static LCGenericItem ingotSteel;
+	public static CBCGenericItem ingotSteel;
 
 	public static ItemMaterial materials;
-	public static LCGenericItem lambdaChip;
+	public static CBCGenericItem lambdaChip;
 	public static SteelBar ironBar;
 	public static IngotUranium ingotUranium;
 	public static LCRecord halfLife01, halfLife02, halfLife03;
 	public static ItemSpray spray1, spray2;
-	public static HLSpray spray;
+	public static HLSpray spray3;
 	public static Item tin, copper, chip, xenCrystal;
 
 	public static ItemBattery battery;
@@ -100,10 +101,10 @@ public class CBCItems {
 		materials = new ItemMaterial();
 
 		ironBar = new SteelBar();
-		lambdaChip = new LCGenericItem().setIAndU("lambdachip");
+		lambdaChip = new CBCGenericItem().setIAndU("lambdachip");
 		
 		ingotUranium = new IngotUranium();
-		ingotSteel = new LCGenericItem().setIAndU("steel");
+		ingotSteel = new CBCGenericItem().setIAndU("steel");
 
 		halfLife01 = new LCRecord("hla", 0);
 		halfLife02 = new LCRecord("hlb", 1);
@@ -112,41 +113,14 @@ public class CBCItems {
 		spray1 = new ItemSpray(0);
 		spray2 = new ItemSpray(1);
 		
-		spray = new HLSpray();
+		spray3 = new HLSpray();
 
-		tin = new LCGenericItem().setIAndU("tin");
-		copper = new LCGenericItem().setIAndU("copper");
-		chip = new LCGenericItem().setIAndU("chip");
-		xenCrystal = new LCGenericItem().setIAndU("xencrystal");
+		tin = new CBCGenericItem().setIAndU("tin");
+		copper = new CBCGenericItem().setIAndU("copper");
+		chip = new CBCGenericItem().setIAndU("chip");
+		xenCrystal = new CBCGenericItem().setIAndU("xencrystal");
 		
 		battery = new ItemBattery();
-		
-		GameRegistry.registerItem(ammo_uranium, "ammo_uranium");
-		GameRegistry.registerItem(ammo_9mm, "ammo_9mm");
-		GameRegistry.registerItem(ammo_9mm2, "ammo_9mm2");
-		GameRegistry.registerItem(ammo_357, "ammo_357");
-		GameRegistry.registerItem(ammo_bow, "ammo_bow");
-		GameRegistry.registerItem(ammo_rpg, "ammo_rpg");
-		GameRegistry.registerItem(ammo_argrenade, "ammo_argrenade");
-		GameRegistry.registerItem(ammo_shotgun, "ammo_shotgun");
-		GameRegistry.registerItem(bullet_9mm, "bullet_9mm");
-		GameRegistry.registerItem(bullet_steelbow, "bullet_steelbow");
-		GameRegistry.registerItem(materials, "materials");
-		GameRegistry.registerItem(ironBar, "ironBar");
-		GameRegistry.registerItem(lambdaChip, "lambdaChip");
-		GameRegistry.registerItem(ingotUranium, "ingotUranium");
-		GameRegistry.registerItem(ingotSteel, "ingotSteel");
-		GameRegistry.registerItem(halfLife01, "halfLife01");
-		GameRegistry.registerItem(halfLife02, "halfLife02");
-		GameRegistry.registerItem(halfLife03, "halfLife03");
-		GameRegistry.registerItem(spray1, "spray1");
-		GameRegistry.registerItem(spray2, "spray2");
-		GameRegistry.registerItem(spray, "spray");
-		GameRegistry.registerItem(tin, "lc_tin");
-		GameRegistry.registerItem(copper, "lc_copper");
-		GameRegistry.registerItem(chip, "lc_chip");
-		GameRegistry.registerItem(xenCrystal, "xenCrystal");
-		GameRegistry.registerItem(battery, "lc_battery");
 	}
 
 	/**
@@ -196,7 +170,7 @@ public class CBCItems {
 				CBCBlocks.genLava), iSbucketEmpty = new ItemStack(
 				Items.bucket), iSgenSolar = new ItemStack(
 				CBCBlocks.genSolar), iSnetherQuartz = new ItemStack(
-				Items.nether_star), sfspieye = new ItemStack(
+				Items.quartz), sfspieye = new ItemStack(
 				Items.fermented_spider_eye), srotten = new ItemStack(
 				Items.rotten_flesh), smagma = new ItemStack(Items.magma_cream), sendereye = new ItemStack(
 				Items.ender_eye), smedkit = new ItemStack(DMItems.medkit);
@@ -241,8 +215,9 @@ public class CBCItems {
 				new ItemStack(CBCMobItems.sentrySyncer, 2),
 				new ItemStack(spray1),
 				new ItemStack(spray2),
-				new ItemStack(spray)
+				new ItemStack(spray3)
 		};
+		addOreRecipes(output, input);
 		
 		Object[][] input2 = {
 				{ " A ", "BCB", "DED", 'A', iSstorageS, 'B', iSglass, 'C', "blockRefinedIron", 'D', iSblockLapis, 'E', iSfurnace },
@@ -252,7 +227,6 @@ public class CBCItems {
 		
 		ItemStack[] output2 = { iSgenFire, iSgenLava, iSgenSolar };
 		addOreRecipes(output2, input2);
-		addOreRecipes(output, input);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife01), lambdaChip, Items.diamond);
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife02), lambdaChip, Items.emerald);
@@ -275,7 +249,7 @@ public class CBCItems {
 				new ShapelessOreRecipe(materials.newStack(2, EnumMaterial.TECH), iSmaterials_1_0, iSdiamond, iSlambdaChip, iSlightStoneDust),
 				new RecipeRepair(spray1, iSredstone),
 				new RecipeRepair(spray2, iSredstone),
-				new RecipeRepair(spray, iSlightStoneDust)
+				new RecipeRepair(spray3, iSlightStoneDust)
 		};
 		for(IRecipe r : recipes)
 			GameRegistry.addRecipe(r);
@@ -295,7 +269,7 @@ public class CBCItems {
 				new WeightedRandomChestContent(new ItemStack(halfLife02), 1, 1, 5),
 				new WeightedRandomChestContent(new ItemStack(halfLife03), 1, 1, 5),
 				new WeightedRandomChestContent(new ItemStack(ironBar), 3, 8, 50),
-				new WeightedRandomChestContent(new ItemStack(DMItems.physExcalibur), 1, 1, 1),
+				new WeightedRandomChestContent(new ItemStack(DMItems.physCalibur), 1, 1, 1),
 				new WeightedRandomChestContent(new ItemStack(DMItems.weapon_crowbar_el), 1, 1, 10)
 		};
 		for(WeightedRandomChestContent gen : gens_dungeon) {
@@ -305,9 +279,9 @@ public class CBCItems {
 		
 		WeightedRandomChestContent gens_desert[] = {
 				new WeightedRandomChestContent(new ItemStack(ironBar), 3, 8, 50),
-				new WeightedRandomChestContent(new ItemStack(DMItems.physExcalibur), 1, 1, 1),
+				new WeightedRandomChestContent(new ItemStack(DMItems.physCalibur), 1, 1, 1),
 				new WeightedRandomChestContent(new ItemStack(DMItems.weapon_crowbar_el), 1, 1, 10),
-				new WeightedRandomChestContent(new ItemStack(spray), 1, 1, 4),
+				new WeightedRandomChestContent(new ItemStack(spray3), 1, 1, 4),
 				new WeightedRandomChestContent(new ItemStack(lambdaChip), 2, 5, 3)
 		};
 		for(WeightedRandomChestContent gen : gens_desert) {
@@ -374,10 +348,10 @@ public class CBCItems {
 			ItemStack in = findIdentifyStack(inv);
 			if (in == null)
 				return null;
-			ICustomEnItem item = (ICustomEnItem) in.getItem();
-			ICustomEnItem item2 = (ICustomEnItem) is.getItem();
-			int energy = item.discharge(in, Integer.MAX_VALUE, 5, true, true);
-			item2.charge(is, energy, 5, true, false);
+			ISpecialElectricItem item = (ISpecialElectricItem) in.getItem();
+			ISpecialElectricItem item2 = (ISpecialElectricItem) is.getItem();
+			int energy = item.getManager(in).discharge(in, Integer.MAX_VALUE, 5, true, true);
+			item2.getManager(is).charge(is, energy, 5, true, false);
 			return is;
 		}
 

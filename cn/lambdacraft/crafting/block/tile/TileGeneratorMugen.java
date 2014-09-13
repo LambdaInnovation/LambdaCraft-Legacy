@@ -14,8 +14,8 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
-import cn.lambdacraft.api.LCDirection;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * @author WeAthFolD
@@ -35,13 +35,18 @@ public class TileGeneratorMugen extends TileGeneratorBase {
 	}
 
 	@Override
-	public boolean emitEnergyTo(TileEntity emTileEntity, LCDirection emDirection) {
+	public boolean emitsEnergyTo(TileEntity emTileEntity, ForgeDirection emDirection) {
 		return true;
 	}
 
 	@Override
-	public int getMaxEnergyOutput() {
-		return 128;
+	public double getOfferedEnergy() {
+		return 256;
+	}
+
+	@Override
+	public void drawEnergy(double amount) {
+		
 	}
 
 }

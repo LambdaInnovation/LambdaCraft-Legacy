@@ -10,15 +10,14 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -34,9 +33,8 @@ public class BlockTripmine extends BlockContainer {
 	public static final float HEIGHT = 0.15F, WIDTH = 0.28F, RAY_RAD = 0.025F;
 
 	public BlockTripmine() {
-
 		super(Material.circuits);
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 		setTickRandomly(true);
 		setBlockName("tripmine");
 	}
@@ -65,8 +63,7 @@ public class BlockTripmine extends BlockContainer {
 	public void updateRayRange(World par1World, int par2, int par3, int par4) {
 		Motion3D begin = new Motion3D(par2, par3, par4, 0, 0, 0);
 		int meta = par1World.getBlockMetadata(par2, par3, par4);
-		TileTripmine tileEntity = (TileTripmine) par1World.getTileEntity(
-				par2, par3, par4);
+		TileTripmine tileEntity = (TileTripmine) par1World.getTileEntity(par2, par3, par4);
 		if (tileEntity == null)
 			return;
 		if (meta == 5)
@@ -78,8 +75,8 @@ public class BlockTripmine extends BlockContainer {
 		else
 			begin.motionZ = -1.0;
 		Motion3D end = new Motion3D(begin).move(20.0);
-		Vec3 vec1 = begin.asVec3(par1World).addVector(0.0, 0.5, 0.0), vec2 = end
-				.asVec3(par1World).addVector(0.0, 0.5, 0.0);
+		Vec3 vec1 = begin.getPosVec(par1World).addVector(0.0, 0.5, 0.0), vec2 = end
+				.getPosVec(par1World).addVector(0.0, 0.5, 0.0);
 		MovingObjectPosition result = par1World.rayTraceBlocks(vec1, vec2);
 		if (result == null) {
 			tileEntity.setEndCoords((int) end.posX, (int) end.posY,
@@ -129,18 +126,13 @@ public class BlockTripmine extends BlockContainer {
 		int i = (var10 == 3 || var10 == 1) ? par2 : par4;
 		super.breakBlock(par1World, par2, par3, par4, par5, par6);
 		par1World.setBlockToAir(par2, par3, par4);
-		WeaponHelper.Explode(par1World, null, 1.5F, 3.5F, par2, par3, par4,
+		WeaponHelper.Explode(par1World, null, 2.5F, 3.5F, par2, par3, par4,
 				40, 0.5D, 1.0F);
 	}
 
 	@Override
 	public int quantityDropped(Random par1Random) {
 		return 0;
-	}
-
-	@Override
-	public Item getItemDropped(int par1, Random par2Random, int par3) {
-		return null;
 	}
 
 	@Override
@@ -225,7 +217,7 @@ public class BlockTripmine extends BlockContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return LCClientProps.RENDER_TYPE_EMPTY;
+		return ClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	@Override
@@ -239,7 +231,7 @@ public class BlockTripmine extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int v) {
+	public TileEntity createNewTileEntity(World world, int i) {
 		return new TileTripmine();
 	}
 

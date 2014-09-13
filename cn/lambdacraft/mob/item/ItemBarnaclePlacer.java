@@ -32,7 +32,15 @@ public class ItemBarnaclePlacer extends LCMobSpawner {
 	 */
 	public ItemBarnaclePlacer() {
 		super(EntityBarnacle.class, "barnacle");
-		setTextureName("lambdacraft:egg0");
+	}
+
+	/**
+	 * @param id
+	 * @param entityClass
+	 * @param name
+	 */
+	public ItemBarnaclePlacer(Class<? extends EntityLiving> entityClass, String name) {
+		super(entityClass, name);
 	}
 	
 	@Override

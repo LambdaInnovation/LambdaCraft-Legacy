@@ -20,7 +20,7 @@ import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.block.container.ContainerGeneratorSolar;
 import cn.lambdacraft.crafting.block.tile.TileGeneratorSolar;
 import cn.lambdacraft.crafting.register.CBCBlocks;
@@ -72,7 +72,7 @@ public class GuiGenSolar extends LIGuiContainer {
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		String guiName = CBCBlocks.genSolar.getLocalizedName();
-		this.fontRendererObj.drawString(EnumChatFormatting.GOLD + guiName, 7, 7,
+		this.fontRenderer.drawString(EnumChatFormatting.GOLD + guiName, 7, 7,
 				0xff9944);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
@@ -83,7 +83,7 @@ public class GuiGenSolar extends LIGuiContainer {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		bindTexture(LCClientProps.GUI_GENSOLAR_PATH);
+		bindTexture(ClientProps.GUI_GENSOLAR_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
@@ -91,7 +91,7 @@ public class GuiGenSolar extends LIGuiContainer {
 		len = te.currentEnergy * 48 / te.maxStorage;
 		if (len > 0)
 			this.drawTexturedModalRect(x + 24, y + 52, 174, 70, len, 7);
-		if (te.getWorldObj().isDaytime()) {
+		if (te.worldObj.isDaytime()) {
 			this.drawTexturedModalRect(x + 13, y + 19, 173, 0, 60, 30);
 			this.drawTexturedModalRect(x + 86, y + 44, 186, 9, 5, 5);
 		} else {

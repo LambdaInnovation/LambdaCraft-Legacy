@@ -14,11 +14,9 @@
  */
 package cn.lambdacraft.crafting.block.tile;
 
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.api.energy.item.IEnItem;
+import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -67,11 +65,6 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 	}
 
 	@Override
-	public int getMaxEnergyOutput() {
-		return 5;
-	}
-
-	@Override
 	public int getSizeInventory() {
 		return 2;
 	}
@@ -91,7 +84,7 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 		if (i == 0)
 			return true;
 		else
-			return (itemstack.getItem() instanceof IEnItem);
+			return (itemstack.getItem() instanceof ISpecialElectricItem);
 	}
 
 	@Override
@@ -106,15 +99,7 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		for (int i = 0; i < slots.length; i++) {
-			short id = nbt.getShort("id" + i), damage = nbt.getShort("damage"
-					+ i);
-			byte count = nbt.getByte("count" + i);
-			if (id == 0)
-				continue;
-			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
-			slots[i] = is;
-		}
+		slots = this.restoreInventory(nbt, "inv", slots.length);
 	}
 
 	@Override
@@ -140,8 +125,8 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 		}
 		isEmitting = false;
 
-		if (currentEnergy > 0 && this.slots[0] != null && slots[0].getItem() instanceof ICustomEnItem) {
-			currentEnergy -= ((ICustomEnItem) slots[0].getItem()).charge(slots[0], currentEnergy, 1, false, false);
+		if (currentEnergy > 0 && this.slots[0] != null && slots[0].getItem() instanceof ISpecialElectricItem) {
+			currentEnergy -= ((ISpecialElectricItem) slots[0].getItem()).getManager(slots[0]).charge(slots[0], currentEnergy, 1, false, false);
 		}
 	}
 
@@ -151,13 +136,17 @@ public class TileGeneratorSolar extends TileGeneratorBase implements IInventory 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		for (int i = 0; i < slots.length; i++) {
-			if (slots[i] == null)
-				continue;
-			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
-			nbt.setByte("count" + i, (byte) slots[i].stackSize);
-			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
-		}
+		this.storeInventory(nbt, slots, "inv");
+	}
+
+	@Override
+	public double getOfferedEnergy() {
+		return Math.min(currentEnergy, 32);
+	}
+
+	@Override
+	public void drawEnergy(double amount) {
+		currentEnergy -= amount;
 	}
 
 	@Override

@@ -16,15 +16,12 @@ package cn.lambdacraft.crafting.block.tile;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
-import cn.lambdacraft.core.block.LCTileEntity;
+import cn.lambdacraft.core.block.CBCTileEntity;
 import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.recipe.RecipeCrafter;
 import cn.lambdacraft.crafting.recipe.RecipeRepair;
@@ -37,7 +34,7 @@ import cn.weaponmod.api.WeaponHelper;
  * 
  * @author WeAthFolD
  */
-public class TileWeaponCrafter extends LCTileEntity implements IInventory {
+public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 
 	/**
 	 * 最大存储热量。
@@ -51,7 +48,6 @@ public class TileWeaponCrafter extends LCTileEntity implements IInventory {
 	public int heat, burnTimeLeft, maxBurnTime;
 	
 	public int heatForRendering = 0;
-	@SideOnly(Side.CLIENT)
 	public boolean isBuffering = false;
 	
 	public final int BUFFER_SPEED = 20;
@@ -64,7 +60,6 @@ public class TileWeaponCrafter extends LCTileEntity implements IInventory {
 	public boolean isLoad = false;
 	public int tickUpdate = 0;
 
-	@SideOnly(Side.CLIENT)
 	public int heatRequired = 0;
 
 	/**
@@ -83,7 +78,8 @@ public class TileWeaponCrafter extends LCTileEntity implements IInventory {
 		if (!isLoad) {
 			if (blockType == null)
 				return;
-			isAdvanced = !(this.blockType == CBCBlocks.weaponCrafter);
+			isAdvanced = this.blockType == CBCBlocks.weaponCrafter ? false
+					: true;
 			this.maxHeat = isAdvanced ? 7000 : 4000;
 			this.writeRecipeInfoToSlot();
 			isLoad = true;
@@ -226,6 +222,7 @@ public class TileWeaponCrafter extends LCTileEntity implements IInventory {
 		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
 				zCoord + 0.5) <= 64;
 	}
+
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return true;
@@ -245,15 +242,7 @@ public class TileWeaponCrafter extends LCTileEntity implements IInventory {
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		for (int i = 0; i < 20; i++) {
-			short id = nbt.getShort("id" + i), damage = nbt.getShort("damage"
-					+ i);
-			byte count = nbt.getByte("count" + i);
-			if (id == 0)
-				continue;
-			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
-			inventory[i] = is;
-		}
+		inventory = restoreInventory(nbt, "inv", 20);
 		this.page = nbt.getByte("page");
 		this.scrollFactor = nbt.getShort("scroll");
 	}
@@ -264,13 +253,7 @@ public class TileWeaponCrafter extends LCTileEntity implements IInventory {
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		for (int i = 0; i < 20; i++) {
-			if (inventory[i] == null)
-				continue;
-			nbt.setShort("id" + i, (short) Item.getIdFromItem(inventory[i].getItem()));
-			nbt.setByte("count" + i, (byte) inventory[i].stackSize);
-			nbt.setShort("damage" + i, (short) inventory[i].getItemDamage());
-		}
+		storeInventory(nbt, inventory, "inv");
 		nbt.setByte("page", (byte) page);
 		nbt.setShort("scroll", (short) scrollFactor);
 	}
@@ -402,7 +385,8 @@ public class TileWeaponCrafter extends LCTileEntity implements IInventory {
 					.getItemDamage() : bulletCount;
 			bulletToConsume /= rs.scale;
 			damage = damage < 0 ? 0 : damage;
-			WeaponHelper.consumeInventoryItem(inventory, rs.inputB, bulletToConsume, 2);
+			WeaponHelper.consumeInventoryItem(inventory, rs.inputB,
+					bulletToConsume, 2);
 			inventory[slotWeapon] = null;
 			inventory[0] = new ItemStack(rs.inputA, 1, damage);
 		}
@@ -450,7 +434,7 @@ public class TileWeaponCrafter extends LCTileEntity implements IInventory {
 			boolean flag = is != null;
 			if (flag) {
 				for (int j = 0; j < r.input.length; j++) {
-					if (r.input[j].getItem() == is.getItem() && r.input[j].getItemDamage() == is.getItemDamage()) {
+					if (r.input[j] == is && r.input[j].getItemDamage() == is.getItemDamage()) {
 						if (left[j] < is.stackSize)
 							left[j] = 0;
 						else

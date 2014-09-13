@@ -15,8 +15,7 @@
 package cn.lambdacraft.deathmatch.client.renderer;
 
 import net.minecraft.entity.Entity;
-
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.entity.fx.GaussParticleFX;
 import cn.liutils.api.client.render.RenderIcon;
 
@@ -29,7 +28,7 @@ public class RenderGlow extends RenderIcon {
 
 	
 	public RenderGlow() {
-		super(LCClientProps.GLOW_PATH);
+		super(ClientProps.GLOW_PATH);
 		this.setEnableDepth(false);
 		this.setSize(1.7F);
 	}

@@ -14,8 +14,8 @@
  */
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.item.LCGenericItem;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.item.CBCGenericItem;
 import cn.lambdacraft.deathmatch.entity.EntityHGrenade;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,13 +27,13 @@ import net.minecraft.world.World;
  * @author WeAthFolD
  * 
  */
-public class Weapon_Hgrenade extends LCGenericItem {
+public class Weapon_Hgrenade extends CBCGenericItem {
 
 	public Weapon_Hgrenade() {
 		super();
 		setUnlocalizedName("weapon_hgrenade");
-		setCreativeTab(LCMod.cct);
-		setTextureName("lambdacraft:weapon_hgrenade");
+		setCreativeTab(CBCMod.cct);
+		setIconName("weapon_hgrenade");
 		setMaxStackSize(8);
 	}
 

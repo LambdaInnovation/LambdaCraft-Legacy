@@ -18,30 +18,31 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.block.LCBlockContainer;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import net.minecraftforge.common.ForgeDirection;
+import cn.lambdacraft.core.block.CBCBlockContainer;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
 
 /**
  * @author WeAthFolD
  *
  */
-public class BlockXenAmethyst extends LCBlockContainer {
+public class BlockXenAmethyst extends CBCBlockContainer {
 
 	/**
 	 * @param par1
 	 * @param par2Material
 	 */
-	public BlockXenAmethyst() {
-		super(Material.rock);
+	public BlockXenAmethyst(int par1) {
+		super(par1, Material.rock);
 		setHardness(1.0F);
-		this.setLightLevel(0.7F);
-		setBlockName("xenAmethyst");
-		setBlockTextureName("lambdacraft:amethyst");
+		this.setLightValue(0.7F);
+		setUnlocalizedName("xenAmethyst");
+		setIconName("amethyst");
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World var1, int var2) {
+	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityXenAmethyst();
 	}
 	
@@ -67,7 +68,7 @@ public class BlockXenAmethyst extends LCBlockContainer {
     @Override
 	public int getRenderType()
     {
-        return LCClientProps.RENDER_TYPE_EMPTY;
+        return ClientProps.RENDER_TYPE_EMPTY;
     }
     
     /**
@@ -77,5 +78,14 @@ public class BlockXenAmethyst extends LCBlockContainer {
 	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
     	this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, 1.0F, 0.7F);
     }
+    
+	@Override
+	public void onNeighborBlockChange(World world, int par2, int par3,
+			int par4, int par5) {
+		super.onNeighborBlockChange(world, par2, par3, par4, par5);
+		if(!world.isBlockNormalCubeDefault(par2, par3 + 1, par4, false))
+			world.destroyBlock(par2, par3, par4, true);
+	}
+
 
 }

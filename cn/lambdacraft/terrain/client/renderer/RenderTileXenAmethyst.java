@@ -21,7 +21,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.client.model.ModelXenAmethyst;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
 import cn.liutils.api.client.render.RenderTileEntityModel;
@@ -35,9 +35,6 @@ public class RenderTileXenAmethyst extends RenderTileEntityModel {
 
 	private static final float WIDTH = 0.15F;
 	
-	/**
-	 * @param mo
-	 */
 	public RenderTileXenAmethyst() {
 		super(new ModelXenAmethyst());
 	}
@@ -48,21 +45,30 @@ public class RenderTileXenAmethyst extends RenderTileEntityModel {
 		TileEntityXenAmethyst amethyst = (TileEntityXenAmethyst) tileentity;
 		GL11.glPushMatrix();
 		if(amethyst.ticksSinceLastAtack < 10) {
-			renderElectro(amethyst, Tessellator.instance, d0, d1, d2);
+			renderRay(amethyst, Tessellator.instance, d0, d1, d2);
 		}
 		super.renderTileEntityAt(tileentity, d0, d1, d2, f);
 		GL11.glPopMatrix();
 	}
 	
-    private void renderElectro(TileEntityXenAmethyst ent, Tessellator t, double x, double y, double z) {
+	/**
+	 * Render the Amethyst ray
+	 * @param ent
+	 * @param t
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+    private void renderRay(TileEntityXenAmethyst ent, Tessellator t, double x, double y, double z) {
     	double dx = ent.lastxCoord, dy = ent.lastyCoord, dz = ent.lastzCoord ;
-    	double tx = 0.0, ty = 0.4, tz = 0.0;
+//    	double tx = 0.0, ty = 0.4, tz = 0.0;
+    	double tx = 0.5, ty = 0.2, tz = 0.5;
     	GL11.glPushMatrix();
     	GL11.glDisable(GL11.GL_CULL_FACE);
     	GL11.glDisable(GL11.GL_LIGHTING);
     	GL11.glEnable(GL11.GL_BLEND);
     	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-    	RenderUtils.loadTexture(LCClientProps.VORTIGAUNT_RAY_PATH[rng.nextInt(3)]);
+    	RenderUtils.loadTexture(ClientProps.VORTIGAUNT_RAY_PATH[rng.nextInt(3)]);
     	
     	Vec3 v1 = RenderUtils.newV3(tx - WIDTH, ty, tz), v2 = RenderUtils.newV3(tx + WIDTH, ty, tz),
     		v3 = RenderUtils.newV3(tx, ty - WIDTH, tz), v4 = RenderUtils.newV3(tx, ty + WIDTH, tz);

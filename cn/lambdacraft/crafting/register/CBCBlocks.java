@@ -47,11 +47,10 @@ public class CBCBlocks {
 		blockRefined = new BlockRefined();
 		uraniumOre = new BlockCBCOres(0);
 		advCrafter = new BlockAdvWeaponCrafter();
-
 		oreTin = new BlockCBCOres(1);
 		oreCopper = new BlockCBCOres(2);
 		genMugen = new BlockElectricalBase(Material.rock).setTileType(TileGeneratorMugen.class)
-				.setBlockTextureName("lambdacraft:genfire_side").setBlockName("mugen");
+				.setBlockTextureName("genfire_side").setBlockName("mugen");
 		wire = new BlockWire();
 		storageS = new BlockBatBox(0);
 		storageL = new BlockBatBox(1);
@@ -78,13 +77,6 @@ public class CBCBlocks {
 		GameRegistry.registerBlock(genSolar, "lc_gensolar");
 		GameRegistry.registerBlock(genFire, "lc_genfire");
 		GameRegistry.registerBlock(genMugen, "lc_genmugen");
-		
-		uraniumOre.setHarvestLevel("pickaxe", 2);
-		blockRefined.setHarvestLevel("pickaxe", 1);
-		weaponCrafter.setHarvestLevel("pickaxe", 1);
-		advCrafter.setHarvestLevel("pickaxe", 2);
-		oreTin.setHarvestLevel("pickaxe", 1);
-		oreCopper.setHarvestLevel("pickaxe", 1);
 		
 		GameRegistry.registerTileEntity(TileWeaponCrafter.class, "tile_entity_weapon_crafter");
 		GameRegistry.registerTileEntity(TileGeneratorMugen.class, "tile_entity_mugen");

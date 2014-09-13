@@ -14,7 +14,7 @@
  */
 package cn.lambdacraft.crafting.item;
 
-import cn.lambdacraft.core.item.LCGenericItem;
+import cn.lambdacraft.core.item.CBCGenericItem;
 import cn.lambdacraft.crafting.entity.EntitySpray;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -23,20 +23,19 @@ import net.minecraft.world.World;
 
 /**
  * 
- * 喷漆的物品
+ * 喷漆
  * 
  * @author mkpoli
  * 
  */
-public class ItemSpray extends LCGenericItem {
+public class ItemSpray extends CBCGenericItem {
 
-	private int title_id; // 喷漆的ID
+	protected int tId; // 喷漆的ID
 
-	public ItemSpray(int title_id) {
+	public ItemSpray(int tId) {
 		super();
-		this.title_id = title_id;
-		setUnlocalizedName("spray" + this.title_id);
-		setTextureName("lambdacraft:spray" + this.title_id);
+		this.tId = tId;
+		setIAndU("spray" + this.tId);
 		setMaxStackSize(1);
 		setMaxDamage(10);
 	}
@@ -45,23 +44,19 @@ public class ItemSpray extends LCGenericItem {
 	public boolean onItemUse(ItemStack item_stack, EntityPlayer player,
 			World world, int x, int y, int z, int side, float x_off,
 			float y_off, float z_off) {
-		// 对其他方块的上下表面使用时，不触发任何效果
-		if (side == 0)
-			return false;
-		if (side == 1)
-			return false;
-
-		// 创建Facing(3D) to Direction(2D)数组传递第Side个对象为in
-		int direction = Direction.facingToDirection[side];
-		// 创建EntityArt实例
-		EntitySpray entity = new EntitySpray(world, x, y, z, direction, title_id, player);
-		// 判断是否被放置在了可用的表面
-		if (entity.onValidSurface()) {
-			if (!world.isRemote) {
+		if (!world.isRemote) {
+			if (side == 0 || side == 1)
+				return false;
+			// 创建Facing(3D) to Direction(2D)数组传递第Side个对象为in
+			int direction = Direction.facingToDirection[side];
+			EntitySpray entity = new EntitySpray(world, x, y, z, direction, tId, player);
+			// 判断是否被放置在了可用的表面
+			if (entity.onValidSurface()) {
+				System.err.println("GENERATING IN SERVER SIDE...");
 				world.spawnEntityInWorld(entity); // 生成entity
 				world.playSoundAtEntity(player, "lambdacraft:entities.sprayer", 0.7f, 1);
+				item_stack.damageItem(1, player);
 			}
-			item_stack.damageItem(1, player);
 		}
 		return true;
 	}

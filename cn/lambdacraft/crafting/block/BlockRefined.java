@@ -1,15 +1,15 @@
 package cn.lambdacraft.crafting.block;
 
+import cn.lambdacraft.core.CBCMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import cn.lambdacraft.core.LCMod;
 
 public class BlockRefined extends Block {
 
 	public BlockRefined() {
 		super(Material.iron);
-		setCreativeTab(LCMod.cctMisc);
+		setCreativeTab(CBCMod.cct);
 		setHardness(2.0F);
 		setBlockName("refined");
 	}

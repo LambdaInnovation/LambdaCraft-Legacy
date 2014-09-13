@@ -18,10 +18,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.deathmatch.entity.EntityHornet;
 import cn.weaponmod.api.information.InformationBullet;
-import cn.weaponmod.events.ItemControlHandler;
+import cn.weaponmod.events.ItemHelper;
 
 /**
  * @author WeAthFolD.
@@ -34,7 +34,7 @@ public class Weapon_Hornet extends WeaponGeneralBullet_LC {
 	public Weapon_Hornet() {
 		super(null);
 		setMaxDamage(9);
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 		setIAndU("weapon_hornet");
 	}
 
@@ -47,7 +47,7 @@ public class Weapon_Hornet extends WeaponGeneralBullet_LC {
 			return;
 		int dt = inf.ticksExisted;
 		EntityPlayer player = (EntityPlayer) par3Entity;
-		if (dt % RECOVER_TIME == 0 && !(this.canShoot(player, par1ItemStack, true) && (ItemControlHandler.getUsingTickLeft(player, true) > 0) || ItemControlHandler.getUsingTickLeft(player, false) > 0)) {
+		if (dt % RECOVER_TIME == 0 && !(this.canShoot(player, par1ItemStack, true) && (ItemHelper.getUsingTickLeft(player, true) > 0) || ItemHelper.getUsingTickLeft(player, false) > 0)) {
 			if (this.getWpnStackDamage(par1ItemStack) > 0) {
 				this.setWpnStackDamage(par1ItemStack, this.getWpnStackDamage(par1ItemStack) - 1);
 			}

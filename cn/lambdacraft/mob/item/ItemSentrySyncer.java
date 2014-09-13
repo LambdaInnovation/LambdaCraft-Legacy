@@ -18,8 +18,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.item.LCGenericItem;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.item.CBCGenericItem;
 import cn.lambdacraft.mob.ModuleMob;
 import cn.lambdacraft.mob.register.CBCMobBlocks;
 import cn.liutils.api.util.BlockPos;
@@ -28,16 +28,15 @@ import cn.liutils.api.util.BlockPos;
  * @author WeAthFolD
  *
  */
-public class ItemSentrySyncer extends LCGenericItem {
+public class ItemSentrySyncer extends CBCGenericItem {
 
 	/**
 	 * @param par1
 	 */
 	public ItemSentrySyncer() {
 		super();
-		this.setCreativeTab(LCMod.cct);
-		setUnlocalizedName("syncer");
-		setTextureName("lambdacraft:syncer");
+		this.setCreativeTab(CBCMod.cct);
+		this.setIAndU("syncer");
 	}
 	
 	@Override

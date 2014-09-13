@@ -84,7 +84,7 @@ public class EntityHGrenade extends EntityThrowable {
 			}
 		}
 		if(collideStrengh > 1.0) collideStrengh = 1.0;
-		System.out.println(collideStrengh);
+//		System.out.println(collideStrengh);
 		if (time == 0 || ticksExisted - time > 20) { // 最小时间间隔1s
 			this.playSound("lambdacraft:weapons.hgrenadebounce", (float) (5F * collideStrengh), 1.0F);
 			time = ticksExisted;

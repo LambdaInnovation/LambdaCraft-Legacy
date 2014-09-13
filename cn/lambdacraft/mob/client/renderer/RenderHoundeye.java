@@ -42,7 +42,7 @@ public class RenderHoundeye extends LIRenderMob {
 	}
 	
     @Override
-	public void doRender(EntityLiving ent, double par2, double par4, double par6, float par8, float par9)
+	public void func_110827_b(EntityLiving ent, double par2, double par4, double par6, float par8, float par9)
     {
     	GL11.glPushMatrix();
     	float yOffset = ent.prevLimbSwingAmount + (ent.limbSwingAmount - ent.prevLimbSwingAmount) * par9;
@@ -56,7 +56,7 @@ public class RenderHoundeye extends LIRenderMob {
     		yOffset = 1.0F;
     	yOffset *= 0.2F;
     	GL11.glTranslatef(xOffset, yOffset, zOffset);
-    	super.doRender(ent, par2, par4, par6, par8, par9);
+    	super.func_110827_b(ent, par2, par4, par6, par8, par9);
     	GL11.glPopMatrix();
     }
 

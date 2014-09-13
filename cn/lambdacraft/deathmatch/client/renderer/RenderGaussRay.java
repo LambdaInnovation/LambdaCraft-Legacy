@@ -10,7 +10,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRay;
 import cn.liutils.api.client.util.RenderUtils;
 import cpw.mods.fml.client.FMLClientHandler;
@@ -60,7 +60,7 @@ public class RenderGaussRay extends RenderEntity {
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		if (renderColor)
-			Minecraft.getMinecraft().renderEngine.bindTexture(LCClientProps.GAUSS_BEAM_PATH);
+			Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.GAUSS_BEAM_PATH);
 		else {
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 		}

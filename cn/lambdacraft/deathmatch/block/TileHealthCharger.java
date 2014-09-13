@@ -14,13 +14,13 @@
  */
 package cn.lambdacraft.deathmatch.block;
 
+import ic2.api.item.ISpecialElectricItem;
+
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import cn.lambdacraft.api.LCDirection;
-import cn.lambdacraft.api.energy.item.ICustomEnItem;
-import cn.lambdacraft.core.block.TileElectricStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -30,14 +30,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.util.ForgeDirection;
+import cn.lambdacraft.core.block.TileElectricStorage;
 
 /**
  * 
  * @author WeAthFolD, Rikka
  * 
  */
-public class TileHealthCharger extends TileElectricStorage implements
-		IInventory {
+public class TileHealthCharger extends TileElectricStorage implements IInventory {
 
 	public static final int ENERGY_MAX = 30000, EFFECT_MAX = 14400,
 			PROGRESS_TIME = 100, HEALTH_MAX = 100; // 1.25 batbox, 4-6 potions
@@ -102,6 +103,14 @@ public class TileHealthCharger extends TileElectricStorage implements
 
 	public TileHealthCharger() {
 		super(2, ENERGY_MAX);
+		try {
+			if(fldDuration == null) {
+				this.fldDuration = PotionEffect.class.getDeclaredField("duration");
+				fldDuration.setAccessible(true);
+			}
+		} catch(Exception e) {
+			//NOPE
+		}
 	}
 
 	@Override
@@ -120,17 +129,17 @@ public class TileHealthCharger extends TileElectricStorage implements
 		 */
 		if (currentEnergy < ENERGY_MAX
 				&& !(!this.isRSActivated && this.getCurrentBehavior() == EnumBehavior.RECEIVEONLY)) {
-			ItemStack stack = slots[2];
-			if (stack != null && stack.getItem() == Items.redstone) {
+			ItemStack sl = slots[2];
+			if (sl != null && sl.getItem() == Items.redstone) {
 				if (energyReq > 500) {
 					this.decrStackSize(2, 1);
 				}
 				currentEnergy += 500;
-			} else if (stack != null && stack.getItem() instanceof ICustomEnItem) {
-				ICustomEnItem item = (ICustomEnItem) stack.getItem();
-				if (item.canProvideEnergy(stack)) {
+			} else if (sl != null && sl.getItem() instanceof ISpecialElectricItem) {
+				ISpecialElectricItem item = (ISpecialElectricItem) sl.getItem();
+				if (item.canProvideEnergy(sl)) {
 					int cn = energyReq < 128 ? energyReq : 128;
-					cn = item.discharge(stack, cn, 2, false, false);
+					cn = item.getManager(sl).discharge(sl, cn, 2, false, false);
 					currentEnergy += cn;
 				}
 			}
@@ -228,6 +237,8 @@ public class TileHealthCharger extends TileElectricStorage implements
 		} else prgAddSide = 0;
 	}
 
+	public static Field fldDuration;
+	
 	public void doHealing(EntityPlayer charger) {
 		if (mainEff > 0 && charger.getHealth() < 20) {
 			if (worldObj.getWorldTime() % 10 == 0) {
@@ -241,8 +252,12 @@ public class TileHealthCharger extends TileElectricStorage implements
 			PotionEffect eff = charger
 					.getActivePotionEffect(Potion.potionTypes[sideEffectId]);
 			if (eff != null) {
-				int add = eff.getDuration();
-				charger.addPotionEffect(new PotionEffect(sideEffectId, amt + add, 0));
+				try {
+					fldDuration.set(eff, (Integer)fldDuration.get(eff) + amt);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				charger.addPotionEffect(eff);
 			} else
 				charger.addPotionEffect(new PotionEffect(sideEffectId, amt, 0));
 		}
@@ -292,7 +307,7 @@ public class TileHealthCharger extends TileElectricStorage implements
 	public String getInventoryName() {
 		return "armorcharger";
 	}
-
+	
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
@@ -306,7 +321,7 @@ public class TileHealthCharger extends TileElectricStorage implements
 
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		if (i <= 3 && !(itemstack.getItem() instanceof ICustomEnItem))
+		if (i <= 3 && !(itemstack.getItem() instanceof ISpecialElectricItem))
 			return false;
 		return true;
 	}
@@ -317,15 +332,7 @@ public class TileHealthCharger extends TileElectricStorage implements
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		for (int i = 0; i < slots.length; i++) {
-			short id = nbt.getShort("id" + i), damage = nbt.getShort("damage"
-					+ i);
-			byte count = nbt.getByte("count" + i);
-			if (id == 0)
-				continue;
-			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
-			slots[i] = is;
-		}
+		slots = this.restoreInventory(nbt, "inv", slots.length);
 		currentEnergy = nbt.getInteger("energy");
 		mainEff = nbt.getShort("mainEff");
 		sideEff = nbt.getShort("sideEff");
@@ -340,13 +347,7 @@ public class TileHealthCharger extends TileElectricStorage implements
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		for (int i = 0; i < slots.length; i++) {
-			if (slots[i] == null)
-				continue;
-			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
-			nbt.setByte("count" + i, (byte) slots[i].stackSize);
-			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
-		}
+		this.storeInventory(nbt, slots, "inv");
 		nbt.setInteger("energy", currentEnergy);
 		nbt.setShort("mainEff", (short) mainEff);
 		nbt.setShort("sideEff", (short) sideEff);
@@ -357,7 +358,7 @@ public class TileHealthCharger extends TileElectricStorage implements
 
 	@Override
 	public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
-			LCDirection paramDirection) {
+			ForgeDirection paramDirection) {
 		return !(getCurrentBehavior() == EnumBehavior.RECEIVEONLY && !this.isRSActivated);
 	}
 
@@ -384,13 +385,20 @@ public class TileHealthCharger extends TileElectricStorage implements
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		return true;
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
-	public void openInventory() {}
+	public void openInventory() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
-	public void closeInventory() {}
+	public void closeInventory() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

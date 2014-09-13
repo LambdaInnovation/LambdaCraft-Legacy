@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import cn.lambdacraft.deathmatch.item.weapon.InformationEnergy;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Egon;
 import cn.lambdacraft.deathmatch.register.DMItems;
-import cn.weaponmod.events.ItemControlHandler;
+import cn.weaponmod.core.event.ItemControlHandler;
 
 /**
  * 进行Egon光束渲染的实用实体。
@@ -38,7 +38,7 @@ public class EntityEgonRay extends Entity {
 	public boolean renderThirdPerson;
 	public boolean draw = true;
 	public boolean isClient = false;
-	protected EntityPlayer thrower;
+	public EntityPlayer thrower;
 
 	public EntityEgonRay(World par1World, EntityPlayer ent, ItemStack itemStack) {
 		super(par1World);
@@ -78,15 +78,14 @@ public class EntityEgonRay extends Entity {
 				item, worldObj);
 		if (inf == null|| 
 				!(thrower.getCurrentEquippedItem() != null && thrower.getCurrentEquippedItem().getItem() == DMItems.weapon_egon && 
-				ItemControlHandler.getUsingTickLeft(thrower, true) > 0 && ((Weapon_Egon)item.getItem()).canShoot(thrower, item, true))) {
+				ItemControlHandler.getUsingTicks(thrower, 1) > 0 && ((Weapon_Egon)item.getItem()).canShoot(thrower, item, true))) {
 			this.setDead();
 			return;
 		}
 
 		EntityPlayer ent = thrower;
 		this.setLocationAndAngles(ent.posX, ent.posY + ent.getEyeHeight(),
-				ent.posZ, ent.rotationYawHead, ent.rotationPitch);
-
+				ent.posZ, ent.rotationYaw, ent.rotationPitch);
 		float var3 = 0.4F;
 		this.motionX = -MathHelper.sin(this.rotationYaw / 180.0F
 				* (float) Math.PI)

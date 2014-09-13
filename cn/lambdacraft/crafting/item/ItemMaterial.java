@@ -21,11 +21,11 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import cn.lambdacraft.core.item.LCGenericItem;
+import cn.lambdacraft.core.item.CBCGenericItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemMaterial extends LCGenericItem {
+public class ItemMaterial extends CBCGenericItem {
 
 	private IIcon icons[] = new IIcon[10]; // 声明Icon对象数组
 

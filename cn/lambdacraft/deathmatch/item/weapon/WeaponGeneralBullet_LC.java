@@ -3,21 +3,22 @@
  */
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.api.hud.IHudTipProvider;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.prop.GeneralProps;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.weapon.WeaponGeneral;
 import cn.weaponmod.api.weapon.WeaponGeneralBullet;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -74,7 +75,7 @@ public class WeaponGeneralBullet_LC extends WeaponGeneralBullet implements IHudT
 	 */
 	@Override
 	public boolean doWeaponUplift() {
-		return LCGeneralProps.doWeaponUplift;
+		return GeneralProps.doWeaponUplift;
 	}
 	
 	@Override
@@ -84,7 +85,8 @@ public class WeaponGeneralBullet_LC extends WeaponGeneralBullet implements IHudT
 		tips[0] = new IHudTip() {
 
 			@Override
-			public IIcon getRenderingIcon(ItemStack itemStack, EntityPlayer player) {
+			public IIcon getRenderingIcon(ItemStack itemStack,
+					EntityPlayer player) {
 				if (ammoItem != null) {
 					return ammoItem.getIconIndex(itemStack);
 				}
@@ -93,7 +95,7 @@ public class WeaponGeneralBullet_LC extends WeaponGeneralBullet implements IHudT
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return (itemStack.getMaxDamage() - WeaponGeneralBullet_LC.this.getWpnStackDamage(itemStack) - 1) + "|" + WeaponHelper.getAmmoCapacity(ammoItem, player.inventory);
+				return WeaponGeneralBullet_LC.this.getAmmo(itemStack) + "|" + WeaponHelper.getAmmoCapacity(ammoItem, player.inventory);
 			}
 
 			@Override

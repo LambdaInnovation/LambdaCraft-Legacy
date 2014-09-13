@@ -14,18 +14,16 @@
  */
 package cn.lambdacraft.crafting.command;
 
-import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
+import cn.liutils.api.command.LICommandBase;
 
 /**
  * @author WeAthFolD
  *
  */
-public class CommandSpray extends CommandBase {
+public class CommandSpray extends LICommandBase {
 
 	/* (non-Javadoc)
 	 * @see net.minecraft.command.ICommand#getCommandName()
@@ -47,44 +45,44 @@ public class CommandSpray extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender ics, String[] astring) {
 		if(astring.length == 0) {
-			ics.addChatMessage(new ChatComponentTranslation(getCommandUsage(ics)));
+			sendChat(ics, getCommandUsage(ics));
 			return;
 		}
 		if(astring[0].equals("color")) {
 			if(astring.length != 4) {
 				if(astring.length == 1) {
-					ics.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spray.color.name") + EnumChatFormatting.RED + LCClientProps.sprayR + " " + 
-				EnumChatFormatting.GREEN + LCClientProps.sprayG + " " + EnumChatFormatting.AQUA + LCClientProps.sprayB));
+					notifyAdmins(ics, "spray.color.name", new Object[] { String.valueOf(ClientProps.sprayR) , String.valueOf(ClientProps.sprayG), 
+							String.valueOf(ClientProps.sprayB)} );
 				} else 
-					ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.argument.name")));
+					sendChat(ics, "spray.argument.name");
 			} else {
 				try {
 					int r = Integer.valueOf(astring[1]);
 					int g = Integer.valueOf(astring[2]);
 					int b = Integer.valueOf(astring[3]);
-					LCClientProps.setSprayColor(r, g, b, 255);
+					ClientProps.setSprayColor(r, g, b, 255);
 				} catch(NumberFormatException e) {
-					ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.format.name")));
+					sendChat(ics, "spray.format.name");
 				}
-				ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.GREEN + StatCollector.translateToLocal("spray.successful.name")));
+				sendChat(ics, "spray.successful.name");
 			}
 		} else if(astring[0].equals("id")){
 			if(astring.length != 2) {
 				if(astring.length == 1) {
-					ics.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spray.id.name") + EnumChatFormatting.GREEN + LCClientProps.getSprayId()));
+					notifyAdmins(ics, "spray.id.name", new Object[] {String.valueOf(ClientProps.getSprayId())});
 				} else
-					ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.argument.name")));
+					sendChat(ics, "spray.argument.name");
 			} else {
 				try {
 					int id = Integer.valueOf(astring[1]);
-					LCClientProps.setSprayId(id);
+					ClientProps.setSprayId(id);
 				} catch(NumberFormatException e) {
-					ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.format.name")));
+					sendChat(ics, "spray.format.name");
 				}
-				ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.GREEN + StatCollector.translateToLocal("spray.successful.name")));
+				sendChat(ics, "spray.successful.name");
 			}
 		} else {
-			ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal(getCommandUsage(ics))));
+			sendChat(ics, EnumChatFormatting.RED + getCommandUsage(ics));
 		}
 	}
 

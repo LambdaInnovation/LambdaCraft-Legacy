@@ -33,6 +33,7 @@ public class BlockAdvWeaponCrafter extends BlockWeaponCrafter {
 	public BlockAdvWeaponCrafter() {
 		super();
 		setBlockName("advcrafter");
+		setHarvestLevel("pickaxe", 2);
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class BlockAdvWeaponCrafter extends BlockWeaponCrafter {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int g) {
+	public TileEntity createNewTileEntity(World world, int v) {
 		return new TileWeaponCrafter().setAdvanced(true);
 	}
 

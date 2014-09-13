@@ -14,18 +14,16 @@
  */
 package cn.lambdacraft.crafting.command;
 
-import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
+import cn.liutils.api.command.LICommandBase;
 
 /**
  * @author WeAthFolD
  *
  */
-public class CommandXHairColor extends CommandBase {
+public class CommandXHairColor extends LICommandBase {
 
 	@Override
 	public String getCommandName() {
@@ -44,29 +42,29 @@ public class CommandXHairColor extends CommandBase {
 	@Override
 	public void processCommand(ICommandSender ics, String[] astring) {
 		if(astring.length == 0) {
-			ics.addChatMessage(new ChatComponentTranslation(getCommandUsage(ics)));
+			sendChat(ics, getCommandUsage(ics));
 			return;
 		}
 		if(astring[0].equals("color")) {
 			if(astring.length != 4) {
 				if(astring.length == 1) {
-					ics.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spray.color.name") + EnumChatFormatting.RED + LCClientProps.sprayR + " " + 
-				EnumChatFormatting.GREEN + LCClientProps.sprayG + " " + EnumChatFormatting.AQUA + LCClientProps.sprayB));
+					this.sendWithTranslation(ics, "spray.color.name",
+							ClientProps.xHairR, ClientProps.xHairG, ClientProps.xHairB);
 				} else 
-					ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.argument.name")));
+					this.sendChat(ics, "spray.argument.name");
 			} else {
 				try {
 					int r = Integer.valueOf(astring[1]);
 					int g = Integer.valueOf(astring[2]);
 					int b = Integer.valueOf(astring[3]);
-					LCClientProps.setCrosshairColor(r, g, b);
+					ClientProps.setCrosshairColor(r, g, b);
 				} catch(NumberFormatException e) {
-					ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal("spray.format.name")));
+					this.sendChat(ics, "spray.format.name");
 				}
-				ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.GREEN + StatCollector.translateToLocal("spray.successful.name")));
+				this.sendChat(ics, "spray.successful.name");
 			}
 		} else {
-			ics.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal(getCommandUsage(ics))));
+			this.sendChat(ics, EnumChatFormatting.RED + getCommandUsage(ics));
 		}	
 	}
 

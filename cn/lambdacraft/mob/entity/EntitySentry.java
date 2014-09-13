@@ -19,18 +19,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.entity.IEntityLink;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
+import cn.liutils.api.command.LICommandBase;
 import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.entity.LIEntityMob;
+import cn.liutils.api.util.EntityUtils;
 import cn.liutils.api.util.GenericUtils;
 
 /**
@@ -152,7 +152,7 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
 	protected void searchForTarget() {
 		if(worldObj.isRemote)
 			return;
-		Entity targetEntity = GenericUtils.getNearestEntityTo(this, GenericUtils.getEntitiesAround_CheckSight(this, 15.0F, selector));
+		Entity targetEntity = EntityUtils.getNearestEntityTo(this, EntityUtils.getEntitiesAround_CheckSight(this, 15.0F, selector));
 		
 		if(targetEntity != null) {
 			if(this.rand.nextFloat() < 0.2)
@@ -281,20 +281,16 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
     {
 		if(!worldObj.isRemote) {
 			if(!player.getCommandSenderName().equals(placerName)) {
-				player.addChatMessage(new ChatComponentTranslation(EnumChatFormatting.RED + StatCollector.translateToLocal("sentry.deny.name")));
+				LICommandBase.sendChat(player, "sentry.deny.name");
 				return false;
 			}
 			if(player.isSneaking()) {
 				attackPlayer = !attackPlayer;
-				StringBuilder b = new StringBuilder(StatCollector.translateToLocal("sentry.head.name")).append("\n");
-				b.append(EnumChatFormatting.WHITE).append(StatCollector.translateToLocal("sentry.id.name")).append(" : ").append(EnumChatFormatting.RED).append(this.getEntityId()).append("\n");
-				b.append(EnumChatFormatting.WHITE).append(StatCollector.translateToLocal("sentry.attackstat.name")).append(" : ").append(EnumChatFormatting.RED).append(StatCollector.translateToLocal("sentry.attacktype" + (attackPlayer ? 1 : 0) + ".name")).append("\n");
-				player.addChatMessage(new ChatComponentTranslation(b.toString()));
+				LICommandBase.sendChat(player, "sentry.attackstat" + (attackPlayer ? 1 : 0)  + ".name");
 			} else {
 				this.isActivated = !isActivated;
-				StringBuilder b = new StringBuilder(StatCollector.translateToLocal("sentry.head.name")).append("\n");
-				b.append((isActivated ? EnumChatFormatting.GREEN : EnumChatFormatting.RED)).append(StatCollector.translateToLocal("sentry.status" + (isActivated ? 1 : 0) + ".name"));
-				player.addChatMessage(new ChatComponentTranslation(b.toString()));
+				LICommandBase.sendChat(player, ("sentry.status" + (isActivated ? 1 : 0) + ".name"));
+				
 				String s = isActivated ? "lambdacraft:mobs.tu_deploy" : "lambdacraft:mobs.tu_spindown";
 				this.playSound(s, 0.5F, 1.0F);
 			}
@@ -355,7 +351,7 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
 
 	@Override
 	public ResourceLocation getTexture() {
-		return LCClientProps.TURRET_PATH;
+		return ClientProps.TURRET_PATH;
 	}
 
 }

@@ -16,24 +16,25 @@ package cn.lambdacraft.mob.block;
 
 import java.util.Random;
 
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.block.LCBlockContainer;
-import cn.lambdacraft.core.proxy.LCClientProps;
-import cn.lambdacraft.mob.block.tile.TileSentryRay;
-import cn.lambdacraft.mob.register.CBCMobItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
+import cn.lambdacraft.core.block.CBCBlockContainer;
+import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.mob.block.tile.TileSentryRay;
+import cn.lambdacraft.mob.register.CBCMobItems;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
  *
  */
-public class BlockSentryRay extends LCBlockContainer {
+public class BlockSentryRay extends CBCBlockContainer {
 
 	public static final float HEIGHT = 0.1F, WIDTH = 0.2F;
 			
@@ -43,8 +44,9 @@ public class BlockSentryRay extends LCBlockContainer {
 	 */
 	public BlockSentryRay() {
 		super(Material.rock);
-		this.setCreativeTab(LCMod.cct);
-		setBlockTextureName("lambdacraft:ss_1");
+		this.setCreativeTab(null);
+		this.setHardness(1.0F);
+		setBlockTextureName("ss_1");
 	}
 	
 	@Override
@@ -90,14 +92,14 @@ public class BlockSentryRay extends LCBlockContainer {
 	 * @see net.minecraft.block.ITileEntityProvider#createNewTileEntity(net.minecraft.world.World)
 	 */
 	@Override
-	public TileEntity createNewTileEntity(World world, int v) {
+	public TileEntity createNewTileEntity(World world, int i) {
 		return new TileSentryRay();
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return LCClientProps.RENDER_TYPE_EMPTY;
+		return ClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	
@@ -109,6 +111,16 @@ public class BlockSentryRay extends LCBlockContainer {
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
+	}
+	
+	@Override
+	public void onNeighborBlockChange(World world, int par2, int par3,
+			int par4, Block par5) {
+		super.onNeighborBlockChange(world, par2, par3, par4, par5);
+		int meta = world.getBlockMetadata(par2, par3, par4); //ForgeDirecton真的是个好东西~ 
+		ForgeDirection dir = ForgeDirection.values()[meta].getOpposite();
+		if(!world.isBlockNormalCubeDefault(par2 + dir.offsetX, par3 + dir.offsetY, par4 + dir.offsetZ, false))
+			world.destroyBlockInWorldPartially(par2, par3, par4, 0, 0);
 	}
 
 }

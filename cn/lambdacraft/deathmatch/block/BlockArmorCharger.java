@@ -15,11 +15,11 @@
 package cn.lambdacraft.deathmatch.block;
 
 import cn.lambdacraft.api.tile.IUseable;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.block.LCBlockContainer;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.block.CBCBlockContainer;
 import cn.lambdacraft.core.client.key.UsingUtils;
-import cn.lambdacraft.core.proxy.LCClientProps;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.core.prop.GeneralProps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -35,7 +35,7 @@ import net.minecraft.world.World;
 /**
  * @author WeAthFolD
  */
-public class BlockArmorCharger extends LCBlockContainer implements IUseable {
+public class BlockArmorCharger extends CBCBlockContainer implements IUseable {
 
 	protected final float WIDTH = 0.3F, HEIGHT = 0.4F, LENGTH = 0.08F;
 
@@ -46,16 +46,11 @@ public class BlockArmorCharger extends LCBlockContainer implements IUseable {
 	public BlockArmorCharger() {
 		super(Material.rock);
 		this.setBlockName("armorcharger");
-		this.setBlockTextureName("lambdacraft:charger");
+		this.setBlockTextureName("charger");
 		this.setHardness(2.0F);
-		this.setGuiId(LCGeneralProps.GUI_ID_CHARGER);
+		this.setGuiId(GeneralProps.GUI_ID_CHARGER);
 	}
 
-	/**
-	 * Lets the block know when one of its neighbor changes. Doesn't know which
-	 * neighbor changed (coordinates passed are their own) Args: x, y, z,
-	 * neighbor blockID
-	 */
 	@Override
 	public void onNeighborBlockChange(World par1World, int par2, int par3,
 			int par4, Block par5) {
@@ -75,7 +70,7 @@ public class BlockArmorCharger extends LCBlockContainer implements IUseable {
 		if (tileEntity == null || player.isSneaking()) {
 			return false;
 		}
-		player.openGui(LCMod.instance, LCGeneralProps.GUI_ID_CHARGER, world, x,
+		player.openGui(CBCMod.instance, GeneralProps.GUI_ID_CHARGER, world, x,
 				y, z);
 		return true;
 	}
@@ -94,7 +89,7 @@ public class BlockArmorCharger extends LCBlockContainer implements IUseable {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getRenderType() {
-		return LCClientProps.RENDER_TYPE_EMPTY;
+		return ClientProps.RENDER_TYPE_EMPTY;
 	}
 
 	@Override
@@ -190,7 +185,7 @@ public class BlockArmorCharger extends LCBlockContainer implements IUseable {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int v) {
+	public TileEntity createNewTileEntity(World world, int i) {
 		return new TileArmorCharger();
 	}
 

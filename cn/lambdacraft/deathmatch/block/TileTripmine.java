@@ -74,7 +74,7 @@ public class TileTripmine extends TileEntity {
 		List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, box,
 				GenericUtils.selectorLiving);
 		if (list != null && list.size() == 1) {
-			blockType.breakBlock(worldObj, xCoord, yCoord, zCoord, blockType, 0);
+			getBlockType().breakBlock(worldObj, xCoord, yCoord, zCoord, getBlockType(), meta);
 		}
 	}
 

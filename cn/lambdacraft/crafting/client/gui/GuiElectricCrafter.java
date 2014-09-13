@@ -16,11 +16,10 @@ package cn.lambdacraft.crafting.client.gui;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.block.container.ContainerElCrafter;
 import cn.lambdacraft.crafting.block.tile.TileElCrafter;
-import cn.lambdacraft.crafting.network.MessageCrafter;
+import cn.lambdacraft.crafting.network.NetCrafterClient;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.client.gui.LIGuiButton;
 import cn.liutils.api.client.gui.LIGuiContainer;
@@ -122,8 +121,8 @@ public class GuiElectricCrafter extends LIGuiContainer {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		String currentPage = StatCollector.translateToLocal(RecipeWeapons
 				.getDescription(tileEntity.page));
-		fontRendererObj.drawString(currentPage,
-				85 - fontRendererObj.getStringWidth(currentPage) / 2, 3, 0xff9843);
+		fontRenderer.drawString(currentPage,
+				85 - fontRenderer.getStringWidth(currentPage) / 2, 3, 0xff9843);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
 
@@ -133,7 +132,7 @@ public class GuiElectricCrafter extends LIGuiContainer {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		bindTexture(LCClientProps.GUI_ELCRAFTER_PATH);
+		bindTexture(ClientProps.GUI_ELCRAFTER_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
@@ -159,12 +158,12 @@ public class GuiElectricCrafter extends LIGuiContainer {
 	public void onButtonClicked(LIGuiButton button) {
 		if (button.name == "up" || button.name == "down") {
 			boolean isDown = button.name == "down" ? true : false;
-			LCMod.netHandler.sendToServer(new MessageCrafter(tileEntity, 0, isDown));
+			NetCrafterClient.sendCrafterPacket(tileEntity, 0, isDown);
 			return;
 		}
 		if (button.name == "left" || button.name == "right") {
 			boolean isForward = button.name == "right" ? true : false;
-			LCMod.netHandler.sendToServer(new MessageCrafter(tileEntity, 1, isForward));
+			NetCrafterClient.sendCrafterPacket(tileEntity, 1, isForward);
 			return;
 		}
 	}

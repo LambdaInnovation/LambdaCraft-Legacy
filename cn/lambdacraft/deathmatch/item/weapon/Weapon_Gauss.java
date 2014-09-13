@@ -1,6 +1,6 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.ISpecialCrosshair;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGauss;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGaussSec;
@@ -16,7 +16,7 @@ import cn.lambdacraft.deathmatch.entity.EntityBulletGaussSec.EnumGaussRayType;
 import cn.liutils.api.util.GenericUtils;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
-import cn.weaponmod.events.ItemControlHandler;
+import cn.weaponmod.events.ItemHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -36,7 +36,7 @@ public class Weapon_Gauss extends WeaponGeneralEnergy_LC implements ISpecialCros
 
 	public Weapon_Gauss() {
 		super(CBCItems.ammo_uranium);
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 		setUnlocalizedName("weapon_gauss");
 		setJamTime(20);
 	}
@@ -143,7 +143,7 @@ public class Weapon_Gauss extends WeaponGeneralEnergy_LC implements ISpecialCros
 	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
 			EntityPlayer player, int par4) {
 		InformationEnergy inf = getInformation(par1ItemStack, par2World);
-		boolean left = ItemControlHandler.getUsingTickLeft(player, true) > 0;
+		boolean left = ItemHelper.getUsingTickLeft(player, true) > 0;
 		if (inf == null)
 			return;
 

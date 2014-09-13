@@ -53,12 +53,12 @@ public class EntityBulletEgon extends EntityBullet {
 			e.attackEntityFrom(DamageSource.causeMobDamage(getThrower()), damage);
 		}
 		if(rand.nextFloat() < 0.1)  {
-			Block blockID = worldObj.getBlock(result.blockX, result.blockY, result.blockZ);
+			Block block = worldObj.getBlock(result.blockX, result.blockY, result.blockZ);
 			//检查以防破坏基岩等重要方块
-			if(blockID != null && blockID != Blocks.air) {
-				float hardness = blockID.getBlockHardness(worldObj, result.blockX, result.blockY, result.blockZ);
-				//if(hardness > 0.0F && hardness < 5.0F) TODO:orz
-				//	worldObj.destroyBlock(result.blockX, result.blockY, result.blockZ, false);
+			if(block != null) {
+				float hardness = block.getBlockHardness(worldObj, result.blockX, result.blockY, result.blockZ);
+				if(hardness >= 0.0F && hardness < 5.0F)
+					worldObj.destroyBlockInWorldPartially(result.blockX, result.blockY, result.blockZ, 0, 0);
 			} else worldObj.setBlock(result.blockX, result.blockY, result.blockZ, Blocks.air, 0, 3);
 		}
 		this.setDead();

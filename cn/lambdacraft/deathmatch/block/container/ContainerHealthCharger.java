@@ -14,16 +14,16 @@
  */
 package cn.lambdacraft.deathmatch.block.container;
 
-import cn.lambdacraft.api.energy.item.IEnItem;
-import cn.lambdacraft.deathmatch.block.TileHealthCharger;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import ic2.api.item.IElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import cn.lambdacraft.deathmatch.block.TileHealthCharger;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -102,7 +102,7 @@ public class ContainerHealthCharger extends Container {
 			// places it into the tileEntity is possible since its in the player
 			// inventory
 			if (slot >= 3) {
-				if (stackInSlot.getItem() instanceof IEnItem) {
+				if (stackInSlot.getItem() instanceof IElectricItem) {
 					if (!this.mergeItemStack(stackInSlot, 2, 3, true)) {
 						return null;
 					}

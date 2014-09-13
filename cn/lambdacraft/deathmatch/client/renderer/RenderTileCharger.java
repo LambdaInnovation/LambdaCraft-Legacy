@@ -14,7 +14,7 @@
  */
 package cn.lambdacraft.deathmatch.client.renderer;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.block.TileArmorCharger;
 import cn.liutils.api.client.render.RendererSidedCube;
 import net.minecraft.block.Block;
@@ -47,14 +47,14 @@ public class RenderTileCharger extends RendererSidedCube {
 	@Override
 	public ResourceLocation getTexture(TileEntity te, int side, int metadata) {
 		if (side == 0 || side == 1)
-			return LCClientProps.HEVCHARGER_TD;
+			return ClientProps.HEVCHARGER_TD;
 		if (side == metadata) {
 			if(((TileArmorCharger)te).currentEnergy > 0)
-				return LCClientProps.HEVCHARGER_MAIN;
-			else return LCClientProps.AC_NOENERGY;
+				return ClientProps.HEVCHARGER_MAIN;
+			else return ClientProps.AC_NOENERGY;
 		}if (metadata == 5 || metadata == 3)
 			if (side == metadata - 2)
-				return LCClientProps.HEVCHARGER_BACK;
-		return LCClientProps.HEVCHARGER_SIDE;
+				return ClientProps.HEVCHARGER_BACK;
+		return ClientProps.HEVCHARGER_SIDE;
 	}
 }

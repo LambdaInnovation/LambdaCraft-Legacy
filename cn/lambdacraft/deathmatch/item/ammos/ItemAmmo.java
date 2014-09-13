@@ -1,8 +1,8 @@
 package cn.lambdacraft.deathmatch.item.ammos;
 
-import cn.lambdacraft.core.item.LCGenericItem;
+import cn.lambdacraft.core.item.CBCGenericItem;
 
-public abstract class ItemAmmo extends LCGenericItem {
+public abstract class ItemAmmo extends CBCGenericItem {
 	
 	public ItemAmmo() {
 		super();

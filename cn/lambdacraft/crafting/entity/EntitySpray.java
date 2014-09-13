@@ -14,63 +14,56 @@
  */
 package cn.lambdacraft.crafting.entity;
 
-import java.util.List;
-
-import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
+import cn.lambdacraft.core.prop.ClientProps;
+import cn.liutils.api.util.Color4I;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityHanging;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.proxy.LCClientProps;
-import cn.liutils.api.util.Color4I;
 
 /**
- * @author Mkpoli
+ * 狼：Minecraft类是要在Server端生成的时候绝对不能引用的类，千万注意 如果要获取玩家实体，可以用dataWatcher
+ * mkpoli：哦，我错了QAQ
  * 
+ * @author mkpoli
  */
-public class EntitySpray extends Entity {
+public class EntitySpray extends EntityHanging {
 
 	public final static int[] GRIDS_HEIGHTS = { 2, 2 };
 	public final static int[] GRIDS_WIDTHS = { 10, 2 };
 
-	public int hanging_direction;
-	public int block_pos_x;
-	public int block_pos_y;
-	public int block_pos_z;
-	public int title_id = -1;
+	// TODO: make player hear sound
+	// public int hangingDirection;
+	// public int blockPosX;
+	// public int blockPosY;
+	// public int blockPosZ;
+	public int tId = -1;
 	public Color4I color;
 
-	private EntityPlayer player;
-
-	// 被框架自动调用
 	public EntitySpray(World world) {
 		super(world);
 		this.setSize(1.0F, 1.0F);
 	}
 
-	// 被 Item 调用
-	public EntitySpray(World world, int x, int y, int z, int direction, int title_id, EntityPlayer thePlayer) {
+	public EntitySpray(World world, int x, int y, int z, int direction,
+			int tId, EntityPlayer thePlayer) {
 		this(world);
+		this.field_146063_b = x;
+		this.field_146064_c = y;
+		this.field_146062_d = z;
+		this.hangingDirection = direction;
+		this.tId = tId;
+		this.color = new Color4I(ClientProps.sprayR, ClientProps.sprayG,
+				ClientProps.sprayB);
 
-		this.block_pos_x = x;
-		this.block_pos_y = y;
-		this.block_pos_z = z;
-		this.hanging_direction = direction;
-		this.title_id = title_id;
-
-		color = new Color4I(LCClientProps.sprayR, LCClientProps.sprayG, LCClientProps.sprayB);
-		
-		this.save_params();
+		this.saveParams();
 		this.initParams();
 
-		this.player = thePlayer;
+		// this.player = thePlayer;
 	}
-	
+
 	@Override
 	protected void entityInit() {
 		this.dataWatcher.addObject(18, 0);
@@ -82,285 +75,197 @@ public class EntitySpray extends Entity {
 		this.dataWatcher.addObject(24, 0);
 		this.dataWatcher.addObject(25, 0);
 	}
-	
-    @Override
-	public void onUpdate()
-    {
-    	if(worldObj.isRemote) {
-    		this.hanging_direction = this.dataWatcher.getWatchableObjectInt(18);
-			this.block_pos_x = this.dataWatcher.getWatchableObjectInt(19);
-			this.block_pos_y = this.dataWatcher.getWatchableObjectInt(20);
-			this.block_pos_z = this.dataWatcher.getWatchableObjectInt(21);
-			this.title_id = this.dataWatcher.getWatchableObjectInt(22);
+
+	@Override
+	public void onUpdate() {
+		if (worldObj.isRemote) {
+			this.hangingDirection = this.dataWatcher.getWatchableObjectInt(18);
+			this.field_146063_b = this.dataWatcher.getWatchableObjectInt(19);
+			this.field_146064_c = this.dataWatcher.getWatchableObjectInt(20);
+			this.field_146062_d = this.dataWatcher.getWatchableObjectInt(21);
+			this.tId = this.dataWatcher.getWatchableObjectInt(22);
 			this.loadColor();
-			this.initParams();
-    	} else {
-    		save_params2();
-    	}
-    }
-	
-	/*
-	public EntitySpray(World world, int x, int y, int z, int direction, int title_id, EntityPlayer thePlayer, Color4I color) {
-		this(world);
-
-		this.block_pos_x = x;
-		this.block_pos_y = y;
-		this.block_pos_z = z;
-		this.hanging_direction = direction;
-		this.title_id = title_id;
-		this.color = color;
-
-		this.save_params2();
-		this.initParams();
-
-		this.player = thePlayer;
+		} else {
+            if (!this.isDead && !this.onValidSurface())
+            {
+                this.setDead();
+                this.onBroken((Entity)null);
+            }
+		}
 	}
-	*/
-	
-	/**
-	 * @param color2
+
+	/*
+	 * public EntitySpray(World world, int x, int y, int z, int direction, int
+	 * title_id, EntityPlayer thePlayer, Color4I color) { this(world);
+	 * 
+	 * this.block_pos_x = x; this.block_pos_y = y; this.block_pos_z = z;
+	 * this.hanging_direction = direction; this.title_id = title_id; this.color
+	 * = color;
+	 * 
+	 * this.save_params2(); this.initParams();
+	 * 
+	 * this.player = thePlayer; }
 	 */
-	private void save_params2() {
-		this.dataWatcher.updateObject(18, this.hanging_direction);
-		this.dataWatcher.updateObject(19, this.block_pos_x);
-		this.dataWatcher.updateObject(20, this.block_pos_y);
-		this.dataWatcher.updateObject(21, this.block_pos_z);
-		this.dataWatcher.updateObject(22, this.title_id);
-		if(color != null) {
+
+	public void loadColor() {
+		if (color == null)
+			this.color = new Color4I(
+					this.dataWatcher.getWatchableObjectInt(23),
+					this.dataWatcher.getWatchableObjectInt(24),
+					this.dataWatcher.getWatchableObjectInt(25));
+		else {
+			color.setValue(this.dataWatcher.getWatchableObjectInt(23),
+					this.dataWatcher.getWatchableObjectInt(24),
+					this.dataWatcher.getWatchableObjectInt(25), 255);
+		}
+	}
+
+	private void saveParams() {
+		this.dataWatcher.updateObject(18, this.hangingDirection);
+		this.dataWatcher.updateObject(19, this.field_146063_b);
+		this.dataWatcher.updateObject(20, this.field_146064_c);
+		this.dataWatcher.updateObject(21, this.field_146062_d);
+		this.dataWatcher.updateObject(22, this.tId);
+		if (this.tId >= 2) {
+			if (this.color == null)
+				this.color = new Color4I(ClientProps.sprayR,
+						ClientProps.sprayG, ClientProps.sprayB);
 			this.dataWatcher.updateObject(23, this.color.red);
 			this.dataWatcher.updateObject(24, this.color.green);
 			this.dataWatcher.updateObject(25, this.color.blue);
 		}
 	}
 
-	public void loadColor() {
-		if(color == null)
-			this.color = new Color4I(this.dataWatcher.getWatchableObjectInt(23), this.dataWatcher.getWatchableObjectInt(24), this.dataWatcher.getWatchableObjectInt(25)); 
-		else {
-			color.setValue(this.dataWatcher.getWatchableObjectInt(23), this.dataWatcher.getWatchableObjectInt(24), this.dataWatcher.getWatchableObjectInt(25), 255);
-		}
-	}
-
-	private void save_params() {
-		this.dataWatcher.updateObject(18, this.hanging_direction);
-		this.dataWatcher.updateObject(19, this.block_pos_x);
-		this.dataWatcher.updateObject(20, this.block_pos_y);
-		this.dataWatcher.updateObject(21, this.block_pos_z);
-		this.dataWatcher.updateObject(22, this.title_id);
-	}
-
-	// 为渲染器载入方向， x， y， z， title_id 等参数
 	public void loadParams() {
-		this.hanging_direction = this.dataWatcher.getWatchableObjectInt(18);
-		this.block_pos_x = this.dataWatcher.getWatchableObjectInt(19);
-		this.block_pos_y = this.dataWatcher.getWatchableObjectInt(20);
-		this.block_pos_z = this.dataWatcher.getWatchableObjectInt(21);
-		this.title_id = this.dataWatcher.getWatchableObjectInt(22);
+		this.hangingDirection = this.dataWatcher.getWatchableObjectInt(18);
+		this.field_146063_b = this.dataWatcher.getWatchableObjectInt(19);
+		this.field_146064_c = this.dataWatcher.getWatchableObjectInt(20);
+		this.field_146062_d = this.dataWatcher.getWatchableObjectInt(21);
+		this.tId = this.dataWatcher.getWatchableObjectInt(22);
 
 		this.initParams();
 	}
-	
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound var1) {
-		this.hanging_direction = var1.getInteger("hanging_direction");
-		this.block_pos_x = var1.getInteger("block_pos_x");
-		this.block_pos_y = var1.getInteger("block_pos_y");
-		this.block_pos_z = var1.getInteger("block_pos_z");
-		this.title_id = var1.getInteger("title_id");
 
-		if (title_id >= 2) {
-			this.color = new Color4I(var1.getInteger("color_r"), var1.getInteger("color_g"), var1.getInteger("color_b"));
+	/**
+	 * NBT Processing.
+	 */
+
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbtTag) {
+		this.hangingDirection = nbtTag.getByte("Direction");
+		this.field_146063_b = nbtTag.getInteger("TileX");
+		this.field_146064_c = nbtTag.getInteger("TileY");
+		this.field_146062_d = nbtTag.getInteger("TileZ");
+		this.tId = nbtTag.getInteger("TitleId");
+
+		if (tId >= 2) {
+			this.color = new Color4I(nbtTag.getInteger("ColorR"),
+					nbtTag.getInteger("ColorG"), nbtTag.getInteger("ColorB"));
 		}
 
 		initParams();
-
-		if (title_id >= 2)
-			save_params2();
-		else
-			save_params();
+		saveParams();
 	}
 
 	@Override
-	protected void writeEntityToNBT(NBTTagCompound var1) {
-		var1.setInteger("hanging_direction", this.hanging_direction);
-		var1.setInteger("block_pos_x", this.block_pos_x);
-		var1.setInteger("block_pos_y", this.block_pos_y);
-		var1.setInteger("block_pos_z", this.block_pos_z);
-		var1.setInteger("title_id", this.title_id);
+	public void writeEntityToNBT(NBTTagCompound nbtTag) {
+		nbtTag.setByte("Direction", (byte) this.hangingDirection);
+		nbtTag.setInteger("TileX", this.field_146063_b);
+		nbtTag.setInteger("TileY", this.field_146064_c);
+		nbtTag.setInteger("TileZ", this.field_146062_d);
+		nbtTag.setInteger("TitleId", this.tId);
 
-		if (title_id >= 2) {
-			var1.setInteger("color_r", this.color.red);
-			var1.setInteger("color_g", this.color.green);
-			var1.setInteger("color_b", this.color.blue);
+		if (tId >= 2) {
+			nbtTag.setInteger("ColorR", this.color.red);
+			nbtTag.setInteger("ColorG", this.color.green);
+			nbtTag.setInteger("ColorB", this.color.blue);
 		}
 	}
 
+	/**
+	 * Initialize params.
+	 */
 	public void initParams() {
-		int direction = this.hanging_direction;
+		int direction = this.hangingDirection;
 
 		float half_width;
 		float half_height;
 
-		if (title_id >= 2) {
+		if (tId >= 2) {
 			half_width = 0.5F;
 			half_height = 0.5F;
 		} else {
-			half_width = GRIDS_WIDTHS[this.title_id] / 2.0F;
-			half_height = GRIDS_HEIGHTS[this.title_id] / 2.0F;
+			half_width = GRIDS_WIDTHS[this.tId] / 2.0F;
+			half_height = GRIDS_HEIGHTS[this.tId] / 2.0F;
 		}
 
 		float entity_pos_x;
-		float entity_pos_y = this.block_pos_y + half_height;
+		float entity_pos_y = this.field_146064_c + half_height;
 		float entity_pos_z;
 
 		float horizontal_off = 0.0625F; // 1/16
 
 		if (direction == 2) {
-			entity_pos_x = this.block_pos_x + 1.0F - half_width;
-			entity_pos_z = this.block_pos_z - horizontal_off;
+			entity_pos_x = this.field_146063_b + 1.0F - half_width;
+			entity_pos_z = this.field_146062_d - horizontal_off;
 
 			this.rotationYaw = this.prevRotationYaw = 180;
 			this.setPosition(entity_pos_x, entity_pos_y, entity_pos_z);
-			this.boundingBox.setBounds(entity_pos_x - half_width, entity_pos_y - half_height, entity_pos_z - horizontal_off, entity_pos_x + half_width, entity_pos_y + half_height, entity_pos_z + horizontal_off);
+			this.boundingBox.setBounds(entity_pos_x - half_width, entity_pos_y
+					- half_height, entity_pos_z - horizontal_off, entity_pos_x
+					+ half_width, entity_pos_y + half_height, entity_pos_z
+					+ horizontal_off);
 			return;
 		}
 
 		if (direction == 1) {
-			entity_pos_x = this.block_pos_x - horizontal_off;
-			entity_pos_z = this.block_pos_z + half_width;
+			entity_pos_x = this.field_146063_b - horizontal_off;
+			entity_pos_z = this.field_146062_d + half_width;
 
 			this.rotationYaw = this.prevRotationYaw = 270;
 			this.setPosition(entity_pos_x, entity_pos_y, entity_pos_z);
-			this.boundingBox.setBounds(entity_pos_x - horizontal_off, entity_pos_y - half_height, entity_pos_z - half_width, entity_pos_x + horizontal_off, entity_pos_y + half_height, entity_pos_z + half_width);
+			this.boundingBox.setBounds(entity_pos_x - horizontal_off,
+					entity_pos_y - half_height, entity_pos_z - half_width,
+					entity_pos_x + horizontal_off, entity_pos_y + half_height,
+					entity_pos_z + half_width);
 			return;
 		}
 
 		if (direction == 0) {
-			entity_pos_x = this.block_pos_x + half_width;
-			entity_pos_z = this.block_pos_z + 1.0F + horizontal_off;
+			entity_pos_x = this.field_146063_b + half_width;
+			entity_pos_z = this.field_146062_d + 1.0F + horizontal_off;
 
 			this.rotationYaw = this.prevRotationYaw = 0;
 			this.setPosition(entity_pos_x, entity_pos_y, entity_pos_z);
-			this.boundingBox.setBounds(entity_pos_x - half_width, entity_pos_y - half_height, entity_pos_z - horizontal_off, entity_pos_x + half_width, entity_pos_y + half_height, entity_pos_z + horizontal_off);
+			this.boundingBox.setBounds(entity_pos_x - half_width, entity_pos_y
+					- half_height, entity_pos_z - horizontal_off, entity_pos_x
+					+ half_width, entity_pos_y + half_height, entity_pos_z
+					+ horizontal_off);
 			return;
 		}
 
 		if (direction == 3) {
-			entity_pos_x = this.block_pos_x + 1.0F + horizontal_off;
-			entity_pos_z = this.block_pos_z + 1.0F - half_width;
+			entity_pos_x = this.field_146063_b + 1.0F + horizontal_off;
+			entity_pos_z = this.field_146062_d + 1.0F - half_width;
 
 			this.rotationYaw = this.prevRotationYaw = 90;
 			this.setPosition(entity_pos_x, entity_pos_y, entity_pos_z);
-			this.boundingBox.setBounds(entity_pos_x - horizontal_off, entity_pos_y - half_height, entity_pos_z - half_width, entity_pos_x + horizontal_off, entity_pos_y + half_height, entity_pos_z + half_width);
+			this.boundingBox.setBounds(entity_pos_x - horizontal_off,
+					entity_pos_y - half_height, entity_pos_z - half_width,
+					entity_pos_x + horizontal_off, entity_pos_y + half_height,
+					entity_pos_z + half_width);
 			return;
 		}
 	}
 
-	// 判断被放置界面是否可用
-	public boolean onValidSurface() {
-		if (player == null)
-			player = Minecraft.getMinecraft().thePlayer;
-		
-		// 如果碰撞箱不是空的返回false
-		if (!this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty()) {
-			return false;
-		}
-
-		int x = this.block_pos_x;
-		int y = this.block_pos_y;
-		int z = this.block_pos_z;
-		int direction = this.hanging_direction;
-
-		float half_width;
-		float half_height;
-
-		if (title_id >= 2) {
-			half_width = 1 / 2.0F;
-			half_height = 1 / 2.0F;
-		} else {
-			half_width = GRIDS_WIDTHS[this.title_id] / 2.0F;
-			half_height = GRIDS_HEIGHTS[this.title_id] / 2.0F;
-		}
-
-		if (direction == 2) {
-			x = MathHelper.floor_double(this.posX - half_width);
-		}
-
-		if (direction == 1) {
-			z = MathHelper.floor_double(this.posZ - half_width);
-		}
-
-		if (direction == 0) {
-			x = MathHelper.floor_double(this.posX - half_width);
-		}
-
-		if (direction == 3) {
-			z = MathHelper.floor_double(this.posZ - half_width);
-		}
-
-		y = MathHelper.floor_double(this.posY - half_height);
-
-		if (title_id >= 2) {
-					Material material, material2;
-
-					if (direction == 1 || direction == 3) {
-						material = this.worldObj.getBlock(this.block_pos_x, y, z).getMaterial();
-						material2 = this.worldObj.getBlock(this.block_pos_x + 1, y, z).getMaterial();
-					} else {
-						material = this.worldObj.getBlock(x, y, this.block_pos_z).getMaterial();
-						material2 = this.worldObj.getBlock(x , y, this.block_pos_z + 1).getMaterial();
-					}
-					if (!material.isSolid()) {
-						player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.nospace")));
-						return false;
-					}
-					if (material2.isLiquid()) {
-						player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.haswater")));
-						return false;
-			}
-		} else {
-			for (int i = 0; i < GRIDS_WIDTHS[this.title_id]; ++i) {
-				for (int j = 0; j < GRIDS_HEIGHTS[this.title_id]; ++j) {
-					Material material, material2;
-
-					if (direction == 1 || direction == 3) {
-						material = this.worldObj.getBlock(this.block_pos_x, y + j, z + i).getMaterial();
-						material2 = this.worldObj.getBlock(this.block_pos_x + 1, y + j, z + i).getMaterial();
-					} else {
-						material = this.worldObj.getBlock(x + i, y + j, this.block_pos_z).getMaterial();
-						material2 = this.worldObj.getBlock(x + i, y + j, this.block_pos_z + 1).getMaterial();
-					}
-					if (!material.isSolid()) {
-						player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.nospace")));
-						return false;
-					}
-					if (material2.isLiquid()) {
-						player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.haswater")));
-						return false;
-					}
-				}
-
-			}
-		}
-
-		// 判断碰装箱内是否出现EntitySpray的实例
-		List<?> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox);
-		for (Object entity : list) {
-			if (!(entity instanceof EntitySpray))
-				continue;
-			if (entity instanceof EntitySpray && ((EntitySpray) entity).block_pos_x == this.block_pos_x && ((EntitySpray) entity).block_pos_y == this.block_pos_y && ((EntitySpray) entity).block_pos_z == this.block_pos_z)
-				continue;
-			player.addChatMessage(new ChatComponentTranslation(StatCollector.translateToLocal("spary.beenblocked") + entity.getClass().getName()));
-			return false;
-		}
-
-		return true;
-	}
-
-	// 让玩家可以击落画像为Item-----------------
+	/**
+	 * Make the spray disapper.
+	 */
 	@Override
 	public boolean hitByEntity(Entity par1Entity) {
-		return par1Entity instanceof EntityPlayer ? this.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) par1Entity), 0) : false;
+		return par1Entity instanceof EntityPlayer ? this.attackEntityFrom(
+				DamageSource.causePlayerDamage((EntityPlayer) par1Entity), 0)
+				: false;
 	}
 
 	@Override
@@ -376,7 +281,18 @@ public class EntitySpray extends Entity {
 	}
 
 	@Override
-	public boolean canBeCollidedWith() {
-		return true;
+	public int getWidthPixels() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getHeightPixels() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void onBroken(Entity entity) {
 	}
 }

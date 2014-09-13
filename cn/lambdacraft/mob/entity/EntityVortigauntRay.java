@@ -53,8 +53,10 @@ public class EntityVortigauntRay extends Entity {
 	
 	@Override
 	public void onUpdate() {
-		if(++ticksExisted > 15)
+		if(++ticksExisted > 15) {
+			
 			setDead();
+		}
 	}
 
 	@Override

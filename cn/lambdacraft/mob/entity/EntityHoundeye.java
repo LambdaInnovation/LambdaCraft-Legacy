@@ -29,9 +29,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.entity.IEntityLink;
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.LIEntityMob;
+import cn.liutils.api.util.EntityUtils;
 import cn.liutils.api.util.GenericUtils;
 
 /**
@@ -73,7 +74,7 @@ public class EntityHoundeye extends LIEntityMob implements IEntityLink<EntityLiv
 	@Override
     protected Entity findPlayerToAttack()
     {
-		Entity e = GenericUtils.getNearestEntityTo(this, GenericUtils.getEntitiesAround_CheckSight(this, 15.0, selector));
+		Entity e = EntityUtils.getNearestEntityTo(this, EntityUtils.getEntitiesAround_CheckSight(this, 15.0, selector));
 		if(e != null && e.getCommandSenderName().equals(throwerName))
 			return null;
 		return e;
@@ -83,7 +84,7 @@ public class EntityHoundeye extends LIEntityMob implements IEntityLink<EntityLiv
 	public void onUpdate() {
 		super.onUpdate();
 		
-		if(!worldObj.isRemote && isCharging) {
+		if(!worldObj.isRemote && isCharging && !dead) {
 			if(++chargeTick > 50) {
 				worldObj.spawnEntityInWorld(new EntityShockwave(worldObj, this, posX, posY, posZ));
 				this.playSound(GenericUtils.getRandomSound("lambdacraft:mobs.he_blast", 3), 0.5F, 1.0F);
@@ -229,7 +230,7 @@ public class EntityHoundeye extends LIEntityMob implements IEntityLink<EntityLiv
 
 	@Override
 	public ResourceLocation getTexture() {
-		return LCClientProps.HOUNDEYE_PATH;
+		return ClientProps.HOUNDEYE_PATH;
 	}
 
 }

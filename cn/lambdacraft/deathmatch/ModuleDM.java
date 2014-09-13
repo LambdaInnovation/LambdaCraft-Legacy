@@ -1,8 +1,9 @@
 package cn.lambdacraft.deathmatch;
 
 import net.minecraftforge.common.MinecraftForge;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.misc.CBCNetHandler;
+import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.deathmatch.block.container.DMGuiElements;
 import cn.lambdacraft.deathmatch.entity.EntityARGrenade;
 import cn.lambdacraft.deathmatch.entity.EntityBattery;
@@ -18,10 +19,10 @@ import cn.lambdacraft.deathmatch.entity.fx.EntityEgonRay;
 import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRay;
 import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRayColored;
 import cn.lambdacraft.deathmatch.entity.fx.GaussParticleFX;
-import cn.lambdacraft.deathmatch.event.DMEventListener;
-import cn.lambdacraft.deathmatch.network.MessageCharger;
-import cn.lambdacraft.deathmatch.network.MessageMedFiller;
+import cn.lambdacraft.deathmatch.network.NetChargerClient;
+import cn.lambdacraft.deathmatch.network.NetMedFillerClient;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
+import cn.lambdacraft.deathmatch.register.DMEventHandler;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -31,10 +32,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = "LambdaCraft|DeathMatch", name = "LambdaCraft DeathMatch", version = LCMod.VERSION, dependencies = LCMod.DEPENCY_CRAFTING)
+@Mod(modid = "LambdaCraft|DeathMatch", name = "LambdaCraft DeathMatch", version = CBCMod.VERSION, dependencies = CBCMod.DEPENCY_CRAFTING)
 public class ModuleDM {
 
 	@Instance("LambdaCraft|DeathMatch")
@@ -45,48 +46,48 @@ public class ModuleDM {
 
 	@EventHandler()
 	public void preInit(FMLPreInitializationEvent Init) {
-		
-		LCMod.netHandler.registerMessage(MessageCharger.Handler.class, MessageCharger.class, LCMod.getUniqueNetChannel(), Side.SERVER);
-		LCMod.netHandler.registerMessage(MessageMedFiller.Handler.class, MessageMedFiller.class, LCMod.getUniqueNetChannel(), Side.SERVER);
-		LCMod.guiHandler.addGuiElement(LCGeneralProps.GUI_ID_CHARGER, new DMGuiElements.ElementArmorCharger());
-		LCMod.guiHandler.addGuiElement(LCGeneralProps.GUI_ID_HEALTH, new DMGuiElements.ElementHealthCharger());
-		LCMod.guiHandler.addGuiElement(LCGeneralProps.GUI_ID_MEDFILLER, new DMGuiElements.ElementMedFiller());
+		MinecraftForge.EVENT_BUS.register(new DMEventHandler());
+		CBCNetHandler.addChannel(GeneralProps.NET_ID_CHARGER_CL, new NetChargerClient());
+		CBCNetHandler.addChannel(GeneralProps.NET_ID_MEDFILLER_CL, new NetMedFillerClient());
+		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_CHARGER, new DMGuiElements.ElementArmorCharger());
+		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_HEALTH, new DMGuiElements.ElementHealthCharger());
+		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_MEDFILLER, new DMGuiElements.ElementMedFiller());
 		proxy.preInit();
 	}
 
 	@EventHandler()
 	public void init(FMLInitializationEvent Init) {
-		DMItems.init(LCMod.config);
-		DMBlocks.init(LCMod.config);
+		DMItems.init(CBCMod.config);
+		DMBlocks.init(CBCMod.config);
 		
 		EntityRegistry.registerModEntity(EntityGaussRay.class, "gauss",
-				LCGeneralProps.ENT_ID_GAUSS1, ModuleDM.instance, 32, 1, true);
+				GeneralProps.ENT_ID_GAUSS1, CBCMod.instance, 32, 1, true);
 		EntityRegistry.registerModEntity(EntityGaussRayColored.class, "gauss2",
-				LCGeneralProps.ENT_ID_GAUSS2, ModuleDM.instance, 32, 1, true);
+				GeneralProps.ENT_ID_GAUSS2, CBCMod.instance, 32, 1, true);
 		EntityRegistry.registerModEntity(EntityEgonRay.class, "egonray",
-				LCGeneralProps.ENT_ID_EGON_RAY, ModuleDM.instance, 32, 1, true);
+				GeneralProps.ENT_ID_EGON_RAY, CBCMod.instance, 32, 1, true);
 		EntityRegistry.registerModEntity(EntityARGrenade.class, "argrenade",
-				LCGeneralProps.ENT_ID_ARGRENADE, ModuleDM.instance, 32, 3, true);
+				GeneralProps.ENT_ID_ARGRENADE, CBCMod.instance, 32, 3, true);
 		EntityRegistry.registerModEntity(EntityHGrenade.class, "hgrenade",
-				LCGeneralProps.ENT_ID_HGRENADE, ModuleDM.instance, 32, 3, true);
+				GeneralProps.ENT_ID_HGRENADE, CBCMod.instance, 32, 3, true);
 		EntityRegistry.registerModEntity(EntityHornet.class, "hornet",
-				LCGeneralProps.ENT_ID_HORNET, ModuleDM.instance, 32, 3, true);
+				GeneralProps.ENT_ID_HORNET, CBCMod.instance, 32, 3, true);
 		EntityRegistry.registerModEntity(EntityRocket.class, "rocket",
-				LCGeneralProps.ENT_ID_ROCKET, ModuleDM.instance, 64, 3, true);
+				GeneralProps.ENT_ID_ROCKET, CBCMod.instance, 64, 3, true);
 		EntityRegistry.registerModEntity(EntityRPGDot.class, "dot",
-				LCGeneralProps.ENT_ID_DOT, ModuleDM.instance, 64, 3, true);
+				GeneralProps.ENT_ID_DOT, CBCMod.instance, 64, 3, true);
 		EntityRegistry.registerModEntity(EntitySatchel.class, "satchel",
-				LCGeneralProps.ENT_ID_SATCHEL, ModuleDM.instance, 32, 2, true);
+				GeneralProps.ENT_ID_SATCHEL, CBCMod.instance, 32, 2, true);
 		EntityRegistry.registerModEntity(EntityCrossbowArrow.class, "arrow",
-				LCGeneralProps.ENT_ID_ARROW, ModuleDM.instance, 32, 2, true);
+				GeneralProps.ENT_ID_ARROW, CBCMod.instance, 32, 2, true);
 		EntityRegistry.registerModEntity(EntityMedkit.class, "medkit",
-				LCGeneralProps.ENT_ID_MEDKIT, ModuleDM.instance, 32, 5, true);
+				GeneralProps.ENT_ID_MEDKIT, CBCMod.instance, 32, 5, true);
 		EntityRegistry.registerModEntity(EntityBattery.class, "battery",
-				LCGeneralProps.ENT_ID_BATTERY, ModuleDM.instance, 32, 5, true);
+				GeneralProps.ENT_ID_BATTERY, CBCMod.instance, 32, 5, true);
 		EntityRegistry.registerModEntity(GaussParticleFX.class, "gaussp",
-				LCGeneralProps.ENT_ID_GAUSS_PARTICLE, ModuleDM.instance, 32, 5, true);
+				GeneralProps.ENT_ID_GAUSS_PARTICLE, CBCMod.instance, 32, 5, true);
 		EntityRegistry.registerModEntity(EntityCrossbowStill.class, "still",
-				LCGeneralProps.ENT_ID_BOW_STILL, ModuleDM.instance, 16, 5, false);
+				GeneralProps.ENT_ID_BOW_STILL, CBCMod.instance, 16, 5, false);
 
 		proxy.init();
 	}

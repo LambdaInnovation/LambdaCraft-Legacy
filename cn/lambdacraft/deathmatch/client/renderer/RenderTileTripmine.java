@@ -9,7 +9,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.LCClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.block.BlockTripmine;
 import cn.lambdacraft.deathmatch.block.TileTripmine;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
@@ -111,7 +111,7 @@ public class RenderTileTripmine extends RendererSidedCube {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_CULL_FACE);
-		RenderUtils.loadTexture(LCClientProps.TRIPMINE_RAY_PATH);
+		RenderUtils.loadTexture(ClientProps.TRIPMINE_RAY_PATH);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 		tessellator.startDrawingQuads();
@@ -138,10 +138,10 @@ public class RenderTileTripmine extends RendererSidedCube {
 	@Override
 	public ResourceLocation getTexture(TileEntity te, int side, int metadata) {
 		if (side == 0 || side == 1)
-			return LCClientProps.TRIPMINE_TOP_PATH;
+			return ClientProps.TRIPMINE_TOP_PATH;
 		if (side == metadata)
-			return LCClientProps.TRIPMINE_FRONT_PATH;
-		return LCClientProps.TRIPMINE_SIDE_PATH;
+			return ClientProps.TRIPMINE_FRONT_PATH;
+		return ClientProps.TRIPMINE_SIDE_PATH;
 	}
 
 }

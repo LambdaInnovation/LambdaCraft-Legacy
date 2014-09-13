@@ -16,8 +16,9 @@ package cn.lambdacraft.deathmatch.item;
 
 import java.util.List;
 
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.item.LCGenericItem;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.item.CBCGenericItem;
+import cn.lambdacraft.deathmatch.block.TileHealthCharger;
 import cn.lambdacraft.deathmatch.entity.EntityMedkit;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -36,7 +37,7 @@ import net.minecraft.world.World;
 /**
  * @author mkpoli
  */
-public class ItemMedkit extends LCGenericItem {
+public class ItemMedkit extends CBCGenericItem {
 
 	public static final int MAX_STORE = 3;
 
@@ -46,9 +47,9 @@ public class ItemMedkit extends LCGenericItem {
 
 	public ItemMedkit() {
 		super();
-		setCreativeTab(LCMod.cct);
+		setCreativeTab(CBCMod.cct);
 		setUnlocalizedName("medkit");
-		this.setTextureName("lambdacraft:medkit");
+		this.setIconName("medkit");
 		this.setMaxStackSize(1);
 		this.setMaxDamage(25); // 最多使用25次
 	}
@@ -71,14 +72,16 @@ public class ItemMedkit extends LCGenericItem {
 
 	public static int tryAddEffectTo(ItemStack medkit, ItemStack potion,
 			EnumAddingType type) {
-		List<PotionEffect> list = Items.potionitem.getEffects(potion.getItemDamage());
+		List<PotionEffect> list = Items.potionitem
+				.getEffects(potion.getItemDamage());
 		NBTTagCompound nbt = loadCompound(potion);
 		int addCount = 0;
 
 		for (PotionEffect e : list) {
 			for (int i = 0; i < 3; i++) {
-				//if(type == EnumAddingType.DURATION)
-				//	e.duration *= 1.3;
+				if(type == EnumAddingType.DURATION)
+					TileHealthCharger.fldDuration.set(e, 
+							(Double)TileHealthCharger.fldDuration.get(e) * 1.3);
 				if (isSlotAvailable(medkit, i)) {
 					addEffect(medkit, e, i);
 					break;
@@ -212,13 +215,13 @@ public class ItemMedkit extends LCGenericItem {
 		return stack.stackTagCompound;
 	}
 
-	public void setPotions(ItemStack stack, ItemStack potion1Stack,
-			ItemStack potion2Stack, ItemStack potion3Stack) {
-		if (!(potion1Stack.getItem() == Items.potionitem)
-				|| !(potion1Stack.getItem() == Items.potionitem)
-				|| !(potion1Stack.getItem() == Items.potionitem))
+	public void setPotions(ItemStack stack, ItemStack p1,
+			ItemStack p2, ItemStack potion3Stack) {
+		if (!(p1.getItem() == Items.potionitem)
+				|| !(p1.getItem() == Items.potionitem)
+				|| !(p1.getItem() == Items.potionitem))
 			return;
-		if (potion1Stack.getTagCompound().getBoolean("isBadEffect") == true)
+		if (p1.getTagCompound().getBoolean("isBadEffect") == true)
 			return;
 
 	}

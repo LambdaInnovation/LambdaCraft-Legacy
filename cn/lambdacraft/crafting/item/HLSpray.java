@@ -16,50 +16,27 @@ package cn.lambdacraft.crafting.item;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Direction;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
-import cn.lambdacraft.core.item.LCGenericItem;
-import cn.lambdacraft.core.proxy.LCClientProps;
-import cn.lambdacraft.crafting.entity.EntitySpray;
+import cn.lambdacraft.core.prop.ClientProps;
 
 /**
+ * Custom spray.
  * @author mkpoli
- * 
  */
-public class HLSpray extends LCGenericItem {
-	
+public class HLSpray extends ItemSpray {
+
 	public HLSpray() {
-		super();
-		setMaxStackSize(1);
-		setMaxDamage(10);
-		setCreativeTab(LCMod.cctMisc);
-		setUnlocalizedName("hlspray");
-		setTextureName("lambdacraft:hlspray");
+		super(ClientProps.getSprayId() + 2);
+		setIAndU("hlspray");
 	}
 	
 	@Override
 	public boolean onItemUse(ItemStack item_stack, EntityPlayer player,
 			World world, int x, int y, int z, int side, float x_off,
 			float y_off, float z_off) {
-		// 对其他方块的上下表面使用时，不触发任何效果
-		if (side == 0)
-			return false;
-		if (side == 1)
-			return false;
-
-		// 创建Facing(3D) to Direction(2D)数组传递第Side个对象为in
-		int direction = Direction.facingToDirection[side];
-		// 创建EntityArt实例
-		EntitySpray entity = new EntitySpray(world, x, y, z, direction, LCClientProps.getSprayId() + 2, player);
-		// 判断是否被放置在了可用的表面
-		if (entity.onValidSurface()) {
-			if (!world.isRemote) {
-				world.spawnEntityInWorld(entity); // 生成entity
-				world.playSoundAtEntity(player, "lambdacraft:entities.sprayer", 0.7f, 1);
-			}
-			item_stack.damageItem(1, player);
-		}
-		return true;
+		//胡妹你看看你这参传的，既然tID是Item构建时确定，运行时修改当然不会影响结果= =
+		this.tId = ClientProps.getSprayId() + 2;
+		return super.onItemUse(item_stack, player, world, x, y, z, side, x_off, y_off, z_off);
 	}
+
 }

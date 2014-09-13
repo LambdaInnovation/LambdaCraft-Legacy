@@ -14,25 +14,21 @@
  */
 package cn.lambdacraft.core.block;
 
+import ic2.api.energy.event.EnergyTileLoadEvent;
+import ic2.api.energy.event.EnergyTileUnloadEvent;
+import ic2.api.energy.tile.IEnergyTile;
 import net.minecraftforge.common.MinecraftForge;
-import cn.lambdacraft.api.energy.events.EnergyTileLoadEvent;
 import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
-import cn.lambdacraft.api.energy.events.EnergyTileUnloadEvent;
-import cn.lambdacraft.api.energy.tile.IEnergyTile;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 
 /**
  * @author WeAthFolD
  * 
  */
-public abstract class TileElectrical extends LCTileEntity implements
-		IEnergyTile {
+public abstract class TileElectrical extends CBCTileEntity implements IEnergyTile {
 
 	public boolean addedToNet = false;
-
-	/**
-	 * 
-	 */
+	
 	public TileElectrical() {
 
 	}
@@ -42,7 +38,8 @@ public abstract class TileElectrical extends LCTileEntity implements
 		super.updateEntity();
 		if (!this.addedToNet) {
 			this.addedToNet = true;
-			this.onElectricTileLoad();
+			if(!worldObj.isRemote) //executes event only on server side
+				this.onElectricTileLoad();
 		}
 	}
 	
@@ -53,21 +50,15 @@ public abstract class TileElectrical extends LCTileEntity implements
 	@Override
 	public void onTileUnload() {
 		super.onTileUnload();
-	    if ((LCMod.proxy.isSimulating()) && (this.addedToNet)) {
-	        MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(worldObj, this));
-	        this.addedToNet = true;
-	     }
+	    if ((CBCMod.proxy.isSimulating()) && (this.addedToNet)) 
+	        MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
 		this.addedToNet = false;
 	}
 
-	@Override
-	public boolean isAddedToEnergyNet() {
-		return addedToNet;
-	}
-
 	public int sendEnergy(int amm) {
+		if(CBCMod.ic2Installed) return amm;
 		int amount = 0;
-		EnergyTileSourceEvent event = new EnergyTileSourceEvent(worldObj, this, amm);
+		EnergyTileSourceEvent event = new EnergyTileSourceEvent(this, amm);
 		MinecraftForge.EVENT_BUS.post(event);
 		amount += event.amount;
 		return amount;

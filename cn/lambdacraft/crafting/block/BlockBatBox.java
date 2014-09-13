@@ -23,9 +23,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.LCMod;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.block.BlockElectricalBase;
-import cn.lambdacraft.core.proxy.LCGeneralProps;
+import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.crafting.block.tile.TileBatBox;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -48,7 +48,7 @@ public class BlockBatBox extends BlockElectricalBase {
 		super(Material.rock);
 		this.setBlockName("batbox" + typ);
 		type = typ;
-		this.setGuiId(LCGeneralProps.GUI_ID_BATBOX);
+		this.setGuiId(GeneralProps.GUI_ID_BATBOX);
 		if (type != 0 && type != 1)
 			throw new RuntimeException();
 
@@ -64,7 +64,7 @@ public class BlockBatBox extends BlockElectricalBase {
 		}
 		if (guiId == -1 || tileEntity == null)
 			return false;
-		player.openGui(LCMod.instance, guiId, world, x, y, z);
+		player.openGui(CBCMod.instance, guiId, world, x, y, z);
 		return true;
 	}
 
@@ -99,7 +99,7 @@ public class BlockBatBox extends BlockElectricalBase {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int v) {
+	public TileEntity createNewTileEntity(World world, int i) {
 		return (type == 1 ? new TileBatBox.TileBoxLarge()
 				: new TileBatBox.TileBoxSmall());
 	}

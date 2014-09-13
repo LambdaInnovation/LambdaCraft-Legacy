@@ -114,7 +114,7 @@ public class EntityBarnacle extends LIEntityMob {
 			//Calculate tracking range
 			if(--tickBreaking <= 0) {
 				Motion3D begin = new Motion3D(posX, posY, posZ, 0.0, -1.0, 0.0);
-				Vec3 vec1 = begin.asVec3(worldObj), vec2 = begin.move(30.0).asVec3(worldObj);
+				Vec3 vec1 = begin.getPosVec(worldObj), vec2 = begin.move(30.0).getPosVec(worldObj);
 				MovingObjectPosition trace = worldObj.rayTraceBlocks(vec1, vec2);
 				double distance = trace != null ? (posY - trace.hitVec.yCoord) : 30;
 				if(tentacleLength < distance)
@@ -126,7 +126,7 @@ public class EntityBarnacle extends LIEntityMob {
 					List<Entity> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, box, GenericUtils.selectorLiving);
 					if(list != null && list.size() == 1) {
 						Entity e = list.get(0);
-						if(GenericUtils.getEntitySize(e) <= 6.0) {
+						if(EntityUtils.getEntityVolume(e) <= 6.0) {
 							this.playSound("lambdacraft:mobs.bcl_alert", 0.5F, 1.0F);
 							startPullingEntity(e);
 						}
@@ -170,11 +170,12 @@ public class EntityBarnacle extends LIEntityMob {
 		}
 		
 		//Check if barnacle could still exist
-		if(worldObj.getBlock(MathHelper.floor_double(posX), (int)posY + 1, MathHelper.floor_double(posZ)) == Blocks.air) {
+		if(worldObj.getBlock(MathHelper.floor_double(posX), (int)posY + 1, MathHelper.floor_double(posZ)) == Blocks.air
+				) {
 			//TryAttach
 			if(ticksExisted < 10) {
 				Motion3D mo = new Motion3D(this);
-				MovingObjectPosition result = worldObj.rayTraceBlocks(mo.asVec3(worldObj), mo.asVec3(worldObj).addVector(0.0, 40.0, 0.0));
+				MovingObjectPosition result = worldObj.rayTraceBlocks(mo.getPosVec(worldObj), mo.getPosVec(worldObj).addVector(0.0, 40.0, 0.0));
 				if(result != null && worldObj.isSideSolid(result.blockX, result.blockY, result.blockZ, ForgeDirection.DOWN)) {
 					if(worldObj.isBlockNormalCubeDefault(result.blockX, result.blockY, result.blockZ, false)) {
 						this.setPosition(result.blockX + 0.5, result.blockY - 1.0, result.blockZ + 0.5);
@@ -194,7 +195,7 @@ public class EntityBarnacle extends LIEntityMob {
 		} else detach = false;
 		
 		//Disappear if in peaceful
-		if(!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.PEACEFUL)
+		if(!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.EASY)
 			this.setDead();
 	}
 	

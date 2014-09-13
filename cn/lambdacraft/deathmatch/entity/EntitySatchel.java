@@ -14,12 +14,12 @@
  */
 package cn.lambdacraft.deathmatch.entity;
 
-import cn.liutils.api.entity.EntityProjectile;
-import cn.weaponmod.api.WeaponHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
+import cn.weaponmod.api.WeaponHelper;
 
 /**
  * 遥控炸弹实体。
@@ -27,7 +27,7 @@ import net.minecraft.world.World;
  * @author WeAthFolD
  * 
  */
-public class EntitySatchel extends EntityProjectile {
+public class EntitySatchel extends EntityThrowable {
 
 	public static double HEIGHT = 0.083, WIDTH1 = 0.2, WIDTH2 = 0.15;
 
@@ -73,13 +73,8 @@ public class EntitySatchel extends EntityProjectile {
 	}
 
 	@Override
-	protected float getHeadingVelocity() {
+	protected float func_70182_d() {
 		return 0.7F;
-	}
-
-	@Override
-	protected float getMotionYOffset() {
-		return 0;
 	}
 
 	@Override
@@ -109,7 +104,7 @@ public class EntitySatchel extends EntityProjectile {
 	}
 
 	@Override
-	protected void onCollide(MovingObjectPosition result) {
+	protected void onImpact(MovingObjectPosition result) {
 		switch (result.sideHit) {
 		case 1:
 			motionY = -0.5 * motionY;
