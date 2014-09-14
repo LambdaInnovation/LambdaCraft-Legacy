@@ -27,10 +27,11 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.util.Vec3;
 import net.minecraftforge.common.util.ForgeDirection;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.mob.ModuleMob;
 import cn.lambdacraft.mob.block.BlockSentryRay;
 import cn.lambdacraft.mob.entity.EntitySentry;
-import cn.lambdacraft.mob.network.NetSentrySync;
+import cn.lambdacraft.mob.network.MsgSentrySync;
 import cn.liutils.api.command.LICommandBase;
 import cn.liutils.api.util.BlockPos;
 import cn.liutils.api.util.EntityUtils;
@@ -97,7 +98,8 @@ public class TileSentryRay extends TileEntity {
 			TileEntity te = worldObj.getTileEntity(linkedX, linkedY, linkedZ);
 			if (te != null && te instanceof TileSentryRay) {
 				linkedBlock = (TileSentryRay) te;
-				NetSentrySync.sendSyncPacket(this);
+				CBCMod.netHandler.sendToDimension(
+						new MsgSentrySync(this), worldObj.provider.dimensionId);
 			}
 			linkedX = linkedY = linkedZ = 0;
 		}
@@ -125,7 +127,8 @@ public class TileSentryRay extends TileEntity {
 							linkedBlock = t;
 							ModuleMob.tileMap.remove(player);
 							LICommandBase.sendChat(player, "sentry.successful.name");
-							NetSentrySync.sendSyncPacket(this);
+							CBCMod.netHandler.sendToDimension(
+									new MsgSentrySync(this), worldObj.provider.dimensionId);
 							isActivated = true;
 						} else {
 							LICommandBase.sendChat(player, "sentry.toofar.name");
@@ -158,7 +161,8 @@ public class TileSentryRay extends TileEntity {
 		}
 		if (++tickSinceLastUpdate > 20) {
 			tickSinceLastUpdate = 0;
-			NetSentrySync.sendSyncPacket(this);
+			CBCMod.netHandler.sendToDimension(
+					new MsgSentrySync(this), worldObj.provider.dimensionId);
 		}
 	}
 

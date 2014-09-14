@@ -17,14 +17,15 @@ package cn.lambdacraft.core.client.key;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import cn.lambdacraft.core.network.NetKeyUsing;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.network.MsgKeyUsing;
 import cn.lambdacraft.deathmatch.proxy.ClientProxy;
 import cn.liutils.api.client.key.IKeyHandler;
 
 /**
  * 使用按键的处理类，负责发包和功能性函数。
  * 
- * @see cn.lambdacraft.core.network.NetKeyUsing
+ * @see cn.lambdacraft.core.network.MsgKeyUsing
  * @see cn.lambdacraft.api.tile.IUseable
  * @author WeAthFolD
  * 
@@ -38,7 +39,7 @@ public class KeyUse implements IKeyHandler {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		if (player == null)
 			return;
-		NetKeyUsing.sendUsingPacket(true);
+		CBCMod.netHandler.sendToServer(new MsgKeyUsing(true));
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class KeyUse implements IKeyHandler {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		if (player == null)
 			return;
-		NetKeyUsing.sendUsingPacket(false);
+		CBCMod.netHandler.sendToServer(new MsgKeyUsing(false));
 		ItemStack armorStack = player.inventory.armorInventory[3];
 		if (armorStack == null)
 			return;

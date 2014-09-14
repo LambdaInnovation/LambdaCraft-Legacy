@@ -53,8 +53,7 @@ public class GeneralProps {
 			ENT_ID_HEADCRAB = 18, ENT_ID_BARNACLE = 19, ENT_ID_BOW_STILL = 20, ENT_ID_ZOMBIE = 21,
 			ENT_ID_TURRET = 22, ENT_ID_HOUNDEYE = 23, ENT_ID_SHOCKWAVE = 24, ENT_ID_VORTIGAUNT = 25, ENT_ID_VOR_RAY = 26;
 
-	public static final String NET_CHANNEL_CLIENT = "cbcclient",
-			NET_CHANNEL_SERVER = "cbcserver";
+	public static final String NET_CHANNEL = "lcnet";
 
 	public static final byte NET_ID_EXPLOSION = 0, NET_ID_DM = 1,
 			NET_ID_CRAFTER_CL = 2, NET_ID_CHARGER_CL = 3, NET_ID_USE = 4,

@@ -18,7 +18,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.stats.Achievement;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.config.Configuration;
-import cn.lambdacraft.crafting.CraftingHandler;
 import cn.lambdacraft.crafting.register.CBCBlocks;
 import cn.lambdacraft.crafting.register.CBCItems;
 
@@ -43,9 +42,6 @@ public class CBCAchievements {
 
 	/* The Page of Achs */
 	public static AchievementPage achpage;
-
-	/* Activer */
-	public static CraftingHandler craftHandler;
 
 	public static void init(Configuration conf) {
 		
@@ -79,7 +75,6 @@ public class CBCAchievements {
 					ohMyTeeth, letsMoe);
 
 			AchievementPage.registerAchievementPage(achpage);
-			craftHandler = new CraftingHandler();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

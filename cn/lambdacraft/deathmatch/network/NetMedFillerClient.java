@@ -50,7 +50,7 @@ public class NetMedFillerClient implements IChannelProcess {
 		}
 
 		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = GeneralProps.NET_CHANNEL_SERVER;
+		packet.channel = GeneralProps.NET_CHANNEL;
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 		PacketDispatcher.sendPacketToServer(packet);

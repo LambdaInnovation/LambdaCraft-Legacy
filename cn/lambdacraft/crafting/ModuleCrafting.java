@@ -14,17 +14,17 @@
  */
 package cn.lambdacraft.crafting;
 
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.misc.CBCAchievements;
-import cn.lambdacraft.core.misc.CBCNetHandler;
 import cn.lambdacraft.core.prop.GeneralProps;
-import cn.lambdacraft.core.proxy.Proxy;
 import cn.lambdacraft.crafting.block.container.CRGuiElements;
 import cn.lambdacraft.crafting.command.CommandSpray;
 import cn.lambdacraft.crafting.command.CommandXHairColor;
 import cn.lambdacraft.crafting.entity.EntitySpray;
 import cn.lambdacraft.crafting.item.ItemMaterial.EnumMaterial;
-import cn.lambdacraft.crafting.network.NetCrafterClient;
+import cn.lambdacraft.crafting.network.MsgCrafterClient;
 import cn.lambdacraft.crafting.recipe.RecipeCrafter;
 import cn.lambdacraft.crafting.recipe.RecipeRepair;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
@@ -34,10 +34,6 @@ import cn.lambdacraft.crafting.world.CBCWorldGen;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.lambdacraft.mob.register.CBCMobItems;
-import cn.liutils.core.client.register.LISoundRegistry;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -46,9 +42,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 /**
  * @author Administrator
@@ -87,8 +83,8 @@ public class ModuleCrafting {
 				new CRGuiElements.ElementBatbox());
 		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_EL_CRAFTER,
 				new CRGuiElements.ElementElCrafter());
-		CBCNetHandler.addChannel(GeneralProps.NET_ID_CRAFTER_CL,
-				new NetCrafterClient());
+		CBCMod.netHandler.registerMessage(MsgCrafterClient.Handler.class, MsgCrafterClient.class,
+				GeneralProps.NET_ID_CRAFTER_CL, Side.SERVER);
 		EntityRegistry.registerModEntity(EntitySpray.class, "lc_spray", GeneralProps.ENT_ID_ART, CBCMod.instance, 64, 1000, false);
 		proxy.init();
 	}

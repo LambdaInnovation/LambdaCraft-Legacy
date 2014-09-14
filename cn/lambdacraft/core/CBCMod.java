@@ -14,39 +14,26 @@
  */
 package cn.lambdacraft.core;
 
-import java.util.EnumSet;
 import java.util.logging.Logger;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.command.CommandHandler;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import cn.lambdacraft.core.energy.EnergyNet;
-import cn.lambdacraft.core.misc.CBCNetHandler;
-import cn.lambdacraft.core.network.NetKeyUsing;
+import cn.lambdacraft.core.network.MsgKeyUsing;
 import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.register.LIGuiHandler;
-import cn.liutils.core.register.Config;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -97,7 +84,7 @@ public class CBCMod {
 	
 	public static LIGuiHandler guiHandler = new LIGuiHandler();
 	
-	public static SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(GeneralProps.NET_CHANNEL_SERVER);
+	public static SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(GeneralProps.NET_CHANNEL);
 
 	/**
 	 * 预加载（设置、世界生成、注册Event）
@@ -135,7 +122,7 @@ public class CBCMod {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMod", "LambdaCraft");
 		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMisc", "LambdaCraft-Misc");
-		CBCNetHandler.addChannel(GeneralProps.NET_ID_USE, new NetKeyUsing());
+		netHandler.registerMessage(MsgKeyUsing.Handler.class, MsgKeyUsing.class, GeneralProps.NET_ID_USE, Side.SERVER);
 		proxy.init();
 	}
 

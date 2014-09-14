@@ -6,7 +6,6 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.biome.BiomeGenBase;
 import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.misc.CBCNetHandler;
 import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
@@ -17,7 +16,7 @@ import cn.lambdacraft.mob.entity.EntityHoundeye;
 import cn.lambdacraft.mob.entity.EntitySentry;
 import cn.lambdacraft.mob.entity.EntityShockwave;
 import cn.lambdacraft.mob.entity.EntitySnark;
-import cn.lambdacraft.mob.network.NetSentrySync;
+import cn.lambdacraft.mob.network.MsgSentrySync;
 import cn.lambdacraft.mob.register.CBCMobBlocks;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.util.BlockPos;
@@ -29,8 +28,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = "LambdaCraft|Living", name = "LambdaCraft Living", version = CBCMod.VERSION, dependencies = CBCMod.DEPENDENCY_CORE)
 public class ModuleMob {
@@ -71,7 +70,9 @@ public class ModuleMob {
 		
 		//EntityRegistry.addSpawn(EntityBarnacle.class, 5, 0, 65, EnumCreatureType.monster, BARNACLE_GEN);
 
-		CBCNetHandler.addChannel(GeneralProps.NET_ID_SENTRYSYNCER, new NetSentrySync());
+		CBCMod.netHandler.registerMessage(MsgSentrySync.Handler.class, MsgSentrySync.class,
+				GeneralProps.NET_ID_SENTRYSYNCER, Side.CLIENT);
+		
 		EntityRegistry.registerModEntity(EntitySnark.class, "snark",
 				GeneralProps.ENT_ID_SNARK, CBCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityHeadcrab.class, "headcrab",

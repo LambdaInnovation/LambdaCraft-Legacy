@@ -19,7 +19,7 @@ import org.lwjgl.opengl.GL11;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.block.container.ContainerElCrafter;
 import cn.lambdacraft.crafting.block.tile.TileElCrafter;
-import cn.lambdacraft.crafting.network.NetCrafterClient;
+import cn.lambdacraft.crafting.network.MsgCrafterClient;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.client.gui.LIGuiButton;
 import cn.liutils.api.client.gui.LIGuiContainer;
@@ -158,12 +158,12 @@ public class GuiElectricCrafter extends LIGuiContainer {
 	public void onButtonClicked(LIGuiButton button) {
 		if (button.name == "up" || button.name == "down") {
 			boolean isDown = button.name == "down" ? true : false;
-			NetCrafterClient.sendCrafterPacket(tileEntity, 0, isDown);
+			MsgCrafterClient.sendCrafterPacket(tileEntity, 0, isDown);
 			return;
 		}
 		if (button.name == "left" || button.name == "right") {
 			boolean isForward = button.name == "right" ? true : false;
-			NetCrafterClient.sendCrafterPacket(tileEntity, 1, isForward);
+			MsgCrafterClient.sendCrafterPacket(tileEntity, 1, isForward);
 			return;
 		}
 	}

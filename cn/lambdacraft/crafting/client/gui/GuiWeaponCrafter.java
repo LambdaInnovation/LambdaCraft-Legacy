@@ -24,7 +24,7 @@ import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.block.container.ContainerWeaponCrafter;
 import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
-import cn.lambdacraft.crafting.network.NetCrafterClient;
+import cn.lambdacraft.crafting.network.MsgCrafterClient;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.client.gui.LIGuiButton;
 import cn.liutils.api.client.gui.LIGuiContainer;
@@ -181,13 +181,13 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 		if (button.name == "up" || button.name == "down") {
 			boolean isDown = button.name == "down" ? true : false;
 			te.addScrollFactor(isDown);
-			NetCrafterClient.sendCrafterPacket(te, 0, isDown);
+			MsgCrafterClient.sendCrafterPacket(te, 0, isDown);
 			return;
 		}
 		if (button.name == "left" || button.name == "right") {
 			boolean isForward = button.name == "right" ? true : false;
 			te.addPage(isForward);
-			NetCrafterClient.sendCrafterPacket(te, 1, isForward);
+			MsgCrafterClient.sendCrafterPacket(te, 1, isForward);
 			return;
 		}
 	}
