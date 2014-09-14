@@ -33,7 +33,7 @@ import org.lwjgl.opengl.GL11;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.api.hud.IHudTipProvider;
 import cn.lambdacraft.api.hud.ISpecialCrosshair;
-import cn.lambdacraft.core.CBCPlayer;
+import cn.lambdacraft.core.LCClientPlayer;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
 import cn.liutils.api.client.util.HudUtils;
@@ -103,7 +103,7 @@ public class HEVRenderingUtils {
         
         //Other section
         drawArmorTip(player, engine, k, l);
-        if(CBCPlayer.drawArmorTip)
+        if(LCClientPlayer.drawArmorTip)
         	drawWeaponTip(player, engine, k, l);
  
         engine.bindTexture(engine.getResourceLocation(1)); 

@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import cn.lambdacraft.core.CBCPlayer;
+import cn.lambdacraft.core.LCClientPlayer;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.client.model.ModelGauss;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -27,7 +27,7 @@ public class DMClientEventHandler {
 	public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		boolean hasHEV = CBCPlayer.armorStat[2] && CBCPlayer.armorStat[3];
+		boolean hasHEV = LCClientPlayer.armorStat[2] && LCClientPlayer.armorStat[3];
 		if (event.type == ElementType.HEALTH || event.type == ElementType.ARMOR || event.type == ElementType.CROSSHAIRS) {
 			if (hasHEV) 
 				event.setCanceled(true);

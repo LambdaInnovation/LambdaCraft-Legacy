@@ -42,7 +42,7 @@ public class CBCGenericItem extends Item {
 	 */
 	public CBCGenericItem() {
 		super();
-		setCreativeTab(CBCMod.cctMisc);
+		setCreativeTab(CBCMod.cct);
 	}
 
 	public CBCGenericItem setDescription(String d) {

@@ -3,7 +3,7 @@ package cn.lambdacraft.deathmatch.flashlight;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 import java.util.EnumSet;
-import cn.lambdacraft.core.CBCPlayer;
+import cn.lambdacraft.core.LCClientPlayer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
@@ -63,7 +63,7 @@ public class ClientTickHandler implements ITickHandler {
 			LightValue.emptyData();
 			
 			MovingObjectPosition result = player.rayTrace(36.0D, 1.0F);
-			if (flag && CBCPlayer.armorStat[3] && result != null)
+			if (flag && LCClientPlayer.armorStat[3] && result != null)
 			{
 				int blockX = result.blockX;
 				int blockY = result.blockY;

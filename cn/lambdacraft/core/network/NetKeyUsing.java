@@ -14,6 +14,8 @@
  */
 package cn.lambdacraft.core.network;
 
+import io.netty.buffer.ByteBuf;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -30,6 +32,9 @@ import cn.liutils.api.util.BlockPos;
 import cn.liutils.api.util.Motion3D;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 /**
  * 用来处理使用键网络包收发的类。
@@ -37,7 +42,7 @@ import cpw.mods.fml.common.network.Player;
  * @author WeAthFolD
  * 
  */
-public class NetKeyUsing implements IChannelProcess {
+public class NetKeyUsing implements IMessage {
 
 	public static void sendUsingPacket(boolean isUsing) {
 		ByteArrayOutputStream bos = CBCNetHandler.getStream(
@@ -79,6 +84,34 @@ public class NetKeyUsing implements IChannelProcess {
 			UsingUtils.stopUsingBlock(world, thePlayer);
 		}
 
+	}
+	
+	boolean isUsing;
+	
+	public NetKeyUsing(boolean b) {
+		isUsing = b;
+	}
+
+	@Override
+	public void fromBytes(ByteBuf buf) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void toBytes(ByteBuf buf) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public static class Handler implements IMessageHandler<NetKeyUsing, IMessage> {
+
+		@Override
+		public IMessage onMessage(NetKeyUsing message, MessageContext ctx) {
+			
+			return null;
+		}
+		
 	}
 
 }

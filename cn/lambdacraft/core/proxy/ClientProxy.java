@@ -21,21 +21,18 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 
+import net.minecraft.client.Minecraft;
+
 import org.lwjgl.input.Keyboard;
 
 import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.CBCPlayer;
+import cn.lambdacraft.core.LCClientPlayer;
 import cn.lambdacraft.core.client.key.KeyUse;
 import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.deathmatch.client.renderer.RenderEmptyBlock;
+import cn.liutils.api.client.render.RenderEmptyBlock;
 import cn.liutils.core.client.register.LIKeyProcess;
-import cn.liutils.core.client.register.LISoundRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.sound.SoundLoadEvent;
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.common.FMLCommonHandler;
 
 /**
  * 客户端代理加载。
@@ -49,6 +46,8 @@ public class ClientProxy extends Proxy {
 	
 	private final int MAX_CROSSHAIR_FILES = 16, MAX_SPRAY_FILES = 14;
 	
+	public static LCClientPlayer lcPlayer;
+	
 	@Override
 	public void preInit() {
 		LIKeyProcess.addKey("key.cbcuse", Keyboard.KEY_F, true, new KeyUse());
@@ -58,8 +57,9 @@ public class ClientProxy extends Proxy {
 	public void init() {
 		super.init();
 		
-		CBCPlayer cbcPlayer = new CBCPlayer();
-		TickRegistry.registerTickHandler(cbcPlayer, Side.CLIENT);
+		lcPlayer = new LCClientPlayer();
+		FMLCommonHandler.instance().bus().register(lcPlayer);
+		
 		RenderingRegistry.registerBlockHandler(new RenderEmptyBlock());
 		ClientProps.loadProps(CBCMod.config);
 		
