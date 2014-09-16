@@ -77,16 +77,18 @@ public class ItemMedkit extends CBCGenericItem {
 		NBTTagCompound nbt = loadCompound(potion);
 		int addCount = 0;
 
-		for (PotionEffect e : list) {
-			for (int i = 0; i < 3; i++) {
-				if(type == EnumAddingType.DURATION)
-					TileHealthCharger.fldDuration.set(e, 
-							(Double)TileHealthCharger.fldDuration.get(e) * 1.3);
-				if (isSlotAvailable(medkit, i)) {
-					addEffect(medkit, e, i);
-					break;
+		try {
+			for (PotionEffect e : list) {
+				for (int i = 0; i < 3; i++) {
+					if(type == EnumAddingType.DURATION)
+						TileHealthCharger.fldDuration.set(e, (Double)TileHealthCharger.fldDuration.get(e) * 1.3);
+					if (isSlotAvailable(medkit, i)) {
+						addEffect(medkit, e, i);
+						break;
+					}
 				}
-			}
+		} } catch(Exception e) {
+			e.printStackTrace();
 		}
 		return 0;
 	}

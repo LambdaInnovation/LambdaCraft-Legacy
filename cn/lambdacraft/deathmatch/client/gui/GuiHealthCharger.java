@@ -14,6 +14,8 @@
  */
 package cn.lambdacraft.deathmatch.client.gui;
 
+import java.util.Set;
+
 import net.minecraft.inventory.Container;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
@@ -22,17 +24,16 @@ import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.block.TileHealthCharger;
-import cn.liutils.api.client.gui.LIGuiButton;
-import cn.liutils.api.client.gui.LIGuiContainer;
-import cn.liutils.api.client.gui.LIGuiPart;
+import cn.liutils.api.client.gui.GuiContainerSP;
 import cn.liutils.api.client.gui.IGuiTip;
+import cn.liutils.api.client.gui.part.LIGuiPart;
 
 
 /**
  * @author WeAthFolD
  * 
  */
-public class GuiHealthCharger extends LIGuiContainer {
+public class GuiHealthCharger extends GuiContainerSP {
 
 	TileHealthCharger te;
 
@@ -40,21 +41,19 @@ public class GuiHealthCharger extends LIGuiContainer {
 	 * @param par1Container
 	 */
 	public GuiHealthCharger(TileHealthCharger t, Container par1Container) {
-		super(par1Container);
-		this.xSize = 176;
-		this.ySize = 166;
+		super(176, 166, par1Container);
 		te = t;
 	}
 
 	class TipEnergy implements IGuiTip {
 
 		@Override
-		public String getHeadText() {
+		public String getHeader() {
 			return "";
 		}
 
 		@Override
-		public String getTip() {
+		public String getText() {
 			return StatCollector.translateToLocal("gui.curenergy.name") + ": "
 					+ te.currentEnergy + "/" + TileHealthCharger.ENERGY_MAX
 					+ " EU";
@@ -64,62 +63,29 @@ public class GuiHealthCharger extends LIGuiContainer {
 
 	class TipMain implements IGuiTip {
 		@Override
-		public String getHeadText() {
+		public String getHeader() {
 			return EnumChatFormatting.RED
 					+ StatCollector.translateToLocal("gui.hemain.name");
 		}
 
 		@Override
-		public String getTip() {
+		public String getText() {
 			return te.mainEff + "/" + TileHealthCharger.HEALTH_MAX + " HP";
 		}
 	}
 
 	class TipSide implements IGuiTip {
 		@Override
-		public String getHeadText() {
+		public String getHeader() {
 			return EnumChatFormatting.RED
 					+ StatCollector.translateToLocal("gui.heside.name");
 		}
 
 		@Override
-		public String getTip() {
+		public String getText() {
 			return te.sideEff / 20.0F + "/" + TileHealthCharger.EFFECT_MAX
 					/ 20.0F + " s";
 		}
-	}
-
-	@Override
-	public void initGui() {
-		super.initGui();
-		LIGuiPart behavior = new LIGuiPart("behavior", 154, 8, 5, 48), main = new LIGuiPart(
-				"main", 20, 8, 14, 46), side = new LIGuiPart("side", 42, 8,
-				14, 46);
-		this.addElement(behavior);
-		this.addElement(main);
-		this.addElement(side);
-		this.setElementTip("behavior", new TipEnergy());
-		this.setElementTip("main", new TipMain());
-		this.setElementTip("side", new TipSide());
-	}
-
-	/**
-	 * Called when the mouse is clicked.
-	 */
-	@Override
-	protected void mouseClicked(int par1, int par2, int par3) {
-		super.mouseClicked(par1, par2, par3);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * cn.lambdacraft.core.gui.CBCGuiContainer#onButtonClicked(cn.lambdacraft.core.gui
-	 * .CBCGuiButton)
-	 */
-	@Override
-	public void onButtonClicked(LIGuiButton button) {
 	}
 
 	@Override
@@ -143,7 +109,7 @@ public class GuiHealthCharger extends LIGuiContainer {
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-		this.drawElements();
+		this.drawElements(i, j);
 
 		if (te.currentEnergy > 0) {
 			int len = te.currentEnergy * 48 / TileHealthCharger.ENERGY_MAX;
@@ -170,6 +136,24 @@ public class GuiHealthCharger extends LIGuiContainer {
 			this.drawTexturedModalRect(x + 58, y + 77 - len, 176, 157 - len,
 					14, len);
 		}
+	}
+
+	@Override
+	protected void addElements(Set<cn.liutils.api.client.gui.part.LIGuiPart> set) {
+		LIGuiPart 
+		behavior = new LIGuiPart("behavior", 154, 8, 5, 48).setTip(new TipEnergy()), 
+		main = new LIGuiPart("main", 20, 8, 14, 46).setTip(new TipMain()), 
+		side = new LIGuiPart("side", 42, 8,14, 46).setTip(new TipSide());
+		set.add(behavior);
+		set.add(main);
+		set.add(side);
+	}
+
+	@Override
+	protected void onPartClicked(cn.liutils.api.client.gui.part.LIGuiPart part,
+			float mx, float my) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

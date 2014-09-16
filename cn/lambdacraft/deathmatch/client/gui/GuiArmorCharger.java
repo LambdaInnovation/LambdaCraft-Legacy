@@ -14,25 +14,29 @@
  */
 package cn.lambdacraft.deathmatch.client.gui;
 
+import java.util.Set;
+
+import net.minecraft.inventory.Container;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
+
 import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.block.TileArmorCharger;
 import cn.lambdacraft.deathmatch.network.NetChargerClient;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
-import cn.liutils.api.client.gui.LIGuiButton;
-import cn.liutils.api.client.gui.LIGuiContainer;
-import cn.liutils.api.client.gui.LIGuiPart;
+import cn.liutils.api.client.gui.GuiContainerSP;
 import cn.liutils.api.client.gui.IGuiTip;
-import net.minecraft.inventory.Container;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import cn.liutils.api.client.gui.part.LIGuiButton;
+import cn.liutils.api.client.gui.part.LIGuiPart;
+import cn.liutils.api.client.util.HudUtils;
 
 /**
- * @author Administrator
+ * @author WeAthFolD
  * 
  */
-public class GuiArmorCharger extends LIGuiContainer {
+public class GuiArmorCharger extends GuiContainerSP {
 
 	TileArmorCharger te;
 
@@ -40,85 +44,32 @@ public class GuiArmorCharger extends LIGuiContainer {
 	 * @param par1Container
 	 */
 	public GuiArmorCharger(TileArmorCharger t, Container par1Container) {
-		super(par1Container);
-		this.xSize = 176;
-		this.ySize = 166;
+		super(176, 166, par1Container);
 		te = t;
 	}
 
 	class TipEnergy implements IGuiTip {
 
 		@Override
-		public String getHeadText() {
+		public String getHeader() {
 			return StatCollector.translateToLocal("gui.curenergy.name");
 		}
 
 		@Override
-		public String getTip() {
+		public String getText() {
 			return te.currentEnergy + "/" + TileArmorCharger.ENERGY_MAX + " EU";
 		}
 
 	}
-
-	class TipBehavior implements IGuiTip {
-
-		@Override
-		public String getHeadText() {
-			return EnumChatFormatting.RED
-					+ StatCollector.translateToLocal("gui.rsbehavior.name");
-		}
-
-		@Override
-		public String getTip() {
-			return StatCollector
-					.translateToLocal(te.currentBehavior.toString());
-		}
-
-	}
-
-	@Override
-	public void initGui() {
-		super.initGui();
-		LIGuiPart behavior = new LIGuiPart("behavior", 80, 28, 64, 10)
-				.setDraw(false), redstone = new LIGuiButton("redstone", 153,
-				5, 19, 10).setDownCoords(180, 13).setTextureCoords(153, 5);
-		this.addElement(behavior);
-		this.addElement(redstone);
-		this.setElementTip("behavior", new TipEnergy());
-		this.setElementTip("redstone", new TipBehavior());
-	}
-
-	/**
-	 * Called when the mouse is clicked.
-	 */
-	@Override
-	protected void mouseClicked(int par1, int par2, int par3) {
-		super.mouseClicked(par1, par2, par3);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * cn.lambdacraft.core.gui.CBCGuiContainer#onButtonClicked(cn.lambdacraft.core.gui
-	 * .CBCGuiButton)
-	 */
-	@Override
-	public void onButtonClicked(LIGuiButton button) {
-		if (button.name == "redstone") {
-			te.nextBehavior();
-			NetChargerClient.sendChargerPacket(te);
-		}
-	}
-
+	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		String blockName = EnumChatFormatting.DARK_GRAY
 				+ StatCollector.translateToLocal(DMBlocks.armorCharger
 						.getLocalizedName());
-		fontRenderer.drawString(blockName,
-				88 - fontRenderer.getStringWidth(blockName) / 2, 5, 0x969494);
+		fontRendererObj.drawString(blockName,
+				88 - fontRendererObj.getStringWidth(blockName) / 2, 5, 0x969494);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
 
@@ -135,14 +86,31 @@ public class GuiArmorCharger extends LIGuiContainer {
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-		this.drawElements();
+		HudUtils.setTextureResolution(256, 256);
+		this.drawElements(i, j);
 
 		int length = te.currentEnergy * 64 / TileArmorCharger.ENERGY_MAX;
 		this.drawTexturedModalRect(x + 80, y + 28, 176, 0, length, 10);
 
 		if (te.isCharging) {
-			int height = (int) (te.worldObj.getWorldTime() % 43);
+			int height = (int) (te.getWorldObj().getWorldTime() % 43);
 			this.drawTexturedModalRect(x + 29, y + 21, 176, 56, 43, height);
+		}
+	}
+
+	@Override
+	protected void addElements(Set<cn.liutils.api.client.gui.part.LIGuiPart> set) {
+		LIGuiPart 
+		behavior = new LIGuiPart("behavior", 80, 28, 64, 10).setDraw(false).setTip(new TipEnergy());
+		set.add(behavior);
+	}
+
+	@Override
+	protected void onPartClicked(LIGuiPart part,
+			float mx, float my) {
+		if (part.name.equals("redstone")) {
+			te.nextBehavior();
+			NetChargerClient.sendChargerPacket(te);
 		}
 	}
 

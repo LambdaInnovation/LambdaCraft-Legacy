@@ -14,62 +14,56 @@
  */
 package cn.lambdacraft.crafting.client.gui;
 
+import java.util.Set;
+
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
+
 import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.block.container.ContainerGenerator;
 import cn.lambdacraft.crafting.block.tile.TileGeneratorFire;
 import cn.lambdacraft.crafting.register.CBCBlocks;
-import cn.liutils.api.client.gui.LIGuiButton;
-import cn.liutils.api.client.gui.LIGuiContainer;
-import cn.liutils.api.client.gui.LIGuiPart;
+import cn.liutils.api.client.gui.GuiContainerSP;
 import cn.liutils.api.client.gui.IGuiTip;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import cn.liutils.api.client.gui.part.LIGuiPart;
+import cn.liutils.api.client.util.HudUtils;
+import cn.liutils.api.client.util.RenderUtils;
 
 /**
  * @author WeAthFolD
  * 
  */
-public class GuiGenFire extends LIGuiContainer {
+public class GuiGenFire extends GuiContainerSP {
 
 	TileGeneratorFire te;
 
 	private class TipEnergy implements IGuiTip {
 
 		@Override
-		public String getHeadText() {
+		public String getHeader() {
 			return EnumChatFormatting.RED + StatCollector.translateToLocal("gui.curenergy.name");
 		}
 
 		@Override
-		public String getTip() {
+		public String getText() {
 			return te.currentEnergy + "/" + te.maxStorage + " EU";
 		}
 
 	}
 
 	public GuiGenFire(TileGeneratorFire gen, InventoryPlayer inv) {
-		super(new ContainerGenerator(gen, inv));
+		super(173, 178, new ContainerGenerator(gen, inv));
 		te = gen;
-		this.xSize = 173;
-		this.ySize = 178;
-	}
-
-	@Override
-	public void initGui() {
-		super.initGui();
-		LIGuiPart energy = new LIGuiPart("energy", 75, 15, 14, 50);
-		this.addElement(energy);
-		this.setElementTip("energy", new TipEnergy());
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		String guiName = CBCBlocks.genFire.getLocalizedName();
-		this.fontRenderer.drawString(guiName, 7, 7, 0xff9944);
+		this.fontRendererObj.drawString(guiName, 7, 7, 0xff9944);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
 
@@ -79,7 +73,7 @@ public class GuiGenFire extends LIGuiContainer {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		bindTexture(ClientProps.GUI_GENFIRE_PATH);
+		RenderUtils.loadTexture(ClientProps.GUI_GENFIRE_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
@@ -92,13 +86,22 @@ public class GuiGenFire extends LIGuiContainer {
 		if (len > 0)
 			this.drawTexturedModalRect(x + 75, y + 65 - len, 173, 55 - len, 14,
 					len);
-		this.drawElements();
+		HudUtils.setTextureResolution(256, 256);
+		this.drawElements(i, j);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glPopMatrix();
 	}
+	
+	@Override
+	protected void addElements(Set<LIGuiPart> set) {
+		LIGuiPart energy = new LIGuiPart("energy", 75, 15, 14, 50).setTip(new TipEnergy());
+		set.add(energy);
+	}
 
 	@Override
-	public void onButtonClicked(LIGuiButton button) {
+	protected void onPartClicked(cn.liutils.api.client.gui.part.LIGuiPart part,
+			float mx, float my) {
+		
 	}
 
 }

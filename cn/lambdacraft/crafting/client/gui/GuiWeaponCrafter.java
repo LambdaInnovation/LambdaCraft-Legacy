@@ -14,22 +14,27 @@
  */
 package cn.lambdacraft.crafting.client.gui;
 
+import java.util.Set;
+
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.block.container.ContainerWeaponCrafter;
 import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
 import cn.lambdacraft.crafting.network.MsgCrafterClient;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
-import cn.liutils.api.client.gui.LIGuiButton;
-import cn.liutils.api.client.gui.LIGuiContainer;
-import cn.liutils.api.client.gui.LIGuiPart;
+import cn.liutils.api.client.gui.GuiContainerSP;
 import cn.liutils.api.client.gui.IGuiTip;
+import cn.liutils.api.client.gui.part.LIGuiButton;
+import cn.liutils.api.client.gui.part.LIGuiPart;
+import cn.liutils.api.client.util.HudUtils;
+import cn.liutils.api.client.util.RenderUtils;
 
 
 /**
@@ -37,7 +42,7 @@ import cn.liutils.api.client.gui.IGuiTip;
  * 
  * @author WeAthFolD
  */
-public class GuiWeaponCrafter extends LIGuiContainer {
+public class GuiWeaponCrafter extends GuiContainerSP {
 
 	public TileWeaponCrafter te;
 	public InventoryPlayer inv;
@@ -45,13 +50,13 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 	public class TipHeat implements IGuiTip {
 
 		@Override
-		public String getHeadText() {
+		public String getHeader() {
 			return EnumChatFormatting.RED
 					+ StatCollector.translateToLocal("gui.curheat.name");
 		}
 
 		@Override
-		public String getTip() {
+		public String getText() {
 			return te.heatForRendering + "/" + te.maxHeat + " "
 					+ StatCollector.translateToLocal("gui.heat.name");
 		}
@@ -61,13 +66,13 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 	public class TipBehavior implements IGuiTip {
 
 		@Override
-		public String getHeadText() {
+		public String getHeader() {
 			return EnumChatFormatting.RED
 					+ StatCollector.translateToLocal("gui.curtask.name");
 		}
 
 		@Override
-		public String getTip() {
+		public String getText() {
 			switch (te.iconType) {
 			case CRAFTING:
 				return StatCollector.translateToLocal("gui.crafting.name")
@@ -85,35 +90,9 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 
 	public GuiWeaponCrafter(InventoryPlayer inventoryPlayer,
 			TileWeaponCrafter tileEntity) {
-		super(new ContainerWeaponCrafter(inventoryPlayer, tileEntity));
+		super(200, 250, new ContainerWeaponCrafter(inventoryPlayer, tileEntity));
 		te = tileEntity;
 		inv = inventoryPlayer;
-		this.xSize = 200;
-		this.ySize = 250;
-	}
-
-	@Override
-	protected void mouseClicked(int par1, int par2, int par3) {
-		super.mouseClicked(par1, par2, par3);
-	}
-
-	@Override
-	public void initGui() {
-		super.initGui();
-		LIGuiPart up = new LIGuiButton("up", 111, 19, 7, 6)
-				.setDownCoords(220, 13).setInvaildCoords(220, 6)
-				.setTextureCoords(208, 13), down = new LIGuiButton("down",
-				111, 74, 7, 6).setDownCoords(220, 43).setInvaildCoords(208, 6)
-				.setTextureCoords(208, 43), left = new LIGuiButton("left", 5,
-				2, 5, 6).setDownCoords(220, 53).setInvaildCoords(245, 53)
-				.setTextureCoords(210, 53), right = new LIGuiButton("right",
-				190, 2, 5, 6).setDownCoords(220, 63).setInvaildCoords(245, 63)
-				.setTextureCoords(210, 63), heat = new LIGuiPart("heat", 175,
-				15, 6, 63), behavior = new LIGuiPart("behavior", 160, 16, 8,
-				18);
-		addElements(up, down, left, right, heat, behavior);
-		this.setElementTip("heat", new TipHeat());
-		this.setElementTip("behavior", new TipBehavior());
 	}
 
 	@Override
@@ -123,9 +102,9 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 				.translateToLocal("gui.crafter_storage.name");
 		String currentPage = StatCollector.translateToLocal(RecipeWeapons
 				.getDescription(te.page));
-		this.fontRenderer.drawString(storage, 8, 88, 4210752);
-		fontRenderer.drawString(currentPage,
-				100 - fontRenderer.getStringWidth(currentPage) / 2, 1, 4210752);
+		this.fontRendererObj.drawString(storage, 8, 88, 4210752);
+		fontRendererObj.drawString(currentPage,
+				100 - fontRendererObj.getStringWidth(currentPage) / 2, 1, 4210752);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
 
@@ -134,11 +113,12 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 		if (!this.te.isLoad)
 			return;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		bindTexture(ClientProps.GUI_WEAPONCRAFTER_PATH);
+		RenderUtils.loadTexture(ClientProps.GUI_WEAPONCRAFTER_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-		this.drawElements();
+		HudUtils.setTextureResolution(256, 256);
+		this.drawElements(i, j);
 		int dy = 0;
 		if (te.iconType == CrafterIconType.NOMATERIAL)
 			dy = 60;
@@ -177,19 +157,42 @@ public class GuiWeaponCrafter extends LIGuiContainer {
 	}
 
 	@Override
-	public void onButtonClicked(LIGuiButton button) {
+	public void onPartClicked(LIGuiPart button, float a, float b) {
 		if (button.name == "up" || button.name == "down") {
 			boolean isDown = button.name == "down" ? true : false;
 			te.addScrollFactor(isDown);
-			MsgCrafterClient.sendCrafterPacket(te, 0, isDown);
+			CBCMod.netHandler.sendToServer(new MsgCrafterClient(0, te, isDown));
 			return;
 		}
 		if (button.name == "left" || button.name == "right") {
 			boolean isForward = button.name == "right" ? true : false;
 			te.addPage(isForward);
-			MsgCrafterClient.sendCrafterPacket(te, 1, isForward);
+			CBCMod.netHandler.sendToServer(new MsgCrafterClient(1, te, isForward));
 			return;
 		}
+	}
+
+	@Override
+	protected void addElements(Set<LIGuiPart> set) {
+		LIGuiPart 
+		up = new LIGuiButton("up", 111, 19, 7, 6)
+			.setDownCoords(220, 13).setInvaildCoords(220, 6)
+			.setTextureCoords(208, 13),
+		down = new LIGuiButton("down", 111, 74, 7, 6).setDownCoords(220, 43)
+			.setInvaildCoords(208, 6).setTextureCoords(208, 43),
+		left = new LIGuiButton("left", 5, 2, 5, 6).setDownCoords(220, 53)
+			.setInvaildCoords(245, 53).setTextureCoords(210, 53),
+		right = new LIGuiButton("right", 190, 2, 5, 6).setDownCoords(220, 63)
+			.setInvaildCoords(245, 63).setTextureCoords(210, 63),
+		heat = new LIGuiPart("heat", 175, 15, 6, 63).setTip(new TipHeat()),
+		behavior = new LIGuiPart("behavior", 160, 16, 8, 18).setTip(new TipBehavior());
+		
+		set.add(up);
+		set.add(down);
+		set.add(left);
+		set.add(right);
+		set.add(heat);
+		set.add(behavior);
 	}
 
 }

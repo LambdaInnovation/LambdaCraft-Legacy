@@ -14,88 +14,66 @@
  */
 package cn.lambdacraft.crafting.client.gui;
 
+import java.util.Set;
+
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
+
 import org.lwjgl.opengl.GL11;
 
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.block.container.ContainerElCrafter;
 import cn.lambdacraft.crafting.block.tile.TileElCrafter;
 import cn.lambdacraft.crafting.network.MsgCrafterClient;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
-import cn.liutils.api.client.gui.LIGuiButton;
-import cn.liutils.api.client.gui.LIGuiContainer;
-import cn.liutils.api.client.gui.LIGuiPart;
+import cn.liutils.api.client.gui.GuiContainerSP;
 import cn.liutils.api.client.gui.IGuiTip;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import cn.liutils.api.client.gui.part.LIGuiButton;
+import cn.liutils.api.client.gui.part.LIGuiPart;
+import cn.liutils.api.client.util.RenderUtils;
 
 /**
  * @author WeAthFolD
  * 
  */
-public class GuiElectricCrafter extends LIGuiContainer {
+public class GuiElectricCrafter extends GuiContainerSP {
 
 	public TileElCrafter tileEntity;
 
 	public GuiElectricCrafter(InventoryPlayer inventoryPlayer,
 			TileElCrafter tile) {
-		super(new ContainerElCrafter(inventoryPlayer, tile));
+		super(172, 192, new ContainerElCrafter(inventoryPlayer, tile));
 		this.tileEntity = tile;
-		xSize = 173;
-		ySize = 192;
 	}
 
 	protected class TipEnergy implements IGuiTip {
 
 		@Override
-		public String getHeadText() {
+		public String getHeader() {
 			return EnumChatFormatting.RED
 					+ StatCollector.translateToLocal("gui.curenergy.name");
 		}
 
 		@Override
-		public String getTip() {
+		public String getText() {
 			return tileEntity.currentEnergy + "/" + TileElCrafter.MAX_STORAGE
 					+ " EU";
 		}
 
 	}
-
-	public class TipBehavior implements IGuiTip {
-
-		@Override
-		public String getHeadText() {
-			return EnumChatFormatting.RED
-					+ StatCollector.translateToLocal("gui.curtask.name");
-		}
-
-		@Override
-		public String getTip() {
-			switch (tileEntity.iconType) {
-			case CRAFTING:
-				return tileEntity.currentRecipe == null ? "" : 
-					StatCollector.translateToLocal("gui.crafting.name") + tileEntity.currentRecipe.toString();
-			case NOMATERIAL:
-				return StatCollector.translateToLocal("gui.nomaterial.name");
-			case NONE:
-				return StatCollector.translateToLocal("gui.idle.name");
-			default:
-				return "";
-			}
-		}
-
-	}
-
+	
 	public class TipHeat implements IGuiTip {
 
 		@Override
-		public String getHeadText() {
+		public String getHeader() {
 			return EnumChatFormatting.RED
 					+ StatCollector.translateToLocal("gui.curheat.name");
 		}
 
 		@Override
-		public String getTip() {
+		public String getText() {
 			return tileEntity.heatForRendering + "/" + tileEntity.maxHeat + " "
 					+ StatCollector.translateToLocal("gui.heat.name");
 		}
@@ -103,26 +81,12 @@ public class GuiElectricCrafter extends LIGuiContainer {
 	}
 
 	@Override
-	public void initGui() {
-		super.initGui();
-		LIGuiPart up = new LIGuiButton("up", 85, 16, 4, 3), down = new LIGuiButton(
-				"down", 85, 61, 4, 3), left = new LIGuiButton("left", 6, 6, 3,
-				4), right = new LIGuiButton("right", 158, 6, 3, 4), heat = new LIGuiPart(
-				"heat", 138, 17, 6, 46), energy = new LIGuiPart("energy", 116,
-				17, 6, 46), behavior = new LIGuiPart("behavior", 124, 16, 6, 8);
-		addElements(up, down, left, right, heat, energy, behavior);
-		this.setElementTip("heat", new TipHeat());
-		this.setElementTip("energy", new TipEnergy());
-		this.setElementTip("behavior", new TipBehavior());
-	}
-
-	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		String currentPage = StatCollector.translateToLocal(RecipeWeapons
 				.getDescription(tileEntity.page));
-		fontRenderer.drawString(currentPage,
-				85 - fontRenderer.getStringWidth(currentPage) / 2, 3, 0xff9843);
+		fontRendererObj.drawString(currentPage,
+				85 - fontRendererObj.getStringWidth(currentPage) / 2, 3, 0xff9843);
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
 
@@ -132,7 +96,7 @@ public class GuiElectricCrafter extends LIGuiContainer {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		bindTexture(ClientProps.GUI_ELCRAFTER_PATH);
+		RenderUtils.loadTexture(ClientProps.GUI_ELCRAFTER_PATH);
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
@@ -155,17 +119,30 @@ public class GuiElectricCrafter extends LIGuiContainer {
 	}
 
 	@Override
-	public void onButtonClicked(LIGuiButton button) {
+	public void onPartClicked(LIGuiPart button, float mx, float my) {
 		if (button.name == "up" || button.name == "down") {
 			boolean isDown = button.name == "down" ? true : false;
-			MsgCrafterClient.sendCrafterPacket(tileEntity, 0, isDown);
+			CBCMod.netHandler.sendToServer(new MsgCrafterClient(0, tileEntity, isDown));
 			return;
 		}
 		if (button.name == "left" || button.name == "right") {
 			boolean isForward = button.name == "right" ? true : false;
-			MsgCrafterClient.sendCrafterPacket(tileEntity, 1, isForward);
+			CBCMod.netHandler.sendToServer(new MsgCrafterClient(1, tileEntity, isForward));
 			return;
 		}
+	}
+
+	@Override
+	protected void addElements(Set<LIGuiPart> set) {
+		
+		set.add(new LIGuiButton("up", 85, 16, 4, 3));
+		set.add(new LIGuiButton("down", 85, 61, 4, 3));
+		set.add(new LIGuiButton("left", 6, 6, 3,4));
+		set.add(new LIGuiButton("right", 158, 6, 3, 4));
+		set.add(new LIGuiPart("heat", 138, 17, 6, 46).setTip(new TipHeat()));
+		set.add(new LIGuiPart("energy", 116, 17, 6, 46).setTip(new TipEnergy()));
+		set.add(new LIGuiPart("behavior", 124, 16, 6, 8));
+		
 	}
 
 }
