@@ -28,8 +28,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ArmorHEV extends ElectricArmor {
 
 	public static int reductionAmount[] = { 5, 8, 5, 4 };
+	/*
 	protected static EnumArmorMaterial material = EnumHelper.addArmorMaterial(
-			"armorHEV", 100000, reductionAmount, 0);
+			"armorHEV", 100000, reductionAmount, 0);*/
 	private static ArmorProperties propChest = new ArmorProperties(3, 0.4,
 			200), propDefault = new ArmorProperties(2, 0.3, 150),
 			propNone = new ArmorProperties(2, 0.0, 0),
@@ -50,15 +51,16 @@ public class ArmorHEV extends ElectricArmor {
 		this.setEnergyPerDamage(500);
 	}
 
+	/*TODO:Seek for different implementation
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, int slot,
 			int layer) {
-		if (stack.getItem().itemID == DMItems.armorHEVLeggings.itemID) {
+		if (stack.getItem() == DMItems.armorHEVLeggings) {
 			return ClientProps.HEV_ARMOR_PATH[1];
 		} else {
 			return ClientProps.HEV_ARMOR_PATH[0];
 		}
-	}
+	}*/
 
 	@Override
 	public boolean canProvideEnergy(ItemStack itemStack) {

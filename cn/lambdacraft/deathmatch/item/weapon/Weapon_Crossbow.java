@@ -1,20 +1,24 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.ISpecialCrosshair;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityCrossbowArrow;
+import cn.liutils.api.entity.EntityBullet;
 import cn.weaponmod.api.WMInformation;
+import cn.weaponmod.api.action.Action;
+import cn.weaponmod.api.action.ActionReload;
+import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.feature.IModdable;
-import cn.weaponmod.api.information.InformationBullet;
+import cn.weaponmod.api.information.InfUtils;
+import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.api.weapon.IZoomable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -27,6 +31,19 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 		IModdable, IZoomable, ISpecialCrosshair {
+	
+	public class ActionLeft extends ActionShoot {
+
+		public ActionLeft() {
+			super(0, 0, "lambdacraft:weapons.xbow_fire");
+			setShootRate(30);
+		}
+		
+		protected Entity getProjectileEntity(World world, EntityPlayer player) {
+			return new EntityCrossbowArrow(world, player, getMode(player.getCurrentEquippedItem()) == 0);
+		}
+		
+	}
 
 	public IIcon[] sideIcons = new IIcon[6];
 
@@ -38,13 +55,7 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 		setMaxStackSize(1);
 		setMaxDamage(6);
 		setNoRepair();
-		
-		this.reloadTime = 55;
 		iconName = "weapon_crossbow";
-
-		setLiftProps(10, .75F);
-		setReloadTime(40);
-
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -90,11 +101,6 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 		}
 		 */
 	}
-	
-	@Override
-	protected Entity getBulletEntity(ItemStack is, World world, EntityPlayer player, boolean left) {
-		return world.isRemote ? null : new EntityCrossbowArrow(world, player, getMode(is) == 0);
-	}
 
 	@Override
 	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
@@ -102,42 +108,22 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
 				par4);
 	}
-
+	
 	@Override
-	public String getSoundShoot(boolean left) {
-		return "lambdacraft:weapons.xbow_fire";
+	public Action getActionShoot() {
+		return new ActionLeft();
 	}
-
+	
 	@Override
-	public String getSoundJam(boolean left) {
-		return "lambdacraft:weapons.gunjam_a";
+	public Action getActionReload() {
+		return new ActionReload(55, "", "");
 	}
-
-	@Override
-	public String getSoundReload() {
-		return "lambdacraft:weapons.xbow_reload";
-	}
-
-	@Override
-	public int getShootTime(boolean left) {
-		return left ? 30 : 0;
-	}
-
-	@Override
-	public int getWeaponDamage(boolean left) {
-		return 20;
-	}
-
-	@Override
-	public int getOffset(boolean left) {
-		return 0;
-	}
-
+	
 	public static boolean isBowPulling(ItemStack item) {
-		InformationBullet information = (InformationBullet) WMInformation.getInformation(item, true);
+		InfWeapon information = WMInformation.getInformation(item, true);
 		if (information == null)
 			return false;
-		return !(information.getDeltaTick(true) < 17);
+		return !(InfUtils.getDeltaTick(information, "shoot") < 17);
 	}
 
 	@Override

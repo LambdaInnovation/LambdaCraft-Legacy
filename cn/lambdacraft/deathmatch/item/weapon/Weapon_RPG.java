@@ -4,17 +4,16 @@ import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.deathmatch.entity.EntityRPGDot;
-import cn.lambdacraft.deathmatch.util.InformationRPG;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.feature.IModdable;
+import cn.weaponmod.api.information.InfWeapon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -29,15 +28,14 @@ public class Weapon_RPG extends Weapon_RPG_Raw implements IModdable {
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
 			Entity par3Entity, int par4, boolean par5) {
 
-		InformationRPG inf = (InformationRPG) super.onWpnUpdate(
-				par1ItemStack, par2World, par3Entity, par4, par5);
+		InfWeapon inf = super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
 		if (par2World.isRemote || inf == null)
 			return;
 		int mode = getMode(par1ItemStack);
 		if (mode == 0)
 			return;
 		EntityPlayer player = (EntityPlayer) par3Entity;
-		EntityRPGDot dot = getRPGDot(inf, par2World, player);
+		EntityRPGDot dot = getRPGDot(par1ItemStack, par2World, player);
 		if (dot == null || dot.isDead) {
 			dot = new EntityRPGDot(par2World, player);
 			par2World.spawnEntityInWorld(dot);
@@ -45,17 +43,17 @@ public class Weapon_RPG extends Weapon_RPG_Raw implements IModdable {
 		}
 	}
 
-	public static EntityRPGDot getRPGDot(InformationRPG inf, World world,
-			EntityPlayer player) {
-		return inf.currentDot;
-	}
-
 	public EntityRPGDot getRPGDot(ItemStack is, World world, EntityPlayer player) {
-		return (loadInformation(is, player)).currentDot;
+		if(getMode(is) == 0) return null;
+		InfWeapon inf = this.loadInformation(is, player);
+		Entity ent = world.getEntityByID(inf.infData.getInteger("dot"));
+		if(ent != null && ent instanceof EntityRPGDot)
+			return (EntityRPGDot) ent;
+		return null;
 	}
 
-	public void setRPGDot(InformationRPG inf, EntityRPGDot dot) {
-		inf.currentDot = dot;
+	public void setRPGDot(InfWeapon inf, EntityRPGDot dot) {
+		inf.infData.setInteger("dot", dot.getEntityId());
 	}
 	
 	@Override
@@ -65,17 +63,17 @@ public class Weapon_RPG extends Weapon_RPG_Raw implements IModdable {
 		tips[0] = new IHudTip() {
 
 			@Override
-			public Icon getRenderingIcon(ItemStack itemStack,
+			public IIcon getRenderingIcon(ItemStack itemStack,
 					EntityPlayer player) {
-				if(Item.itemsList[ammoID] != null){
-					return Item.itemsList[ammoID].getIconIndex(itemStack);
+				if(ammoItem != null){
+					return ammoItem.getIconIndex(itemStack);
 				}
 				return null;
 			}
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return String.valueOf(WeaponHelper.getAmmoCapacity(ammoID, player.inventory));
+				return String.valueOf(WeaponHelper.getAmmoCapacity(ammoItem, player.inventory));
 			}
 
 			@Override

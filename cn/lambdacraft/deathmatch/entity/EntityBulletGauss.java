@@ -17,11 +17,11 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGaussSec.EnumGaussRayType;
 import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRay;
-import cn.lambdacraft.deathmatch.item.weapon.InformationEnergy;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Gauss;
 import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
+import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.api.weapon.WeaponGeneral;
 
 /**
@@ -34,7 +34,7 @@ public class EntityBulletGauss extends EntityBullet {
 	private static final float CHARGE_DAMAGE_SCALE = 2.0F;
 
 	private Weapon_Gauss item;
-	private InformationEnergy inf;
+	private InfWeapon inf;
 	protected ItemStack itemStack;
 
 	public enum EnumSubPlain {
@@ -177,7 +177,7 @@ public class EntityBulletGauss extends EntityBullet {
 	 * @param item
 	 */
 	private void doChargeAttack(MovingObjectPosition result,
-			InformationEnergy information, WeaponGeneral item) {
+			InfWeapon information, WeaponGeneral item) {
 
 		int damage = getChargeDamage();
 		double var0 = damage / 20;
@@ -356,7 +356,7 @@ public class EntityBulletGauss extends EntityBullet {
 	}
 
 	private int getChargeDamage() {
-		return Math.round(inf.charge);
+		return Math.round(damage);
 	}
 
 }

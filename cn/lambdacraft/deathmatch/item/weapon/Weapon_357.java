@@ -1,13 +1,17 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.crafting.register.CBCItems;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.crafting.register.CBCItems;
+import cn.weaponmod.api.action.Action;
+import cn.weaponmod.api.action.ActionJam;
+import cn.weaponmod.api.action.ActionReload;
+import cn.weaponmod.api.action.ActionShoot;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * .357 Magnum weapon class.
@@ -26,15 +30,11 @@ public class Weapon_357 extends WeaponGeneralBullet_LC {
 		setMaxStackSize(1);
 		setMaxDamage(7);
 		setNoRepair();
-
-		setReloadTime(70);
-		setJamTime(20);
-		setLiftProps(18, 1.2F);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_357");
 	}
 
@@ -44,35 +44,18 @@ public class Weapon_357 extends WeaponGeneralBullet_LC {
 		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4,
 				par5);
 	}
-
-	@Override
-	public String getSoundShoot(boolean side) {
-		return itemRand.nextInt(2) == 0 ? "lambdacraft:weapons.pyt_shota" : "lambdacraft:weapons.pyt_shotb";
+	
+	public Action getActionShoot() {
+		return new ActionShoot(7, 5, "lambdacraft:weapons.pyt_shota").setShootRate(20)
+		.bindUpliftActions(getActionUplift(), getActionUpliftRender());
 	}
-
-	@Override
-	public String getSoundJam(boolean side) {
-		return side ? "lambdacraft:weapons.gunjam_a" : "";
+	
+	public Action getActionReload() {
+		return new ActionReload(70, "lambdacraft:weapons.pyt_reloada", "");
 	}
-
-	@Override
-	public String getSoundReload() {
-		return "lambdacraft:weapons.pyt_reloada";
-	}
-
-	@Override
-	public int getShootTime(boolean side) {
-		return side ? 20 : 0;
-	}
-
-	@Override
-	public int getWeaponDamage(boolean side) {
-		return 7;
-	}
-
-	@Override
-	public int getOffset(boolean side) {
-		return 1;
+	
+	public Action getActionJam() {
+		return new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 	}
 
 }

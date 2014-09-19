@@ -1,5 +1,8 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
+import cn.lambdacraft.deathmatch.item.weapon.Weapon_9mmAR.ActionGrenade;
+import cn.weaponmod.api.action.ActionAutomaticShoot;
+import cn.weaponmod.api.information.InfWeapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -17,6 +20,29 @@ public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
 	public Weapon_9mmhandgun() {
 		super();
 	}
+	
+	@Override
+	public void onItemClick(World world, EntityPlayer player, ItemStack stack, int keyid) {
+		InfWeapon inf = loadInformation(stack, player);
+		switch(keyid) {
+		case 0: //LMOUSE
+			if(!canShoot(player, stack)) {
+				inf.executeAction(player, getActionJam());
+			} else {
+				inf.executeAction(player, this.getActionShoot());
+			}
+			break;
+		case 1:
+			//RMOUSE GRENADE
+			inf.executeAction(player, new ActionAutomaticShoot(300, 10, 3, "leon:weapons.9mmhg"));
+			break;
+		case 2: //Reload
+			inf.executeAction(player, this.getActionReload());
+			break;
+		default:
+			break;
+		}
+	}
 
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
@@ -30,16 +56,6 @@ public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
 			EntityPlayer par3EntityPlayer, int par4) {
 		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
 				par4);
-	}
-
-	@Override
-	public int getShootTime(boolean left) {
-		return  left ? 10 : 5;
-	}
-
-	@Override
-	public int getOffset(boolean left) {
-		return left ? 1 : 8;
 	}
 
 }

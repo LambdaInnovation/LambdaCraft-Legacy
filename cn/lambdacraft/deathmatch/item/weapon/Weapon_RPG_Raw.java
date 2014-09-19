@@ -18,20 +18,24 @@ import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
+import cn.lambdacraft.deathmatch.entity.EntityRPGDot;
 import cn.lambdacraft.deathmatch.entity.EntityRocket;
-import cn.lambdacraft.deathmatch.util.InformationRPG;
+import cn.liutils.api.entity.EntityBullet;
 import cn.weaponmod.api.WMInformation;
 import cn.weaponmod.api.WeaponHelper;
-import cn.weaponmod.api.information.InformationBullet;
-import cn.weaponmod.events.ItemHelper;
+import cn.weaponmod.api.action.Action;
+import cn.weaponmod.api.action.ActionDummy;
+import cn.weaponmod.api.action.ActionJam;
+import cn.weaponmod.api.action.ActionReload;
+import cn.weaponmod.api.action.ActionShoot;
+import cn.weaponmod.api.feature.IModdable;
+import cn.weaponmod.api.weapon.WeaponGeneral;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -41,56 +45,42 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 
+	public static class ActionRocketShoot extends ActionShoot {
 
-	public Weapon_RPG_Raw(int par1) {
-		super(par1, CBCItems.ammo_rpg.itemID);
+		public ActionRocketShoot() {
+			super(0, "lambdacraft:weapons.rocketfire");
+			setShootRate(40);
+		}
+		
+		@Override
+		protected Entity getProjectileEntity(World world, EntityPlayer player) {
+			ItemStack is = player.getCurrentEquippedItem();
+			return new EntityRocket(world, player, is);
+		}
+		
+		@Override
+		protected boolean consumeAmmo(EntityPlayer player, ItemStack stack, int amount) {
+			return WeaponHelper.consumeInventoryItem(player.inventory.mainInventory, CBCItems.ammo_rpg, 1) == 0;
+		}
+		
+	}
+	
+
+	public Weapon_RPG_Raw() {
+		super(CBCItems.ammo_rpg);
 
 		setIAndU("weapon_rpg");
 		setCreativeTab(CBCMod.cct);
 		this.hasSubtypes = true;
-
-		setJamTime(20);
-		setLiftProps(20, 2);
-		this.reloadTime = 45;
 	}
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
 			Entity par3Entity, int par4, boolean par5) {
-
-		InformationRPG inf = (InformationRPG) super.onWpnUpdate(
-				par1ItemStack, par2World, par3Entity, par4, par5);
-	}
-	
-	@Override
-	public void onBulletWpnShoot(ItemStack par1ItemStack, World par2World,
-			EntityPlayer par3Entity, InformationBullet information, boolean left) {
-		
-		information.setLastTick(left);
-		if (this.canShoot(par3Entity, par1ItemStack, left)) {
-			if(!par2World.isRemote) {
-				par2World.playSoundAtEntity(par3Entity, getSoundShoot(left), 0.5F,
-						1.0F);
-				par2World.spawnEntityInWorld(new EntityRocket(par2World,
-						par3Entity, par1ItemStack));
-				WeaponHelper.consumeAmmo(par3Entity, this, 1);
-			}
-			ItemHelper.stopUsingItem(par3Entity, true);
-			ItemHelper.stopUsingItem(par3Entity, false);
-			information.isReloading = true;
-			information.setLastTick(false);
-			information.setLastTick(true);
-		}
-	}
-	
-	@Override
-	public void onBulletWpnReload(ItemStack stack, World world, EntityPlayer entity, InformationBullet inf) {
-		//DO NOTHING
-		inf.isReloading = false;
-		inf.setLastTick(false);
+		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
 	}
 
 	@Override
-	public boolean canShoot(EntityPlayer player, ItemStack is, boolean left) {
+	public boolean canShoot(EntityPlayer player, ItemStack is) {
 		return WeaponHelper.hasAmmo(this, player) || player.capabilities.isCreativeMode;
 	}
 
@@ -100,53 +90,20 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
 				par4);
 	}
-
+	
 	@Override
-	public String getSoundShoot(boolean side) {
-		return "lambdacraft:weapons.rocketfire";
+	public Action getActionShoot() {
+		return new ActionRocketShoot();
 	}
-
+	
 	@Override
-	public String getSoundJam(boolean side) {
-		return "lambdacraft:weapons.gunjam_a";
+	public Action getActionJam() {
+		return new ActionJam(40, "lambdacraft:weapons.gunjam_a");
 	}
-
+	
 	@Override
-	public String getSoundReload() {
-		return "";
-	}
-
-	@Override
-	public int getShootTime(boolean side) {
-		return side ? 40 : 0;
-	}
-
-	@Override
-	public int getWeaponDamage(boolean side) {
-		return 0;
-	}
-
-	@Override
-	public int getOffset(boolean side) {
-		return 0;
-	}
-
-	@Override
-	public InformationRPG getInformation(ItemStack itemStack, World world) {
-		return (InformationRPG)WMInformation.getInformation(itemStack, world);
-	}
-
-	@Override
-	public InformationRPG loadInformation(ItemStack stack,
-			EntityPlayer player) {
-
-		InformationRPG inf = getInformation(stack, player.worldObj);
-		if (inf != null)
-			return inf;
-		inf = new InformationRPG(stack);
-		WMInformation.register(stack, inf, player.worldObj);
-		return inf;
-
+	public Action getActionReload() {
+		return new ActionDummy();
 	}
 	
 	@Override
@@ -156,17 +113,17 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 		tips[0] = new IHudTip() {
 
 			@Override
-			public Icon getRenderingIcon(ItemStack itemStack,
+			public IIcon getRenderingIcon(ItemStack itemStack,
 					EntityPlayer player) {
-				if(Item.itemsList[ammoID] != null){
-					return Item.itemsList[ammoID].getIconIndex(itemStack);
+				if(ammoItem != null){
+					return ammoItem.getIconIndex(itemStack);
 				}
 				return null;
 			}
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return String.valueOf(WeaponHelper.getAmmoCapacity(ammoID, player.inventory));
+				return String.valueOf(WeaponHelper.getAmmoCapacity(ammoItem, player.inventory));
 			}
 
 			@Override
@@ -183,27 +140,6 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 	public void addInformation(ItemStack par1ItemStack,
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 		
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	/**
-	 * 获取上弹时武器的旋转角度（0.0F~1.0F)
-	 * @param itemStack
-	 * @return
-	 */
-	public float getRotationForReload(ItemStack itemStack) {
-		InformationBullet inf = (InformationBullet) WMInformation.getInformation(itemStack, true);
-		int dt = inf.getDeltaTick(false);
-		float changeTime = reloadTime / 5F;
-		float rotation = 1.0F;
-		if (dt < changeTime/2F) {
-			rotation = MathHelper.sin((dt / changeTime) * 2F * (float) Math.PI * 0.5F);
-		} else if (dt > reloadTime - changeTime) {
-			rotation = MathHelper.sin((reloadTime - dt) / changeTime
-					* (float) Math.PI * 0.5F);
-		}
-		return rotation;
 	}
 
 }

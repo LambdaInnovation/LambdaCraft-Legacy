@@ -33,15 +33,15 @@ import cn.weaponmod.api.WeaponHelper;
  */
 public class EntityRocket extends EntityThrowable {
 
-	private EntityRPGDot dot;
 	public static double TURNING_SPEED = 0.6;
+	ItemStack theStack;
 
 	public EntityRocket(World par1World, EntityPlayer player, ItemStack is) {
 		super(par1World, player);
 		rotationPitch = player.rotationPitch;
 		rotationYaw = player.rotationYaw;
 		worldObj.playSoundAtEntity(this, "cbc.weapons.rocket", 0.3F, 1.0F);
-		this.dot = DMItems.weapon_RPG.getRPGDot(is, par1World, player);
+		theStack = is;
 	}
 
 	public EntityRocket(World world) {
@@ -61,6 +61,9 @@ public class EntityRocket extends EntityThrowable {
 			Explode();
 		if (ticksExisted % 45 == 0)
 			worldObj.playSoundAtEntity(this, "cbc.weapons.rocket", 0.5F, 1.0F);
+		
+		EntityRPGDot dot = DMItems.weapon_RPG.getRPGDot(theStack, worldObj, (EntityPlayer) getThrower());
+		
 		if (dot == null || this.isDead)
 			return;
 		if (dot.isDead) {

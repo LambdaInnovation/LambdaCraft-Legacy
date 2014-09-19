@@ -19,13 +19,14 @@ import ic2.api.item.ISpecialElectricItem;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -51,23 +52,13 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecia
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_crowbar");
 	}
 	
 	@Override
 	public boolean canProvideEnergy(ItemStack itemStack) {
 		return false;
-	}
-
-	@Override
-	public int getChargedItemId(ItemStack itemStack) {
-		return this.itemID;
-	}
-
-	@Override
-	public int getEmptyItemId(ItemStack itemStack) {
-		return this.itemID;
 	}
 
 	@Override
@@ -79,12 +70,14 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecia
 	public int getTier(ItemStack itemStack) {
 		return 2;
 	}
-
+	
+	/*	
     @Override
-	public float getDamageVsEntity(Entity par1Entity,ItemStack i)
+	public float getDamageVsEntity(Entity par1Entity, ItemStack i)
     {
         return 6;
     }
+    */
     
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
@@ -126,7 +119,7 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecia
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(int par1, CreativeTabs par2CreativeTabs,
+	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
 			List par3List) {
 		par3List.add(new ItemStack(par1, 1, 0));
 		ItemStack chargedItem = new ItemStack(par1, 1, 9999);
@@ -170,6 +163,16 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecia
 	@Override
 	public IElectricItemManager getManager(ItemStack itemStack) {
 		return LCElectItemManager.INSTANCE;
+	}
+
+	@Override
+	public Item getChargedItem(ItemStack itemStack) {
+		return this;
+	}
+
+	@Override
+	public Item getEmptyItem(ItemStack itemStack) {
+		return this;
 	}
 
 }

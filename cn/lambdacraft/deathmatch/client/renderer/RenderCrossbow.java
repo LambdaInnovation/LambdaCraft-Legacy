@@ -42,7 +42,7 @@ public class RenderCrossbow extends RenderModelItem {
 			boolean firstPerson = (entity == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) 
 					&& Minecraft.getMinecraft().currentScreen == null;
 			final float upliftRatio = 1.0F;
-			if(inf != null && firstPerson && inf.isReloading) {
+			if(inf != null && firstPerson && inf.isActionPresent("reload")) {
 				float rotation = DMItems.weapon_crossbow.getRotationForReload(item);
 				GL11.glRotatef(upliftRatio * rotation * 17F, 0.0F, 0.0F, -1.0F);
 				GL11.glRotatef(upliftRatio * rotation * 12F, 0.0F, -1.0F, 0.0F);

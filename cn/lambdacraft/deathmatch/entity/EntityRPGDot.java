@@ -18,17 +18,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumMovingObjectType;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_RPG;
+import cn.liutils.api.util.GenericUtils;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
 
 /**
  * RPG制导红点。
- * 
  * @author WeAthFolD
  * 
  */
@@ -42,7 +42,6 @@ public class EntityRPGDot extends EntityThrowable {
 
 	public EntityRPGDot(World par1World, EntityPlayer player) {
 		super(par1World, player);
-//		System.out.println(player);
 		shooter = player;
 		updateDotPosition();
 	}
@@ -58,38 +57,43 @@ public class EntityRPGDot extends EntityThrowable {
 	public void onUpdate() {
 		if (worldObj.isRemote || getThrower() == null)
 			return;
-		ItemStack currentItem = getThrower().getCurrentItemOrArmor(0);
-		if (currentItem == null
-				|| !Weapon_RPG.class.isInstance(currentItem.getItem())) {
+		
+		ItemStack currentItem = ((EntityPlayer)getThrower()).getCurrentEquippedItem();
+		if (currentItem == null || !Weapon_RPG.class.isInstance(currentItem.getItem())) {
+			
 			setDead();
 			return;
+			
 		} else {
+			
 			int mode = currentItem.getItemDamage();
 			if (mode == 0)
 				this.setDead();
+			
 		}
+		
 		updateDotPosition();
 	}
 
 	private void updateDotPosition() {
 		Motion3D begin = new Motion3D(shooter, true);
 		Motion3D end = new Motion3D(begin).move(DOT_MAX_RANGE);
-		MovingObjectPosition result = WeaponHelper.rayTraceBlocksAndEntities(null, worldObj, begin.asVec3(worldObj), end.asVec3(worldObj), this, getThrower());
+		MovingObjectPosition result = GenericUtils.rayTraceBlocksAndEntities(null, worldObj,
+				begin.getPosVec(worldObj), end.getPosVec(worldObj), this, getThrower());
 		if (result != null) {
 			posX = result.hitVec.xCoord;
 			posY = result.hitVec.yCoord;
 			posZ = result.hitVec.zCoord;
-			if(result.typeOfHit == EnumMovingObjectType.ENTITY) {
+			if(result.typeOfHit == MovingObjectType.ENTITY) {
 				double distance = result.entityHit.getDistance(begin.posX, begin.posY, begin.posZ);
-				distance -= Math.sqrt(result.entityHit.width * result.entityHit.width * result.entityHit.height) * 0.25;
+				distance -= Math.cbrt(result.entityHit.width * result.entityHit.width * result.entityHit.height) * 0.25;
 				end = begin.move(distance);
 				posX = end.posX;
 				posY = end.posY;
 				posZ = end.posZ;
 			}
 			side = result.sideHit;
-			ForgeDirection[] v = ForgeDirection.values();
-			ForgeDirection d = v[side].getOpposite();
+			ForgeDirection d = ForgeDirection.values()[side].getOpposite();
 			double dx = d.offsetX, dy = d.offsetY, dz = d.offsetZ;
 			this.setPosition(posX + 0.03 * dx, posY + 0.03 * dy, posZ + 0.03 * dz);
 		} else {

@@ -1,6 +1,6 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,10 +13,13 @@ import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGauss;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGaussSec;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGaussSec.EnumGaussRayType;
+import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.util.GenericUtils;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
-import cn.weaponmod.events.ItemHelper;
+import cn.weaponmod.api.action.Action;
+import cn.weaponmod.api.action.ActionShoot;
+import cn.weaponmod.api.information.InfWeapon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -25,7 +28,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  *
  */
-public class Weapon_Gauss extends WeaponGeneralEnergy_LC implements ISpecialCrosshair {
+public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCrosshair {
 
 	
 	public static String SND_CHARGE_PATH = "lambdacraft:weapons.gauss_charge",
@@ -33,6 +36,24 @@ public class Weapon_Gauss extends WeaponGeneralEnergy_LC implements ISpecialCros
 					"lambdacraft:weapons.gauss_windupb", "lambdacraft:weapons.gauss_windupc",
 					"lambdacraft:weapons.gauss_windupd" },
 			SND_SHOOT_PATH = "lambdacraft:weapons.gaussb";
+	
+	public class ActionCharge extends ActionShoot {
+		
+		final int strengh;
+		final boolean type;
+		
+		public ActionCharge(boolean b, int str) {
+			super(0, "charge");
+			strengh = str;
+			type = b;
+		}
+		
+		@Override
+		public Entity getProjectileEntity(World world, EntityPlayer player) {
+			return type ? new EntityBulletGaussSec(EnumGaussRayType.NORMAL, world, player, player.getCurrentEquippedItem(), null, null, 8)
+			: new EntityBulletGauss(world, player, player.getCurrentEquippedItem(), strengh);
+		}
+	}
 
 	public Weapon_Gauss() {
 		super(CBCItems.ammo_uranium);
@@ -45,19 +66,6 @@ public class Weapon_Gauss extends WeaponGeneralEnergy_LC implements ISpecialCros
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_gauss");
-	}
-	
-	@Override
-	public void onItemClick(World world, EntityPlayer player, ItemStack stack, boolean left) {
-		super.onItemClick(world, player, stack, left);
-		InformationEnergy inf = loadInformation(stack, player);
-		if (left) {
-			inf.rotationVelocity = 15.0F;
-		} else {
-			inf.resetState();
-			if (canShoot(player, stack, left))
-				world.playSoundAtEntity(player, SND_CHARGEA_PATH[0], 0.5F, 1.0F);
-		}
 	}
 	
 
@@ -88,7 +96,7 @@ public class Weapon_Gauss extends WeaponGeneralEnergy_LC implements ISpecialCros
 		return side && super.doesShoot(inf, player, itemStack, side);
 	}
 
-	public void onChargeModeUpdate(InformationEnergy inf,
+	public void onChargeModeUpdate(InfWeapon inf,
 			ItemStack par1ItemStack, World par2World, EntityPlayer player,
 			int par4, boolean par5) {
 
@@ -139,9 +147,7 @@ public class Weapon_Gauss extends WeaponGeneralEnergy_LC implements ISpecialCros
 
 	}
 	
-	@Override
-	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
-			EntityPlayer player, int par4) {
+	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack, int keyid) {
 		InformationEnergy inf = getInformation(par1ItemStack, par2World);
 		boolean left = ItemHelper.getUsingTickLeft(player, true) > 0;
 		if (inf == null)
@@ -170,7 +176,6 @@ public class Weapon_Gauss extends WeaponGeneralEnergy_LC implements ISpecialCros
 					1.0F);
 			par2World.spawnEntityInWorld(new EntityBulletGauss(par2World, player, par1ItemStack, damage));
 		}
-
 	}
 
 	@Override
@@ -213,6 +218,16 @@ public class Weapon_Gauss extends WeaponGeneralEnergy_LC implements ISpecialCros
 	@Override
 	public String getSoundJam(boolean left) {
 		return "lambdacraft:weapons.gunjam_a";
+	}
+	
+	@Override
+	public Action getActionShoot() {
+		return new ActionShoot(0, "") {
+			@Override
+			protected Entity getProjectileEntity(World world, EntityPlayer player) {
+				return new EntityBullet(world, player, damage, scatter);
+			}
+		};
 	}
 
 	@Override

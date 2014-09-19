@@ -3,15 +3,12 @@
  */
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.api.hud.IHudTipProvider;
@@ -19,6 +16,8 @@ import cn.lambdacraft.core.prop.GeneralProps;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.weapon.WeaponGeneral;
 import cn.weaponmod.api.weapon.WeaponGeneralBullet;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -52,30 +51,6 @@ public class WeaponGeneralBullet_LC extends WeaponGeneralBullet implements IHudT
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
 			Entity par3Entity, int par4, boolean par5) {
 		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
-	}
-
-	/* (non-Javadoc)
-	 * @see cn.weaponmod.api.weapon.WeaponGeneral#getDamage(boolean)
-	 */
-	@Override
-	public int getWeaponDamage(boolean left) {
-		return 10;
-	}
-
-	/* (non-Javadoc)
-	 * @see cn.weaponmod.api.weapon.WeaponGeneral#getOffset(boolean)
-	 */
-	@Override
-	public int getOffset(boolean left) {
-		return 5;
-	}
-
-	/* (non-Javadoc)
-	 * @see cn.weaponmod.api.weapon.WeaponGeneral#doWeaponUplift()
-	 */
-	@Override
-	public boolean doWeaponUplift() {
-		return GeneralProps.doWeaponUplift;
 	}
 	
 	@Override

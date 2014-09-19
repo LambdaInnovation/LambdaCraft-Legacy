@@ -20,14 +20,32 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.deathmatch.entity.EntityHornet;
-import cn.weaponmod.api.information.InformationBullet;
-import cn.weaponmod.events.ItemHelper;
+import cn.weaponmod.api.action.Action;
+import cn.weaponmod.api.action.ActionReload;
+import cn.weaponmod.api.action.ActionShoot;
+import cn.weaponmod.api.information.InfWeapon;
 
 /**
  * @author WeAthFolD.
  * 
  */
 public class Weapon_Hornet extends WeaponGeneralBullet_LC {
+	
+	public static class HornetShoot extends ActionShoot {
+
+		boolean side;
+		
+		public HornetShoot(boolean b) {
+			super(0, 0, "lambdacraft:weapons.ag_firea");
+			side = b;
+			setShootRate(b ? 5 : 3);
+		}
+		
+		protected Entity getProjectileEntity(World world, EntityPlayer player) {
+			return new EntityHornet(world, player, side);
+		}
+		
+	}
 
 	public static final int RECOVER_TIME = 10;
 
@@ -37,63 +55,43 @@ public class Weapon_Hornet extends WeaponGeneralBullet_LC {
 		setCreativeTab(CBCMod.cct);
 		setIAndU("weapon_hornet");
 	}
+	
+	@Override
+	public void onItemClick(World world, EntityPlayer player, ItemStack stack, int keyid) {
+		InfWeapon inf = loadInformation(stack, player);
+		super.onItemClick(world, player, stack, keyid);
+		if(keyid == 1) {
+			inf.executeAction(player, new HornetShoot(false));
+		}
+	}
 
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
 			Entity par3Entity, int par4, boolean par5) {
-		InformationBullet inf = (InformationBullet) onWpnUpdate(par1ItemStack, par2World,
+		InfWeapon inf = onWpnUpdate(par1ItemStack, par2World,
 				par3Entity, par4, par5);
 		if (inf == null)
 			return;
+		
 		int dt = inf.ticksExisted;
+		
 		EntityPlayer player = (EntityPlayer) par3Entity;
-		if (dt % RECOVER_TIME == 0 && !(this.canShoot(player, par1ItemStack, true) && (ItemHelper.getUsingTickLeft(player, true) > 0) || ItemHelper.getUsingTickLeft(player, false) > 0)) {
-			if (this.getWpnStackDamage(par1ItemStack) > 0) {
-				this.setWpnStackDamage(par1ItemStack, this.getWpnStackDamage(par1ItemStack) - 1);
+		
+		if (dt % RECOVER_TIME == 0 && !(this.canShoot(player, par1ItemStack) && !inf.isActionPresent("shoot"))) {
+			if (this.getAmmo(par1ItemStack) < this.getMaxDamage()) {
+				this.setAmmo(par1ItemStack, this.getAmmo(par1ItemStack) + 1);
 			}
 		}
 	}
 	
 	@Override
-	protected Entity getBulletEntity(ItemStack is, World world, EntityPlayer player, boolean left) {
-		return world.isRemote ? null : new EntityHornet(world, player, left);
+	public Action getActionReload() {
+		return new ActionReload(0, "", "");
 	}
-
-	@Override
-	public void onBulletWpnReload(ItemStack par1ItemStack, World par2World,
-			EntityPlayer par3Entity, InformationBullet information) {}
 	
 	@Override
-	public int getWeaponDamage(boolean left) {
-		return 4;
-	}
-
-	@Override
-	public int getOffset(boolean left) {
-		return 0;
-	}
-
-	@Override
-	public String getSoundShoot(boolean left) {
-		int random = (int) (itemRand.nextFloat() * 3);
-		return random == 0 ? "lambdacraft:weapons.ag_firea"
-				: (random == 1 ? "lambdacraft:weapons.ag_fireb"
-						: "lambdacraft:weapons.ag_firec");
-	}
-
-	@Override
-	public String getSoundJam(boolean left) {
-		return "";
-	}
-
-	@Override
-	public String getSoundReload() {
-		return "";
-	}
-
-	@Override
-	public int getShootTime(boolean left) {
-		return left ? 5 : 3;
+	public Action getActionShoot() {
+		return new HornetShoot(true);
 	}
 
 }

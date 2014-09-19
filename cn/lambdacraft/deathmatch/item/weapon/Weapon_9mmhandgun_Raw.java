@@ -6,6 +6,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
+import cn.weaponmod.api.action.Action;
+import cn.weaponmod.api.action.ActionAutomaticShoot;
+import cn.weaponmod.api.action.ActionJam;
+import cn.weaponmod.api.action.ActionReload;
+import cn.weaponmod.api.action.ActionShoot;
 
 public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 
@@ -19,9 +24,6 @@ public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 		setMaxDamage(18);
 		iconName = "weapon_9mmhandgun";
 		setNoRepair();
-
-		setReloadTime(60);
-		setJamTime(10);
 	}
 
 	@Override
@@ -37,35 +39,17 @@ public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
 				par4);
 	}
-
-	@Override
-	public String getSoundShoot(boolean left) {
-		return "lambdacraft:weapons.plgun_c";
+	
+	public Action getActionShoot() {
+		return new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c").bindUpliftActions(getActionUplift(), getActionUpliftRender());
 	}
-
-	@Override
-	public String getSoundJam(boolean left) {
-		return "lambdacraft:weapons.gunjam_a";
+	
+	public Action getActionReload() {
+		return new ActionReload(60, "lambdacraft:weapons.nmmclipa", "");
 	}
-
-	@Override
-	public String getSoundReload() {
-		return "lambdacraft:weapons.nmmclipa";
-	}
-
-	@Override
-	public int getShootTime(boolean left) {
-		return  left ? 10 : 0;
-	}
-
-	@Override
-	public int getWeaponDamage(boolean left) {
-		return 3;
-	}
-
-	@Override
-	public int getOffset(boolean left) {
-		return 1;
+	
+	public Action getActionJam() {
+		return new ActionJam(10, "weapons.gunjam_a");
 	}
 
 }

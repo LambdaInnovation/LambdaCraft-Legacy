@@ -16,17 +16,19 @@ package cn.lambdacraft.deathmatch.item;
 
 import java.util.List;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.deathmatch.item.ArmorHEV.EnumAttachment;
-import net.minecraft.client.renderer.texture.IconRegister;
+import javax.swing.Icon;
+
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.deathmatch.item.ArmorHEV.EnumAttachment;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -34,7 +36,7 @@ import net.minecraft.util.StatCollector;
 public class ItemAttachment extends Item {
 
 	EnumAttachment[] attaches = EnumAttachment.values();
-	Icon[] icons = new Icon[attaches.length];
+	IIcon[] icons = new IIcon[attaches.length];
 	
 	/**
 	 * @param par1
@@ -42,13 +44,13 @@ public class ItemAttachment extends Item {
 	public ItemAttachment() {
 		super();
 		setUnlocalizedName("attaches");
-		setCreativeTab(CBCMod.cctMisc);
+		setCreativeTab(CBCMod.cct);
 		this.hasSubtypes = true;
 	}
 	
     @Override
 	@SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister ir)
+    public void registerIcons(IIconRegister ir)
     {
         for(int i = 0; i < icons.length; i++) {
         	icons[i] = ir.registerIcon("lambdacraft:attach" + i);
@@ -61,7 +63,7 @@ public class ItemAttachment extends Item {
     /**
      * Gets an icon index based on an item's damage value
      */
-    public Icon getIconFromDamage(int par1)
+    public IIcon getIconFromDamage(int par1)
     {
         return icons[par1];
     }
@@ -82,7 +84,7 @@ public class ItemAttachment extends Item {
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
-    public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List list)
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list)
     {
     	for(int i = 0; i < icons.length; i ++) {
     		list.add(new ItemStack(par1, 1, i));
