@@ -26,7 +26,6 @@ import cn.lambdacraft.terrain.register.XenBlocks;
 import cn.lambdacraft.terrain.world.WorldProviderXenContinent;
 import cn.lambdacraft.terrain.world.biome.MainBiomes;
 import cn.liutils.api.register.Configurable;
-import cn.liutils.core.register.Config;
 import cn.liutils.core.register.ConfigHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -36,7 +35,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 /**
@@ -68,6 +66,9 @@ public class ModuleTerrain {
 	
 	@Configurable(key = "xenStonePlainBiomeId", defValue = "34")
 	public static int xenStonePlainBiomeId;
+	
+	@Configurable(key = "xenPlainInDefaultWorldBiomeId", defValue = "35")
+	public static int xenPlainInDefaultWorldBiomeId;
 	
 	@SidedProxy(clientSide = "cn.lambdacraft.terrain.proxy.ClientProxy", serverSide = "cn.lambdacraft.terrain.proxy.Proxy")
 	public static cn.lambdacraft.terrain.proxy.Proxy proxy;
@@ -102,6 +103,6 @@ public class ModuleTerrain {
 	}
 	
 	private static void loadProps(Configuration config) {
-		LIGeneralRegistry.loadConfigurableClass(CBCMod.config, ModuleTerrain.class);
+		ConfigHandler.loadConfigurableClass(CBCMod.config, ModuleTerrain.class);
 	}
 }

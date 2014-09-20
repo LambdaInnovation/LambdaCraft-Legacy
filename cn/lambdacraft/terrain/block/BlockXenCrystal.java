@@ -2,30 +2,36 @@ package cn.lambdacraft.terrain.block;
 
 import java.util.Random;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import cn.lambdacraft.core.block.CBCBlock;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
 /**
  * Xen水晶方块 掉落水晶材料
  * @author F
  *
  */
-public class BlockXenCrystal extends CBCBlock {
+public class BlockXenCrystal extends Block {
 
-	public BlockXenCrystal(int par1) {
+	public BlockXenCrystal() {
 		super(Material.rock);
-		this.setUnlocalizedName("xencrystal");
-		this.setIconName("xen_crystal");
+		this.setBlockName("xencrystal");
+		this.setBlockTextureName("xen_crystal");
 		this.setHardness(2.0F);
 		this.setResistance(10.0F);
-		this.setStepSound(soundStoneFootstep);
-		this.setLightValue(0.5F);
+		this.setStepSound(soundTypeStone);
+		this.setLightLevel(0.5F);
+		this.setHarvestLevel("pickaxe", 1);
 	}
 	
 	@Override
-	public int idDropped(int par1, Random par2Random, int par3)
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister p_149651_1_)
 	{
-		//TODO 要掉落啥东西呢
-		return this.blockID;
+	    this.blockIcon = p_149651_1_.registerIcon("lambdacraft:" + this.getTextureName());
 	}
 
 }

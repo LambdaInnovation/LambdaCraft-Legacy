@@ -160,6 +160,6 @@ public class RenderXenSky extends IRenderHandler {
 	}
 
 	private void fomartAndBind(String s) {
-		mc.renderEngine.bindTexture(new ResourceLocation(String.format(cn.lambdacraft.core.prop.ClientProps.SKYBOX_PATH, s)));
+		mc.renderEngine.bindTexture(new ResourceLocation(String.format(cn.lambdacraft.core.proxy.ClientProps.SKYBOX_PATH, s)));
 	}
 }

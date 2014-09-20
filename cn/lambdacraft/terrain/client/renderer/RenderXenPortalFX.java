@@ -4,7 +4,7 @@
 package cn.lambdacraft.terrain.client.renderer;
 
 import net.minecraft.entity.Entity;
-import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.terrain.client.EntityXenPortalFX;
 import cn.liutils.api.client.render.RenderIcon;
 

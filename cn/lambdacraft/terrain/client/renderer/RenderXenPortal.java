@@ -10,7 +10,7 @@ import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.liutils.api.client.util.RenderUtils;
 
 public class RenderXenPortal extends TileEntitySpecialRenderer {
@@ -22,7 +22,7 @@ public class RenderXenPortal extends TileEntitySpecialRenderer {
 		EntityLivingBase living = Minecraft.getMinecraft().thePlayer;
 		
 		GL11.glPushMatrix();
-		int textureID = (int) ((te.worldObj.getWorldTime() % 20) / 2);
+		int textureID = (int) ((te.getWorldObj().getWorldTime() % 20) / 2);
 		RenderUtils.loadTexture(ClientProps.PORTAL_PATH[textureID]);
 		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glTranslated(x, y, z);	

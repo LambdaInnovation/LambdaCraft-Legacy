@@ -18,11 +18,13 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.block.*;
-import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.terrain.register.XenBlocks;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenLight;
 
@@ -34,17 +36,17 @@ public class BlockXenLight extends CBCBlockContainer {
 
 	private boolean isBright;
 
-	public BlockXenLight(int par1, boolean bright) {
-		super(par1, Material.cloth);
+	public BlockXenLight( boolean bright) {
+		super(Material.cloth);
 		isBright = bright;
-		this.setStepSound(Block.soundClothFootstep);
-		this.setUnlocalizedName("xenLight");
-		this.setIconName("xenlight");
-		this.setLightValue(isBright ? 0.7F : 0.0F);
+		this.setStepSound(soundTypeCloth);
+		this.setBlockName("xenLight");
+		this.setBlockTextureName("xenlight");
+		this.setLightLevel(isBright ? 0.7F : 0.0F);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world) {
+	public TileEntity createNewTileEntity(World var1, int var2) {
 		return new TileEntityXenLight();
 	}
 	
@@ -63,15 +65,15 @@ public class BlockXenLight extends CBCBlockContainer {
      * redstoneTorchOff, and vice versa. Most blocks only match themselves.
      */
     @Override
-	public boolean isAssociatedBlockID(int par1)
+	public boolean isAssociatedBlock(Block par1)
     {
-        return par1 == XenBlocks.light_on.blockID || par1 == XenBlocks.light_off.blockID;
+        return par1 == XenBlocks.light_on || par1 == XenBlocks.light_off;
     }
     
     @Override
-	public int idDropped(int par1, Random par2Random, int par3)
+	public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
     {
-    	return XenBlocks.light_on.blockID;
+        return Item.getItemFromBlock(XenBlocks.light_on);
     }
     
     @Override
@@ -93,9 +95,10 @@ public class BlockXenLight extends CBCBlockContainer {
      * their own) Args: x, y, z, neighbor blockID
      */
     @Override
-    public void onNeighborBlockChange(World world, int par2, int par3, int par4, int par5) {
-    	if(world.getBlockId(par2, par3 - 1, par4) == 0)
+    public void onNeighborBlockChange(World world, int par2, int par3, int par4, Block par5) {
+    	if(world.getBlock(par2, par3 - 1, par4) == Blocks.air){
     		world.setBlockToAir(par2, par3, par4);
+    	}
     }
 
 }

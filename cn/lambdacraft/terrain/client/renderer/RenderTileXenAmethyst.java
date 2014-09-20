@@ -21,7 +21,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.terrain.client.model.ModelXenAmethyst;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
 import cn.liutils.api.client.render.RenderTileEntityModel;
@@ -35,6 +35,9 @@ public class RenderTileXenAmethyst extends RenderTileEntityModel {
 
 	private static final float WIDTH = 0.15F;
 	
+	/**
+	 * @param mo
+	 */
 	public RenderTileXenAmethyst() {
 		super(new ModelXenAmethyst());
 	}
@@ -45,24 +48,15 @@ public class RenderTileXenAmethyst extends RenderTileEntityModel {
 		TileEntityXenAmethyst amethyst = (TileEntityXenAmethyst) tileentity;
 		GL11.glPushMatrix();
 		if(amethyst.ticksSinceLastAtack < 10) {
-			renderRay(amethyst, Tessellator.instance, d0, d1, d2);
+			renderElectro(amethyst, Tessellator.instance, d0, d1, d2);
 		}
 		super.renderTileEntityAt(tileentity, d0, d1, d2, f);
 		GL11.glPopMatrix();
 	}
 	
-	/**
-	 * Render the Amethyst ray
-	 * @param ent
-	 * @param t
-	 * @param x
-	 * @param y
-	 * @param z
-	 */
-    private void renderRay(TileEntityXenAmethyst ent, Tessellator t, double x, double y, double z) {
+    private void renderElectro(TileEntityXenAmethyst ent, Tessellator t, double x, double y, double z) {
     	double dx = ent.lastxCoord, dy = ent.lastyCoord, dz = ent.lastzCoord ;
-//    	double tx = 0.0, ty = 0.4, tz = 0.0;
-    	double tx = 0.5, ty = 0.2, tz = 0.5;
+    	double tx = 0.0, ty = 0.4, tz = 0.0;
     	GL11.glPushMatrix();
     	GL11.glDisable(GL11.GL_CULL_FACE);
     	GL11.glDisable(GL11.GL_LIGHTING);

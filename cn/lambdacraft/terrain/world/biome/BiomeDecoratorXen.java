@@ -42,10 +42,10 @@ public class BiomeDecoratorXen extends BiomeDecorator {
     public WorldGenerator slimeGen;
     public WorldGenerator xenSandGen;
 
-    public BiomeDecoratorXen(BiomeGenBase par1BiomeGenBase)
+    public BiomeDecoratorXen()
     {
-    	super(par1BiomeGenBase);
-        this.crystalGen = new WorldGenMinableXen(XenBlocks.crystal.blockID, 8);
+    	super();
+        this.crystalGen = new WorldGenMinableXen(XenBlocks.crystal, 8);
         this.lightGen = new WorldGenLights();
         this.amethystGen = new WorldGenAmethyst();
         this.xenSandGen = new WorldGenXenSand(7);
@@ -55,7 +55,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
      * Decorates the world. Calls code that was formerly (pre-1.8) in ChunkProviderGenerate.populate
      */
     @Override
-	public void decorate(World par1World, Random par2Random, int par3, int par4)
+	public void decorateChunk(World par1World, Random par2Random, BiomeGenBase biomeGenBase, int par3, int par4)
     {
         if (this.currentWorld != null)
         {
@@ -68,7 +68,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
             this.randomGenerator = par2Random;
             this.chunk_X = par3;
             this.chunk_Z = par4;
-            this.decorate();
+            this.genDecorations(biomeGenBase);
             this.currentWorld = null;
             this.randomGenerator = null;
             
@@ -79,7 +79,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
      * The method that does the work of actually decorating chunks
      */
     @Override
-	protected void decorate()
+	protected void genDecorations(BiomeGenBase biomeGenBase)
     {
        this.generateOres();
        

@@ -1,12 +1,13 @@
 package cn.lambdacraft.terrain.world.gen;
 
 import cn.lambdacraft.terrain.register.XenBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.MapGenBase;
 
 public class MapGenFloatIsland extends MapGenBase{
 
-    protected void generateFloatIsland(World world, int genX, int genY, int genZ, byte[] par5ArrayOfByte, int thisChunkX, int thisChunkZ)
+    protected void generateFloatIsland(World world, int genX, int genY, int genZ, Block[] par5ArrayOfBlock, int thisChunkX, int thisChunkZ)
     {
     	
 		int height = this.rand.nextInt(25) + 25;
@@ -180,7 +181,7 @@ public class MapGenFloatIsland extends MapGenBase{
 				{
 					if(noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] <= 0.5F && y2 > noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY)
 					{
-							par5ArrayOfByte[(x2 * 16 + z2) * 128 + y2] = (byte)XenBlocks.stone.blockID;
+							par5ArrayOfBlock[(x2 * 16 + z2) * 128 + y2] = XenBlocks.stone;
 					}
 				}
 			}
@@ -222,7 +223,7 @@ public class MapGenFloatIsland extends MapGenBase{
 						if(y2 < noiseArray2[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY
 						&& booleanArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31])
 						{
-								par5ArrayOfByte[(x2 * 16 + z2) * 128 + y2] = (byte)XenBlocks.stone.blockID;
+								par5ArrayOfBlock[(x2 * 16 + z2) * 128 + y2] = XenBlocks.stone;
 						}
 					}
 				}
@@ -232,7 +233,7 @@ public class MapGenFloatIsland extends MapGenBase{
     }
 
     @Override
-	protected void recursiveGenerate(World world, int genChunkX, int genChunkZ, int thisChunkX, int thisChunkZ, byte[] par6ArrayOfByte)
+	protected void func_151538_a(World world, int genChunkX, int genChunkZ, int thisChunkX, int thisChunkZ, Block[] par6ArrayOfByte)
     {
         if (this.rand.nextInt(30) == 0)
         {
