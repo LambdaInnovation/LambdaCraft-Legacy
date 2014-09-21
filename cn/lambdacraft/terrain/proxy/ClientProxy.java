@@ -16,6 +16,7 @@ package cn.lambdacraft.terrain.proxy;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.client.EntityXenPortalFX;
 import cn.lambdacraft.terrain.client.model.ModelXenLight;
 import cn.lambdacraft.terrain.client.renderer.RenderItemPortal;
@@ -38,7 +39,7 @@ public class ClientProxy extends Proxy {
 	@Override
 	public void init() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenPortal.class, new RenderXenPortal());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenLight.class, new RenderTileEntityModel(new ModelXenLight()));
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenLight.class, new RenderTileEntityModel(new ModelXenLight(), ClientProps.XENLIGHT_PATH));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenAmethyst.class, new RenderTileXenAmethyst());
 		RenderingRegistry.registerEntityRenderingHandler(EntityXenPortalFX.class, new RenderXenPortalFX());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(XenBlocks.xenPortal), new RenderItemPortal());

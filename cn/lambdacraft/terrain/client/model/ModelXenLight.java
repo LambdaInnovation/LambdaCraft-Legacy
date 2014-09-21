@@ -84,14 +84,12 @@ public class ModelXenLight extends ModelBase implements ITileEntityModel {
 	}
 
 	@Override
-	public void render(TileEntity is, double x, double y, double z, float f1,
-			float scale, float f) {
+	public void render(TileEntity is, float f1, float f) {
 		TileEntityXenLight tile = (TileEntityXenLight) is;
 		GL11.glPushMatrix();
-		GL11.glTranslated(x + 0.5, y + 1.5, z + 0.5);
+		GL11.glTranslated(0.0, 1.5, 0.0);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
-		RenderUtils.loadTexture(ClientProps.XENLIGHT_PATH);
-		Shape1.render(scale);
+		Shape1.render(1);
 		//说好的伸缩~
 		GL11.glRotated(12.5 * MathHelper.sin(tile.ticksExisted * 0.07F), 0.1, 1, -0.1);
 		if(tile.isLighting) {
@@ -102,9 +100,14 @@ public class ModelXenLight extends ModelBase implements ITileEntityModel {
 				GL11.glTranslatef(0.0F, 0.05F * tile.tickSinceChange, 0.0F);
 			else GL11.glTranslatef(0.0F, 0.25F, 0.0F);
 		}
-		Shape2.render(scale);
-		Shape3.render(scale);
+		Shape2.render(1);
+		Shape3.render(1);
 		GL11.glPopMatrix();
+	}
+
+	@Override
+	public void renderPart(TileEntity te, String name, float f1, float f) {
+		throw new UnsupportedOperationException();
 	}
 
 }

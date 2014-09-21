@@ -83,16 +83,20 @@ public class ModelXenAmethyst extends ModelBase implements ITileEntityModel {
 	}
 
 	@Override
-	public void render(TileEntity is, double x, double y, double z, float f1,
-			float scale, float f) {
+	public void render(TileEntity is, float f1, float f) {
 		GL11.glPushMatrix();
-		GL11.glTranslated(x + 0.5, y + 1.5, z + 0.5);
+		GL11.glTranslated(0.0, 1.5, 0.0);
 		GL11.glScalef(-1.0F, -1.0F, 1.0F);
 		RenderUtils.loadTexture(ClientProps.AMETHYST_PATH);
-		Shape1.render(scale);
-		Shape2.render(scale);
-		Shape3.render(scale);
+		Shape1.render(1);
+		Shape2.render(1);
+		Shape3.render(1);
 		GL11.glPopMatrix();
+	}
+
+	@Override
+	public void renderPart(TileEntity te, String name, float f1, float f) {
+		throw new UnsupportedOperationException();
 	}
 
 }

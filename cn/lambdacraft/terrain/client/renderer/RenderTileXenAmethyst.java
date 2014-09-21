@@ -39,7 +39,7 @@ public class RenderTileXenAmethyst extends RenderTileEntityModel {
 	 * @param mo
 	 */
 	public RenderTileXenAmethyst() {
-		super(new ModelXenAmethyst());
+		super(new ModelXenAmethyst(), ClientProps.AMETHYST_PATH);
 	}
 	
 	@Override
@@ -62,7 +62,7 @@ public class RenderTileXenAmethyst extends RenderTileEntityModel {
     	GL11.glDisable(GL11.GL_LIGHTING);
     	GL11.glEnable(GL11.GL_BLEND);
     	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-    	RenderUtils.loadTexture(ClientProps.VORTIGAUNT_RAY_PATH[rng.nextInt(3)]);
+    	RenderUtils.loadTexture(ClientProps.VORTIGAUNT_RAY_PATH[RNG.nextInt(3)]);
     	
     	Vec3 v1 = RenderUtils.newV3(tx - WIDTH, ty, tz), v2 = RenderUtils.newV3(tx + WIDTH, ty, tz),
     		v3 = RenderUtils.newV3(tx, ty - WIDTH, tz), v4 = RenderUtils.newV3(tx, ty + WIDTH, tz);
