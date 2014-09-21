@@ -1,9 +1,11 @@
 package cn.lambdacraft.terrain.block;
 
+import cn.lambdacraft.core.CBCMod;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.Icon;
-import cn.lambdacraft.core.block.CBCBlock;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
+import net.minecraft.world.IBlockAccess;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -12,34 +14,47 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author F
  *
  */
-public class BlockBlackPillar extends CBCBlock{
+public class BlockBlackPillar extends XenBlock{
 
 	@SideOnly(Side.CLIENT)
-    private Icon iconPillar;
+    private IIcon iconPillar;
     @SideOnly(Side.CLIENT)
-    private Icon iconPillarSide;
+    private IIcon iconPillarSide;
 	
-	public BlockBlackPillar(int par1) 
+	protected BlockBlackPillar() 
 	{
 		super(Material.rock);
-		this.setUnlocalizedName("xenblackpillar");
-		this.setIconName("xen_black_pillar");
-		this.setHardness(-1.0F);
+		this.setBlockName("xenblackpillar");
+		this.setBlockTextureName("xen_black_pillar");
+		this.setBlockUnbreakable();
 		this.setResistance(2000.0F);
-		this.setStepSound(soundStoneFootstep);
+		this.setStepSound(soundTypeStone);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int par1, int par2)
+	public void registerBlockIcons(IIconRegister p_149651_1_)
+	{
+	    this.iconPillar = p_149651_1_.registerIcon("lambdacraft:" + this.getTextureName());
+	    this.iconPillarSide = p_149651_1_.registerIcon("lambdacraft:" + this.getTextureName() + "_side");
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public IIcon getIcon(IBlockAccess par1, int x, int y, int z, int side)
     {
-        return par1 == 1 ? this.iconPillar : (par1 == 0 ? this.iconPillar : this.iconPillarSide);
+        return this.getIcon(side, par1.getBlockMetadata(x, y, z));
     }
 	
-	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
-		this.iconPillar = par1IconRegister.registerIcon("lambdacraft:" + "xen_black_pillar");
-		this.iconPillarSide = par1IconRegister.registerIcon("lambdacraft:" + "xen_black_pillar_side");
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(int side, int meta)
+	{
+	     if(side == 1 || side == 0){
+	    	 return iconPillar;
+	     }else{
+	    	 return iconPillarSide;
+	     }
 	}
+	
 }

@@ -21,16 +21,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.core.proxy.ClientProps;
 import cn.lambdacraft.core.util.LCParticles;
 import cn.lambdacraft.terrain.ModuleTerrain;
 import cn.lambdacraft.terrain.register.XenBlocks;
@@ -47,12 +48,12 @@ public class BlockXenPortal extends BlockContainer {
 	private String iconName;
 	private final float HALF_WIDTH = 0.4F;
 
-	public BlockXenPortal(int par1) {
-		super(par1, Material.portal);
+	public BlockXenPortal() {
+		super(Material.portal);
 		this.setCreativeTab(CBCMod.cct);
-		this.setStepSound(Block.soundGlassFootstep);
-		this.setLightValue(0.75F);
-		this.setUnlocalizedName("xenPortal");
+		this.setStepSound(soundTypeGlass);
+		this.setLightLevel(0.75F);
+		this.setBlockName("xenPortal");
 		this.setIconName("xen_portal1");
 		this.setHardness(-1.0F);
 		this.setResistance(2000.0F);
@@ -74,7 +75,7 @@ public class BlockXenPortal extends BlockContainer {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void registerBlockIcons(IIconRegister par1IconRegister) {
 		this.blockIcon = par1IconRegister.registerIcon("lambdacraft:"
 				+ iconName);
 	}
@@ -84,16 +85,16 @@ public class BlockXenPortal extends BlockContainer {
     {
         super.updateTick(par1World, par2, par3, par4, par5Random);
 
-        if (par1World.provider.isSurfaceWorld() && par5Random.nextInt(2000) < par1World.difficultySetting)
+        if (par1World.provider.isSurfaceWorld() && par1World.getGameRules().getGameRuleBooleanValue("doMobSpawning") && par5Random.nextInt(2000) < par1World.difficultySetting.getDifficultyId())
         {
             int l;
 
-            for (l = par3; !par1World.doesBlockHaveSolidTopSurface(par2, l, par4) && l > 0; --l)
+            for (l = par3; !par1World.doesBlockHaveSolidTopSurface(par1World, par2, l, par4) && l > 0; --l)
             {
                 ;
             }
 
-            if (l > 0 && !par1World.isBlockNormalCube(par2, l + 1, par4))
+            if (l > 0 && !par1World.getBlock(par2, l + 1, par4).isNormalCube())
             {
                 Entity entity = ItemMonsterPlacer.spawnCreature(par1World, 57, par2 + 0.5D, l + 1.1D, par4 + 0.5D);
 
@@ -128,12 +129,12 @@ public class BlockXenPortal extends BlockContainer {
         byte b0 = 0;
         byte b1 = 0;
 
-        if (par1World.getBlockId(par2 - 1, par3, par4) == Block.bedrock.blockID || par1World.getBlockId(par2 + 1, par3, par4) == Block.bedrock.blockID)
+        if (par1World.getBlock(par2 - 1, par3, par4) == Blocks.bedrock || par1World.getBlock(par2 + 1, par3, par4) == Blocks.bedrock)
         {
             b0 = 1;
         }
 
-        if (par1World.getBlockId(par2, par3, par4 - 1) == Block.bedrock.blockID || par1World.getBlockId(par2, par3, par4 + 1) == Block.bedrock.blockID)
+        if (par1World.getBlock(par2, par3, par4 - 1) == Blocks.bedrock || par1World.getBlock(par2, par3, par4 + 1) == Blocks.bedrock)
         {
             b1 = 1;
         }
@@ -144,7 +145,7 @@ public class BlockXenPortal extends BlockContainer {
         }
         else
         {
-            if (par1World.getBlockId(par2 - b0, par3, par4 - b1) == 0)
+            if (par1World.getBlock(par2 - b0, par3, par4 - b1) == Blocks.air)
             {
                 par2 -= b0;
                 par4 -= b1;
@@ -161,16 +162,16 @@ public class BlockXenPortal extends BlockContainer {
 
                     if (l != -1 && l != 2 || i1 != -1 && i1 != 3)
                     {
-                        int j1 = par1World.getBlockId(par2 + b0 * l, par3 + i1, par4 + b1 * l);
+                        Block j1 = par1World.getBlock(par2 + b0 * l, par3 + i1, par4 + b1 * l);
 
                         if (flag)
                         {
-                            if (j1 != Block.bedrock.blockID)
+                            if (j1 != Blocks.bedrock)
                             {
                                 return false;
                             }
                         }
-                        else if (j1 != 0 && j1 != Block.fire.blockID)
+                        else if (j1 != Blocks.air && j1 != Blocks.fire)
                         {
                             return false;
                         }
@@ -182,15 +183,13 @@ public class BlockXenPortal extends BlockContainer {
             {
                 for (i1 = 0; i1 < 3; ++i1)
                 {
-                    par1World.setBlock(par2 + b0 * l, par3 + i1, par4 + b1 * l, XenBlocks.xenPortal.blockID , 0, 2);
+                    par1World.setBlock(par2 + b0 * l, par3 + i1, par4 + b1 * l, XenBlocks.xenPortal , 0, 2);
                 }
             }
 
             return true;
         }
     }
-    @Override
-    public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5){}
     
     /**
      *    
@@ -262,7 +261,7 @@ public class BlockXenPortal extends BlockContainer {
             d4 = (par5Random.nextFloat() - 0.5D) * 0.5D;
             d5 = (par5Random.nextFloat() - 0.5D) * 0.5D;
 
-            if (par1World.getBlockId(par2 - 1, par3, par4) != this.blockID && par1World.getBlockId(par2 + 1, par3, par4) != this.blockID)
+            if (par1World.getBlock(par2 - 1, par3, par4) != this && par1World.getBlock(par2 + 1, par3, par4) != this)
             {
                 d0 = par2 + 0.5D + 0.25D * i1;
                 d3 = par5Random.nextFloat() * 2.0F * i1;
@@ -277,20 +276,8 @@ public class BlockXenPortal extends BlockContainer {
         }
     }
 
-    @Override
-	@SideOnly(Side.CLIENT)
-
-    /**
-     * only called by clickMiddleMouseButton , and passed to inventory.setCurrentItem (along with isCreative)
-     */
-    public int idPicked(World par1World, int par2, int par3, int par4)
-    {
-        return 0;
-    }
-
 	@Override
-	public TileEntity createNewTileEntity(World world) {
-		// TODO Auto-generated method stub
+	public TileEntity createNewTileEntity(World var1, int var2) {
 		return new TileEntityXenPortal();
 	}
 
