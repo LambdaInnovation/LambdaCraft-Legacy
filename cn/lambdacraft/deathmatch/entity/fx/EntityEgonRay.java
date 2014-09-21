@@ -21,9 +21,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import cn.lambdacraft.deathmatch.item.weapon.InformationEnergy;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Egon;
 import cn.lambdacraft.deathmatch.register.DMItems;
+import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.core.event.ItemControlHandler;
 
 /**
@@ -74,11 +74,11 @@ public class EntityEgonRay extends Entity {
 		if (item == null)
 			return;
 
-		InformationEnergy inf = ((Weapon_Egon) item.getItem()).getInformation(
+		InfWeapon inf = ((Weapon_Egon) item.getItem()).getInformation(
 				item, worldObj);
 		if (inf == null|| 
 				!(thrower.getCurrentEquippedItem() != null && thrower.getCurrentEquippedItem().getItem() == DMItems.weapon_egon && 
-				ItemControlHandler.getUsingTicks(thrower, 1) > 0 && ((Weapon_Egon)item.getItem()).canShoot(thrower, item, true))) {
+				ItemControlHandler.getUsingTicks(thrower, 1) > 0 && ((Weapon_Egon)item.getItem()).canShoot(thrower, item))) {
 			this.setDead();
 			return;
 		}

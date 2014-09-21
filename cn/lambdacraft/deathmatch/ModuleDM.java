@@ -1,38 +1,17 @@
 package cn.lambdacraft.deathmatch;
 
-import net.minecraftforge.common.MinecraftForge;
 import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.misc.CBCNetHandler;
 import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.deathmatch.block.container.DMGuiElements;
-import cn.lambdacraft.deathmatch.entity.EntityARGrenade;
-import cn.lambdacraft.deathmatch.entity.EntityBattery;
-import cn.lambdacraft.deathmatch.entity.EntityCrossbowArrow;
-import cn.lambdacraft.deathmatch.entity.EntityHGrenade;
-import cn.lambdacraft.deathmatch.entity.EntityHornet;
-import cn.lambdacraft.deathmatch.entity.EntityMedkit;
-import cn.lambdacraft.deathmatch.entity.EntityRPGDot;
-import cn.lambdacraft.deathmatch.entity.EntityRocket;
-import cn.lambdacraft.deathmatch.entity.EntitySatchel;
-import cn.lambdacraft.deathmatch.entity.fx.EntityCrossbowStill;
-import cn.lambdacraft.deathmatch.entity.fx.EntityEgonRay;
-import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRay;
-import cn.lambdacraft.deathmatch.entity.fx.EntityGaussRayColored;
-import cn.lambdacraft.deathmatch.entity.fx.GaussParticleFX;
-import cn.lambdacraft.deathmatch.network.NetChargerClient;
-import cn.lambdacraft.deathmatch.network.NetMedFillerClient;
+import cn.lambdacraft.deathmatch.entity.*;
+import cn.lambdacraft.deathmatch.entity.fx.*;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
-import cn.lambdacraft.deathmatch.register.DMEventHandler;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.event.*;
 import cpw.mods.fml.common.registry.EntityRegistry;
 
 @Mod(modid = "LambdaCraft|DeathMatch", name = "LambdaCraft DeathMatch", version = CBCMod.VERSION, dependencies = CBCMod.DEPENCY_CRAFTING)
@@ -46,12 +25,8 @@ public class ModuleDM {
 
 	@EventHandler()
 	public void preInit(FMLPreInitializationEvent Init) {
-		MinecraftForge.EVENT_BUS.register(new DMEventHandler());
-		CBCNetHandler.addChannel(GeneralProps.NET_ID_CHARGER_CL, new NetChargerClient());
-		CBCNetHandler.addChannel(GeneralProps.NET_ID_MEDFILLER_CL, new NetMedFillerClient());
 		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_CHARGER, new DMGuiElements.ElementArmorCharger());
 		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_HEALTH, new DMGuiElements.ElementHealthCharger());
-		CBCMod.guiHandler.addGuiElement(GeneralProps.GUI_ID_MEDFILLER, new DMGuiElements.ElementMedFiller());
 		proxy.preInit();
 	}
 

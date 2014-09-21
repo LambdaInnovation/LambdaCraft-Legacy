@@ -35,7 +35,7 @@ import cn.liutils.api.util.GenericUtils;
 public class EntityBulletEgon extends EntityBullet {
 
 	public EntityBulletEgon(World par1World, EntityLivingBase par2EntityLiving) {
-		super(par1World, par2EntityLiving, DMItems.weapon_egon.getWeaponDamage(true));
+		super(par1World, par2EntityLiving, 8);
 	}
 
 	public EntityBulletEgon(World world) {

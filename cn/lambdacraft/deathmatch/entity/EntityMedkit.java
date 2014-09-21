@@ -1,11 +1,11 @@
 package cn.lambdacraft.deathmatch.entity;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import cn.lambdacraft.deathmatch.item.ItemMedkit;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.util.selector.EntitySelectorPlayer;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +19,8 @@ import net.minecraft.world.World;
 public class EntityMedkit extends Entity {
 
 	private boolean spawnItem = true;
+	
+	Field fldDuration;
 
 	public EntityMedkit(World world) {
 		super(world);
@@ -31,6 +33,12 @@ public class EntityMedkit extends Entity {
 		this.setPosition(x, y, z);
 		writePotionInf(itemStack);
 		this.setSize(0.8F, 0.4F);
+		
+		try {
+			fldDuration = PotionEffect.class.getDeclaredField("duration");
+			fldDuration.setAccessible(true);
+		} catch(Exception e) {}
+		
 		if (entityPlayer.capabilities.isCreativeMode)
 			spawnItem = false;
 	}
@@ -76,7 +84,9 @@ public class EntityMedkit extends Entity {
 			if (eff != null) {
 				PotionEffect ef = player.getActivePotionEffect(Potion.potionTypes[eff.getPotionID()]);
 				if(ef != null) {
-					ef.duration += eff.duration;
+					try {
+						fldDuration.set(ef, ef.getDuration() + eff.getDuration());
+					} catch (Exception e)  {}
 					player.addPotionEffect(ef);
 				} else
 					player.addPotionEffect(eff);

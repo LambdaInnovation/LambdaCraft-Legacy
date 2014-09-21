@@ -24,11 +24,9 @@ import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.block.TileArmorCharger;
-import cn.lambdacraft.deathmatch.network.NetChargerClient;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.liutils.api.client.gui.GuiContainerSP;
 import cn.liutils.api.client.gui.IGuiTip;
-import cn.liutils.api.client.gui.part.LIGuiButton;
 import cn.liutils.api.client.gui.part.LIGuiPart;
 import cn.liutils.api.client.util.HudUtils;
 
@@ -100,18 +98,11 @@ public class GuiArmorCharger extends GuiContainerSP {
 
 	@Override
 	protected void addElements(Set<cn.liutils.api.client.gui.part.LIGuiPart> set) {
-		LIGuiPart 
-		behavior = new LIGuiPart("behavior", 80, 28, 64, 10).setDraw(false).setTip(new TipEnergy());
-		set.add(behavior);
 	}
 
 	@Override
 	protected void onPartClicked(LIGuiPart part,
 			float mx, float my) {
-		if (part.name.equals("redstone")) {
-			te.nextBehavior();
-			NetChargerClient.sendChargerPacket(te);
-		}
 	}
 
 }

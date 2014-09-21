@@ -1,19 +1,18 @@
 package cn.lambdacraft.deathmatch.client.renderer;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+
+import org.lwjgl.opengl.GL11;
+
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.client.model.ModelCrossbow;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.client.render.RenderModelItem;
-import cn.weaponmod.api.WMInformation;
 import cn.weaponmod.api.information.InfWeapon;
-import cn.weaponmod.api.information.InformationBullet;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -43,7 +42,7 @@ public class RenderCrossbow extends RenderModelItem {
 					&& Minecraft.getMinecraft().currentScreen == null;
 			final float upliftRatio = 1.0F;
 			if(inf != null && firstPerson && inf.isActionPresent("reload")) {
-				float rotation = DMItems.weapon_crossbow.getRotationForReload(item);
+				float rotation = 0.0F;//DMItems.weapon_crossbow.getRotationForReload(item);
 				GL11.glRotatef(upliftRatio * rotation * 17F, 0.0F, 0.0F, -1.0F);
 				GL11.glRotatef(upliftRatio * rotation * 12F, 0.0F, -1.0F, 0.0F);
 				GL11.glRotatef(upliftRatio * rotation * 14F, 1.0F, 0.0F, 0.0F);

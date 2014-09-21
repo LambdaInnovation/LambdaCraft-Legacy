@@ -18,8 +18,11 @@ import cn.liutils.api.util.GenericUtils;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.action.Action;
+import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionShoot;
+import cn.weaponmod.api.information.InfUtils;
 import cn.weaponmod.api.information.InfWeapon;
+import cn.weaponmod.core.event.ItemControlHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -40,18 +43,15 @@ public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCros
 	public class ActionCharge extends ActionShoot {
 		
 		final int strengh;
-		final boolean type;
 		
-		public ActionCharge(boolean b, int str) {
+		public ActionCharge(int str) {
 			super(0, "charge");
 			strengh = str;
-			type = b;
 		}
 		
 		@Override
 		public Entity getProjectileEntity(World world, EntityPlayer player) {
-			return type ? new EntityBulletGaussSec(EnumGaussRayType.NORMAL, world, player, player.getCurrentEquippedItem(), null, null, 8)
-			: new EntityBulletGauss(world, player, player.getCurrentEquippedItem(), strengh);
+			return new EntityBulletGauss(world, player, player.getCurrentEquippedItem(), strengh);
 		}
 	}
 
@@ -59,7 +59,6 @@ public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCros
 		super(CBCItems.ammo_uranium);
 		setCreativeTab(CBCMod.cct);
 		setUnlocalizedName("weapon_gauss");
-		setJamTime(20);
 	}
 
 	@Override
@@ -68,42 +67,29 @@ public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCros
 		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_gauss");
 	}
 	
-
-	@Override
-	public void onItemUsingTick(World world, EntityPlayer player, ItemStack stack, boolean type, int tickLeft) {
-    	InformationEnergy inf = loadInformation(stack, player);
-    	super.onItemUsingTick(world, player, stack, type, tickLeft);
-		if(!type)
-			onChargeModeUpdate(inf, stack, player.worldObj, player, 0, true);
-	}
-	
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
 			Entity par3Entity, int par4, boolean par5) {
 
-		InformationEnergy inf = (InformationEnergy) onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
+		InfWeapon inf = onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
 		
 		if (inf == null)
 			return;
 		EntityPlayer player = (EntityPlayer) par3Entity;
+		/*
 		if(!player.isUsingItem() && inf.rotationVelocity > 0)
 			inf.rotationVelocity -= 0.5;
-		inf.rotationAngle += inf.rotationVelocity;
-	}
-
-	@Override
-	public boolean doesShoot(InformationEnergy inf, EntityPlayer player, ItemStack itemStack, boolean side) {
-		return side && super.doesShoot(inf, player, itemStack, side);
+		inf.rotationAngle += inf.rotationVelocity;*/
 	}
 
 	public void onChargeModeUpdate(InfWeapon inf,
 			ItemStack par1ItemStack, World par2World, EntityPlayer player,
 			int par4, boolean par5) {
-
+		/*TODO:Transfer to ActionCharge
 		final int OVER_CHARGE_LIMIT = 160;
 		final int CHARGE_TIME_LIMIT = 41;
 
-		int ticksChange = inf.getDeltaTick(false);
+		int ticksChange = InfUtils.getDeltaTick(inf, "charge");
 		inf.chargeTime++;
 		
 		if(inf.rotationVelocity <= 15)
@@ -144,23 +130,18 @@ public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCros
 			inf.setLastTick(false);
 			par2World.playSoundAtEntity(player, SND_CHARGE_PATH, 0.5F, 1.0F);
 		}
-
+	*/
 	}
 	
-	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack, int keyid) {
-		InformationEnergy inf = getInformation(par1ItemStack, par2World);
-		boolean left = ItemHelper.getUsingTickLeft(player, true) > 0;
-		if (inf == null)
+	public void onItemRelease(World world, EntityPlayer player, ItemStack stack, int keyid) {
+		super.onItemRelease(world, player, stack, keyid);
+		
+		InfWeapon inf = getInformation(stack, world);
+		if (inf == null || keyid != 0)
 			return;
-
-		if (left) {
-			super.onPlayerStoppedUsing(par1ItemStack, par2World,
-					player, par4);
-			return;
-		}
 
 		// Do the charge attack part
-		int charge = (inf.charge > 60 ? 60 : inf.charge);
+		int charge = (InfUtils.getDeltaTick(inf) > 60 ? 60 : InfUtils.getDeltaTick(inf));
 		if (charge <= 6)
 			return;
 		int damage = charge * 2 / 3;
@@ -171,73 +152,30 @@ public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCros
 				* vel;
 
 		player.addVelocity(-dx, -dy, -dz);
-		if (!par2World.isRemote) {
-			par2World.playSoundAtEntity(player, SND_SHOOT_PATH, 0.5F,
+		if (!world.isRemote) {
+			world.playSoundAtEntity(player, SND_SHOOT_PATH, 0.5F,
 					1.0F);
-			par2World.spawnEntityInWorld(new EntityBulletGauss(par2World, player, par1ItemStack, damage));
+			world.spawnEntityInWorld(new EntityBulletGauss(world, player, stack, damage));
 		}
-	}
-
-	@Override
-	public void onEnergyWpnShoot(ItemStack par1ItemStack, World par2World,
-			EntityPlayer player, InformationEnergy information, boolean side) {
-		if(!par2World.isRemote)
-			par2World.spawnEntityInWorld(new EntityBulletGaussSec(EnumGaussRayType.NORMAL, par2World, player,
-				par1ItemStack, null, null, getWeaponDamage(side)));
-		par2World.playSoundAtEntity(player, getSoundShoot(side), 0.5F, 1.0F);
-		WeaponHelper.consumeAmmo(player, this, 2);
-		information.setLastTick(side);
-		return;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public float getRotationForStack(ItemStack is, EntityLivingBase living) {
-		if(!(living instanceof EntityPlayer))
-			return 0.0F;
-		InformationEnergy inf = loadInformation(is, (EntityPlayer) living);
-		if(inf == null)
-			return 0;
-		return inf.rotationAngle / 0.01745329252F;
 	}
 
 	@Override
 	public int getMaxItemUseDuration(ItemStack par1ItemStack) {
 		return 500;
 	}
-
-	@Override
-	public int getShootTime(boolean left) {
-		return 5;
-	}
-
-	@Override
-	public String getSoundShoot(boolean left) {
-		return left ? SND_SHOOT_PATH : "";
-	}
-
-	@Override
-	public String getSoundJam(boolean left) {
-		return "lambdacraft:weapons.gunjam_a";
-	}
 	
 	@Override
 	public Action getActionShoot() {
-		return new ActionShoot(0, "") {
-			@Override
+		return new ActionShoot(0, this.SND_SHOOT_PATH) {
 			protected Entity getProjectileEntity(World world, EntityPlayer player) {
-				return new EntityBullet(world, player, damage, scatter);
+				return new EntityBulletGaussSec(EnumGaussRayType.NORMAL, world, player, player.getCurrentEquippedItem(), null, null, 8);
 			}
 		};
 	}
-
+	
 	@Override
-	public int getWeaponDamage(boolean left) {
-		return 8;
-	}
-
-	@Override
-	public int getOffset(boolean left) {
-		return 0;
+	public Action getActionJam() {
+		return new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 	}
 
 	@Override
@@ -248,6 +186,11 @@ public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCros
 	@Override
 	public int getCrosshairID(ItemStack itemStack) {
 		return -1;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public float getRotationForStack(ItemStack stack, EntityPlayer ent) {
+		return this.loadInformation(stack, ent).infData.getInteger("charge");
 	}
 
 }

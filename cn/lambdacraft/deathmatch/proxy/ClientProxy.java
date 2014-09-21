@@ -152,6 +152,5 @@ public class ClientProxy extends Proxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileArmorCharger.class,new RenderTileCharger(DMBlocks.armorCharger));
 		ClientRegistry.bindTileEntitySpecialRenderer(TileHealthCharger.class,new RenderTileHeCharger(DMBlocks.healthCharger));
 		cth = new ClientTickHandler();
-		TickRegistry.registerTickHandler(cth, Side.CLIENT);
 	}
 }

@@ -1,30 +1,24 @@
 package cn.lambdacraft.deathmatch.flashlight;
 
-import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.TickType;
 import java.util.EnumSet;
-import cn.lambdacraft.core.LCClientPlayer;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.EnumSkyBlock;
+import cn.lambdacraft.core.LCClientPlayer;
 
-public class ClientTickHandler implements ITickHandler {
+public class ClientTickHandler {
 	public static int ticks = 0;
 
 	/* the flag if the flashlight button has been pressed */
 	public boolean flag = false;
 
-	@Override
-	public void tickStart(EnumSet var1, Object... var2) {
-	}
-
-	@Override
-	public void tickEnd(EnumSet var1, Object... var2) {
-		if (var1.equals(EnumSet.of(TickType.RENDER))) {
+	public void tickEnd(boolean renderTick) {
+		if (renderTick) {
 			this.onRenderTick();
-		} else if (var1.equals(EnumSet.of(TickType.CLIENT))) {
+		} else {
 			GuiScreen var3 = Minecraft.getMinecraft().currentScreen;
 			if (var3 != null) {
 				this.onTickInGUI(var3);
@@ -32,16 +26,6 @@ public class ClientTickHandler implements ITickHandler {
 				this.onTickInGame();
 			}
 		}
-	}
-
-	@Override
-	public EnumSet ticks() {
-		return EnumSet.of(TickType.RENDER, TickType.CLIENT);
-	}
-
-	@Override
-	public String getLabel() {
-		return "Flashlight.ClientTickHandler";
 	}
 
 	public void onRenderTick() {
