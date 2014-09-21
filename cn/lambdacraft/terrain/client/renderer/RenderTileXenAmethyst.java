@@ -21,7 +21,7 @@ import net.minecraft.util.Vec3;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.client.model.ModelXenAmethyst;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
 import cn.liutils.api.client.render.RenderTileEntityModel;

@@ -10,7 +10,7 @@ import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.liutils.api.client.util.RenderUtils;
 
 public class RenderXenPortal extends TileEntitySpecialRenderer {

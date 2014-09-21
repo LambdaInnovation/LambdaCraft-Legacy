@@ -21,7 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.liutils.api.client.model.ITileEntityModel;
 import cn.liutils.api.client.util.RenderUtils;
 

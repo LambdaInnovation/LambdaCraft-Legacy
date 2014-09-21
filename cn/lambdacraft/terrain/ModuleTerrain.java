@@ -25,8 +25,8 @@ import cn.lambdacraft.mob.entity.EntityHoundeye;
 import cn.lambdacraft.terrain.register.XenBlocks;
 import cn.lambdacraft.terrain.world.WorldProviderXenContinent;
 import cn.lambdacraft.terrain.world.biome.MainBiomes;
+import cn.liutils.api.LIGeneralRegistry;
 import cn.liutils.api.register.Configurable;
-import cn.liutils.core.register.ConfigHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -103,6 +103,6 @@ public class ModuleTerrain {
 	}
 	
 	private static void loadProps(Configuration config) {
-		ConfigHandler.loadConfigurableClass(CBCMod.config, ModuleTerrain.class);
+		LIGeneralRegistry.loadConfigurableClass(CBCMod.config, ModuleTerrain.class);
 	}
 }

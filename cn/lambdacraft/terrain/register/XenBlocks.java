@@ -33,7 +33,6 @@ import cn.lambdacraft.terrain.block.BlockXenStone;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenLight;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenPortal;
-import cn.liutils.core.register.ConfigHandler;
 
 /**
  * @author F 

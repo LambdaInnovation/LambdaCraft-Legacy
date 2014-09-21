@@ -31,7 +31,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.proxy.ClientProps;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.core.util.LCParticles;
 import cn.lambdacraft.terrain.ModuleTerrain;
 import cn.lambdacraft.terrain.register.XenBlocks;
