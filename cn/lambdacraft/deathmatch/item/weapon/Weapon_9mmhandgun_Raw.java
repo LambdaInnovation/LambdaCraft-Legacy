@@ -41,7 +41,7 @@ public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 	}
 	
 	public Action getActionShoot() {
-		return new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c").bindUpliftActions(getActionUplift(), getActionUpliftRender());
+		return new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c");
 	}
 	
 	public Action getActionReload() {

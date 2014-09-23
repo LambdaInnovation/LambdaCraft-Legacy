@@ -1,5 +1,6 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_9mmAR.ActionGrenade;
 import cn.weaponmod.api.action.ActionAutomaticShoot;
 import cn.weaponmod.api.information.InfWeapon;
@@ -33,11 +34,26 @@ public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
 			}
 			break;
 		case 1:
-			//RMOUSE GRENADE
-			inf.executeAction(player, new ActionAutomaticShoot(300, 10, 3, "leon:weapons.9mmhg"));
+			//RMOUSE
+			inf.executeAction(player, new ActionAutomaticShoot(300, 7, 3, "lambdacraft:weapons.nmmarr")
+				.setMuzzleflash(ClientProps.MUZZLEFLASH));
 			break;
 		case 2: //Reload
 			inf.executeAction(player, this.getActionReload());
+			break;
+		default:
+			break;
+		}
+	}
+	
+	@Override
+	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,
+			int keyid) {
+		InfWeapon inf = loadInformation(stack, pl);
+		switch(keyid) {
+		case 0: //LMOUSE
+		case 1: //RMOUSE
+			inf.removeAction(pl, "shoot_auto");
 			break;
 		default:
 			break;

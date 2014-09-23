@@ -46,8 +46,7 @@ public class Weapon_357 extends WeaponGeneralBullet_LC {
 	}
 	
 	public Action getActionShoot() {
-		return new ActionShoot(7, 5, "lambdacraft:weapons.pyt_shota").setShootRate(20)
-		.bindUpliftActions(getActionUplift(), getActionUpliftRender());
+		return new ActionShoot(7, 5, "lambdacraft:weapons.pyt_shota").setShootRate(20);
 	}
 	
 	public Action getActionReload() {

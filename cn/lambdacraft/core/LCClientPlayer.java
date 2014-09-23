@@ -11,7 +11,7 @@ import cn.lambdacraft.core.item.ElectricArmor;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
 import cn.lambdacraft.deathmatch.item.ArmorHEV.EnumAttachment;
 import cn.lambdacraft.deathmatch.register.DMItems;
-import cn.lambdacraft.terrain.ModuleTerrain;
+//import cn.lambdacraft.terrain.ModuleTerrain;
 import cn.liutils.api.util.GenericUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -69,15 +69,13 @@ public class LCClientPlayer {
 			}
 		}
 		
-		/**
-		 * TODO:添加XC
-		 */
+		/*
 		if(player.worldObj.provider.dimensionId == ModuleTerrain.xenIslandDimensionID 
 				|| player.worldObj.provider.dimensionId == ModuleTerrain.xenContinentDimensionID) {
 			if(!player.onGround && !player.capabilities.isFlying && !(player.isOnLadder() || player.isInWater())) {
 				player.motionY += 0.036;
 			}
-		}
+		}*/
 	}
 	
 	public void afterOnUpdate() {

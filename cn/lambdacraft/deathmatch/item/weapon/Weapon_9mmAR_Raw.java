@@ -57,8 +57,7 @@ public class Weapon_9mmAR_Raw extends WeaponGeneralBullet_LC {
 	}
 	
 	public Action getActionShoot() {
-		return new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa")
-		.bindUpliftActions(getActionUplift(), getActionUpliftRender());
+		return new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa");
 	}
 	
 	public Action getActionReload() {

@@ -126,7 +126,7 @@ public class ModuleCrafting {
 						CBCItems.materials.newStack(3, EnumMaterial.LIGHT),
 						CBCItems.materials.newStack(1, EnumMaterial.TECH),
 						CBCItems.materials.newStack(6, EnumMaterial.EXPLOSIVE)),
-				new RecipeCrafter(new ItemStack(DMItems.weapon_gauss), 4800,
+				new RecipeCrafter(new ItemStack(DMItems.gauss), 4800,
 						CBCItems.materials.newStack(8, EnumMaterial.LIGHT),
 						CBCItems.materials.newStack(3, EnumMaterial.TECH),
 						new ItemStack(CBCItems.xenCrystal, 5)),
@@ -134,7 +134,7 @@ public class ModuleCrafting {
 						CBCItems.materials.newStack(5, EnumMaterial.HEAVY),
 						new ItemStack(CBCItems.xenCrystal, 8),
 						CBCItems.materials.newStack(4, EnumMaterial.TECH)),
-				new RecipeCrafter(new ItemStack(DMItems.weapon_crossbow), 3000,
+				new RecipeCrafter(new ItemStack(DMItems.crossbow), 3000,
 						CBCItems.materials.newStack(6, EnumMaterial.LIGHT),
 						CBCItems.materials
 								.newStack(3, EnumMaterial.ACCESSORIES),

@@ -62,7 +62,7 @@ public class EntityRocket extends EntityThrowable {
 		if (ticksExisted % 45 == 0)
 			worldObj.playSoundAtEntity(this, "cbc.weapons.rocket", 0.5F, 1.0F);
 		
-		EntityRPGDot dot = DMItems.weapon_RPG.getRPGDot(theStack, worldObj, (EntityPlayer) getThrower());
+		EntityRPGDot dot = DMItems.rpg.getRPGDot(theStack, worldObj, (EntityPlayer) getThrower());
 		
 		if (dot == null || this.isDead)
 			return;

@@ -1,5 +1,6 @@
 package cn.lambdacraft.deathmatch.register;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
@@ -22,21 +23,23 @@ import cn.lambdacraft.deathmatch.item.weapon.Weapon_Shotgun;
 
 public class DMItems {
 
-	public static Weapon_Crowbar weapon_crowbar, physCalibur;
-	public static Weapon_Hgrenade weapon_hgrenade;
-
-	public static Weapon_Gauss weapon_gauss;
-	public static Weapon_Satchel weapon_satchel;
-	public static Weapon_Egon weapon_egon;
-	public static Weapon_9mmhandgun weapon_9mmhandgun;
-	public static Weapon_9mmAR weapon_9mmAR;
-	public static Weapon_357 weapon_357;
-	public static Item weapon_shotgun;
-	public static Weapon_Hornet weapon_hornet;
-	public static Weapon_RPG weapon_RPG;
-	public static Weapon_Crossbow weapon_crossbow;
-	public static ItemMedkit medkit;
-	public static Weapon_Crowbar_Electrical weapon_crowbar_el;
+	public static Item 
+		weapon_crowbar, 
+		physCalibur,
+		weapon_hgrenade,
+		weapon_satchel,
+		weapon_egon,
+		weapon_9mmhandgun,
+		weapon_9mmAR,
+		weapon_357,
+		weapon_shotgun,
+		weapon_hornet,
+		medkit,
+		weapon_crowbar_el;
+	
+	public static Weapon_RPG rpg;
+	public static Weapon_Crossbow crossbow;
+	public static Weapon_Gauss gauss;
 	
 	public static ArmorHEV armorHEVBoot, armorHEVLeggings, armorHEVChestplate,
 			armorHEVHelmet;
@@ -44,30 +47,53 @@ public class DMItems {
 
 	public static void init(Configuration conf) {
 
-		weapon_crowbar = new Weapon_Crowbar();
+		weapon_crowbar = reg(Weapon_Crowbar.class, "lc_crowbar");
 		
-		weapon_shotgun = new Weapon_Shotgun();
-		weapon_hgrenade = new Weapon_Hgrenade();
-		weapon_9mmhandgun = new Weapon_9mmhandgun();
-		weapon_9mmAR = new Weapon_9mmAR();
-		weapon_357 = new Weapon_357();
-		weapon_RPG = new Weapon_RPG();
-		weapon_crossbow = new Weapon_Crossbow();
-		weapon_satchel = new Weapon_Satchel();
+		weapon_shotgun = reg(Weapon_Shotgun.class, "lc_shotgun");
+		weapon_hgrenade = reg(Weapon_Hgrenade.class, "lc_hgren");
+		weapon_9mmhandgun = reg(Weapon_9mmhandgun.class, "lc_9mmhg");
+		weapon_9mmAR = reg(Weapon_9mmAR.class, "lc_9mmar");
+		weapon_357 = reg(Weapon_357.class, "lc_357");
+		rpg = (Weapon_RPG) reg(Weapon_RPG.class, "lc_rpg");
+		crossbow = (Weapon_Crossbow) reg(Weapon_Crossbow.class, "lc_crossbow");
+		weapon_satchel = reg(Weapon_Satchel.class, "lc_satchel");
 
-		weapon_gauss = new Weapon_Gauss();
-		weapon_egon = new Weapon_Egon();
-		weapon_hornet = new Weapon_Hornet();
-		physCalibur = new ItemPhysicalCalibur();
+		gauss = (Weapon_Gauss) reg(Weapon_Gauss.class, "lc_gauss");
+		weapon_egon = reg(Weapon_Egon.class, "lc_egon");
+		weapon_hornet = reg(Weapon_Hornet.class, "lc_hornet");
+		physCalibur = reg(ItemPhysicalCalibur.class, "lc_pcalibur");
 		
-		armorHEVHelmet = new ArmorHEV(0);
-			armorHEVChestplate = new ArmorHEV(1);
-			armorHEVLeggings = new ArmorHEV(2);
-			armorHEVBoot = new ArmorHEV(3);
-			weapon_crowbar_el = new Weapon_Crowbar_Electrical();
+		Item[] hevs = reg(ArmorHEV.class, 4, "lc_hev");
+		armorHEVHelmet = (ArmorHEV) hevs[0];
+		armorHEVChestplate = (ArmorHEV) hevs[1];
+		armorHEVLeggings = (ArmorHEV) hevs[2];
+		armorHEVBoot = (ArmorHEV) hevs[3];
+		weapon_crowbar_el = reg(Weapon_Crowbar_Electrical.class, "lc_elcrowbar");
 		
-		attach = new ItemAttachment();
-		medkit = new ItemMedkit();
+		attach = (ItemAttachment) reg(ItemAttachment.class, "lc_attach");
+		medkit = reg(ItemMedkit.class, "lc_medkit");
 
+	}
+	
+	private static Item reg(Class<? extends Item> cl, String key) {
+		try {
+			Item it = cl.newInstance();
+			GameRegistry.registerItem(it, key);
+			return it;
+		} catch(Exception e) {}
+		return null;
+	}
+	
+	private static Item[] reg(Class<? extends Item> cl, int n, String key) {
+		Item[] arr = new Item[n];
+		try {
+		for(int i = 0; i < n; i++) {
+			arr[i] = cl.getConstructor(Integer.TYPE).newInstance(i);
+			GameRegistry.registerItem(arr[i], key + i);
+		}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return arr;
 	}
 }

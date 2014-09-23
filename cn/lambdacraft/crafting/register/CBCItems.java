@@ -46,7 +46,7 @@ import cn.lambdacraft.deathmatch.item.ammos.ItemAmmo;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.lambdacraft.mob.register.CBCMobItems;
-import cn.lambdacraft.terrain.register.XenBlocks;
+//import cn.lambdacraft.terrain.register.XenBlocks;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
@@ -189,7 +189,7 @@ public class CBCItems {
 				{ "AAA", "CDC", "BEB", 'A', iSglass, 'B', iSlambdaChip, 'C', battery, 'D', "blockMFSU", 'E', "blockRefinedIron" },
 				{ "AAA", "AAA", "AAA", 'A', "ingotRefinedIron" } ,
 				{"A  ", "A  ", 'A', "ingotRefinedIron"},
-				{ "ABA", "CDC", "AEA", 'A', iSglass, 'B', iSdiamond, 'C', "blockMFSU", 'D', iSlambdaChip, 'E', iSemerald},
+				//{ "ABA", "CDC", "AEA", 'A', iSglass, 'B', iSdiamond, 'C', "blockMFSU", 'D', iSlambdaChip, 'E', iSemerald},
 				{" A ", "BCB", 'A', iSglass, 'B', iSwire, 'C', iSchip},
 				{" AA", "ABA", "ABA", 'A', "ingotCopper", 'B', iSredstone},
 				{" AA", "ABA", "ABA", 'A', "ingotTin", 'B', iSredstone},
@@ -210,7 +210,7 @@ public class CBCItems {
 				new ItemStack(DMBlocks.armorCharger),
 				new ItemStack(CBCBlocks.blockRefined),
 				new ItemStack(CBCItems.ironBar, 5),
-				new ItemStack(XenBlocks.xenPortal),
+				//new ItemStack(XenBlocks.xenPortal),
 				new ItemStack(CBCMobItems.sentrySyncer, 2),
 				new ItemStack(spray1),
 				new ItemStack(spray2),
@@ -230,7 +230,7 @@ public class CBCItems {
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife01), lambdaChip, Items.diamond);
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife02), lambdaChip, Items.emerald);
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife03), lambdaChip, Items.ender_eye);
-		GameRegistry.addShapelessRecipe(new ItemStack(XenBlocks.crystal), iSlightStoneDust, iSdiamond);
+		//GameRegistry.addShapelessRecipe(new ItemStack(XenBlocks.crystal), iSlightStoneDust, iSdiamond);
 		GameRegistry.addShapelessRecipe(new ItemStack(DMItems.weapon_crowbar_el), lambdaChip, new ItemStack(DMItems.weapon_crowbar));
 		GameRegistry.addShapelessRecipe(iSstorageL, CBCBlocks.storageS, lambdaChip);
 		GameRegistry.addRecipe(new RecipeHEVAttach());
@@ -260,7 +260,7 @@ public class CBCItems {
 		GameRegistry.addSmelting(CBCBlocks.uraniumOre, new ItemStack(ingotUranium), 5);
 		GameRegistry.addSmelting(CBCBlocks.oreCopper, new ItemStack(copper), 2);
 		GameRegistry.addSmelting(CBCBlocks.oreTin, new ItemStack(tin), 2);
-		GameRegistry.addSmelting(XenBlocks.crystal, new ItemStack(xenCrystal), 3);
+		//GameRegistry.addSmelting(XenBlocks.crystal, new ItemStack(xenCrystal), 3);
 		
 		//ChestGen
 		WeightedRandomChestContent gens_dungeon[] = {

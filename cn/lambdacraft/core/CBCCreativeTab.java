@@ -31,7 +31,7 @@ public class CBCCreativeTab extends CreativeTabs {
 
 	@Override
 	public Item getTabIconItem() {
-		return DMItems.weapon_gauss;
+		return DMItems.gauss;
 	}
 
 }
