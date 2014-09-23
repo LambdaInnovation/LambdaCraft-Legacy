@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.client.model.ModelEgonHead;
 import cn.liutils.api.client.render.RenderModelItem;
-import cn.weaponmod.api.client.render.RenderBulletWeapon;
+import cn.weaponmod.api.client.render.RendererBulletWeapon;
 import cn.weaponmod.core.event.ItemControlHandler;
 
 /**
@@ -40,7 +40,7 @@ public class RenderEgon extends RenderModelItem {
 			EntityPlayer player = (EntityPlayer) entity;
 			if(player.getCurrentEquippedItem() == item &&
 					ItemControlHandler.getUsingTicks(player, 0) > 0) {
-				RenderBulletWeapon.renderMuzzleflashIn2d(Tessellator.instance, ClientProps.EGON_MUZZLE, 0.0F, -0.12F, -0.2F);
+				RendererBulletWeapon.renderMuzzleflashIn2d(Tessellator.instance, ClientProps.EGON_MUZZLE, 0.0F, -0.12F, -0.2F);
 			}
 		}
 	}

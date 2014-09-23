@@ -59,6 +59,13 @@ public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCros
 		super(CBCItems.ammo_uranium);
 		setCreativeTab(CBCMod.cct);
 		setUnlocalizedName("weapon_gauss");
+		
+		actionShoot = new ActionShoot(0, this.SND_SHOOT_PATH) {
+			protected Entity getProjectileEntity(World world, EntityPlayer player) {
+				return new EntityBulletGaussSec(EnumGaussRayType.NORMAL, world, player, player.getCurrentEquippedItem(), null, null, 8);
+			}
+		};
+		actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 	}
 
 	@Override
@@ -162,20 +169,6 @@ public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCros
 	@Override
 	public int getMaxItemUseDuration(ItemStack par1ItemStack) {
 		return 500;
-	}
-	
-	@Override
-	public Action getActionShoot() {
-		return new ActionShoot(0, this.SND_SHOOT_PATH) {
-			protected Entity getProjectileEntity(World world, EntityPlayer player) {
-				return new EntityBulletGaussSec(EnumGaussRayType.NORMAL, world, player, player.getCurrentEquippedItem(), null, null, 8);
-			}
-		};
-	}
-	
-	@Override
-	public Action getActionJam() {
-		return new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 	}
 
 	@Override

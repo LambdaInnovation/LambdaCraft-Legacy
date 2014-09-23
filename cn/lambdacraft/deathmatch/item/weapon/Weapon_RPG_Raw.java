@@ -72,6 +72,10 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 		setIAndU("weapon_rpg");
 		setCreativeTab(CBCMod.cct);
 		this.hasSubtypes = true;
+		
+		actionReload = new ActionReload(40, "", "");
+		actionJam = new ActionJam(40, "lambdacraft:weapons.gunjam_a");
+		actionShoot = new ActionRocketShoot();
 	}
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
@@ -89,21 +93,6 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 			EntityPlayer par3EntityPlayer, int par4) {
 		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
 				par4);
-	}
-	
-	@Override
-	public Action getActionShoot() {
-		return new ActionRocketShoot();
-	}
-	
-	@Override
-	public Action getActionJam() {
-		return new ActionJam(40, "lambdacraft:weapons.gunjam_a");
-	}
-	
-	@Override
-	public Action getActionReload() {
-		return new ActionDummy();
 	}
 	
 	@Override

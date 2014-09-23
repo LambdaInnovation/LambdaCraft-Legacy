@@ -56,6 +56,9 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 		setMaxDamage(6);
 		setNoRepair();
 		iconName = "weapon_crossbow";
+		
+		actionShoot = new ActionLeft();
+		actionReload = new ActionReload(55, "", "");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -107,16 +110,6 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 			EntityPlayer par3EntityPlayer, int par4) {
 		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
 				par4);
-	}
-	
-	@Override
-	public Action getActionShoot() {
-		return new ActionLeft();
-	}
-	
-	@Override
-	public Action getActionReload() {
-		return new ActionReload(55, "", "");
 	}
 	
 	public static boolean isBowPulling(ItemStack item) {

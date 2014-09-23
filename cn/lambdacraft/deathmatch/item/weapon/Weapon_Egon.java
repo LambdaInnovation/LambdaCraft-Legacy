@@ -70,6 +70,9 @@ public class Weapon_Egon extends WeaponGeneralBullet_LC implements ISpecialCross
 		super(CBCItems.ammo_uranium);
 		setCreativeTab(CBCMod.cct);
 		setUnlocalizedName("weapon_egon");
+		
+		actionShoot = new ActionEgonShoot();
+		actionJam = new ActionJam(20, "cbc.weapons.gunjam_a");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -93,13 +96,10 @@ public class Weapon_Egon extends WeaponGeneralBullet_LC implements ISpecialCross
 		case 0: //LMOUSE
 			if(!canShoot(player, stack)) {
 				//Sound playing
-				inf.executeAction(player, getActionJam());
+				inf.executeAction(player, actionJam);
 			} else {
-				inf.executeAction(player, this.getActionShoot());
+				inf.executeAction(player, actionShoot);
 			}
-			break;
-		case 2: //Reload
-			inf.executeAction(player, this.getActionReload());
 			break;
 		default:
 			break;
@@ -112,7 +112,7 @@ public class Weapon_Egon extends WeaponGeneralBullet_LC implements ISpecialCross
 		InfWeapon inf = loadInformation(stack, pl);
 		switch(keyid) {
 		case 0: //LMOUSE
-			inf.removeAction(pl, name_shoot);
+			inf.removeAction(pl, actionShoot.name);
 			break;
 		default:
 			break;
@@ -123,16 +123,6 @@ public class Weapon_Egon extends WeaponGeneralBullet_LC implements ISpecialCross
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
 			Entity par3Entity, int par4, boolean par5) {
 		onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
-	}
-	
-	@Override
-	public Action getActionShoot() {
-		return new ActionEgonShoot();
-	}
-
-	@Override
-	public Action getActionJam() {
-		return new ActionJam(20, "cbc.weapons.gunjam_a");
 	}
 
 	@Override

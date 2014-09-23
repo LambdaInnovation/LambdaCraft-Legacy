@@ -54,6 +54,8 @@ public class Weapon_Hornet extends WeaponGeneralBullet_LC {
 		setMaxDamage(9);
 		setCreativeTab(CBCMod.cct);
 		setIAndU("weapon_hornet");
+		actionShoot = new HornetShoot(true);
+		actionReload = null;
 	}
 	
 	@Override
@@ -83,15 +85,4 @@ public class Weapon_Hornet extends WeaponGeneralBullet_LC {
 			}
 		}
 	}
-	
-	@Override
-	public Action getActionReload() {
-		return new ActionReload(0, "", "");
-	}
-	
-	@Override
-	public Action getActionShoot() {
-		return new HornetShoot(true);
-	}
-
 }
