@@ -128,6 +128,7 @@ public class ClientProps {
 			BARNACLE_TENTACLE_PATH = src("lambdacraft:textures/entities/barnacle_tentacle.png"),
 			LIGHT_BALL_PATH = src("lambdacraft:textures/entities/lightball.png"),
 			ZOMBIE_MOB_PATH = src("lambdacraft:textures/entities/zombie.png"),
+			BIG_MOMOA_MOB_PATH = src("lambdacraft:textures/entities/bigmomoa.png"),
 			TURRET_PATH = src("lambdacraft:textures/entities/turret.png"),
 			SHOCKWAVE_PATH = src("lambdacraft:textures/entities/shockwave.png"),
 			VORTIGAUNT_PATH = src("lambdacraft:textures/entities/vortigaunt.png"),
