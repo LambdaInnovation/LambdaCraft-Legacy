@@ -5,8 +5,10 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cn.liutils.api.entity.LIEntityMob;
@@ -109,9 +111,9 @@ public class EntityBigMomoa extends LIEntityMob {
 			/* NEVER SAY NO. */
 			this.parseSpawnChild();
 			// Randomly decide attack method #1 or #2
-			java.util.Random rand = new java.util.Random();
+			// MODIFY: rand already exist in entity base class
 			boolean AttackModeOne = rand.nextBoolean();
-			System.err.println(AttackModeOne);
+			//System.err.println(AttackModeOne);
 			// if (AttackModeOne)
 			//	 super.attackEntity(par1Entity, par2);
 			// else
@@ -127,8 +129,9 @@ public class EntityBigMomoa extends LIEntityMob {
 	    for(int i=0; i<=ls.size(); i++) {
 	    	// YOU WILL BE PUNISHED!
 	    	try {
-	    	    EntityLiving toAttack = ls.get(i);
-	    	    if(!toAttack.equals(this)) toAttack.setHealth(toAttack.getHealth() - 1.5f);
+	    	    EntityLivingBase toAttack = ls.get(i);
+	    	    if(!toAttack.equals(this)) 
+	    	    	toAttack.attackEntityFrom(DamageSource.causeMobDamage(this), toAttack.getHealth() - 1.5f);
 	    	} catch(Exception ex) {
 	    		System.err.println("For heaven's sake... -w-");
 	    	}
