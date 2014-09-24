@@ -37,6 +37,10 @@ public class MsgKeyUsing implements IMessage {
 	public MsgKeyUsing(boolean b) {
 		isUsing = b;
 	}
+	
+	public MsgKeyUsing() {
+		
+	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {

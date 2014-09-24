@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionAutomaticShoot;
@@ -41,7 +42,8 @@ public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 	}
 	
 	public Action getActionShoot() {
-		return new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c");
+		return new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c")
+			.setMuzzleflash(ClientProps.MUZZLEFLASH);
 	}
 	
 	public Action getActionReload() {

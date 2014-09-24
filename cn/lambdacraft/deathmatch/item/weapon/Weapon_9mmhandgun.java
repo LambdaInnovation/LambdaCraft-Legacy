@@ -35,7 +35,7 @@ public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
 			break;
 		case 1:
 			//RMOUSE
-			inf.executeAction(player, new ActionAutomaticShoot(300, 7, 3, "lambdacraft:weapons.nmmarr")
+			inf.executeAction(player, new ActionAutomaticShoot(300, 7, 3, 5, "lambdacraft:weapons.plgun_c")
 				.setMuzzleflash(ClientProps.MUZZLEFLASH));
 			break;
 		case 2: //Reload
