@@ -80,7 +80,7 @@ public class EntityBigMomoa extends LIEntityMob {
 	protected void parseSpawnChild() {
 		/* Request once while parsing spawn child: Never mind. */
 		// Minecraft.getMinecraft().getSystemTime();
-		// -> Debugging System.out.println("SpawnChildCount is now " + this.spawnChildCount + ".");
+		System.out.println("SpawnChildCount is now " + this.spawnChildCount + ".");
 		this.spawnChildCount ++;
 		if(this.spawnChildCount % LENGTH_TO_SPAWN_CHILD == 0) {
 			spawnChildCount = 0;
@@ -112,9 +112,9 @@ public class EntityBigMomoa extends LIEntityMob {
 			java.util.Random rand = new java.util.Random();
 			boolean AttackModeOne = rand.nextBoolean();
 			System.err.println(AttackModeOne);
-			if (AttackModeOne)
-				super.attackEntity(par1Entity, par2);
-			else
+			// if (AttackModeOne)
+			//	 super.attackEntity(par1Entity, par2);
+			// else
 				this.attackEntityInRange(this.ATTACK_RANGE);
 		}
 		
@@ -123,8 +123,8 @@ public class EntityBigMomoa extends LIEntityMob {
 	
 	private void attackEntityInRange(int aTTACK_RANGE2) {
 		// TODO Get Everything and attack
-	    List<EntityLiving> ls = worldObj.getEntitiesWithinAABB(EntityLiving.class, AxisAlignedBB.getBoundingBox(posX, posY, posZ, posX + 16.0D, posY + 16.0D, posZ + 16.0D).expand(16D, 16D, 16D));
-	    for(int i=0; i<ls.size(); i++) {
+	    List<EntityLiving> ls = worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(posX - 16, posY - 16, posZ - 16, posX + 16, posY + 16, posZ + 16).expand(16, 16, 16));
+	    for(int i=0; i<=ls.size(); i++) {
 	    	// YOU WILL BE PUNISHED!
 	    	try {
 	    	    EntityLiving toAttack = ls.get(i);
