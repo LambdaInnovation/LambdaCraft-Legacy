@@ -22,6 +22,8 @@ import java.util.Random;
 import java.util.logging.Level;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.AdvancedModelLoader;
+import net.minecraftforge.client.model.IModelCustom;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import cn.lambdacraft.core.CBCMod;
@@ -179,6 +181,9 @@ public class ClientProps {
 			PORTAL_PATH[i] = "lambdacraft:textures/blocks/xen_portal" + (i + 1) + ".png";
 		}
 	}
+	
+	public static IModelCustom MDL_GONARCH = AdvancedModelLoader.loadModel(
+			new ResourceLocation("lambdacraft:models/bigmomoa.obj"));
 	
 	private static String mf = "lambdacraft:textures/muz/muz";
 	public static final ResourceLocation MUZZLEFLASH[] = {

@@ -10,6 +10,7 @@ import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
 import cn.lambdacraft.mob.entity.EntityBarnacle;
+import cn.lambdacraft.mob.entity.EntityBigMomoa;
 import cn.lambdacraft.mob.entity.EntityHLZombie;
 import cn.lambdacraft.mob.entity.EntityHeadcrab;
 import cn.lambdacraft.mob.entity.EntityHoundeye;
@@ -89,6 +90,8 @@ public class ModuleMob {
 				GeneralProps.ENT_ID_SHOCKWAVE, CBCMod.instance, 32, 3, false);
 		EntityRegistry.registerModEntity(EntityAlienSlave.class, "vortigaunt",
 				GeneralProps.ENT_ID_VORTIGAUNT, CBCMod.instance, 48, 3, true);
+		EntityRegistry.registerModEntity(EntityBigMomoa.class, "gonarch",
+				GeneralProps.ENT_ID_GONARCH, CBCMod.instance, 48, 3, true);
 		proxy.init();
 	}
 
