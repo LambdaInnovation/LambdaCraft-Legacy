@@ -37,12 +37,12 @@ public class EntityBigMomoa extends LIEntityMob implements IBossDisplayData {
 	protected int LENGTH_TO_SPAWN_CHILD = 400;
 	protected int ATTACK_RANGE = 5;
 	protected final double FOLLOW_RANGE = 10;
-
+	protected stats currStat = stats.IDLE;
+	
 	protected int diff;	
-	// For logging, and I REALLY CAN'T STAND THE BAS. TYPE OF JAVA
-	public String[] eventStat = new String[300];
-	public String[] eventTime = new String[300];
-	public int topL = 0;
+	public enum stats {
+		SPAWING_CHILD, ATTACKING, ATTACKING_RANGE, ATTACKED, IDLE
+	}
 	private int spawnChildCount = 1;
 
 	
@@ -90,17 +90,11 @@ public class EntityBigMomoa extends LIEntityMob implements IBossDisplayData {
 	protected void reqSpawnChild() {
 		/* Request once while parsing spawn child: Never mind. */
 		// Minecraft.getMinecraft().getSystemTime();
-		try {
-		    this.eventStat[topL] = "SPAWNING_CHILD";
-		    this.eventTime[topL] = String.valueOf(Minecraft.getSystemTime());
-		    topL ++;
-		} catch(Exception ex) {
-			topL = 0;
-		}
 		System.out.println("SpawnChildCount is now " + this.spawnChildCount + ".");
 		this.spawnChildCount ++;
 		if(this.spawnChildCount % LENGTH_TO_SPAWN_CHILD == 0) {
 			spawnChildCount = 0;
+			this.currStat = stats.SPAWING_CHILD;
 			EntityHeadcrab entityBabyHeadcrab = new EntityBabyHeadcrab(worldObj);
 			entityBabyHeadcrab.setPosition(posX + 2, posY + 2, posZ);
 			worldObj.spawnEntityInWorld(entityBabyHeadcrab);
@@ -157,13 +151,7 @@ public class EntityBigMomoa extends LIEntityMob implements IBossDisplayData {
 			int AttackMode = rand.nextInt() % 30;
 			if (AttackMode != 5) {
 			    super.attackEntity(par1Entity, par2);
-			    try {
-				    this.eventStat[topL] = "ATTACKING_ENTITY";
-				    this.eventTime[topL] = String.valueOf(Minecraft.getSystemTime());
-				    topL ++;
-				} catch(Exception ex) {
-					topL = 0;
-				}
+			    this.currStat = stats.ATTACKING;
 			} else
 				this.attackEntityInRange(this.ATTACK_RANGE);
 		}
@@ -171,13 +159,7 @@ public class EntityBigMomoa extends LIEntityMob implements IBossDisplayData {
 	}
 	
 	private void attackEntityInRange(int ATTACK_RANGE) {
-		try {
-		    this.eventStat[topL] = "ATTACKING_ENTITY_IN_RANGE";
-		    this.eventTime[topL] = String.valueOf(Minecraft.getSystemTime());
-		    topL ++;
-		} catch(Exception ex) {
-			topL = 0;
-		}
+		this.currStat = stats.ATTACKING_RANGE;
 		System.err.println("[TESTING] {INVOKED}");
 	    List<EntityLiving> ls = worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(posX - (ATTACK_RANGE), posY - (ATTACK_RANGE / 2), posZ - (ATTACK_RANGE), posX + (ATTACK_RANGE), posY + (ATTACK_RANGE), posZ + (ATTACK_RANGE)).expand(ATTACK_RANGE, ATTACK_RANGE, ATTACK_RANGE));
 	    for(int i=0; i<=ls.size(); i++) {
@@ -192,6 +174,12 @@ public class EntityBigMomoa extends LIEntityMob implements IBossDisplayData {
 	    }
 		
 		
+	}
+	
+	@Override
+	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
+		this.currStat = stats.ATTACKED;
+		return super.attackEntityFrom(par1DamageSource, par2);
 	}
 
 }
