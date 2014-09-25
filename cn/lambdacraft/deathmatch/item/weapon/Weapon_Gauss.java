@@ -143,7 +143,7 @@ public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCros
 	public void onItemRelease(World world, EntityPlayer player, ItemStack stack, int keyid) {
 		super.onItemRelease(world, player, stack, keyid);
 		
-		InfWeapon inf = getInformation(stack, world);
+		InfWeapon inf = loadInformation(stack, player);
 		if (inf == null || keyid != 0)
 			return;
 

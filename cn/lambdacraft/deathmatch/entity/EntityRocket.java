@@ -59,6 +59,8 @@ public class EntityRocket extends EntityThrowable {
 		super.onUpdate();
 		if (this.isBurning())
 			Explode();
+		if(theStack == null)
+			return;
 		if (ticksExisted % 45 == 0)
 			worldObj.playSoundAtEntity(this, "cbc.weapons.rocket", 0.5F, 1.0F);
 		

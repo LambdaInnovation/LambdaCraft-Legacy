@@ -47,7 +47,7 @@ public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 	}
 	
 	public Action getActionReload() {
-		return new ActionReload(60, "lambdacraft:weapons.nmmclipa", "");
+		return new ActionReload(35, "lambdacraft:weapons.nmmclipa", "");
 	}
 	
 	public Action getActionJam() {

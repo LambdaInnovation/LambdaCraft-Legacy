@@ -74,8 +74,8 @@ public class EntityEgonRay extends Entity {
 		if (item == null)
 			return;
 
-		InfWeapon inf = ((Weapon_Egon) item.getItem()).getInformation(
-				item, worldObj);
+		InfWeapon inf = ((Weapon_Egon) item.getItem()).loadInformation(
+				item, getThrower());
 		if (inf == null|| 
 				!(thrower.getCurrentEquippedItem() != null && thrower.getCurrentEquippedItem().getItem() == DMItems.weapon_egon && 
 				ItemControlHandler.getUsingTicks(thrower, 1) > 0 && ((Weapon_Egon)item.getItem()).canShoot(thrower, item))) {

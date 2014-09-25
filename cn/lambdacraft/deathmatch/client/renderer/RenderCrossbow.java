@@ -37,7 +37,7 @@ public class RenderCrossbow extends RenderModelItem {
 			EntityLivingBase entity, ItemRenderType type) {
 		if(entity instanceof EntityPlayer) {
 			
-			InfWeapon inf = DMItems.crossbow.getInformation(item, entity.worldObj);
+			InfWeapon inf = DMItems.crossbow.loadInformation(item, (EntityPlayer) entity);
 			boolean firstPerson = (entity == Minecraft.getMinecraft().thePlayer && Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) 
 					&& Minecraft.getMinecraft().currentScreen == null;
 			final float upliftRatio = 1.0F;

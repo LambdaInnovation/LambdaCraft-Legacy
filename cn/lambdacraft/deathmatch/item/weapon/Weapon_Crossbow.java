@@ -112,12 +112,13 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 				par4);
 	}
 	
+	/*
 	public static boolean isBowPulling(ItemStack item) {
 		InfWeapon information = WMInformation.getInformation(item, true);
 		if (information == null)
 			return false;
 		return !(InfUtils.getDeltaTick(information, "shoot") < 17);
-	}
+	}*/
 
 	@Override
 	public void onModeChange(ItemStack item, EntityPlayer player, int newMode) {

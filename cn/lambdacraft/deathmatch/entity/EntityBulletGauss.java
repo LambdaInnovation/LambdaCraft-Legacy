@@ -50,7 +50,7 @@ public class EntityBulletGauss extends EntityBullet {
 		motion = new Motion3D(entityPlayer, true);
 		itemStack = stack;
 		item = (Weapon_Gauss) itemStack.getItem();
-		inf = item.getInformation(itemStack, worldObj);
+		inf = item.loadInformation(itemStack, entityPlayer);
 		worldObj.spawnEntityInWorld(new EntityGaussRay(new Motion3D(this, true), worldObj));
 		if (par1World.isRemote)
 			this.setDead();

@@ -86,25 +86,25 @@ public class CBCItems {
 	 */
 	public static void init(Configuration conf) {
 
-		ammo_uranium = new Ammo_uranium();
-		ammo_9mm = new Ammo_9mm();
-		ammo_9mm2 = new Ammo_9mm2();
-		ammo_357 = new Ammo_357();
-		ammo_bow = new Ammo_bow();
-		ammo_rpg = new Ammo_rpg();
-		ammo_argrenade = new Ammo_argrenade();
-		ammo_shotgun = new Ammo_shotgun();
+		ammo_uranium = reg(Ammo_uranium.class, "lc_uranium");
+		ammo_9mm = reg(Ammo_9mm.class, "lc_9mmammo");
+		ammo_9mm2 = reg(Ammo_9mm2.class, "lc_9mmammo2");
+		ammo_357 = reg(Ammo_357.class, "lc_357ammo");
+		ammo_bow = reg(Ammo_bow.class, "lc_bowammo");
+		ammo_rpg = reg(Ammo_rpg.class, "lc_rpgammo");
+		ammo_argrenade = reg(Ammo_argrenade.class, "lc_argrenade");
+		ammo_shotgun = reg(Ammo_shotgun.class, "lc_sgammo");
 		
-		bullet_9mm = new Bullet_9mm();
-		bullet_steelbow = new Bullet_steelbow();
+		bullet_9mm = reg(Bullet_9mm.class, "lc_9mmblt");
+		bullet_steelbow = reg(Bullet_steelbow.class, "lc_steelbow");
 
-		materials = new ItemMaterial();
+		materials = reg(ItemMaterial.class, "lc_mats");
 
-		ironBar = new SteelBar();
-		lambdaChip = new CBCGenericItem().setIAndU("lambdachip");
+		ironBar = reg(SteelBar.class, "lc_ironbar");
+		lambdaChip = reg(CBCGenericItem.class, "lc_lchip").setIAndU("lambdachip");
 		
-		ingotUranium = new IngotUranium();
-		ingotSteel = new CBCGenericItem().setIAndU("steel");
+		ingotUranium = reg(IngotUranium.class, "lc_radioactive");
+		ingotSteel = reg(CBCGenericItem.class, "lc_universalrule").setIAndU("steel");
 
 		halfLife01 = new LCRecord("hla", 0);
 		halfLife02 = new LCRecord("hlb", 1);
@@ -113,14 +113,28 @@ public class CBCItems {
 		spray1 = new ItemSpray(0);
 		spray2 = new ItemSpray(1);
 		
-		spray3 = new HLSpray();
+		spray3 = reg(HLSpray.class, "lc_hlspray");
 
-		tin = new CBCGenericItem().setIAndU("tin");
-		copper = new CBCGenericItem().setIAndU("copper");
-		chip = new CBCGenericItem().setIAndU("chip");
-		xenCrystal = new CBCGenericItem().setIAndU("xencrystal");
+		tin = reg(CBCGenericItem.class, "lc_tin").setIAndU("tin");
+		copper = reg(CBCGenericItem.class, "lc_copper").setIAndU("copper");
+		chip = reg(CBCGenericItem.class, "lc_chip").setIAndU("chip");
+		xenCrystal = reg(CBCGenericItem.class, "lc_xcrystal").setIAndU("xencrystal");
 		
-		battery = new ItemBattery();
+		battery = reg(ItemBattery.class, "lc_battery");
+	}
+	
+	/**
+	 * Short alias.
+	 */
+	private static <T extends Item> T reg(Class<? extends T> cl, String k) {
+		T it = null;
+		try {
+			it = cl.newInstance();
+			GameRegistry.registerItem(it, k);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return it;
 	}
 
 	/**
