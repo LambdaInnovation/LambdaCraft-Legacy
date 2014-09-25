@@ -13,6 +13,7 @@ import cn.lambdacraft.mob.entity.EntityBarnacle;
 import cn.lambdacraft.mob.entity.EntityBigMomoa;
 import cn.lambdacraft.mob.entity.EntityHLZombie;
 import cn.lambdacraft.mob.entity.EntityHeadcrab;
+import cn.lambdacraft.mob.entity.EntityBabyHeadcrab;
 import cn.lambdacraft.mob.entity.EntityHoundeye;
 import cn.lambdacraft.mob.entity.EntitySentry;
 import cn.lambdacraft.mob.entity.EntityShockwave;
@@ -77,6 +78,8 @@ public class ModuleMob {
 		EntityRegistry.registerModEntity(EntitySnark.class, "snark",
 				GeneralProps.ENT_ID_SNARK, CBCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityHeadcrab.class, "headcrab",
+				GeneralProps.ENT_ID_HEADCRAB, CBCMod.instance, 48, 3, true);
+		EntityRegistry.registerModEntity(EntityBabyHeadcrab.class, "baby_headcrab",
 				GeneralProps.ENT_ID_HEADCRAB, CBCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityBarnacle.class, "barnacle",
 				GeneralProps.ENT_ID_BARNACLE, CBCMod.instance, 84, 5, false);
