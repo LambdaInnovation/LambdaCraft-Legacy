@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.BossStatus;
 import net.minecraft.entity.boss.IBossDisplayData;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -25,18 +26,19 @@ import cn.lambdacraft.core.prop.ClientProps;
  * - Attaching damage: 5
  * - Moving speed: 0.9
  */
-public class EntityBigMomoa extends LIEntityMob implements IBossDisplayData {
+public class EntityBigMomoa extends EntityMob implements IBossDisplayData {
 	/* IN THIS CLASS EVERYTHING INCLUDING SPAWNING CHILD IS ABLE TO CHANGE THE PARAMETRE.
 	 * SO IN DIFFERENT GAME TYPE MIGHT BE DIFFER.
 	 */
 	/* About 2.5 Hearts */
-	protected final float ATTACK_DAMAGE = 5f;
-	protected final float MOVING_SPEED = 0.9f;
+	protected float ATTACK_DAMAGE = 5f;
+	protected float MOVING_SPEED = 0.9f;
 	/* About 50 Hearts */
-	protected final float HEALTH_POINT = 100f;
+	protected float HEALTH_POINT;
 	protected int LENGTH_TO_SPAWN_CHILD = 400;
 	protected int ATTACK_RANGE = 5;
-	protected final double FOLLOW_RANGE = 10;
+	protected double FOLLOW_RANGE = 10;
+	protected int KNOCKBACK_RESISTANCE = 2;
 	protected stats currStat = stats.IDLE;
 	
 	protected int diff;	
@@ -57,31 +59,40 @@ public class EntityBigMomoa extends LIEntityMob implements IBossDisplayData {
 				// this.setDead(); -- It will exec itself.
 				break;
 			case 1:
-				this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3f);
+				this.ATTACK_DAMAGE = 3f;
 				this.ATTACK_RANGE = 4;
-				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(70);
-				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.5f);
+				this.HEALTH_POINT = 70;
+				this.MOVING_SPEED = 0.5f;
 				this.LENGTH_TO_SPAWN_CHILD = 1000;
 				break;
 			case 2:
-				this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(4f);
+				this.ATTACK_DAMAGE = 4f;
 				this.ATTACK_RANGE = 5;
-				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(85);
-				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.65f);
+				this.HEALTH_POINT = 85;
+				this.MOVING_SPEED = 0.65f;
 				this.LENGTH_TO_SPAWN_CHILD = 700;
 				break;
 			case 3:
-				this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(6f);
+				this.ATTACK_DAMAGE = 6f;
 				this.ATTACK_RANGE = 7;
-				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(120);
-				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.7f);
+				this.HEALTH_POINT = 120;
+				this.MOVING_SPEED = 0.7f;
 				this.LENGTH_TO_SPAWN_CHILD = 400;
 				break;
 		}
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(HEALTH_POINT); // Max Health
+		this.setHealth(HEALTH_POINT);
+		if (this.FOLLOW_RANGE != 0)
+			this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(FOLLOW_RANGE); // Follow Range
+		if (this.KNOCKBACK_RESISTANCE != 0)
+			this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(KNOCKBACK_RESISTANCE); // knockbackResistance
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(MOVING_SPEED); // Move Speed
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(ATTACK_DAMAGE); // Attack Damage
 	}
 	
 	@Override
 	public void onUpdate() {
+		System.err.println(getHealth() + "  " + getMaxHealth());
 		BossStatus.setBossStatus(this, true);
 		super.onUpdate();
 		this.reqSpawnChild();
@@ -102,42 +113,11 @@ public class EntityBigMomoa extends LIEntityMob implements IBossDisplayData {
 	}
 	
 	@Override
-	protected double getMaxHealth2() {
-		return HEALTH_POINT;
-	}
-
-	@Override
-	protected double getFollowRange() {
-		return FOLLOW_RANGE;
-	}
-
-	@Override
 	/**
 	 * Seems to drop something -w-
 	 */
 	protected Item getDropItem() {
 		return null;
-	}
-	
-	@Override
-	protected double getKnockBackResistance() {
-		// Gotcha.
-		return 2;
-	}
-	
-	@Override
-	protected double getMoveSpeed() {
-		return MOVING_SPEED;
-	}
-	
-	@Override
-	protected double getAttackDamage() {
-		return ATTACK_DAMAGE;
-	}
-	
-	@Override
-	public ResourceLocation getTexture() {
-		return ClientProps.BIG_MOMOA_MOB_PATH;
 	}
 	
 	@Override
