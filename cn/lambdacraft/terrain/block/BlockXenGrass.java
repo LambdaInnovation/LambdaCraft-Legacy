@@ -9,6 +9,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import net.minecraft.util.IIcon;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.terrain.register.XenBlocks;
 /**
  * Xen草方块
@@ -31,6 +32,7 @@ public class BlockXenGrass extends Block{
 		this.setBlockTextureName("xen_grass");
 		this.setHardness(0.6F);
 		this.setStepSound(soundTypeGrass);
+		setCreativeTab(CBCMod.cct);
 	}
 	
 	@Override

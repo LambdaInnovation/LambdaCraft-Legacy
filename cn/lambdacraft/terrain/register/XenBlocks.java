@@ -16,6 +16,7 @@ package cn.lambdacraft.terrain.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockSand;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.lambdacraft.terrain.block.BlockBlackPillar;
@@ -41,7 +42,6 @@ import cn.lambdacraft.terrain.tileentity.TileEntityXenPortal;
  */
 public class XenBlocks {
 	
-	public static Block[] blocks;
 	public static BlockXenPortal xenPortal;
 	public static BlockXenDesertedDirt desertedDirt;
 	public static BlockXenCrystal crystal;
@@ -56,6 +56,20 @@ public class XenBlocks {
 	public static BlockXenSand sand;
 	
 	public static void init(Configuration conf) {
+		
+		xenPortal = new BlockXenPortal();
+		desertedDirt = new BlockXenDesertedDirt();
+		crystal = new BlockXenCrystal();
+		stone = new BlockXenStone();
+		dirt = new BlockXenDirt();
+		grass = new BlockXenGrass();
+		light_on = new BlockXenLight(true);
+		light_off = new BlockXenLight(false);
+		amethyst = new BlockXenAmethyst();
+		pillar = new BlockBlackPillar();
+		slimeFlow = new BlockSlimeFlow();
+		slimeStill = new BlockSlimeStill();
+		sand = new BlockXenSand();
 		
 		GameRegistry.registerBlock(xenPortal, "lc_xenportal");
 		GameRegistry.registerBlock(desertedDirt, "lc_xendeserteddirt");

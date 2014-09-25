@@ -3,10 +3,12 @@ package cn.lambdacraft.terrain.world.gen;
 import java.util.List;
 import java.util.Random;
 
+import cn.lambdacraft.terrain.ModuleTerrain;
 import cn.lambdacraft.terrain.register.XenBlocks;
 import cn.lambdacraft.terrain.world.biome.MainBiomes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IProgressUpdate;
@@ -148,6 +150,26 @@ public class ChunkProviderXenContinent implements IChunkProvider
         
         this.noiseArray = new double[825];
         this.noiseArrayXen = new double[825];
+        
+        this.parabolicField = new float[25];
+        for (int j = -2; j <= 2; ++j)
+        {
+            for (int k = -2; k <= 2; ++k)
+            {
+                float f = 10.0F / MathHelper.sqrt_float((float)(j * j + k * k) + 0.2F);
+                this.parabolicField[j + 2 + (k + 2) * 5] = f;
+            }
+        }
+        
+        this.parabolicFieldXen = new float[25];
+        for (int j = -2; j <= 2; ++j)
+        {
+            for (int k = -2; k <= 2; ++k)
+            {
+                float f = 10.0F / MathHelper.sqrt_float((float)(j * j + k * k) + 0.2F);
+                this.parabolicFieldXen[j + 2 + (k + 2) * 5] = f;
+            }
+        }
     }
 
     /**
@@ -257,14 +279,14 @@ public class ChunkProviderXenContinent implements IChunkProvider
                 for (int k2 = 0; k2 < 32; ++k2)
                 {
                     double d0 = 0.125D;
-                    double d1 = this.noiseArray[k1 + k2];
-                    double d2 = this.noiseArray[l1 + k2];
-                    double d3 = this.noiseArray[i2 + k2];
-                    double d4 = this.noiseArray[j2 + k2];
-                    double d5 = (this.noiseArray[k1 + k2 + 1] - d1) * d0;
-                    double d6 = (this.noiseArray[l1 + k2 + 1] - d2) * d0;
-                    double d7 = (this.noiseArray[i2 + k2 + 1] - d3) * d0;
-                    double d8 = (this.noiseArray[j2 + k2 + 1] - d4) * d0;
+                    double d1 = this.noiseArrayXen[k1 + k2];
+                    double d2 = this.noiseArrayXen[l1 + k2];
+                    double d3 = this.noiseArrayXen[i2 + k2];
+                    double d4 = this.noiseArrayXen[j2 + k2];
+                    double d5 = (this.noiseArrayXen[k1 + k2 + 1] - d1) * d0;
+                    double d6 = (this.noiseArrayXen[l1 + k2 + 1] - d2) * d0;
+                    double d7 = (this.noiseArrayXen[i2 + k2 + 1] - d3) * d0;
+                    double d8 = (this.noiseArrayXen[j2 + k2 + 1] - d4) * d0;
 
                     for (int l2 = 0; l2 < 8; ++l2)
                     {
@@ -615,7 +637,52 @@ public class ChunkProviderXenContinent implements IChunkProvider
             for (int l = 0; l < 16; ++l)
             {
                 BiomeGenBase biomegenbase = ArrayOfBiomeGenBase[l + k * 16];
-                biomegenbase.genTerrainBlocks(this.worldObj, this.rand, block, ArrayOfByte, par1 * 16 + k, par2 * 16 + l, this.stoneNoise[l + k * 16]);
+                this.genBiomeTerrain(this.worldObj, rand, block, biomegenbase, ArrayOfByte, par1 * 16 + k, par2 * 16 + l, this.stoneNoise[l + k * 16]);
+                
+            }
+        }
+    }
+    
+    private void genBiomeTerrain(World world, Random rand, Block[] arrayOfBlock, BiomeGenBase biomegenbase, byte[] arrayOfByte, int x, int z, double noise)
+    {
+        boolean flag = true;
+        Block block = biomegenbase.topBlock;
+        byte b0 = (byte)(0 & 255);
+        Block block1 = biomegenbase.fillerBlock;
+        int k = -1;
+        int l = (int)(noise / 3.0D + 3.0D + rand.nextDouble() * 0.25D);
+        int i1 = x & 15;
+        int j1 = z & 15;
+        int k1 = arrayOfBlock.length / 256;
+
+        for (int l1 = 255; l1 >= 0; --l1)
+        {
+            int i2 = (j1 * 16 + i1) * k1 + l1;
+
+            Block block2 = arrayOfBlock[i2];
+            
+            if (block2 != null && block2.getMaterial() != Material.air && block2 == XenBlocks.stone)
+            {
+            	if (k == -1)
+                {
+                    k = l;
+                    arrayOfBlock[i2] = block;
+                    arrayOfByte[i2] = b0;
+                }
+                else if (k > 0)
+                {
+                    --k;
+                    arrayOfBlock[i2] = block1;
+                }
+            }
+            else
+            {
+                k = -1;
+            }
+            
+            if(biomegenbase.biomeID == ModuleTerrain.xenBrokenBiomeId && rand.nextInt(45) != 0)
+            {
+            	arrayOfBlock[i2] = null;
             }
         }
     }

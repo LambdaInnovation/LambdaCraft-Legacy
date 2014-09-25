@@ -14,14 +14,14 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author F
  *
  */
-public class BlockBlackPillar extends XenBlock{
+public class BlockBlackPillar extends Block{
 
 	@SideOnly(Side.CLIENT)
     private IIcon iconPillar;
     @SideOnly(Side.CLIENT)
     private IIcon iconPillarSide;
 	
-	protected BlockBlackPillar() 
+	public BlockBlackPillar() 
 	{
 		super(Material.rock);
 		this.setBlockName("xenblackpillar");
@@ -29,6 +29,7 @@ public class BlockBlackPillar extends XenBlock{
 		this.setBlockUnbreakable();
 		this.setResistance(2000.0F);
 		this.setStepSound(soundTypeStone);
+		setCreativeTab(CBCMod.cct);
 	}
 	
 	@Override

@@ -2,6 +2,8 @@ package cn.lambdacraft.terrain.block;
 
 import java.util.Random;
 
+import cn.lambdacraft.core.CBCMod;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -25,6 +27,7 @@ public class BlockXenCrystal extends Block {
 		this.setStepSound(soundTypeStone);
 		this.setLightLevel(0.5F);
 		this.setHarvestLevel("pickaxe", 1);
+		setCreativeTab(CBCMod.cct);
 	}
 	
 	@Override
