@@ -25,6 +25,11 @@ public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 		setMaxDamage(18);
 		iconName = "weapon_9mmhandgun";
 		setNoRepair();
+		
+		actionShoot = new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c")
+		.setMuzzleflash(ClientProps.MUZZLEFLASH);
+		actionReload = new ActionReload(35, "lambdacraft:weapons.nmmclipa", "");
+		actionJam = new ActionJam(10, "lambdacraft:weapons.gunjam_a");
 	}
 
 	@Override
@@ -39,19 +44,6 @@ public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 			EntityPlayer par3EntityPlayer, int par4) {
 		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
 				par4);
-	}
-	
-	public Action getActionShoot() {
-		return new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c")
-			.setMuzzleflash(ClientProps.MUZZLEFLASH);
-	}
-	
-	public Action getActionReload() {
-		return new ActionReload(35, "lambdacraft:weapons.nmmclipa", "");
-	}
-	
-	public Action getActionJam() {
-		return new ActionJam(10, "weapons.gunjam_a");
 	}
 
 }

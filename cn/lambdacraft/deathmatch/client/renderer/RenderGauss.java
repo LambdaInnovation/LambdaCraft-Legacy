@@ -49,7 +49,7 @@ public class RenderGauss extends RenderModelItem {
 	@Override
 	protected float getModelAttribute(ItemStack item, EntityLivingBase entity) {
 		if(!(entity instanceof EntityPlayer)) return 0F;
-		return DMItems.gauss.getRotationForStack(item, (EntityPlayer) entity);
+		return DMItems.gauss.getRotation(item);
 	}
 
 }

@@ -1,13 +1,12 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.deathmatch.item.weapon.Weapon_9mmAR.ActionGrenade;
-import cn.weaponmod.api.action.ActionAutomaticShoot;
-import cn.weaponmod.api.information.InfWeapon;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.prop.ClientProps;
+import cn.weaponmod.api.action.ActionAutomaticShoot;
+import cn.weaponmod.api.information.InfWeapon;
 
 /**
  * 9mm Handgun. Mode I : low speed, high accuracy Mode II : high speed, low
@@ -28,9 +27,9 @@ public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
 		switch(keyid) {
 		case 0: //LMOUSE
 			if(!canShoot(player, stack)) {
-				inf.executeAction(player, getActionJam());
+				inf.executeAction(player, actionJam);
 			} else {
-				inf.executeAction(player, this.getActionShoot());
+				inf.executeAction(player, actionShoot);
 			}
 			break;
 		case 1:
@@ -39,7 +38,7 @@ public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
 				.setMuzzleflash(ClientProps.MUZZLEFLASH));
 			break;
 		case 2: //Reload
-			inf.executeAction(player, this.getActionReload());
+			inf.executeAction(player, actionReload);
 			break;
 		default:
 			break;
@@ -53,7 +52,7 @@ public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
 		switch(keyid) {
 		case 0: //LMOUSE
 		case 1: //RMOUSE
-			inf.removeAction(pl, "shoot_auto");
+			inf.removeAction("shoot_auto");
 			break;
 		default:
 			break;

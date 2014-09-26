@@ -45,10 +45,10 @@ public class EntityBulletGauss extends EntityBullet {
 		super(world);
 	}
 
-	public EntityBulletGauss(World par1World, EntityPlayer entityPlayer, ItemStack stack, int damage) {
+	public EntityBulletGauss(World par1World, EntityPlayer entityPlayer, int damage) {
 		super(par1World, entityPlayer, damage);
 		motion = new Motion3D(entityPlayer, true);
-		itemStack = stack;
+		itemStack = entityPlayer.getCurrentEquippedItem();
 		item = (Weapon_Gauss) itemStack.getItem();
 		inf = item.loadInformation(itemStack, entityPlayer);
 		worldObj.spawnEntityInWorld(new EntityGaussRay(new Motion3D(this, true), worldObj));

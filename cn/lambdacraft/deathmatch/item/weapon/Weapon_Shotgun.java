@@ -12,6 +12,7 @@ import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionBuckshot;
 import cn.weaponmod.api.action.ActionMultipleReload;
+import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.core.proxy.WMClientProxy;
 
 public class Weapon_Shotgun extends WeaponGeneralBullet_LC {
@@ -24,28 +25,21 @@ public class Weapon_Shotgun extends WeaponGeneralBullet_LC {
 		setMaxDamage(9);
 		setCreativeTab(CBCMod.cct);
 
+		actionShoot = new ActionBuckshot(2, 32, "lambdacraft:weapons.sbarrela").setShootRate(20);
+		actionReload = new ActionMultipleReload(15, 300).setSound("lambdacraft:weapons.reload");
 	}
 
-	@Override
-	public void onUpdate(ItemStack par1ItemStack, World par2World,
-			Entity par3Entity, int par4, boolean par5) {
-		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4,
-				par5);
-	}
-
-	@Override
-	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
-			EntityPlayer par3EntityPlayer, int par4) {
-		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
-				par4);
-	}
+	private Action actionDoubleBolt = new ActionBuckshot(2, 70, "lambdacraft:weapons.sbarrelb")
+		.setBucks(12).setShootRate(30);
 	
-	public Action getActionShoot() {
-		return new ActionBuckshot(2, 5, "lambdacraft:weapons.sbarrela").setShootRate(20);
-	}
-	
-	public Action getActionReload() {
-		return new ActionMultipleReload(15, 300).setSound("lambdacraft:weapons.reload");
+	@Override
+	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,
+			int keyid) {
+		super.onItemRelease(world, pl, stack, keyid);
+		if(keyid == 1) {
+			InfWeapon inf = loadInformation(pl);
+			inf.executeAction(actionDoubleBolt);
+		}
 	}
 
 }

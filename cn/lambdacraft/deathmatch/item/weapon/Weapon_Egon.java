@@ -112,7 +112,7 @@ public class Weapon_Egon extends WeaponGeneralBullet_LC implements ISpecialCross
 		InfWeapon inf = loadInformation(stack, pl);
 		switch(keyid) {
 		case 0: //LMOUSE
-			inf.removeAction(pl, actionShoot.name);
+			inf.removeAction(actionShoot.name);
 			break;
 		default:
 			break;

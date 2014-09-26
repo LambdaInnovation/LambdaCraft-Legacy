@@ -64,7 +64,7 @@ public class RenderGaussRay extends RenderEntity {
 		else {
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 		}
-		GL11.glRotatef(90.0F + gauss.rotationYaw, 0.0F, -1.0F, 0.0F); // 左右旋转
+		GL11.glRotatef(-90.0F + gauss.rotationYaw, 0.0F, 1.0F, 0.0F); // 左右旋转
 		GL11.glRotatef(gauss.rotationPitch, 0.0F, 0.0F, -1.0F); // 上下旋转
 		GL11.glTranslatef(0, 0.4F, 0);
 		GL11.glRotatef(7.5F, -1.0F, 0.0F, 0.0F);

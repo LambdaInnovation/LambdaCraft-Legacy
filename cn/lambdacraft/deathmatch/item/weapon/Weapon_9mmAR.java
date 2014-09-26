@@ -13,6 +13,7 @@ import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityARGrenade;
 import cn.liutils.api.entity.EntityBullet;
 import cn.weaponmod.api.WeaponHelper;
+import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.api.weapon.WeaponGeneral;
@@ -27,10 +28,9 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class Weapon_9mmAR extends Weapon_9mmAR_Raw {
 	
-	public static class ActionGrenade extends ActionShoot {
-
-		public ActionGrenade() {
-			super(0, 0, "lambdacraft:weapons.glauncher");
+	public static Action actionGrenade = new ActionShoot(0, 0, "lambdacraft:weapons.glauncher") {
+		
+		{
 			setShootRate(20);
 			ticker_channel = "grenade";
 		}
@@ -41,10 +41,10 @@ public class Weapon_9mmAR extends Weapon_9mmAR_Raw {
 		}
 		
 		protected Entity getProjectileEntity(World world, EntityPlayer player) {
-			return new EntityARGrenade(world, player);
+			return world.isRemote ? null : new EntityARGrenade(world, player);
 		}
 		
-	}
+	};
 
 	public Weapon_9mmAR() {
 		super();
@@ -52,24 +52,10 @@ public class Weapon_9mmAR extends Weapon_9mmAR_Raw {
 	
 	@Override
 	public void onItemClick(World world, EntityPlayer player, ItemStack stack, int keyid) {
-		InfWeapon inf = loadInformation(stack, player);
-		switch(keyid) {
-		case 0: //LMOUSE
-			if(!canShoot(player, stack)) {
-				inf.executeAction(player, getActionJam());
-			} else {
-				inf.executeAction(player, this.getActionShoot());
-			}
-			break;
-		case 1:
-			//RMOUSE GRENADE
-			inf.executeAction(player, new ActionGrenade());
-			break;
-		case 2: //Reload
-			inf.executeAction(player, this.getActionReload());
-			break;
-		default:
-			break;
+		super.onItemClick(world, player, stack, keyid);
+		if(keyid == 1) {
+			InfWeapon inf = loadInformation(player);
+			inf.executeAction(actionGrenade);
 		}
 	}
 	

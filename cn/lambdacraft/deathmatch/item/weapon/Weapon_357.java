@@ -30,6 +30,10 @@ public class Weapon_357 extends WeaponGeneralBullet_LC {
 		setMaxStackSize(1);
 		setMaxDamage(7);
 		setNoRepair();
+		
+		this.actionShoot = new ActionShoot(7, 5, "lambdacraft:weapons.pyt_shota").setShootRate(20);
+		this.actionReload = new ActionReload(70, "lambdacraft:weapons.pyt_reloada", "");
+		this.actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 	}
 
 	@Override
@@ -41,20 +45,7 @@ public class Weapon_357 extends WeaponGeneralBullet_LC {
 	@Override
 	public void onUpdate(ItemStack par1ItemStack, World par2World,
 			Entity par3Entity, int par4, boolean par5) {
-		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4,
-				par5);
-	}
-	
-	public Action getActionShoot() {
-		return new ActionShoot(7, 5, "lambdacraft:weapons.pyt_shota").setShootRate(20);
-	}
-	
-	public Action getActionReload() {
-		return new ActionReload(70, "lambdacraft:weapons.pyt_reloada", "");
-	}
-	
-	public Action getActionJam() {
-		return new ActionJam(20, "lambdacraft:weapons.gunjam_a");
+		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
 	}
 
 }

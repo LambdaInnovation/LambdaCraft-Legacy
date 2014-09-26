@@ -33,39 +33,13 @@ import cn.weaponmod.api.action.ActionShoot;
 public class Weapon_9mmAR_Raw extends WeaponGeneralBullet_LC {
 
 	public Weapon_9mmAR_Raw() {
-
 		super(CBCItems.ammo_9mm2);
 		setIAndU("weapon_9mmar");
 		setCreativeTab(CBCMod.cct);
 		setMaxDamage(51);
+		
+		actionShoot = new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa");
+		actionReload = new ActionReload(60, "lambdacraft:weapons.nmmarr", "");
+		actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 	}
-	
-	@Override
-	public void onUpdate(ItemStack par1ItemStack, World par2World,
-			Entity par3Entity, int par4, boolean par5) {
-		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4,
-				par5);
-	}
-	
-	@Override
-	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
-			EntityPlayer par3EntityPlayer, int par4) {
-
-		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
-				par4);
-
-	}
-	
-	public Action getActionShoot() {
-		return new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa");
-	}
-	
-	public Action getActionReload() {
-		return new ActionReload(60, "lambdacraft:weapons.nmmarr", "");
-	}
-	
-	public Action getActionJam() {
-		return new ActionJam(20, "lambdacraft:weapons.gunjam_a");
-	}
-
 }
