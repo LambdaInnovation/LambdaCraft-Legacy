@@ -1,5 +1,6 @@
 package cn.lambdacraft.terrain.block;
 
+import cn.lambdacraft.core.CBCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -20,6 +21,7 @@ public class BlockXenDesertedDirt extends Block {
 		this.setBlockTextureName("xen_deserted_dirt");
 		this.setHardness(0.8F);
 		this.setStepSound(soundTypeGravel);
+		setCreativeTab(CBCMod.cct);
 	}
 
 	@Override

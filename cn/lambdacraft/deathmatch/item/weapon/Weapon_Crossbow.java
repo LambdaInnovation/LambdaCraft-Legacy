@@ -168,4 +168,12 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 			EntityPlayer player) {
 		return false;
 	}
+	
+	@Override
+	public void onItemClick(World world, EntityPlayer player, ItemStack stack, int keyid) {
+		super.onItemClick(world, player, stack, keyid);
+		if(!world.isRemote && keyid == 1) {
+			onModeChange(stack, player, (getMode(stack) + 1) % getMaxModes());
+		}
+	}
 }

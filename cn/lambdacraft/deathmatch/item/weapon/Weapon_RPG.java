@@ -110,5 +110,13 @@ public class Weapon_RPG extends Weapon_RPG_Raw implements IModdable {
 			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
 		par3List.add(EnumChatFormatting.BLUE + StatCollector.translateToLocal("weapon.useinv.name"));
 	}
+	
+	@Override
+	public void onItemClick(World world, EntityPlayer player, ItemStack stack, int keyid) {
+		super.onItemClick(world, player, stack, keyid);
+		if(!world.isRemote && keyid == 1) {
+			onModeChange(stack, player, (getMode(stack) + 1) % getMaxModes());
+		}
+	}
 
 }

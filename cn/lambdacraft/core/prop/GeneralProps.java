@@ -44,6 +44,8 @@ public class GeneralProps {
 	@Configurable(key = "KeyCode_Reload", defValue = "19", comment = "Reload Key.")
 	public static int keyCodeReload;
 
+	
+
 	public static final int 
 		ENT_ID_GAUSS1 = 0,
 		ENT_ID_EGON_RAY = 1,
@@ -72,8 +74,9 @@ public class GeneralProps {
 		ENT_ID_SHOCKWAVE = 24,
 		ENT_ID_VORTIGAUNT = 25,
 		ENT_ID_VOR_RAY = 26,
-		ENT_ID_GONARCH = 27;
-
+		ENT_ID_GONARCH = 27,
+	    ENT_ID_MOB_BULL = 28;
+	
 	public static final String NET_CHANNEL = "lcnet";
 
 	public static final byte NET_ID_EXPLOSION = 0, NET_ID_DM = 1,

@@ -2,6 +2,7 @@ package cn.lambdacraft.terrain.block;
 
 import java.util.Random;
 
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.terrain.register.XenBlocks;
 
 import cpw.mods.fml.relauncher.Side;
@@ -25,6 +26,7 @@ public class BlockXenDirt extends Block {
 		this.setBlockTextureName("xen_dirt");
 		this.setHardness(0.5F);
 		this.setStepSound(soundTypeGravel);
+		setCreativeTab(CBCMod.cct);
 	}
 	
 	@Override

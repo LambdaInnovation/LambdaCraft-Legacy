@@ -86,9 +86,9 @@ public class ModelXenLight extends ModelBase implements ITileEntityModel {
 	@Override
 	public void render(TileEntity is, float f1, float f) {
 		TileEntityXenLight tile = (TileEntityXenLight) is;
+		GL11.glDisable(GL11.GL_CULL_FACE);
 		GL11.glPushMatrix();
-		GL11.glTranslated(0.0, 1.5, 0.0);
-		GL11.glScalef(-1.0F, -1.0F, 1.0F);
+		GL11.glTranslated(0.0, -24, 0.0);
 		Shape1.render(1);
 		//说好的伸缩~
 		GL11.glRotated(12.5 * MathHelper.sin(tile.ticksExisted * 0.07F), 0.1, 1, -0.1);
@@ -103,6 +103,7 @@ public class ModelXenLight extends ModelBase implements ITileEntityModel {
 		Shape2.render(1);
 		Shape3.render(1);
 		GL11.glPopMatrix();
+		GL11.glEnable(GL11.GL_CULL_FACE);
 	}
 
 	@Override

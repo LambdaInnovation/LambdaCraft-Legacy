@@ -55,7 +55,7 @@ public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
 		@Override
 		protected Entity getProjectileEntity(World world, EntityPlayer player) {
 			ItemStack is = player.getCurrentEquippedItem();
-			return new EntityRocket(world, player, is);
+			return world.isRemote ? null : new EntityRocket(world, player, is);
 		}
 		
 		@Override

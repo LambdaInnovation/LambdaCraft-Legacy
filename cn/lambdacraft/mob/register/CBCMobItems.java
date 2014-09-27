@@ -10,6 +10,7 @@ import cn.lambdacraft.mob.entity.EntityHLZombie;
 import cn.lambdacraft.mob.entity.EntityHeadcrab;
 import cn.lambdacraft.mob.entity.EntityHoundeye;
 import cn.lambdacraft.mob.entity.EntitySentry;
+import cn.lambdacraft.mob.entity.EntityMobBull;
 import cn.lambdacraft.mob.item.DispenserBehaviorSpawner;
 import cn.lambdacraft.mob.item.ItemBarnaclePlacer;
 import cn.lambdacraft.mob.item.ItemDNAFragment;
@@ -27,7 +28,8 @@ public class CBCMobItems {
 		sentrySyncer,
 		houndeye,
 		vortigaunt,
-		gonarch;
+		gonarch,
+		mob_bull;
 	
 	public static ItemDNAFragment dna;
 	public static DispenserBehaviorSpawner dispenserBehaviorSpawner;
@@ -43,6 +45,7 @@ public class CBCMobItems {
 		sentrySyncer = new ItemSentrySyncer();
 		dna = new ItemDNAFragment();
 		gonarch = new LCMobSpawner(EntityBigMomoa.class, "gonarch").setIconName("egg6");
+		mob_bull = new LCMobSpawner(EntityMobBull.class, "mob_bull").setIconName("egg7");
 		
 		GameRegistry.registerItem(weapon_snark, "lc_snark");
 		GameRegistry.registerItem(headcrab0w0, "lc_headcrab");
@@ -54,6 +57,7 @@ public class CBCMobItems {
 		GameRegistry.registerItem(sentrySyncer, "lc_sentry");
 		GameRegistry.registerItem(dna, "lc_dna");
 		GameRegistry.registerItem(gonarch, "lc_gonarch");
+		GameRegistry.registerItem(mob_bull, "lc_mob_bull");
 
 		dispenserBehaviorSpawner = new DispenserBehaviorSpawner();
 		BlockDispenser.dispenseBehaviorRegistry.putObject(weapon_snark, dispenserBehaviorSpawner);
