@@ -18,6 +18,7 @@ import cn.lambdacraft.mob.entity.EntityHoundeye;
 import cn.lambdacraft.mob.entity.EntitySentry;
 import cn.lambdacraft.mob.entity.EntityShockwave;
 import cn.lambdacraft.mob.entity.EntitySnark;
+import cn.lambdacraft.mob.entity.EntityMobBull;
 import cn.lambdacraft.mob.network.MsgSentrySync;
 import cn.lambdacraft.mob.register.CBCMobBlocks;
 import cn.lambdacraft.mob.register.CBCMobItems;
@@ -95,6 +96,8 @@ public class ModuleMob {
 				GeneralProps.ENT_ID_VORTIGAUNT, CBCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityBigMomoa.class, "gonarch",
 				GeneralProps.ENT_ID_GONARCH, CBCMod.instance, 48, 3, true);
+		EntityRegistry.registerModEntity(EntityMobBull.class, "mobbull",
+				GeneralProps.ENT_ID_MOB_BULL, CBCMod.instance, 48, 3, true);
 		proxy.init();
 	}
 

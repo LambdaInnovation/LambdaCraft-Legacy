@@ -92,7 +92,6 @@ public class EntityBigMomoa extends EntityMob implements IBossDisplayData {
 	
 	@Override
 	public void onUpdate() {
-		System.err.println(getHealth() + "  " + getMaxHealth());
 		BossStatus.setBossStatus(this, true);
 		super.onUpdate();
 		this.reqSpawnChild();
@@ -101,7 +100,6 @@ public class EntityBigMomoa extends EntityMob implements IBossDisplayData {
 	protected void reqSpawnChild() {
 		/* Request once while parsing spawn child: Never mind. */
 		// Minecraft.getMinecraft().getSystemTime();
-		System.out.println("SpawnChildCount is now " + this.spawnChildCount + ".");
 		this.spawnChildCount ++;
 		if(this.spawnChildCount % LENGTH_TO_SPAWN_CHILD == 0) {
 			spawnChildCount = 0;
