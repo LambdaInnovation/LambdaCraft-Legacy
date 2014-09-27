@@ -181,7 +181,7 @@ public class MapGenFloatIsland extends MapGenBase{
 				{
 					if(noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] <= 0.5F && y2 > noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY)
 					{
-							par5ArrayOfBlock[(x2 * 16 + z2) * 256 + y2] = XenBlocks.stone;
+							par5ArrayOfBlock[(x2 * 16 + z2) * 128 + y2] = XenBlocks.stone;
 					}
 				}
 			}
@@ -206,7 +206,7 @@ public class MapGenFloatIsland extends MapGenBase{
 		if(!(genEndY == 128))
 		{
 			height = height/2;
-			genY = genEndY;
+			genY = genEndY + 1;
 			genEndY = genEndY + rand.nextInt(height) + 5;
 			
 			if(genEndY > 128 )
@@ -223,7 +223,7 @@ public class MapGenFloatIsland extends MapGenBase{
 						if(y2 < noiseArray2[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY
 						&& booleanArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31])
 						{
-								par5ArrayOfBlock[(x2 * 16 + z2) * 256 + y2] = XenBlocks.stone;
+								par5ArrayOfBlock[(x2 * 16 + z2) * 128 + y2] = XenBlocks.stone;
 						}
 					}
 				}

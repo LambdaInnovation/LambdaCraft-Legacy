@@ -16,6 +16,5 @@ public class BiomeGenStonePlain extends BiomeGenBase{
 		this.fillerBlock = XenBlocks.stone;
 		this.setBiomeName("Xen Plain");
 		this.theBiomeDecorator = new BiomeDecoratorXen();
-		this.waterColorMultiplier = 13458524;
 	}
 }

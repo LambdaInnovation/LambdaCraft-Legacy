@@ -26,7 +26,6 @@ public class BiomeGenBroken extends BiomeGenBase{
 		this.fillerBlock = XenBlocks.dirt;
 		this.setBiomeName("Xen Broken");
 		this.theBiomeDecorator = new BiomeDecoratorXen();
-		this.waterColorMultiplier = 13458524;
 	}
 	
 }

@@ -34,8 +34,9 @@ public class RenderEgonRay extends RenderEntity {
 			double par6, float par8, float par9) {
 
 		EntityEgonRay egon = (EntityEgonRay) par1Entity;
-		if (!egon.draw)
+		if (!egon.draw) {
 			return;
+		}
 		
 		Motion3D motion = new Motion3D(egon);
 		MovingObjectPosition trace = egon.worldObj.rayTraceBlocks(motion.getPosVec(egon.worldObj), 

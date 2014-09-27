@@ -20,6 +20,5 @@ public class BiomeGenHill extends BiomeGenBase{
 		this.fillerBlock = XenBlocks.dirt;
 		this.setBiomeName("Xen Hill");
 		this.theBiomeDecorator = new BiomeDecoratorXen();
-		this.waterColorMultiplier = 13458524;
 	}
 }

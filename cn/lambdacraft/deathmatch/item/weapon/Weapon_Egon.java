@@ -11,9 +11,13 @@ import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityBulletEgon;
 import cn.lambdacraft.deathmatch.entity.fx.EntityEgonRay;
+import cn.liutils.api.entity.EntityBullet;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.action.Action;
+import cn.weaponmod.api.action.ActionAutomaticShoot;
 import cn.weaponmod.api.action.ActionJam;
+import cn.weaponmod.api.action.ActionShoot;
+import cn.weaponmod.api.information.InfUtils;
 import cn.weaponmod.api.information.InfWeapon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,38 +34,46 @@ public class Weapon_Egon extends WeaponGeneralBullet_LC implements ISpecialCross
 			SND_RUN = "lambdacraft:weapons.egon_run", SND_OFF = "lambdacraft:weapons.egon_off";
 
 	public IIcon iconEquipped;
+	
+	private class ActionShooter extends ActionShoot {
 
-	public class ActionEgonShoot extends Action {
+		public ActionShooter() {
+			super(10, 2, "");
+		}
 		
-		//shootRate = 2
+		protected Entity getProjectileEntity(World world, EntityPlayer player) {
+			return world.isRemote ? null : new EntityBulletEgon(world, player);
+		}
+		
+	}
+	
+	private class ActionEgonShoot extends ActionAutomaticShoot {
 
 		public ActionEgonShoot() {
-			super(200, "");
+			super(new ActionShooter(), 4, 300);
 		}
 		
-		public boolean onActionBegin(World world, EntityPlayer player, InfWeapon information) { 
-			//Spawn egon
-			return false;
+		@Override
+		public boolean onActionBegin(World world, EntityPlayer player, InfWeapon information) {
+			world.spawnEntityInWorld(new EntityEgonRay(world, player));
+			return super.onActionBegin(world, player, information);
 		}
 		
+		@Override
 		public boolean onActionTick(World world, EntityPlayer player, InfWeapon inf) {
-			//Continous entityBullet && Sound
+			int ticks = inf.getTickLeft(this);
+			if(ticks == 1) {
+				player.playSound(SND_WINDUP, 0.5F, 1.0F);
+			} else if((ticks - 79) % 43 == 0) {
+				player.playSound(SND_RUN, 0.5F, 1.0F);
+			}
+			return super.onActionTick(world, player, inf);
+		}
+		
+		@Override
+		public boolean onActionEnd(World world, EntityPlayer player, InfWeapon information) {
+			player.playSound(SND_OFF, 0.5F, 1.0F);
 			return false;
-		}
-
-		@Override
-		public int getPriority() {
-			return 0;
-		}
-
-		@Override
-		public boolean doesConcurrent(Action other) {
-			return false;
-		}
-
-		@Override
-		public int getRenderPriority() {
-			return 0;
 		}
 		
 	}
@@ -99,6 +111,12 @@ public class Weapon_Egon extends WeaponGeneralBullet_LC implements ISpecialCross
 				inf.executeAction(player, actionJam);
 			} else {
 				inf.executeAction(player, actionShoot);
+			}
+			break;
+		case 1: //RMOUSE, MISTY ACTION
+			if(InfUtils.getDeltaTick(inf, "nico") >= 20) {
+				inf.updateTicker("nico");
+				player.playSound(SND_OFF, 0.5F, 1.0F);
 			}
 			break;
 		default:

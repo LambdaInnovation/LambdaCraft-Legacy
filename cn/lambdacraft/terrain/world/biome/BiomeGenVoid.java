@@ -19,7 +19,6 @@ public class BiomeGenVoid extends BiomeGenBase{
 		this.fillerBlock = (XenBlocks.dirt);
 		this.setBiomeName("Xen Void");
 		this.theBiomeDecorator = new BiomeDecoratorXen();
-		this.waterColorMultiplier = 13458524;
 	}
 	/*
 	 * this.minHeight = -1.95F;

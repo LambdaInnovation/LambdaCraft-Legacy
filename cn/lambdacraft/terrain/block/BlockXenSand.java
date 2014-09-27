@@ -1,6 +1,5 @@
 package cn.lambdacraft.terrain.block;
 
-import cn.lambdacraft.core.CBCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -14,14 +13,13 @@ import net.minecraft.client.renderer.texture.IIconRegister;
  */
 public class BlockXenSand extends Block {
 
-	public BlockXenSand()
+	public BlockXenSand(int par1)
 	{
 		super( Material.sand);
 		this.setBlockName("xensand");
 		this.setBlockTextureName("xen_sand");
 		this.setHardness(0.5F);
 		this.setStepSound(soundTypeSand);
-		setCreativeTab(CBCMod.cct);
 	}
 	
 	@Override

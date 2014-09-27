@@ -23,6 +23,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Egon;
 import cn.lambdacraft.deathmatch.register.DMItems;
+import cn.weaponmod.api.WMInformation;
 import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.core.event.ItemControlHandler;
 
@@ -33,21 +34,18 @@ import cn.weaponmod.core.event.ItemControlHandler;
  * 
  */
 public class EntityEgonRay extends Entity {
-
-	public ItemStack item;
 	public boolean renderThirdPerson;
 	public boolean draw = true;
 	public boolean isClient = false;
 	public EntityPlayer thrower;
 
-	public EntityEgonRay(World par1World, EntityPlayer ent, ItemStack itemStack) {
+	public EntityEgonRay(World par1World, EntityPlayer ent) {
 		super(par1World);
 		this.posX = ent.posX;
 		this.posY = ent.posY;
 		this.posZ = ent.posZ;
 		ignoreFrustumCheck = true;
 		thrower = ent;
-		item = itemStack;
 		renderThirdPerson = true;
 		isClient = true;
 	}
@@ -64,21 +62,26 @@ public class EntityEgonRay extends Entity {
 
 	@Override
 	public void onUpdate() {
-
+		
 		if (worldObj.isRemote && !isClient && draw) {
 			if (this.getDistanceSqToEntity(thrower) < 4.5)
 				draw = false;
 			return;
 		}
 
-		if (item == null)
+		if(thrower == null)
+			return;
+		
+		ItemStack stack = thrower.getCurrentEquippedItem();
+		if (stack == null || stack.getItem() != DMItems.weapon_egon)
 			return;
 
-		InfWeapon inf = ((Weapon_Egon) item.getItem()).loadInformation(
-				item, getThrower());
+		InfWeapon inf = WMInformation.getInformation(thrower);
+		Weapon_Egon egon = (Weapon_Egon) DMItems.weapon_egon;
+		
 		if (inf == null|| 
 				!(thrower.getCurrentEquippedItem() != null && thrower.getCurrentEquippedItem().getItem() == DMItems.weapon_egon && 
-				ItemControlHandler.getUsingTicks(thrower, 1) > 0 && ((Weapon_Egon)item.getItem()).canShoot(thrower, item))) {
+				ItemControlHandler.getUsingTicks(thrower, 0) > 0 && egon.canShoot(thrower, stack))) {
 			this.setDead();
 			return;
 		}

@@ -11,7 +11,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class BlockSlimeStill extends BlockStaticLiquid{
@@ -42,10 +41,4 @@ public class BlockSlimeStill extends BlockStaticLiquid{
 	{
 	    this.blockIcon = par1.registerIcon("lambdacraft:" + this.getTextureName());
 	}
-	
-	@SideOnly(Side.CLIENT)
-    public IIcon getIcon(int p_149691_1_, int p_149691_2_)
-    {
-        return this.blockIcon;
-    }
 }

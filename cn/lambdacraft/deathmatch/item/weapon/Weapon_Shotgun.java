@@ -25,12 +25,12 @@ public class Weapon_Shotgun extends WeaponGeneralBullet_LC {
 		setMaxDamage(9);
 		setCreativeTab(CBCMod.cct);
 
-		actionShoot = new ActionBuckshot(2, 32, "lambdacraft:weapons.sbarrela").setShootRate(20);
+		actionShoot = new ActionBuckshot(2, 60, "lambdacraft:weapons.sbarrela").setShootRate(20);
 		actionReload = new ActionMultipleReload(15, 300).setSound("lambdacraft:weapons.reload");
 	}
 
-	private Action actionDoubleBolt = new ActionBuckshot(2, 70, "lambdacraft:weapons.sbarrelb")
-		.setBucks(12).setShootRate(30);
+	private Action actionDoubleBolt = new ActionBuckshot(2, 150, "lambdacraft:weapons.sbarrelb")
+		.setBucks(12).setShootRate(30).setConsume(true, 2);
 	
 	@Override
 	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,

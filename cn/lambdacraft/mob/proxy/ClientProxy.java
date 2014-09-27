@@ -16,7 +16,6 @@ package cn.lambdacraft.mob.proxy;
 
 import net.minecraftforge.client.MinecraftForgeClient;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
-import cn.lambdacraft.mob.client.model.ModelBabyHeadcrab;
 import cn.lambdacraft.mob.client.model.ModelHLZombie;
 import cn.lambdacraft.mob.client.model.ModelHeadcrab;
 import cn.lambdacraft.mob.client.model.ModelSnark;
@@ -30,7 +29,6 @@ import cn.lambdacraft.mob.client.renderer.RenderTurret;
 import cn.lambdacraft.mob.client.renderer.RenderVortigauntRay;
 import cn.lambdacraft.mob.client.renderer.RendererBigMomoa;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
-import cn.lambdacraft.mob.entity.EntityBabyHeadcrab;
 import cn.lambdacraft.mob.entity.EntityBarnacle;
 import cn.lambdacraft.mob.entity.EntityBigMomoa;
 import cn.lambdacraft.mob.entity.EntityHLZombie;
@@ -57,8 +55,6 @@ public class ClientProxy extends Proxy {
 				new LIRenderMob(new ModelSnark(), 0.2F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHeadcrab.class,
 				new LIRenderMob(new ModelHeadcrab(), 0.4F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityBabyHeadcrab.class,
-				new LIRenderMob(new ModelBabyHeadcrab(), 0.4F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBarnacle.class, new RenderBarnacle());
 		RenderingRegistry.registerEntityRenderingHandler(EntityHLZombie.class, new LIRenderMob(new ModelHLZombie(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHoundeye.class, new RenderHoundeye());

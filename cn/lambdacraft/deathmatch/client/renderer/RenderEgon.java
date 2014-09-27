@@ -35,11 +35,11 @@ public class RenderEgon extends RenderModelItem {
 	public void renderEquipped(ItemStack item, RenderBlocks render,
 			EntityLivingBase entity, ItemRenderType type) {
 		super.renderEquipped(item, render, entity, type);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
 		if(entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
 			if(player.getCurrentEquippedItem() == item &&
 					ItemControlHandler.getUsingTicks(player, 0) > 0) {
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
 				RendererBulletWeapon.renderMuzzleflashIn2d(Tessellator.instance, ClientProps.EGON_MUZZLE, 0.0F, -0.12F, -0.2F);
 			}
 		}

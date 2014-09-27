@@ -18,7 +18,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.block.CBCBlockContainer;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
@@ -29,7 +28,11 @@ import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
  */
 public class BlockXenAmethyst extends CBCBlockContainer {
 
-	public BlockXenAmethyst() {
+	/**
+	 * @param par1
+	 * @param par2Material
+	 */
+	public BlockXenAmethyst(int par1) {
 		super(Material.rock);
 		setHardness(1.0F);
 		this.setLightLevel(0.7F);

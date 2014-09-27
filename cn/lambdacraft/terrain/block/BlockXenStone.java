@@ -1,6 +1,5 @@
 package cn.lambdacraft.terrain.block;
 
-import cn.lambdacraft.core.CBCMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -22,7 +21,6 @@ public class BlockXenStone extends Block {
 		this.setHardness(2.0F);
 		this.setResistance(10.0F);
 		this.setStepSound(soundTypeStone);
-		setCreativeTab(CBCMod.cct);
 	}
 	
 	@Override

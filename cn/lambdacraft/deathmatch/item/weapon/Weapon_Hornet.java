@@ -24,6 +24,7 @@ import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionReload;
 import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.information.InfWeapon;
+import cn.weaponmod.core.event.ItemControlHandler;
 
 /**
  * @author WeAthFolD.
@@ -42,7 +43,7 @@ public class Weapon_Hornet extends WeaponGeneralBullet_LC {
 		}
 		
 		protected Entity getProjectileEntity(World world, EntityPlayer player) {
-			return new EntityHornet(world, player, side);
+			return world.isRemote ? null : new EntityHornet(world, player, side);
 		}
 		
 	}
@@ -79,7 +80,9 @@ public class Weapon_Hornet extends WeaponGeneralBullet_LC {
 		
 		EntityPlayer player = (EntityPlayer) par3Entity;
 		
-		if (dt % RECOVER_TIME == 0 && !(this.canShoot(player, par1ItemStack) && !inf.isActionPresent("shoot"))) {
+		if (dt % RECOVER_TIME == 0 
+				&& !ItemControlHandler.isKeyDown(player, 0) 
+				&& !ItemControlHandler.isKeyDown(player, 1)) {
 			if (this.getAmmo(par1ItemStack) < this.getMaxDamage()) {
 				this.setAmmo(par1ItemStack, this.getAmmo(par1ItemStack) + 1);
 			}

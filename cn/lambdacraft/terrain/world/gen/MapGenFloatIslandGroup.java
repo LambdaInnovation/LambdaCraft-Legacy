@@ -189,7 +189,7 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 				{
 					if(noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] <= 0.5F && y2 > noiseArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY)
 					{
-							par5ArrayOfBlock[(x2 * 16 + z2) * 256 + y2] = XenBlocks.stone;
+							par5ArrayOfBlock[(x2 * 16 + z2) * 128 + y2] = XenBlocks.stone;
 					}
 				}
 			}
@@ -214,7 +214,7 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 		if(!(genEndY == 128))
 		{
 			height = height/2;
-			genY = genEndY;
+			genY = genEndY + 1;
 			genEndY = genEndY + rand.nextInt(height) + 5;
 			
 			if(genEndY > 128 )
@@ -231,7 +231,7 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 						if(y2 < noiseArray2[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31] * height + genY
 						&& booleanArray[x2 + thisChunkX * 16 - genX + (z2 + thisChunkZ * 16 - genZ) * 31])
 						{
-								par5ArrayOfBlock[(x2 * 16 + z2) * 256 + y2] = XenBlocks.stone;
+								par5ArrayOfBlock[(x2 * 16 + z2) * 128 + y2] = XenBlocks.stone;
 						}
 					}
 				}
@@ -314,14 +314,14 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + t * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + t * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfBlock[(x * 16 + z) * 256 + y] = XenBlocks.stone;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 							if((firstGenY < secondGenY) 
 								&& (y <= (int)(downY + t * height) + heightOfBriage) && (y >= (int)(downY + t * height) - heightOfBriage)
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + t * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + t * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfBlock[(x * 16 + z) * 256 + y] = XenBlocks.stone;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 						}
 					}
@@ -342,14 +342,14 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + t * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + t * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfBlock[(x * 16 + z) * 256 + y] = XenBlocks.stone;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 							if((firstGenY < secondGenY) 
 								&& (y <= (int)(downY + (1.0F - t) * height) + heightOfBriage) && (y >= (int)(downY + (1.0F - t) * height) - heightOfBriage)
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + t * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + t * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfBlock[(x * 16 + z) * 256 + y] = XenBlocks.stone;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 						}
 					}
@@ -370,14 +370,14 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + (1.0F - t) * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + (1.0F - t) * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfBlock[(x * 16 + z) * 256 + y] = XenBlocks.stone;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 							if((firstGenY < secondGenY) 
 								&& (y <= (int)(downY + (1.0F - t) * height) + heightOfBriage) && (y >= (int)(downY + (1.0F - t) * height) - heightOfBriage)
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + (1.0F - t) * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + (1.0F - t) * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfBlock[(x * 16 + z) * 256 + y] = XenBlocks.stone;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 						}
 					}
@@ -399,14 +399,14 @@ public class MapGenFloatIslandGroup extends MapGenBase{
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + (1.0F - t) * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + (1.0F - t) * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfBlock[(x * 16 + z) * 256 + y] = XenBlocks.stone;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 							if((firstGenY < secondGenY) 
 								&& (y <= (int)(downY + t * height) + heightOfBriage) && (y >= (int)(downY + t * height) - heightOfBriage)
 								&& ((z + thisChunkZ * 16) <= (int)(littleZ + (1.0F - t) * lengthOfZ) + widthOfBriage)
 								&& ((z + thisChunkZ * 16) >= (int)(littleZ + (1.0F - t) * lengthOfZ) - widthOfBriage))
 							{
-									par5ArrayOfBlock[(x * 16 + z) * 256 + y] = XenBlocks.stone;
+									par5ArrayOfBlock[(x * 16 + z) * 128 + y] = XenBlocks.stone;
 							}
 						}
 					}

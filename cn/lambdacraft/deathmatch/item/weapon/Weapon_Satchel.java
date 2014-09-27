@@ -133,30 +133,33 @@ public class Weapon_Satchel extends CBCGenericItem implements IClickHandler, IHu
 	@Override
 	public void onItemClick(World world, EntityPlayer player, ItemStack stack,
 			int keyid) {
-		if(!world.isRemote && keyid == 0) {
-			int mode = getMode(stack);
-			NBTTagCompound nbt = player.getEntityData();
-			int count = nbt.getInteger("satchelCount");
-			// Max 6 satchel
-			
-			if (mode == 0) { // Setting mode
+		if(!world.isRemote) {
+			if(keyid == 0) {
+				int mode = getMode(stack);
+				NBTTagCompound nbt = player.getEntityData();
+				int count = nbt.getInteger("satchelCount");
+				// Max 6 satchel
 				
-				if (count > 5)
-					return;
-				nbt.setBoolean("doesExplode", false);
-				EntitySatchel ent = new EntitySatchel(world, player);
-				world.spawnEntityInWorld(ent);
-				nbt.setInteger("satchelCount", ++count);
-				if (!player.capabilities.isCreativeMode) {
-					if(--stack.stackSize == 0)
-						player.destroyCurrentEquippedItem();
+				if (mode == 0) { // Setting mode
+					
+					if (count > 5)
+						return;
+					nbt.setBoolean("doesExplode", false);
+					EntitySatchel ent = new EntitySatchel(world, player);
+					world.spawnEntityInWorld(ent);
+					nbt.setInteger("satchelCount", ++count);
+					if (!player.capabilities.isCreativeMode) {
+						if(--stack.stackSize == 0)
+							player.destroyCurrentEquippedItem();
+					}
+					
+				} else { // Detonating mode
+					nbt.setBoolean("doesExplode", true);
+					nbt.setInteger("satchelCount", 0);
 				}
-				
-			} else { // Detonating mode
-				nbt.setBoolean("doesExplode", true);
-				nbt.setInteger("satchelCount", 0);
-			}
-			
+			} else if(keyid == 1) {
+				onModeChange(stack, player, (getMode(stack) + 1) % getMaxModes());
+			} 
 		}
 	}
 

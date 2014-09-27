@@ -18,7 +18,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import cn.weaponmod.api.WeaponHelper;
 
 /**
@@ -30,6 +32,9 @@ import cn.weaponmod.api.WeaponHelper;
 public class EntitySatchel extends EntityThrowable {
 
 	public static double HEIGHT = 0.083, WIDTH1 = 0.2, WIDTH2 = 0.15;
+	
+	public boolean still;
+	public double stlX, stlY, stlZ;
 
 	/**
 	 * 被击中时的tick数。
@@ -48,6 +53,15 @@ public class EntitySatchel extends EntityThrowable {
 	public EntitySatchel(World world) {
 		super(world);
 	}
+	
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+		dataWatcher.addObject(9,  Byte.valueOf((byte) 0));
+		dataWatcher.addObject(10, Float.valueOf(0));
+		dataWatcher.addObject(11, Float.valueOf(0));
+		dataWatcher.addObject(12, Float.valueOf(0));
+	}
 
 	@Override
 	public boolean canBeCollidedWith() {
@@ -63,7 +77,7 @@ public class EntitySatchel extends EntityThrowable {
 
 	@Override
 	protected float getGravityVelocity() {
-		return 0.025F;
+		return still ? 0F : 0.025F;
 	}
 
 	@Override
@@ -78,12 +92,8 @@ public class EntitySatchel extends EntityThrowable {
 	}
 
 	@Override
-	protected void entityInit() {
-		rotationFactor = 0.0F;
-	}
-
-	@Override
 	public void onUpdate() {
+		attemptUpdate();
 		super.onUpdate();
 		if (worldObj.isRemote)
 			return;
@@ -101,28 +111,56 @@ public class EntitySatchel extends EntityThrowable {
 			rotationFactor += 3.0F;
 		if (rotationFactor > 360.0F)
 			rotationFactor = 0.0F;
+		
 	}
 
 	@Override
 	protected void onImpact(MovingObjectPosition result) {
-		switch (result.sideHit) {
-		case 1:
-			motionY = -0.5 * motionY;
-			return;
-		case 2:
-		case 3:
-			motionZ = -0.6 * motionZ;
-			return;
-		case 4:
-		case 5:
-			motionX = -0.6 * motionX;
-			return;
-		default:
-			this.onGround = true;
-			posY = result.hitVec.yCoord + 1.0;
-			motionY = 0.0;
-			return;
+		if(result.typeOfHit != MovingObjectType.BLOCK || 
+				still || !acceptible(result.blockX, result.blockY, result.blockZ)) return;
+		ForgeDirection dir = ForgeDirection.values()[result.sideHit];
+		double offX = dir.offsetX, offY = dir.offsetY, offZ = dir.offsetZ;
+		if(result.sideHit == 0 || result.sideHit == 1) {
+			offY *= 0.1F;
+		} else {
+			offX *= 0.1F;
+			offZ *= 0.1F;
 		}
+		
+		this.still = true;
+		stlX = result.hitVec.xCoord + offX;
+		stlY = result.hitVec.yCoord + offY;
+		stlZ = result.hitVec.zCoord + offZ;
+		attemptUpdate();
+	}
+	
+	private void attemptUpdate() {
+		if(worldObj.isRemote) {
+			still = dataWatcher.getWatchableObjectByte(9) == 1;
+			stlX = dataWatcher.getWatchableObjectFloat(10);
+			stlY = dataWatcher.getWatchableObjectFloat(11);
+			stlZ = dataWatcher.getWatchableObjectFloat(12);
+		} else {
+			dataWatcher.updateObject(9, still ? (byte)1 : (byte)0);
+			if(still) {
+				dataWatcher.updateObject(10, (float)stlX);
+				dataWatcher.updateObject(11, (float)stlY);
+				dataWatcher.updateObject(12, (float)stlZ);
+			}
+		}
+		
+		if(still) {
+			motionX = motionY = motionZ = 0;
+			posX = stlX;
+			posY = stlY;
+			posZ = stlZ;
+			
+			if(!acceptible((int)posX, (int)posY, (int)posZ)) still = false;
+		}
+	}
+	
+	private boolean acceptible(int x, int y, int z) {
+		return worldObj.getBlock(x, y, z).getCollisionBoundingBoxFromPool(worldObj, x, y, z) != null;
 	}
 
 }
