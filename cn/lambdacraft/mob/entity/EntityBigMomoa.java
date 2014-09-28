@@ -98,7 +98,7 @@ public class EntityBigMomoa extends EntityMob implements IBossDisplayData {
 		super.onUpdate();
 		this.reqSpawnChild();
 		if(rand.nextInt() % 25 == 0) {
-			System.out.println("EXECUTED.");
+			// System.out.println("EXECUTED.");
 			this.breakBlock();
 		}
 	}

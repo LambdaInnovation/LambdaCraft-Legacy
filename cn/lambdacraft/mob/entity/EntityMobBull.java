@@ -11,7 +11,11 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-
+/**
+ * 
+ * @author jiangyue
+ *
+ */
 public class EntityMobBull extends LIEntityMob {
 	
 	/* Fields Decl. */
@@ -75,7 +79,8 @@ public class EntityMobBull extends LIEntityMob {
 
 	private void attackLongRange(Entity entity) {
 		int r2 = rand.nextInt();
-		if(r2 % 12 == 0) entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (((EntityLivingBase) entity).getHealth() - (double) (ATTACK_DAMAGE / 4)));
+		if(r2 % 12 == 0) worldObj.spawnEntityInWorld(new EntityBullToxic(worldObj).setPosAndTargXYZ(posX, posY, posZ, entity.posX, entity.posY, entity.posZ));
+		
 	}
 	
 	@Override
