@@ -20,10 +20,12 @@ import net.minecraft.world.World;
 public class EntityBullToxic extends Entity {
 	protected double targetX, targetY, targetZ;
 	protected double ATTACK_RANGE = 4.0f;
+	protected int TO_GO = 14;
 
 	public EntityBullToxic(World par1World) {
 		super(par1World);
-		// TODO Auto-generated constructor stub
+		if(rand.nextInt() % 6 != 0) // While it is too frequency
+			this.setDead();
 	}
 
 	public Entity setPosAndTargXYZ(double x, double y, double z, double tX, double tY, double tZ) {
@@ -40,12 +42,20 @@ public class EntityBullToxic extends Entity {
 	public void onUpdate() {
 		super.onUpdate();
 		// FIXME: Insert code instead of setting position in order to 'approach' player
+		// this.moveEntity(targetX, targetY, targetZ);
 		this.setPosition(targetX, targetY, targetZ);
+		while(TO_GO >= 0) {
+			TO_GO --;
+			this.setPosition((this.posX - targetX) / TO_GO,
+							 (this.posY - targetY) / TO_GO, 
+							 (this.posZ - targetZ) / TO_GO);
+		}
 		double distance = Math.sqrt(Math.abs(targetX - this.posX)*Math.abs(targetX - this.posX) + Math.abs(targetX - this.posX)*Math.abs(targetY - this.posY) + Math.abs(targetZ - this.posZ)*Math.abs(targetZ - this.posZ));
-		if(distance <= 1.5)
+		if(distance <= 1.5) {
 			this.affectStart();
-		// The mission is OVER, good luck, bro :P
-		this.setDead();
+			// The mission is OVER, good luck, bro :P
+			this.setDead();
+		}
 	}
 	
 	

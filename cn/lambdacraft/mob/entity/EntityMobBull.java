@@ -79,7 +79,7 @@ public class EntityMobBull extends LIEntityMob {
 
 	private void attackLongRange(Entity entity) {
 		int r2 = rand.nextInt();
-		if(r2 % 12 == 0) worldObj.spawnEntityInWorld(new EntityBullToxic(worldObj).setPosAndTargXYZ(posX, posY, posZ, entity.posX, entity.posY, entity.posZ));
+		if(r2 % 36 == 0) worldObj.spawnEntityInWorld(new EntityBullToxic(worldObj).setPosAndTargXYZ(posX, posY, posZ, entity.posX, entity.posY, entity.posZ));
 		
 	}
 	
