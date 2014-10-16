@@ -13,7 +13,7 @@ import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionReload;
 import cn.weaponmod.api.action.ActionShoot;
 
-public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
+public class Weapon_9mmhandgun_Raw extends WeaponGenericLC {
 
 	public Weapon_9mmhandgun_Raw() {
 
@@ -26,7 +26,7 @@ public class Weapon_9mmhandgun_Raw extends WeaponGeneralBullet_LC {
 		iconName = "weapon_9mmhandgun";
 		setNoRepair();
 		
-		actionShoot = new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c")
+		actionShoot = new ActionAutomaticShoot(300, 10, 2, 5, "lambdacraft:weapons.plgun_c")
 		.setMuzzleflash(ClientProps.MUZZLEFLASH);
 		actionReload = new ActionReload(35, "lambdacraft:weapons.nmmclipa", "");
 		actionJam = new ActionJam(10, "lambdacraft:weapons.gunjam_a");

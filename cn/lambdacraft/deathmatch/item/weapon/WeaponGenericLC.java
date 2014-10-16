@@ -14,8 +14,9 @@ import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.api.hud.IHudTipProvider;
 import cn.lambdacraft.core.prop.GeneralProps;
 import cn.weaponmod.api.WeaponHelper;
-import cn.weaponmod.api.weapon.WeaponGeneral;
-import cn.weaponmod.api.weapon.WeaponGeneralBullet;
+import cn.weaponmod.api.action.ActionJam;
+import cn.weaponmod.api.weapon.WeaponGenericBase;
+import cn.weaponmod.api.weapon.WeaponGeneric;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -23,15 +24,16 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  *
  */
-public class WeaponGeneralBullet_LC extends WeaponGeneralBullet implements IHudTipProvider {
+public class WeaponGenericLC extends WeaponGeneric implements IHudTipProvider {
 	
 	protected String iconName = "";
 	
-	public WeaponGeneralBullet_LC(Item ammo) {
+	public WeaponGenericLC(Item ammo) {
 		super(ammo);
+		actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 	}
 	
-	public WeaponGeneral setIAndU(String name) {
+	public WeaponGenericBase setIAndU(String name) {
 		iconName = name;
 		setUnlocalizedName(name);
 		return this;
@@ -70,7 +72,7 @@ public class WeaponGeneralBullet_LC extends WeaponGeneralBullet implements IHudT
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return WeaponGeneralBullet_LC.this.getAmmo(itemStack) + "|" + WeaponHelper.getAmmoCapacity(ammoItem, player.inventory);
+				return WeaponGenericLC.this.getAmmo(itemStack) + "|" + WeaponHelper.getAmmoCapacity(ammoItem, player.inventory);
 			}
 
 			@Override

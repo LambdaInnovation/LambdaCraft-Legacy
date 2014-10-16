@@ -16,11 +16,6 @@ package cn.lambdacraft.mob.entity;
 
 import java.util.List;
 
-import cn.lambdacraft.api.entity.IEntityLink;
-import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.mob.register.CBCMobItems;
-import cn.liutils.api.entity.LIEntityMob;
-import cn.liutils.api.util.GenericUtils;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -37,6 +32,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.mob.register.CBCMobItems;
+import cn.liutils.api.entity.LIEntityMob;
+import cn.liutils.api.util.GenericUtils;
+import cn.liutils.core.entity.IEntityLink;
 
 /**
  * 蛇鲨虫子的生物实体类。

@@ -22,7 +22,7 @@ import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.information.InfWeapon;
-import cn.weaponmod.api.weapon.WeaponGeneral;
+import cn.weaponmod.api.weapon.WeaponGenericBase;
 
 /**
  * 高斯枪蓄力射击的判断实体。
@@ -50,7 +50,14 @@ public class EntityBulletGauss extends EntityBullet {
 		motion = new Motion3D(entityPlayer, true);
 		itemStack = entityPlayer.getCurrentEquippedItem();
 		item = (Weapon_Gauss) itemStack.getItem();
-		inf = item.loadInformation(itemStack, entityPlayer);
+		
+		if(item == null) { //for safety
+			System.out.println("Unexpected error in " + par1World.isRemote);
+			this.setDead();
+			return;
+		}
+		
+		inf = item.loadInformation(entityPlayer);
 		worldObj.spawnEntityInWorld(new EntityGaussRay(new Motion3D(this, true), worldObj));
 		if (par1World.isRemote)
 			this.setDead();
@@ -177,7 +184,7 @@ public class EntityBulletGauss extends EntityBullet {
 	 * @param item
 	 */
 	private void doChargeAttack(MovingObjectPosition result,
-			InfWeapon information, WeaponGeneral item) {
+			InfWeapon information, WeaponGenericBase item) {
 
 		int damage = getChargeDamage();
 		double var0 = damage / 20;

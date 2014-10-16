@@ -28,15 +28,14 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import cn.lambdacraft.api.entity.IEntityLink;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.EntityUtils;
 import cn.liutils.api.util.GenericUtils;
+import cn.liutils.core.entity.IEntityLink;
 
 /**
- * TODO:坑完了
  * @author WeAt3hFolD
  *
  */
@@ -85,7 +84,7 @@ public class EntityHoundeye extends LIEntityMob implements IEntityLink<EntityLiv
 		super.onUpdate();
 		
 		if(!worldObj.isRemote && isCharging && !dead) {
-			if(++chargeTick > 50) {
+			if(++chargeTick > 50) { 
 				worldObj.spawnEntityInWorld(new EntityShockwave(worldObj, this, posX, posY, posZ));
 				this.playSound(GenericUtils.getRandomSound("lambdacraft:mobs.he_blast", 3), 0.5F, 1.0F);
 				lastShockTick = ticksExisted;

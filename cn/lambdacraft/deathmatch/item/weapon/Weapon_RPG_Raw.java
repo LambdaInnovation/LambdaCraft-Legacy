@@ -35,7 +35,7 @@ import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionReload;
 import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.feature.IModdable;
-import cn.weaponmod.api.weapon.WeaponGeneral;
+import cn.weaponmod.api.weapon.WeaponGenericBase;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -43,7 +43,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  *
  */
-public class Weapon_RPG_Raw extends WeaponGeneralBullet_LC {
+public class Weapon_RPG_Raw extends WeaponGenericLC {
 
 	public static class ActionRocketShoot extends ActionShoot {
 

@@ -24,12 +24,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 /**
- * Crossbow in HLDM Style. Mode I : Non-delay, sniper rifle style. Mode II :
- * Explosive arrow.
- * 
+ * Crossbow of HLDM Style. 
+ * Mode I : Non-delay, sniper rifle style. 
+ * Mode II : Explosive arrow.
  * @author WeAthFolD
  */
-public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
+public class Weapon_Crossbow extends WeaponGenericLC implements
 		IModdable, IZoomable, ISpecialCrosshair {
 	
 	public class ActionLeft extends ActionShoot {
@@ -58,7 +58,7 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 		iconName = "weapon_crossbow";
 		
 		actionShoot = new ActionLeft();
-		actionReload = new ActionReload(55, "", "");
+		actionReload = new ActionReload(55, "lambdacraft:weapons.xbow_reload", "");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -74,35 +74,11 @@ public class Weapon_Crossbow extends WeaponGeneralBullet_LC implements
 	public void onUpdate(ItemStack is, World par2World,
 			Entity entity, int par4, boolean par5) {
 		super.onWpnUpdate(is, par2World, entity, par4, par5);
-		if(!par5) {
+		if(entity instanceof EntityPlayer && !par5) {
 			NBTTagCompound nbt = loadCompound(is);
-			if(nbt.getInteger("mode") == 1)
-				nbt.setInteger("mode", 0);
+			if(getMode(is) == 1)
+				onModeChange(is, (EntityPlayer) entity, 0);
 		}
-		// TODO:Left to be finished
-		/*
-		if (entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
-			int mode = getMode(par1ItemStack);
-			if (par5) {
-				if (mode == 1)
-					player.capabilities.setPlayerWalkSpeed(0.005F);
-				else
-					player.capabilities.setPlayerWalkSpeed(0.1F);
-
-			} else {
-				ItemStack stack = player.getCurrentEquippedItem();
-				if (stack == null || stack.itemID != itemID) 
-					player.capabilities.setPlayerWalkSpeed(0.1F);
-			}
-		}
-		
-		
-		if (!par5) {
-			NBTTagCompound nbt = loadCompound(par1ItemStack);
-			nbt.setInteger("mode", 0);
-		}
-		 */
 	}
 
 	@Override

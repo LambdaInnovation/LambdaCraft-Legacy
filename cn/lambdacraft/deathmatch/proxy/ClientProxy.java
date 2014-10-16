@@ -60,7 +60,7 @@ import cn.liutils.api.client.render.RenderModelItem;
 import cn.liutils.api.client.render.RenderModelProjectile;
 import cn.weaponmod.api.client.render.RendererBulletWeapon;
 import cn.weaponmod.api.client.render.RendererModelBulletWeapon;
-import cn.weaponmod.api.weapon.WeaponGeneralBullet;
+import cn.weaponmod.api.weapon.WeaponGeneric;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -124,12 +124,22 @@ public class ClientProxy extends Proxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityBattery.class,new RenderModel(new ModelBattery(), ClientProps.BATTERY_PATH,0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMedkit.class,new RenderModel(new ModelMedkit(), ClientProps.MEDKIT_ENT_PATH,1.0F));
 		RenderingRegistry.registerEntityRenderingHandler(GaussParticleFX.class, new RenderGlow());
-		RendererModelBulletWeapon handgun_render = new RendererModelBulletWeapon(new ModelHandgun(), (WeaponGeneralBullet) DMItems.weapon_9mmhandgun, ClientProps.HANDGUN_MDL_PATH);
-		RendererModelBulletWeapon pyt_render = new RendererModelBulletWeapon(new Model357(), (WeaponGeneralBullet) DMItems.weapon_357, ClientProps.PYTHON_MDL_PATH);
-		RendererModelBulletWeapon ar_render = new RendererModelBulletWeapon(new ModelAR(), (WeaponGeneralBullet) DMItems.weapon_9mmAR, ClientProps.NMMAR_MDL_PATH);
+		RendererModelBulletWeapon handgun_render = new RendererModelBulletWeapon(new ModelHandgun(), (WeaponGeneric) DMItems.weapon_9mmhandgun, ClientProps.HANDGUN_MDL_PATH);
+		RendererModelBulletWeapon pyt_render = new RendererModelBulletWeapon(new Model357(), (WeaponGeneric) DMItems.weapon_357, ClientProps.PYTHON_MDL_PATH);
+		RendererModelBulletWeapon ar_render = new RendererModelBulletWeapon(new ModelAR(), (WeaponGeneric) DMItems.weapon_9mmAR, ClientProps.NMMAR_MDL_PATH);
 		RenderModelItem uranium_render = new RenderModelItem(new ModelUranium(), ClientProps.URANIUM_MDL_PATH);
-		pyt_render.setStdRotation(0F, 180F, 0F).setOffset(0.002F, 0.402F, -0.314F).setStdRotation(0F, 181.13414F, 0F).setEquipOffset(1.06F, -0.278F, 0.016F)
-			.setInventorySpin(false).setScale(1.212F).setInvOffset(-2.45F, 3.04F).setInvScale(0.912F).setInvRotation(-35.796F, -94.770F, -3.452F); //爱死debugger了
+		
+		pyt_render.setStdRotation(0F, 180F, 0F)
+			.setOffset(0.002F, 0.402F, -0.314F)
+			.setScale(1.212F)
+			.setStdRotation(0F, 181.13414F, 0F)
+			.setEquipOffset(1.15, -0.447, 0.325)
+			.setEquipRotation(0.066F, 0.844F, -8.483F)
+			.setInventorySpin(false)
+			.setInvOffset(-2.45F, 3.04F)
+			.setInvScale(0.912F)
+			.setInvRotation(-35.796F, -94.77F, -3.452F);
+		
 		handgun_render.setInventorySpin(false).setStdRotation(0F, 180F, 0F).setOffset(0.0F, 0.11F, -0.30F).setEquipOffset(0.91F, -0.12F, 0.132F)
 			.setScale(2.24F).setInvOffset(-0.422F, 1.90F).setInvScale(1.164F).setInvRotation(-40.54F, -66F, 8F);
 		ar_render.setOffset(0.0F, 0.242F, -0.588F).setEquipOffset(0.852F, -0.118F, -0.01F)
@@ -141,7 +151,7 @@ public class ClientProxy extends Proxy {
 		MinecraftForgeClient.registerItemRenderer(DMItems.gauss,new RenderGauss());
 		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_9mmhandgun, handgun_render);
 		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_357, pyt_render);
-		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_shotgun,new RendererBulletWeapon((WeaponGeneralBullet) DMItems.weapon_shotgun,0.08F));
+		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_shotgun,new RendererBulletWeapon((WeaponGeneric) DMItems.weapon_shotgun,0.08F));
 		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_9mmAR, ar_render);
 		MinecraftForgeClient.registerItemRenderer(DMItems.rpg, new RendererBulletWeapon(DMItems.rpg, 0.15F));
 		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_crowbar_el, new RenderItemElCrowbar());

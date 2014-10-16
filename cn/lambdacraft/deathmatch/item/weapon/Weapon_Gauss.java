@@ -33,7 +33,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  *
  */
-public class Weapon_Gauss extends WeaponGeneralBullet_LC implements ISpecialCrosshair {
+public class Weapon_Gauss extends WeaponGenericLC implements ISpecialCrosshair {
 
 	
 	public static final String 

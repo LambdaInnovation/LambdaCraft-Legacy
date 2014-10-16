@@ -20,11 +20,9 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import cn.lambdacraft.api.entity.IEntityLink;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.command.LICommandBase;
@@ -32,6 +30,7 @@ import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.EntityUtils;
 import cn.liutils.api.util.GenericUtils;
+import cn.liutils.core.entity.IEntityLink;
 
 /**
  * 你问我为什么要继承EntityLiving？这货本来可是大光圈基地的产物啊，233

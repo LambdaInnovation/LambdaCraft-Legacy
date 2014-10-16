@@ -1,6 +1,5 @@
 package cn.lambdacraft.mob.register;
 
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
@@ -9,13 +8,14 @@ import cn.lambdacraft.mob.entity.EntityBigMomoa;
 import cn.lambdacraft.mob.entity.EntityHLZombie;
 import cn.lambdacraft.mob.entity.EntityHeadcrab;
 import cn.lambdacraft.mob.entity.EntityHoundeye;
-import cn.lambdacraft.mob.entity.EntitySentry;
 import cn.lambdacraft.mob.entity.EntityMobBull;
+import cn.lambdacraft.mob.entity.EntitySentry;
 import cn.lambdacraft.mob.item.DispenserBehaviorSpawner;
 import cn.lambdacraft.mob.item.ItemBarnaclePlacer;
 import cn.lambdacraft.mob.item.ItemDNAFragment;
 import cn.lambdacraft.mob.item.ItemSentrySyncer;
-import cn.lambdacraft.mob.item.LCMobSpawner;
+import cn.liutils.api.item.LIMobSpawner;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CBCMobItems {
 
@@ -35,17 +35,17 @@ public class CBCMobItems {
 	public static DispenserBehaviorSpawner dispenserBehaviorSpawner;
 
 	public static void init(Configuration conf) {
-		weapon_snark = new LCMobSpawner();
-		headcrab0w0 = new LCMobSpawner(EntityHeadcrab.class, "headcrab").setIconName("egg5");
+		weapon_snark = new LIMobSpawner();
+		headcrab0w0 = new LIMobSpawner(EntityHeadcrab.class).setTextureName("lambdacraft:egg5");
 		barnacle = new ItemBarnaclePlacer().setTextureName("egg0");
-		zombie = new LCMobSpawner(EntityHLZombie.class, "hlzombie").setIconName("egg3");
-		turret = new LCMobSpawner(EntitySentry.class, "turret");
-		houndeye = new LCMobSpawner(EntityHoundeye.class, "houndeye").setIconName("egg1");
-		vortigaunt = new LCMobSpawner(EntityAlienSlave.class, "vortigaunt").setIconName("egg4");
+		zombie = new LIMobSpawner(EntityHLZombie.class).setTextureName("lambdacraft:egg3");
+		turret = new LIMobSpawner(EntitySentry.class);
+		houndeye = new LIMobSpawner(EntityHoundeye.class).setTextureName("lambdacraft:egg1");
+		vortigaunt = new LIMobSpawner(EntityAlienSlave.class).setTextureName("lambdacraft:egg4");
 		sentrySyncer = new ItemSentrySyncer();
 		dna = new ItemDNAFragment();
-		gonarch = new LCMobSpawner(EntityBigMomoa.class, "gonarch").setIconName("egg6");
-		mob_bull = new LCMobSpawner(EntityMobBull.class, "mob_bull").setIconName("egg7");
+		gonarch = new LIMobSpawner(EntityBigMomoa.class).setTextureName("lambdacraft:egg6");
+		mob_bull = new LIMobSpawner(EntityMobBull.class).setTextureName("lambdacraft:egg7");
 		
 		GameRegistry.registerItem(weapon_snark, "lc_snark");
 		GameRegistry.registerItem(headcrab0w0, "lc_headcrab");

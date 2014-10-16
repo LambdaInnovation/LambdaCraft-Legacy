@@ -32,7 +32,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class CBCBlocks {
 
 	public static Block weaponCrafter, blockRefined, uraniumOre, advCrafter,
-			genFire, genLava, genSolar, genMugen, wire, storageS, storageL;
+			genFire, genLava, genSolar, genInfinite, wire, storageS, storageL;
 	public static Block oreTin, oreCopper, elCrafter;
 
 	/**
@@ -49,8 +49,8 @@ public class CBCBlocks {
 		advCrafter = new BlockAdvWeaponCrafter();
 		oreTin = new BlockCBCOres(1);
 		oreCopper = new BlockCBCOres(2);
-		genMugen = new BlockElectricalBase(Material.rock).setTileType(TileGeneratorMugen.class)
-				.setBlockTextureName("genfire_side").setBlockName("mugen");
+		genInfinite = new BlockElectricalBase(Material.rock).setTileType(TileGeneratorMugen.class)
+				.setBlockTextureName("lambdacraft:infinite_gen").setBlockName("mugen");
 		wire = new BlockWire();
 		storageS = new BlockBatBox(0);
 		storageL = new BlockBatBox(1);
@@ -76,7 +76,7 @@ public class CBCBlocks {
 		GameRegistry.registerBlock(genLava, "lc_genlava");
 		GameRegistry.registerBlock(genSolar, "lc_gensolar");
 		GameRegistry.registerBlock(genFire, "lc_genfire");
-		GameRegistry.registerBlock(genMugen, "lc_genmugen");
+		GameRegistry.registerBlock(genInfinite, "lc_genmugen");
 		
 		GameRegistry.registerTileEntity(TileWeaponCrafter.class, "tile_entity_weapon_crafter");
 		GameRegistry.registerTileEntity(TileGeneratorMugen.class, "tile_entity_mugen");

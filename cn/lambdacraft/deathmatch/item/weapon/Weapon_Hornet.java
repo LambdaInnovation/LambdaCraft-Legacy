@@ -30,7 +30,7 @@ import cn.weaponmod.core.event.ItemControlHandler;
  * @author WeAthFolD.
  * 
  */
-public class Weapon_Hornet extends WeaponGeneralBullet_LC {
+public class Weapon_Hornet extends WeaponGenericLC {
 	
 	public static class HornetShoot extends ActionShoot {
 

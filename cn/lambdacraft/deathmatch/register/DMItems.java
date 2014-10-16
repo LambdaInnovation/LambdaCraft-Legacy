@@ -41,8 +41,12 @@ public class DMItems {
 	public static Weapon_Crossbow crossbow;
 	public static Weapon_Gauss gauss;
 	
-	public static ArmorHEV armorHEVBoot, armorHEVLeggings, armorHEVChestplate,
-			armorHEVHelmet;
+	public static ArmorHEV 
+		armorHEVBoot,
+		armorHEVLeggings,
+		armorHEVChestplate,
+		armorHEVHelmet;
+	
 	public static ItemAttachment attach;
 
 	public static void init(Configuration conf) {

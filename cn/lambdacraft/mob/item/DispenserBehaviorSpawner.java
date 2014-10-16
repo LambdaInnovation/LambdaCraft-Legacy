@@ -3,7 +3,6 @@
  */
 package cn.lambdacraft.mob.item;
 
-import cn.lambdacraft.mob.util.MobHelper;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorDefaultDispenseItem;
 import net.minecraft.dispenser.IBlockSource;
@@ -12,6 +11,8 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import cn.liutils.api.item.LIMobSpawner;
+import cn.liutils.api.util.MobHelper;
 
 
 /**
@@ -29,7 +30,7 @@ public class DispenserBehaviorSpawner extends BehaviorDefaultDispenseItem {
         double d0 = blockSource.getX() + enumfacing.getFrontOffsetX();
         double d1 = blockSource.getYInt() + 0.2F;
         double d2 = blockSource.getZ() + enumfacing.getFrontOffsetZ();
-        Entity entity = MobHelper.spawnCreature(blockSource.getWorld(), null, ((LCMobSpawner)stack.getItem()).getEntityClass()
+        Entity entity = MobHelper.spawnCreature(blockSource.getWorld(), null, ((LIMobSpawner)stack.getItem()).getEntityClass()
         		, d0, d1, d2);
 
         if (entity instanceof EntityLivingBase && stack.hasDisplayName())

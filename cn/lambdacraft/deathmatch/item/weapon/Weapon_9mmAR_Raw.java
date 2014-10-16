@@ -30,7 +30,7 @@ import cn.weaponmod.api.action.ActionShoot;
  * @author WeAthFolD
  *
  */
-public class Weapon_9mmAR_Raw extends WeaponGeneralBullet_LC {
+public class Weapon_9mmAR_Raw extends WeaponGenericLC {
 
 	public Weapon_9mmAR_Raw() {
 		super(CBCItems.ammo_9mm2);

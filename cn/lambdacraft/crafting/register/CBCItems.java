@@ -86,7 +86,7 @@ public class CBCItems {
 	 */
 	public static void init(Configuration conf) {
 
-		ammo_uranium = reg(Ammo_uranium.class, "lc_uranium");
+		ammo_uranium = reg(Ammo_uranium.class, "lc_uranium_ingot");
 		ammo_9mm = reg(Ammo_9mm.class, "lc_9mmammo");
 		ammo_9mm2 = reg(Ammo_9mm2.class, "lc_9mmammo2");
 		ammo_357 = reg(Ammo_357.class, "lc_357ammo");

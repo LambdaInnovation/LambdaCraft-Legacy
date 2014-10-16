@@ -14,15 +14,6 @@
  */
 package cn.lambdacraft.mob.entity;
 
-import java.util.List;
-
-import cn.lambdacraft.api.entity.IEntityLink;
-import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.mob.register.CBCMobItems;
-import cn.lambdacraft.mob.util.MobHelper;
-import cn.liutils.api.entity.LIEntityMob;
-import cn.liutils.api.util.EntityUtils;
-import cn.liutils.api.util.GenericUtils;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,11 +26,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import cn.lambdacraft.core.prop.ClientProps;
+import cn.lambdacraft.mob.register.CBCMobItems;
+import cn.liutils.api.entity.LIEntityMob;
+import cn.liutils.api.util.EntityUtils;
+import cn.liutils.api.util.GenericUtils;
+import cn.liutils.api.util.MobHelper;
+import cn.liutils.core.entity.IEntityLink;
 
 /**
  * @author WeAthFolD

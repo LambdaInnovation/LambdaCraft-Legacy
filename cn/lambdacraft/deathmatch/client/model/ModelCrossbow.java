@@ -201,7 +201,7 @@ public class ModelCrossbow extends ModelBase implements IItemModel {
 	@Override
 	public void setRotationAngles(ItemStack is, double posX, double posY,
 			double posZ, float f) {
-		if(f == 1.0F) {
+		if(f == 0.0F || f == 1.0F) {
 			Shape3.setRotationPoint(0F, 0.5F, -1F);
 			setRotation(Shape3, 0F, -0.2617994F, 0F);
 			

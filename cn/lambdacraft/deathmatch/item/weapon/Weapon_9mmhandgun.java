@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.prop.ClientProps;
+import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionAutomaticShoot;
 import cn.weaponmod.api.information.InfWeapon;
 
@@ -16,6 +17,9 @@ import cn.weaponmod.api.information.InfWeapon;
  * 
  */
 public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
+	
+	Action automaticShoot = new ActionAutomaticShoot(300, 5, 3, 5, "lambdacraft:weapons.plgun_c")
+			.setMuzzleflash(ClientProps.MUZZLEFLASH);
 
 	public Weapon_9mmhandgun() {
 		super();
@@ -23,22 +27,21 @@ public class Weapon_9mmhandgun extends Weapon_9mmhandgun_Raw {
 	
 	@Override
 	public void onItemClick(World world, EntityPlayer player, ItemStack stack, int keyid) {
-		InfWeapon inf = loadInformation(stack, player);
+		InfWeapon inf = loadInformation(player);
 		switch(keyid) {
 		case 0: //LMOUSE
 			if(!canShoot(player, stack)) {
-				inf.executeAction(player, actionJam);
+				inf.executeAction(actionJam);
 			} else {
-				inf.executeAction(player, actionShoot);
+				inf.executeAction(actionShoot);
 			}
 			break;
 		case 1:
 			//RMOUSE
-			inf.executeAction(player, new ActionAutomaticShoot(300, 7, 3, 5, "lambdacraft:weapons.plgun_c")
-				.setMuzzleflash(ClientProps.MUZZLEFLASH));
+			inf.executeAction(automaticShoot);
 			break;
 		case 2: //Reload
-			inf.executeAction(player, actionReload);
+			inf.executeAction(actionReload);
 			break;
 		default:
 			break;

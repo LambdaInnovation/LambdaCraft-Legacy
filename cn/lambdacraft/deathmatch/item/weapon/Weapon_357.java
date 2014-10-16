@@ -19,7 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  * 
  */
-public class Weapon_357 extends WeaponGeneralBullet_LC {
+public class Weapon_357 extends WeaponGenericLC {
 
 	public Weapon_357() {
 
@@ -28,10 +28,10 @@ public class Weapon_357 extends WeaponGeneralBullet_LC {
 		setIAndU("weapon_357");
 		setCreativeTab(CBCMod.cct);
 		setMaxStackSize(1);
-		setMaxDamage(7);
+		setMaxDamage(6);
 		setNoRepair();
 		
-		this.actionShoot = new ActionShoot(7, 5, "lambdacraft:weapons.pyt_shota").setShootRate(20);
+		this.actionShoot = new ActionShoot(7, 2, "lambdacraft:weapons.pyt_shota").setShootRate(20);
 		this.actionReload = new ActionReload(70, "lambdacraft:weapons.pyt_reloada", "");
 		this.actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 	}

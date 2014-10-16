@@ -16,7 +16,7 @@ import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.information.InfWeapon;
-import cn.weaponmod.api.weapon.WeaponGeneral;
+import cn.weaponmod.api.weapon.WeaponGenericBase;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

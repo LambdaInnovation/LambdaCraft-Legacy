@@ -28,7 +28,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  * 
  */
-public class Weapon_Egon extends WeaponGeneralBullet_LC implements ISpecialCrosshair {
+public class Weapon_Egon extends WeaponGenericLC implements ISpecialCrosshair {
 
 	public static String SND_WINDUP = "lambdacraft:weapons.egon_windup",
 			SND_RUN = "lambdacraft:weapons.egon_run", SND_OFF = "lambdacraft:weapons.egon_off";

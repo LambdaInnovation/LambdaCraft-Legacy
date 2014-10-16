@@ -15,7 +15,7 @@ import cn.weaponmod.api.action.ActionMultipleReload;
 import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.core.proxy.WMClientProxy;
 
-public class Weapon_Shotgun extends WeaponGeneralBullet_LC {
+public class Weapon_Shotgun extends WeaponGenericLC {
 
 	public Weapon_Shotgun() {
 
@@ -25,11 +25,11 @@ public class Weapon_Shotgun extends WeaponGeneralBullet_LC {
 		setMaxDamage(9);
 		setCreativeTab(CBCMod.cct);
 
-		actionShoot = new ActionBuckshot(2, 60, "lambdacraft:weapons.sbarrela").setShootRate(20);
+		actionShoot = new ActionBuckshot(2, 5, "lambdacraft:weapons.sbarrela").setShootRate(20);
 		actionReload = new ActionMultipleReload(15, 300).setSound("lambdacraft:weapons.reload");
 	}
 
-	private Action actionDoubleBolt = new ActionBuckshot(2, 150, "lambdacraft:weapons.sbarrelb")
+	private Action actionDoubleBolt = new ActionBuckshot(2, 13, "lambdacraft:weapons.sbarrelb")
 		.setBucks(12).setShootRate(30).setConsume(true, 2);
 	
 	@Override

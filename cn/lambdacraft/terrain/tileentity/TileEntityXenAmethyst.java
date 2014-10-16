@@ -14,14 +14,14 @@
  */
 package cn.lambdacraft.terrain.tileentity;
 
-import cn.lambdacraft.mob.util.MobHelper;
-import cn.liutils.api.util.GenericUtils;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import cn.liutils.api.util.GenericUtils;
+import cn.liutils.api.util.MobHelper;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD

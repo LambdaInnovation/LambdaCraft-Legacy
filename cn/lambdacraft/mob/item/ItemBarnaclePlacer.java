@@ -20,27 +20,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.mob.entity.EntityBarnacle;
+import cn.liutils.api.item.LIMobSpawner;
 
 /**
  * @author WeAthFolD
  *
  */
-public class ItemBarnaclePlacer extends LCMobSpawner {
+public class ItemBarnaclePlacer extends LIMobSpawner {
 
 	/**
 	 * @param par1
 	 */
 	public ItemBarnaclePlacer() {
-		super(EntityBarnacle.class, "barnacle");
-	}
-
-	/**
-	 * @param id
-	 * @param entityClass
-	 * @param name
-	 */
-	public ItemBarnaclePlacer(Class<? extends EntityLiving> entityClass, String name) {
-		super(entityClass, name);
+		super(EntityBarnacle.class);
 	}
 	
 	@Override
