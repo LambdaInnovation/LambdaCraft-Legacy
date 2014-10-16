@@ -11,6 +11,7 @@ import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
 import cn.lambdacraft.mob.entity.EntityBarnacle;
 import cn.lambdacraft.mob.entity.EntityBigMomoa;
+import cn.lambdacraft.mob.entity.EntityBullToxic;
 import cn.lambdacraft.mob.entity.EntityHLZombie;
 import cn.lambdacraft.mob.entity.EntityHeadcrab;
 import cn.lambdacraft.mob.entity.EntityBabyHeadcrab;
@@ -92,6 +93,8 @@ public class ModuleMob {
 				GeneralProps.ENT_ID_HOUNDEYE, CBCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityShockwave.class, "shockwave",
 				GeneralProps.ENT_ID_SHOCKWAVE, CBCMod.instance, 32, 3, false);
+		EntityRegistry.registerModEntity(EntityBullToxic.class, "toxic",
+				GeneralProps.ENT_ID_BULL_TOXIC, CBCMod.instance, 32, 3, false);
 		EntityRegistry.registerModEntity(EntityAlienSlave.class, "vortigaunt",
 				GeneralProps.ENT_ID_VORTIGAUNT, CBCMod.instance, 48, 3, true);
 		EntityRegistry.registerModEntity(EntityBigMomoa.class, "gonarch",
