@@ -2,7 +2,6 @@ package cn.lambdacraft.mob.entity;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -11,7 +10,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.boss.BossStatus;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
@@ -97,10 +95,6 @@ public class EntityBigMomoa extends EntityMob implements IBossDisplayData {
 		BossStatus.setBossStatus(this, true);
 		super.onUpdate();
 		this.reqSpawnChild();
-		if(rand.nextInt() % 25 == 0) {
-			// System.out.println("EXECUTED.");
-			this.breakBlock();
-		}
 	}
 	
 	protected void reqSpawnChild() {
@@ -160,30 +154,6 @@ public class EntityBigMomoa extends EntityMob implements IBossDisplayData {
 		
 	}
 	
-	private void breakBlock() {
-		double tempX = this.posX;
-		double tempY = this.posY;
-		double tempZ = this.posZ;
-		/* Breaking range is the same as attacking range: */
-		int rand1 = rand.nextInt() % (ATTACK_RANGE * 2) - ATTACK_RANGE;
-		int rand2 = rand.nextInt() % (ATTACK_RANGE * 2) - ATTACK_RANGE;
-		int rand3 = rand.nextInt() % (ATTACK_RANGE * 2) - ATTACK_RANGE;
-		Block blk;
-		this.breakBlock(worldObj, (int)tempX + rand1, (int)tempY + rand2, (int)tempZ + rand3);
-	}
-	
-	private void breakBlock(World world, int x, int y, int z){
-		if(world.getBlock(x, y, z) != Blocks.bedrock){
-			world.getBlock(x, y, z).dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
-			world.setBlockToAir(x, y, z);
-		}
-	}
-	
-	private void doNothing() {
-		System.out.println("Nothing was taken place.");
-		// Just for reading ability. Nothing else.		
-	}
-
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		this.currStat = stats.ATTACKED;

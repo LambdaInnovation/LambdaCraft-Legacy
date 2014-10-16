@@ -75,8 +75,7 @@ public class GeneralProps {
 		ENT_ID_VORTIGAUNT = 25,
 		ENT_ID_VOR_RAY = 26,
 		ENT_ID_GONARCH = 27,
-	    ENT_ID_MOB_BULL = 28,
-	    ENT_ID_BULL_TOXIC = 29;
+	    ENT_ID_MOB_BULL = 28;
 	
 	public static final String NET_CHANNEL = "lcnet";
 
@@ -98,8 +97,6 @@ public class GeneralProps {
 	 * 方块分类。
 	 */
 	public static final int CAT_GENERIC = 0;
-
-	
 
 	public static void loadProps(Configuration config) {
 		LIGeneralRegistry.loadConfigurableClass(config, GeneralProps.class);
