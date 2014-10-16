@@ -28,7 +28,7 @@ import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
 import cn.lambdacraft.core.util.EnergyUtils;
 import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.item.ItemMaterial;
-import cn.lambdacraft.crafting.recipe.RecipeCrafter;
+import cn.lambdacraft.crafting.recipe.CrafterRecipeNormal;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 
 /**
@@ -83,7 +83,7 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 			heat--;
 
 		if (iconType == CrafterIconType.NOMATERIAL
-				&& worldObj.getWorldTime() - lastTime > 20) {
+				&& worldObj.getWorldTime() - lastActionTime > 20) {
 			iconType = isCrafting ? CrafterIconType.CRAFTING
 					: CrafterIconType.NONE;
 		}
@@ -122,7 +122,7 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 		length = RecipeWeapons.getECRecipeLength(this.page);
 
 		for (int i = 0; i < length && i < 3; i++) {
-			RecipeCrafter r = RecipeWeapons.getECRecipe(this.page, i
+			CrafterRecipeNormal r = RecipeWeapons.getECRecipe(this.page, i
 					+ scrollFactor);
 			if (r == null)
 				return;
@@ -168,7 +168,7 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 	public void addScrollFactor(boolean isForward) {
 		if (!RecipeWeapons.doesECNeedScrollBar(page))
 			return;
-		List<RecipeCrafter> recipes[] = RecipeWeapons.recipeEC;
+		List<CrafterRecipeNormal> recipes[] = RecipeWeapons.recipeEC;
 		if (isForward) {
 			if (scrollFactor < recipes[page].size() - 3) {
 				scrollFactor++;
@@ -183,7 +183,7 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 
 	@Override
 	public void addPage(boolean isForward) {
-		List<RecipeCrafter> recipes[] = RecipeWeapons.recipeEC;
+		List<CrafterRecipeNormal> recipes[] = RecipeWeapons.recipeEC;
 		if (isForward) {
 			if (page < recipes.length - 1) {
 				page++;
@@ -198,7 +198,7 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 	}
 
 	@Override
-	public RecipeCrafter getRecipeBySlotAndScroll(int slot, int factor) {
+	public CrafterRecipeNormal getRecipeBySlotAndScroll(int slot, int factor) {
 		int i = 0;
 		if (slot == 0)
 			i = 0;

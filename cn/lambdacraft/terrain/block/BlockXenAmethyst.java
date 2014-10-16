@@ -34,7 +34,7 @@ public class BlockXenAmethyst extends CBCBlockContainer {
 		setHardness(1.0F);
 		this.setLightLevel(0.7F);
 		setBlockName("xenAmethyst");
-		setBlockTextureName("amethyst");
+		setBlockTextureName("lambdacraft:amethyst");
 	}
 
 	@Override

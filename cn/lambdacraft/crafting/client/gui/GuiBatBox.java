@@ -88,9 +88,10 @@ public class GuiBatBox extends GuiContainerSP {
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-
+		
 		if (te.currentEnergy > 0) {
 			int len = te.currentEnergy * 68 / te.maxStorage;
+			
 			this.drawTexturedModalRect(x + 53, y + 38, 173, 10, len, 7);
 		}
 

@@ -55,9 +55,13 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
+		
+		this.markDirty();
 		if (worldObj.isRemote)
 			return;
 
+		System.out.println(currentEnergy);
+		
 		// emit the energy frequently
 		int amt = Math.min(32, currentEnergy);
 		amt -= this.sendEnergy(amt);
@@ -83,6 +87,8 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 						false);
 			}
 		}
+		
+		
 
 	}
 
@@ -123,6 +129,7 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 		this.currentEnergy += amount;
 		if (currentEnergy > maxStorage) 
 			currentEnergy = maxStorage;
+		
 		return 0;
 	}
 

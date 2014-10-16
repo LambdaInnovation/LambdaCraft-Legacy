@@ -18,8 +18,8 @@ import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergyTile;
 import net.minecraftforge.common.MinecraftForge;
-import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
 import cn.lambdacraft.core.CBCMod;
+import cn.liutils.api.energy.event.EnergyTileSourceEvent;
 
 /**
  * @author WeAthFolD
@@ -37,9 +37,9 @@ public abstract class TileElectrical extends CBCTileEntity implements IEnergyTil
 	public void updateEntity() {
 		super.updateEntity();
 		if (!this.addedToNet) {
-			this.addedToNet = true;
 			if(!worldObj.isRemote) //executes event only on server side
 				this.onElectricTileLoad();
+			this.addedToNet = true;
 		}
 	}
 	
@@ -50,7 +50,7 @@ public abstract class TileElectrical extends CBCTileEntity implements IEnergyTil
 	@Override
 	public void onTileUnload() {
 		super.onTileUnload();
-	    if ((CBCMod.proxy.isSimulating()) && (this.addedToNet)) 
+	    if (!worldObj.isRemote && (this.addedToNet)) 
 	        MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
 		this.addedToNet = false;
 	}

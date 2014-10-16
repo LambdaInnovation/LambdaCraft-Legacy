@@ -98,13 +98,14 @@ public class GuiWeaponCrafter extends GuiContainerSP {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glColor3f(1.0F, 1.0F, 1.0F);
-		String storage = StatCollector
-				.translateToLocal("gui.crafter_storage.name");
-		String currentPage = StatCollector.translateToLocal(RecipeWeapons
-				.getDescription(te.page));
-		this.fontRendererObj.drawString(storage, 8, 88, 4210752);
-		fontRendererObj.drawString(currentPage,
-				100 - fontRendererObj.getStringWidth(currentPage) / 2, 1, 4210752);
+		
+		//Text draw
+		String storage = StatCollector.translateToLocal("gui.crafter_storage.name"),
+			   currentPage = StatCollector.translateToLocal(RecipeWeapons.getDescription(te.page));
+		
+		this.fontRendererObj.drawString(storage, 8, 88, 0x3a3531);
+		fontRendererObj.drawString(currentPage, 100 - fontRendererObj.getStringWidth(currentPage) / 2, 1, 0x3a3531);
+		
 		super.drawGuiContainerForegroundLayer(par1, par2);
 	}
 
@@ -112,13 +113,17 @@ public class GuiWeaponCrafter extends GuiContainerSP {
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
 		if (!this.te.isLoad)
 			return;
+		
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderUtils.loadTexture(ClientProps.GUI_WEAPONCRAFTER_PATH);
+		HudUtils.setTextureResolution(256, 256);
+		HudUtils.setZLevel(zLevel);
+		
 		int x = (width - xSize) / 2;
 		int y = (height - ySize) / 2;
-		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-		HudUtils.setTextureResolution(256, 256);
-		this.drawElements(i, j);
+		
+		HudUtils.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+		
 		int dy = 0;
 		if (te.iconType == CrafterIconType.NOMATERIAL)
 			dy = 60;
@@ -145,6 +150,8 @@ public class GuiWeaponCrafter extends GuiContainerSP {
 				drawTexturedModalRect(x + 156, y + 78 - height, 211,
 						101 - height, 16, height);
 		}
+		
+		this.drawElements(i, j);
 	}
 
 	// top 1, bottom -1, neither 0

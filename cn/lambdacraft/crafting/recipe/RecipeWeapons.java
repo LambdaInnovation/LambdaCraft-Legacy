@@ -22,169 +22,39 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.item.ItemStack;
 
 public class RecipeWeapons {
-
-	public static List<RecipeCrafter> recipes[];
-	public static List<RecipeCrafter> advancedRecipes[];
-	public static List<RecipeCrafter> recipeEC[];
-
-	public static List<String> pageDescriptions = new ArrayList();
-	private static boolean finished = false;
-
-	public static String getDescription(int page) {
-		return pageDescriptions.get(page);
-	}
-
-	public static void InitializeRecipes(int pages, String[] ds) {
-		if (getRecipePages() > 0)
-			throw new WrongUsageException("Recipes already loaded");
-		if (pages != ds.length)
-			throw new WrongUsageException(
-					"size does not match for adding recipe", pages);
-
-		Collections.addAll(pageDescriptions, ds);
-		recipes = new ArrayList[pages];
-		advancedRecipes = new ArrayList[pages];
-		for (int i = 0; i < pages; i++) {
-			recipes[i] = new ArrayList<RecipeCrafter>();
-			advancedRecipes[i] = new ArrayList<RecipeCrafter>();
-		}
-	}
-
-	public static void initliazeECRecipes(int pages, String[] additional) {
-		if (getRecipePages() == 0)
-			throw new WrongUsageException(
-					"Recipes not loaded while trying to load the EC recipes");
-		if (pages != additional.length)
-			throw new WrongUsageException(
-					"size does not match for adding recipe", pages);
-		recipeEC = new ArrayList[pages + pageDescriptions.size()];
-		for (int i = 0; i < recipeEC.length; i++)
-			recipeEC[i] = new ArrayList();
-		Collections.addAll(pageDescriptions, additional);
-
-	}
-
-	public static void close() {
-		finished = true;
-	}
-
-	public static void addNormalRecipe(int page, RecipeCrafter... entry) {
-		if (finished)
-			throw new RuntimeException(
-					"Trying to add a weapon recipe while finished initializing");
-		for (RecipeCrafter e : entry) {
-			recipes[page].add(e);
-			recipeEC[page].add(e);
-		}
-	}
-
-	public static void addAdvancedRecipe(int page, RecipeCrafter... entry) {
-		if (finished)
-			throw new RuntimeException(
-					"Trying to add a weapon recipe while finished initializing");
-		for (RecipeCrafter e : entry) {
-			advancedRecipes[page].add(e);
-			recipeEC[page].add(e);
-		}
-	}
-
 	/*
-	 * 页面数是绝对页面数。
+	 * 加入规则：
+	 * index大的一定拥有index小的recipe
 	 */
-	public static void addECSpecificRecipe(int page, RecipeCrafter... entry) {
-		if (finished)
-			throw new RuntimeException(
-					"Trying to add a EC weapon recipe while finished initializing");
-		for (RecipeCrafter e : entry) {
-			recipeEC[page].add(e);
+	
+	public static final int
+		ID_NORMAL_CRAFTER = 0,
+		ID_ADVANCED_CRAFTER = 1,
+		ID_ELECTRIC_CRAFTER = 2;
+	
+	private static final String
+		PAGE_DESCRIPTIONS[] = {
+			"crafter.weapon",
+			"crafter.ammo",
+			"crafter.equipments"
+		};
+		
+	private static List<MachineRecipes> machineList = new ArrayList<MachineRecipes>();
+	static {
+		machineList.add(new MachineRecipes(2, PAGE_DESCRIPTIONS));
+		machineList.add(new MachineRecipes(2, PAGE_DESCRIPTIONS));
+		machineList.add(new MachineRecipes(3, PAGE_DESCRIPTIONS));
+	}
+	
+	public static void addRecipe(int mid, int pid, ICrafterRecipe... recipes) {
+		for(int i = mid; i >= 0; --i) {
+			MachineRecipes machine = machineList.get(mid);
+			machine.insertRecipe(pid, recipes);
 		}
 	}
-
-	public static boolean doesNeedScrollBar(int page) {
-		return recipes[page].size() > 3;
+	
+	public static MachineRecipes getMachineRecipes(int machineID) {
+		return machineList.get(machineID);
 	}
-
-	public static boolean doesAdvNeedScrollBar(int page) {
-		return advancedRecipes[page].size() > 3;
-	}
-
-	public static boolean doesECNeedScrollBar(int page) {
-		return recipeEC[page].size() > 3;
-	}
-
-	public static RecipeCrafter getRecipe(int page, ItemStack is) {
-		if (is == null)
-			return null;
-
-		for (RecipeCrafter r : recipes[page]) {
-			if (is.getItem() == r.output.getItem())
-				return r;
-		}
-		return null;
-	}
-
-	public static RecipeCrafter getAdvancedRecipe(int page, ItemStack is) {
-		if (is == null)
-			return null;
-
-		for (RecipeCrafter r : advancedRecipes[page]) {
-			if (is.getItem() == r.output.getItem())
-				return r;
-		}
-		return null;
-	}
-
-	public static RecipeCrafter getECRecipe(int page, ItemStack is) {
-		if (is == null)
-			return null;
-
-		for (RecipeCrafter r : recipeEC[page]) {
-			if (is.getItem() == r.output.getItem())
-				return r;
-		}
-		return null;
-	}
-
-	public static int getRecipeLength(int page) {
-		return recipes[page].size();
-	}
-
-	public static int getAdvRecipeLength(int page) {
-		return advancedRecipes[page].size();
-	}
-
-	public static int getECRecipeLength(int page) {
-		return recipeEC[page].size();
-	}
-
-	public static int getRecipePages() {
-		return recipes != null ? recipes.length : 0;
-	}
-
-	public static int getAdvRecipePages() {
-		return advancedRecipes != null ? advancedRecipes.length : 0;
-	}
-
-	public static int getECRecipePages() {
-		return recipeEC != null ? recipeEC.length : 0;
-	}
-
-	public static RecipeCrafter getRecipe(int page, int i) {
-		if (recipes[page].size() < i + 1)
-			return null;
-		return recipes[page].get(i);
-	}
-
-	public static RecipeCrafter getAdvRecipe(int page, int i) {
-		if (advancedRecipes[page].size() < i + 1)
-			return null;
-		return advancedRecipes[page].get(i);
-	}
-
-	public static RecipeCrafter getECRecipe(int page, int i) {
-		if (recipeEC[page].size() < i + 1)
-			return null;
-		return recipeEC[page].get(i);
-	}
-
+	
 }

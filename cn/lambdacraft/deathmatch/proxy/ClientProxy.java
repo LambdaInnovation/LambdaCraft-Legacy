@@ -73,32 +73,6 @@ public class ClientProxy extends Proxy {
 
 	public static ClientTickHandler cth;
 
-	public final static String SOUND_WEAPONS[] = {
-
-			"hgrenadepin", "hgrenadebounce", "plgun_c", "nmmclipa", "explode_a",
-			"explode_b", "g_bounceb", "gunjam_a", "hksa", "hksb", "hksc",
-			"nmmarr", "pyt_shota", "pyt_shotb", "pyt_cocka", "pyt_reloada",
-			"sbarrela", "sbarrela_a", "sbarrelb", "sbarrelb_a", "scocka",
-			"cbar_hita", "cbar_hitb", "cbar_hitboda", "cbar_hitbodb",
-			"cbar_hitbodc", "reloada", "reloadb", "reloadc", "gaussb",
-			"gauss_charge", "gauss_windupa", "gauss_windupb", "gauss_windupc",
-			"gauss_windupd", "rocketfirea", "xbow_fire", "xbow_reload",
-			"egon_run", "egon_windup", "egon_off", "rocket", "rocketfire",
-			"glauncher", "glauncherb", "ag_firea", "ag_fireb", "ag_firec",
-			"mine_activate"
-
-	};
-
-	public static final String SND_ENTITIES[] = { "medkit", "battery",
-			"suitcharge", "suitchargeno", "suitchargeok", "medshot",
-			"medshotno", "medcharge" };
-	
-	public static final String SND_HEV[] = {
-		"hev_logon", "health_critical",
-		"health_dropping", "heat_damage", "hev_shutdown", "major_fracture",
-		"morphine_shot", "radiation_detected"
-	};
-
 	
 	@Override
 	public void preInit() {

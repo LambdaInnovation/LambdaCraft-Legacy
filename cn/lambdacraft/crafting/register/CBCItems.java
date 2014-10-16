@@ -46,6 +46,7 @@ import cn.lambdacraft.deathmatch.item.ammos.ItemAmmo;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.lambdacraft.mob.register.CBCMobItems;
+import cn.lambdacraft.terrain.register.XenBlocks;
 //import cn.lambdacraft.terrain.register.XenBlocks;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -191,11 +192,11 @@ public class CBCItems {
 
 		Object input[][] = {
 				{ "ABA", "AAA", 'A', "ingotTin", 'B', iSglass },
-				{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSblockRedstone, 'C', "blockRefinedIron", 'D', iSfurnace, 'E', iSchest },
-				{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSdiamond, 'C', iSweaponCrafter, 'D', "ingotCopper", 'E', "blockRefinedIron" },
+				//{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSblockRedstone, 'C', "blockRefinedIron", 'D', iSfurnace, 'E', iSchest },
+				//{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSdiamond, 'C', iSweaponCrafter, 'D', "ingotCopper", 'E', "blockRefinedIron" },
 				{ "ABA", "ABA", "ABA", 'A', Blocks.wool, 'B', "ingotCopper" },
 				{ "ABA", "CDC", "AEA", 'A', iSlightStoneDust, 'B', iSemerald, 'C', iSdiamond, 'D', iSchip, 'E', iSglass },
-				{ "ABA", "CDC", "EAE", 'A', iSglass, 'B', iSwire, 'C', iSlambdaChip, 'D', iSadvCrafter, 'E', iSlightStoneDust },
+				//{ "ABA", "CDC", "EAE", 'A', iSglass, 'B', iSwire, 'C', iSlambdaChip, 'D', iSadvCrafter, 'E', iSlightStoneDust },
 				{ "ABA", "ACA", "ACA", 'A', "ingotTin", 'B', iSwire, 'C', iSlightStoneDust },
 				{ "AAA", "BCB", "DED", 'A', iSglass, 'B', battery, 'C', iSredstone, 'D', iSchip, 'E', "blockRefinedIron" },
 				{ "ABA", "CDC", "ABA", 'A', iSwire, 'B', iSnetherQuartz, 'C', iSredstone, 'D', "ingotRefinedIron" },
@@ -203,7 +204,7 @@ public class CBCItems {
 				{ "AAA", "CDC", "BEB", 'A', iSglass, 'B', iSlambdaChip, 'C', battery, 'D', "blockMFSU", 'E', "blockRefinedIron" },
 				{ "AAA", "AAA", "AAA", 'A', "ingotRefinedIron" } ,
 				{"A  ", "A  ", 'A', "ingotRefinedIron"},
-				//{ "ABA", "CDC", "AEA", 'A', iSglass, 'B', iSdiamond, 'C', "blockMFSU", 'D', iSlambdaChip, 'E', iSemerald},
+				{ "ABA", "CDC", "AEA", 'A', iSglass, 'B', iSdiamond, 'C', "blockMFSU", 'D', iSlambdaChip, 'E', iSemerald},
 				{" A ", "BCB", 'A', iSglass, 'B', iSwire, 'C', iSchip},
 				{" AA", "ABA", "ABA", 'A', "ingotCopper", 'B', iSredstone},
 				{" AA", "ABA", "ABA", 'A', "ingotTin", 'B', iSredstone},
@@ -212,11 +213,11 @@ public class CBCItems {
 
 		ItemStack output[] = { 
 				materials.newStack(10, EnumMaterial.BOX),
-				iSweaponCrafter,
-				iSadvCrafter, 
+				//iSweaponCrafter,
+				//iSadvCrafter, 
 				new ItemStack(CBCBlocks.wire, 6),
 				new ItemStack(lambdaChip, 2),
-				iSelectricCrafter, 
+				//iSelectricCrafter, 
 				iSbattery,
 				iSstorageS, 
 				iSchip,
@@ -224,7 +225,7 @@ public class CBCItems {
 				new ItemStack(DMBlocks.armorCharger),
 				new ItemStack(CBCBlocks.blockRefined),
 				new ItemStack(CBCItems.ironBar, 5),
-				//new ItemStack(XenBlocks.xenPortal),
+				new ItemStack(XenBlocks.xenPortal),
 				new ItemStack(CBCMobItems.sentrySyncer, 2),
 				new ItemStack(spray1),
 				new ItemStack(spray2),
