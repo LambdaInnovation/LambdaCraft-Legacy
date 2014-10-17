@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.block.container;
+package cn.lambdacraft.crafting.block.generator;
 
 import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +21,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import cn.lambdacraft.crafting.block.tile.TileBatBox;
 import cn.lambdacraft.deathmatch.block.container.SlotElectricItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,17 +29,17 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  * 
  */
-public class ContainerBatBox extends Container {
+public class ContainerGenerator extends Container {
 
 	// 0:fuel 1:charge
-	TileBatBox te;
+	TileGeneratorFire te;
 
-	public ContainerBatBox(TileBatBox ent, InventoryPlayer player) {
+	public ContainerGenerator(TileGeneratorFire ent, InventoryPlayer player) {
 		te = ent;
 		// 燃料槽
-		addSlotToContainer(new Slot(ent, 0, 80, 53));
+		addSlotToContainer(new Slot(ent, 0, 108, 34));
 		// 充电槽
-		addSlotToContainer(new SlotElectricItem(ent, 1, 132, 30));
+		addSlotToContainer(new SlotElectricItem(ent, 1, 133, 34));
 		bindPlayerInventory(player);
 	}
 
@@ -61,7 +60,9 @@ public class ContainerBatBox extends Container {
 		super.detectAndSendChanges();
 		for (int i = 0; i < this.crafters.size(); ++i) {
 			ICrafting icrafting = (ICrafting) this.crafters.get(i);
-			icrafting.sendProgressBarUpdate(this, 0, te.currentEnergy / 6);
+			icrafting.sendProgressBarUpdate(this, 0, te.currentEnergy);
+			icrafting.sendProgressBarUpdate(this, 1, te.tickLeft);
+			icrafting.sendProgressBarUpdate(this, 2, te.maxBurnTime);
 		}
 	}
 
@@ -69,8 +70,12 @@ public class ContainerBatBox extends Container {
 	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int par1, int par2) {
 		super.updateProgressBar(par1, par2);
-		if (par1 == 0)
-			te.currentEnergy = par2 * 6;
+		if (par1 == 0) {
+			te.currentEnergy = par2;
+		} else if (par1 == 1) {
+			te.tickLeft = par2;
+		} else
+			te.maxBurnTime = par2;
 	}
 
 	@Override
@@ -90,7 +95,7 @@ public class ContainerBatBox extends Container {
 			// 将玩家物品栏中的物品放到TileEntity中
 			if (slot >= 2) {
 				if (stackInSlot.getItem() instanceof ISpecialElectricItem) {
-					if (!this.mergeItemStack(stackInSlot, 0, 2, true)) {
+					if (!this.mergeItemStack(stackInSlot, 1, 2, true)) {
 						return null;
 					}
 				} else if (!this.mergeItemStack(stackInSlot, 0, 1, true)) {
@@ -99,7 +104,7 @@ public class ContainerBatBox extends Container {
 			}
 			// 将TileEntity中的物品放到玩家物品栏中
 			else {
-				if (!this.mergeItemStack(stackInSlot, 2, 37, false))
+				if (!this.mergeItemStack(stackInSlot, 2, 33, false))
 					return null;
 			}
 
@@ -116,5 +121,4 @@ public class ContainerBatBox extends Container {
 		}
 		return stack;
 	}
-
 }

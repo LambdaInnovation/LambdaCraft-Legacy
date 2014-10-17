@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.block;
+package cn.lambdacraft.crafting.block.electric;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -26,7 +26,6 @@ import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.block.BlockElectricalBase;
 import cn.lambdacraft.core.prop.GeneralProps;
-import cn.lambdacraft.crafting.block.tile.TileBatBox;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

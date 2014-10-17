@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.client.gui;
+package cn.lambdacraft.crafting.block.crafter;
 
 import java.util.Set;
 
@@ -24,8 +24,6 @@ import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.crafting.block.container.ContainerElCrafter;
-import cn.lambdacraft.crafting.block.tile.TileElCrafter;
 import cn.lambdacraft.crafting.network.MsgCrafterClient;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.client.gui.GuiContainerSP;
@@ -84,7 +82,7 @@ public class GuiElectricCrafter extends GuiContainerSP {
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		String currentPage = StatCollector.translateToLocal(RecipeWeapons
-				.getDescription(tileEntity.page));
+				.getPageDescription(tileEntity.currentPage));
 		fontRendererObj.drawString(currentPage,
 				85 - fontRendererObj.getStringWidth(currentPage) / 2, 3, 0xff9843);
 		super.drawGuiContainerForegroundLayer(par1, par2);

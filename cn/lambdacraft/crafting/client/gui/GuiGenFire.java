@@ -23,8 +23,8 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.crafting.block.container.ContainerGenerator;
-import cn.lambdacraft.crafting.block.tile.TileGeneratorFire;
+import cn.lambdacraft.crafting.block.generator.ContainerGenerator;
+import cn.lambdacraft.crafting.block.generator.TileGeneratorFire;
 import cn.lambdacraft.crafting.register.CBCBlocks;
 import cn.liutils.api.client.gui.GuiContainerSP;
 import cn.liutils.api.client.gui.IGuiTip;

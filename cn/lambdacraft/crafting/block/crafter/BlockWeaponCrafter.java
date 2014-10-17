@@ -1,4 +1,4 @@
-package cn.lambdacraft.crafting.block;
+package cn.lambdacraft.crafting.block.crafter;
 
 import java.util.Random;
 
@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.block.CBCBlockContainer;
 import cn.lambdacraft.core.prop.GeneralProps;
-import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

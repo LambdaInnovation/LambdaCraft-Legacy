@@ -12,10 +12,12 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.block.container;
+package cn.lambdacraft.crafting.block.crafter;
 
-import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
-import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
+import cn.lambdacraft.crafting.block.SlotLocked;
+import cn.lambdacraft.crafting.block.SlotOutput;
+import cn.lambdacraft.crafting.block.SlotResult;
+import cn.lambdacraft.crafting.block.crafter.BlockWeaponCrafter.CrafterIconType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -32,8 +34,11 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class ContainerWeaponCrafter extends Container {
 
-	public TileWeaponCrafter tileEntity;
-	public int scrollFactor;
+	public final TileWeaponCrafter tileEntity;
+	
+	public ContainerWeaponCrafter(TileWeaponCrafter te) {
+		this.tileEntity = te;
+	}
 
 	public ContainerWeaponCrafter(InventoryPlayer inventoryPlayer,
 			TileWeaponCrafter te) {
@@ -41,11 +46,6 @@ public class ContainerWeaponCrafter extends Container {
 
 		addSlots(te);
 		bindPlayerInventory(inventoryPlayer);
-		scrollFactor = te.scrollFactor;
-	}
-
-	public ContainerWeaponCrafter(TileWeaponCrafter te) {
-		this.tileEntity = te;
 	}
 
 	protected void addSlots(TileWeaponCrafter te) {
@@ -90,11 +90,11 @@ public class ContainerWeaponCrafter extends Container {
 		super.detectAndSendChanges();
 		for (int i = 0; i < this.crafters.size(); ++i) {
 			ICrafting icrafting = (ICrafting) this.crafters.get(i);
-			icrafting.sendProgressBarUpdate(this, 0, tileEntity.page);
+			icrafting.sendProgressBarUpdate(this, 0, tileEntity.currentPage);
 			icrafting.sendProgressBarUpdate(this, 1, tileEntity.iconType.ordinal());
 			icrafting.sendProgressBarUpdate(this, 2, tileEntity.heat);
 			if(tileEntity.currentRecipe != null)
-				icrafting.sendProgressBarUpdate(this, 3, tileEntity.currentRecipe.heatRequired);
+				icrafting.sendProgressBarUpdate(this, 3, tileEntity.currentRecipe.getHeatConsumed());
 			else icrafting.sendProgressBarUpdate(this, 3, 0);
 			icrafting.sendProgressBarUpdate(this, 4, tileEntity.maxBurnTime);
 			icrafting.sendProgressBarUpdate(this, 5, tileEntity.burnTimeLeft);
@@ -105,7 +105,7 @@ public class ContainerWeaponCrafter extends Container {
 	@Override
 	public void updateProgressBar(int par1, int par2) {
 		if (par1 == 0) {
-			tileEntity.page = Math.abs(par2);
+			tileEntity.currentPage = Math.abs(par2);
 		} else if (par1 == 1) {
 			tileEntity.iconType = CrafterIconType.values()[par2];
 		} else if (par1 == 2) {

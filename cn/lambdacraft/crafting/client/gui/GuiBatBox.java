@@ -23,8 +23,8 @@ import net.minecraft.util.StatCollector;
 import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.crafting.block.container.ContainerBatBox;
-import cn.lambdacraft.crafting.block.tile.TileBatBox;
+import cn.lambdacraft.crafting.block.electric.ContainerBatBox;
+import cn.lambdacraft.crafting.block.electric.TileBatBox;
 import cn.liutils.api.client.gui.GuiContainerSP;
 import cn.liutils.api.client.gui.IGuiTip;
 import cn.liutils.api.client.gui.part.LIGuiPart;

@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.block.container;
+package cn.lambdacraft.crafting.block.generator;
 
 import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +21,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import cn.lambdacraft.crafting.block.tile.TileGeneratorLava;
 import cn.lambdacraft.deathmatch.block.container.SlotElectricItem;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -30,17 +29,14 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  * 
  */
-public class ContainerGeneratorLava extends Container {
+public class ContainerGeneratorSolar extends Container {
 
-	// 0:fuel 1:charge
-	TileGeneratorLava te;
+	TileGeneratorSolar te;
 
-	public ContainerGeneratorLava(TileGeneratorLava ent, InventoryPlayer player) {
+	public ContainerGeneratorSolar(TileGeneratorSolar ent,
+			InventoryPlayer player) {
 		te = ent;
-		// 燃料槽
-		addSlotToContainer(new Slot(ent, 0, 71, 50));
-		// 充电槽
-		addSlotToContainer(new SlotElectricItem(ent, 1, 71, 17));
+		addSlotToContainer(new SlotElectricItem(ent, 0, 129, 48));
 		bindPlayerInventory(player);
 	}
 
@@ -48,11 +44,11 @@ public class ContainerGeneratorLava extends Container {
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 9; j++) {
 				addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-						6 + j * 18, 84 + i * 18));
+						5 + j * 18, 84 + i * 18));
 			}
 		}
 		for (int i = 0; i < 9; i++) {
-			addSlotToContainer(new Slot(inventoryPlayer, i, 6 + i * 18, 142));
+			addSlotToContainer(new Slot(inventoryPlayer, i, 5 + i * 18, 142));
 		}
 	}
 
@@ -61,8 +57,8 @@ public class ContainerGeneratorLava extends Container {
 		super.detectAndSendChanges();
 		for (int i = 0; i < this.crafters.size(); ++i) {
 			ICrafting icrafting = (ICrafting) this.crafters.get(i);
-			icrafting.sendProgressBarUpdate(this, 0, te.bucketCnt);
-			icrafting.sendProgressBarUpdate(this, 1, te.currentEnergy);
+			icrafting.sendProgressBarUpdate(this, 0, te.currentEnergy
+					* (te.isEmitting ? 1 : -1));
 		}
 	}
 
@@ -71,9 +67,8 @@ public class ContainerGeneratorLava extends Container {
 	public void updateProgressBar(int par1, int par2) {
 		super.updateProgressBar(par1, par2);
 		if (par1 == 0) {
-			te.bucketCnt = par2;
-		} else if (par1 == 1) {
-			te.currentEnergy = par2;
+			te.currentEnergy = Math.abs(par2);
+			te.isEmitting = par2 > 0;
 		}
 	}
 
@@ -92,18 +87,16 @@ public class ContainerGeneratorLava extends Container {
 			stack = stackInSlot.copy();
 
 			// 将玩家物品栏中的物品放到TileEntity中
-			if (slot >= 2) {
-				if (stackInSlot.getItem() instanceof ISpecialElectricItem) {
-					if (!this.mergeItemStack(stackInSlot, 1, 2, true)) {
-						return null;
-					}
-				} else if (!this.mergeItemStack(stackInSlot, 0, 1, true)) {
+			if (slot >= 1) {
+				if (!(stackInSlot.getItem() instanceof ISpecialElectricItem))
+					return null;
+				if (!this.mergeItemStack(stackInSlot, 0, 1, true)) {
 					return null;
 				}
 			}
 			// 将TileEntity中的物品放到玩家物品栏中
 			else {
-				if (!this.mergeItemStack(stackInSlot, 2, 33, false))
+				if (!this.mergeItemStack(stackInSlot, 1, 32, false))
 					return null;
 			}
 

@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.client.gui;
+package cn.lambdacraft.crafting.block.crafter;
 
 import java.util.Set;
 
@@ -24,9 +24,7 @@ import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
-import cn.lambdacraft.crafting.block.container.ContainerWeaponCrafter;
-import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
+import cn.lambdacraft.crafting.block.crafter.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.network.MsgCrafterClient;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.client.gui.GuiContainerSP;
@@ -101,7 +99,7 @@ public class GuiWeaponCrafter extends GuiContainerSP {
 		
 		//Text draw
 		String storage = StatCollector.translateToLocal("gui.crafter_storage.name"),
-			   currentPage = StatCollector.translateToLocal(RecipeWeapons.getDescription(te.page));
+			   currentPage = StatCollector.translateToLocal(RecipeWeapons.getPageDescription(te.currentPage));
 		
 		this.fontRendererObj.drawString(storage, 8, 88, 0x3a3531);
 		fontRendererObj.drawString(currentPage, 100 - fontRendererObj.getStringWidth(currentPage) / 2, 1, 0x3a3531);
@@ -111,7 +109,7 @@ public class GuiWeaponCrafter extends GuiContainerSP {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-		if (!this.te.isLoad)
+		if (!this.te.isLoaded)
 			return;
 		
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -140,7 +138,7 @@ public class GuiWeaponCrafter extends GuiContainerSP {
 		}
 		if (te.heatRequired > 0) {
 			if (te.currentRecipe != null) {
-				height = te.currentRecipe.heatRequired * 64 / te.maxHeat;
+				height = te.currentRecipe.getHeatConsumed() * 64 / te.maxHeat;
 				drawTexturedModalRect(x + 173, y + 77 - height, 201, 1, 6, 3);
 			}
 		}
@@ -152,15 +150,6 @@ public class GuiWeaponCrafter extends GuiContainerSP {
 		}
 		
 		this.drawElements(i, j);
-	}
-
-	// top 1, bottom -1, neither 0
-	public int isAtTopOrBottom() {
-		if (te.scrollFactor == RecipeWeapons.getRecipeLength(te.page) - 3)
-			return -1;
-		if (te.scrollFactor == 0)
-			return 1;
-		return 0;
 	}
 
 	@Override

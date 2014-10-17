@@ -57,4 +57,8 @@ public class RecipeWeapons {
 		return machineList.get(machineID);
 	}
 	
+	public static String getPageDescription(int page) {
+		return PAGE_DESCRIPTIONS[page];
+	}
+	
 }

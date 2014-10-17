@@ -16,7 +16,7 @@ package cn.lambdacraft.crafting.proxy;
 
 import net.minecraftforge.client.MinecraftForgeClient;
 import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.crafting.block.tile.TileWire;
+import cn.lambdacraft.crafting.block.electric.TileWire;
 import cn.lambdacraft.crafting.client.renderer.RenderSpray;
 import cn.lambdacraft.crafting.client.renderer.RenderWire;
 import cn.lambdacraft.crafting.entity.EntitySpray;

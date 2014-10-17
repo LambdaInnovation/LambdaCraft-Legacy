@@ -12,9 +12,9 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.block.container;
+package cn.lambdacraft.crafting.block;
 
-import cn.lambdacraft.crafting.block.tile.TileWeaponCrafter;
+import cn.lambdacraft.crafting.block.crafter.TileWeaponCrafter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

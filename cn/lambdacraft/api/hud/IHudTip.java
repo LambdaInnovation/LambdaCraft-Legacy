@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
 /**
- * 实现它以提供一个武器有头戴显示提示。
+ * 实现它以提供一个武器头戴显示提示。
  * @see cn.lambdacraft.deathmatch.item.ArmorHEV
  * @author WeAthFolD
  *

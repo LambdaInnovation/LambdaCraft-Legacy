@@ -39,7 +39,9 @@ public class TileEntityXenAmethyst extends TileEntity {
     @Override
 	public void updateEntity() {
     	if(++ticksSinceLastAtack > 40) {
-    		Entity e = MobHelper.getNearestTargetWithinAABB(worldObj, xCoord + 0.5, yCoord - 3.0, zCoord + 0.5, 5.0F, GenericUtils.selectorLiving);
+    		Entity e = MobHelper.getNearestTargetWithinAABB(worldObj, 
+    				xCoord + 0.5, yCoord - 3.0, zCoord + 0.5, 5.0F,
+    				GenericUtils.selectorLiving);
     		if(e != null) {
     			ticksSinceLastAtack = 0;
     			e.attackEntityFrom(DamageSource.generic, 2);

@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.block.tile;
+package cn.lambdacraft.crafting.block.electric;
 
 import ic2.api.energy.tile.IEnergySink;
 import ic2.api.item.ISpecialElectricItem;
@@ -24,6 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.core.util.EnergyUtils;
+import cn.lambdacraft.crafting.block.generator.TileGeneratorBase;
 import cn.lambdacraft.crafting.register.CBCBlocks;
 
 /**

@@ -19,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 /**
+ * 电力方块的基类。
  * @author WeAthFolD
  * 
  */
@@ -26,27 +27,21 @@ public class BlockElectricalBase extends CBCBlockContainer {
 
 	private Class<? extends TileEntity> generatorType;
 
-	/**
-	 * @param par1
-	 * @param mat
-	 */
 	public BlockElectricalBase(Material mat) {
 		super(mat);
 		this.setHardness(2.0F);
 	}
 
+	/**
+	 * 设置生成的TileEntity类型（反射大法好~）
+	 * @param type
+	 * @return
+	 */
 	public BlockElectricalBase setTileType(Class<? extends TileEntity> type) {
 		this.generatorType = type;
 		return this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * net.minecraft.block.ITileEntityProvider#createNewTileEntity(net.minecraft
-	 * .world.World)
-	 */
 	@Override
 	public TileEntity createNewTileEntity(World world, int var2) {
 		try {

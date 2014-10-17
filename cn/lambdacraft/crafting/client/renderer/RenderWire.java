@@ -24,7 +24,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.crafting.block.tile.TileWire;
+import cn.lambdacraft.crafting.block.electric.TileWire;
 import cn.liutils.api.client.util.RenderUtils;
 
 /**

@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.block.tile;
+package cn.lambdacraft.crafting.block.generator;
 
 import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,23 +21,24 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityFurnace;
 
 /**
  * @author WeAthFolD, Rikka
  * 
  */
-public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
+public class TileGeneratorFire extends TileGeneratorBase implements IInventory {
 
-	public static final int ENERGY_PER_BUCKET = 20000;
 	public ItemStack[] slots = new ItemStack[2];
-	public int bucketCnt = 0;
+	public boolean isBurning = false;
+	public int tickLeft = 0, maxBurnTime = 0;
 
 	/**
 	 * @param tier
 	 * @param store
 	 */
-	public TileGeneratorLava() {
-		super(1, 20);
+	public TileGeneratorFire() {
+		super(1, 5000);
 	}
 
 	@Override
@@ -45,34 +46,71 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 		super.updateEntity();
 		if (worldObj.isRemote)
 			return;
-		tryBurn();
-		if (currentEnergy > 0) {
-			if (this.slots[1] != null
-					&& slots[1].getItem() instanceof ISpecialElectricItem) {
-				currentEnergy -= ((ISpecialElectricItem) slots[1].getItem()).getManager(slots[1]).charge(slots[1], currentEnergy, 1, false, false);
-			}
-			int toConsume = 10 - sendEnergy(currentEnergy > 10 ? 10 : currentEnergy);
-			currentEnergy -= toConsume;
+
+		if (isBurning) {
+			tickLeft--;
+			currentEnergy += this.sendEnergy(5);
+			if (currentEnergy > maxStorage)
+				currentEnergy = maxStorage;
+			if (tickLeft <= 0)
+				isBurning = false;
 		} else {
-			if (bucketCnt-- > 0)
-				currentEnergy += ENERGY_PER_BUCKET;
-			else {
-				bucketCnt = 0;
-				currentEnergy = 0;
+			if (currentEnergy < maxStorage)
+				tryBurn();
+		}
+
+		if (currentEnergy > 0) {
+			int all = currentEnergy > 5 ? 5 : currentEnergy;
+			int rev = sendEnergy(all);
+			currentEnergy -= (all - rev);
+			if (slots[1] != null) {
+				currentEnergy -= ((ISpecialElectricItem) slots[1].getItem()).getManager(slots[1]).charge(
+						slots[1], currentEnergy, 2, false, false);
 			}
 		}
+
 	}
 
 	private void tryBurn() {
-		int energyReq = maxStorage - bucketCnt;
-
-		if (energyReq >= 1 && slots[0] != null) {
+		if (slots[0] != null) {
+			this.tickLeft = TileEntityFurnace.getItemBurnTime(slots[0]) / 4;
+			this.maxBurnTime = this.tickLeft;
+			if (maxBurnTime == 0)
+				return;
 			if (slots[0].getItem() == Items.lava_bucket) {
-				this.setInventorySlotContents(0, new ItemStack(
-						Items.bucket, 1, 0));
-				bucketCnt += 1;
+				slots[0] = new ItemStack(Items.bucket);
+			} else {
+				if (--slots[0].stackSize <= 1)
+					slots[0] = null;
 			}
+			isBurning = true;
 		}
+	}
+
+	/**
+	 * Reads a tile entity from NBT.
+	 */
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		for (int i = 0; i < slots.length; i++) {
+			short id = nbt.getShort("id" + i), damage = nbt.getShort("damage"
+					+ i);
+			byte count = nbt.getByte("count" + i);
+			if (id == 0)
+				continue;
+			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
+			slots[i] = is;
+		}
+	}
+
+	/**
+	 * Writes a tile entity to NBT.
+	 */
+	@Override
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		
 	}
 
 	@Override
@@ -101,35 +139,15 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 		return stack;
 	}
 
-	/**
-	 * Reads a tile entity from NBT.
-	 */
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		this.slots = restoreInventory(nbt, "inv", slots.length);
-		bucketCnt = nbt.getShort("bucket");
-	}
-
-	/**
-	 * Writes a tile entity to NBT.
-	 */
-	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		this.storeInventory(nbt, slots, "inv");
-		nbt.setShort("bucket", (short) bucketCnt);
+	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
+				zCoord + 0.5) <= 64;
 	}
 
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
 		return slots[i];
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
-				zCoord + 0.5) <= 64;
 	}
 
 	@Override
@@ -139,25 +157,21 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 
 	@Override
 	public String getInventoryName() {
-		return "cbc.tile.genlava";
+		return "cbc.tile.genfire";
 	}
-
+	
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
 	}
-	
 	@Override
 	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		if (i == 0)
-			return true;
-		else
-			return (itemstack.getItem() instanceof ISpecialElectricItem);
+		return true;
 	}
 
 	@Override
 	public double getOfferedEnergy() {
-		return Math.min(currentEnergy, 10);
+		return Math.max(5, currentEnergy);
 	}
 
 	@Override
@@ -168,20 +182,14 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 
 	@Override
 	public boolean hasCustomInventoryName() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void openInventory() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void closeInventory() {
-		// TODO Auto-generated method stub
-		
 	}
-
 }

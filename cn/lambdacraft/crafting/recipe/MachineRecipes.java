@@ -19,11 +19,22 @@ public class MachineRecipes {
 
 	public MachineRecipes(int length, String[] pd) {
 		recipeLists = new ArrayList[length];
+		for(int i = 0; i < length; ++i)
+			recipeLists[i] = new ArrayList<ICrafterRecipe>();
+		
 		pageDescriptions = pd;
 	}
 	
 	public int getRecipeSize(int pid) {
 		return recipeLists[pid].size();
+	}
+	
+	public int getPageSize() {
+		return recipeLists.length;
+	}
+	
+	public int getMaxScrollFactor(int pageID) {
+		return Math.max(0, getRecipeSize(pageID) - 3);
 	}
 	
 	public void insertRecipe(int pid, ICrafterRecipe... recipes) {

@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.block.tile;
+package cn.lambdacraft.crafting.block.crafter;
 
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.tile.IEnergySink;
@@ -26,7 +26,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
 import cn.lambdacraft.core.util.EnergyUtils;
-import cn.lambdacraft.crafting.block.BlockWeaponCrafter.CrafterIconType;
+import cn.lambdacraft.crafting.block.crafter.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.item.ItemMaterial;
 import cn.lambdacraft.crafting.recipe.CrafterRecipeNormal;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
@@ -119,10 +119,10 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 	protected void writeRecipeInfoToSlot() {
 		clearRecipeInfo();
 		int length;
-		length = RecipeWeapons.getECRecipeLength(this.page);
+		length = RecipeWeapons.getECRecipeLength(this.currentPage);
 
 		for (int i = 0; i < length && i < 3; i++) {
-			CrafterRecipeNormal r = RecipeWeapons.getECRecipe(this.page, i
+			CrafterRecipeNormal r = RecipeWeapons.getECRecipe(this.currentPage, i
 					+ scrollFactor);
 			if (r == null)
 				return;
@@ -166,11 +166,11 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 
 	@Override
 	public void addScrollFactor(boolean isForward) {
-		if (!RecipeWeapons.doesECNeedScrollBar(page))
+		if (!RecipeWeapons.doesECNeedScrollBar(currentPage))
 			return;
 		List<CrafterRecipeNormal> recipes[] = RecipeWeapons.recipeEC;
 		if (isForward) {
-			if (scrollFactor < recipes[page].size() - 3) {
+			if (scrollFactor < recipes[currentPage].size() - 3) {
 				scrollFactor++;
 			}
 		} else {
@@ -185,12 +185,12 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 	public void addPage(boolean isForward) {
 		List<CrafterRecipeNormal> recipes[] = RecipeWeapons.recipeEC;
 		if (isForward) {
-			if (page < recipes.length - 1) {
-				page++;
+			if (currentPage < recipes.length - 1) {
+				currentPage++;
 			}
 		} else {
-			if (page > 0) {
-				page--;
+			if (currentPage > 0) {
+				currentPage--;
 			}
 		}
 		scrollFactor = 0;
@@ -198,7 +198,7 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 	}
 
 	@Override
-	public CrafterRecipeNormal getRecipeBySlotAndScroll(int slot, int factor) {
+	public CrafterRecipeNormal getRecipeBySlot(int slot, int factor) {
 		int i = 0;
 		if (slot == 0)
 			i = 0;
@@ -206,7 +206,7 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 			i = 1;
 		if (slot == 8)
 			i = 2;
-		return RecipeWeapons.getECRecipe(page, factor + i);
+		return RecipeWeapons.getECRecipe(currentPage, factor + i);
 	}
 
 	public int sendEnergy(int amm) {

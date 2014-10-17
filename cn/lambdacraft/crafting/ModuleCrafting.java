@@ -19,7 +19,6 @@ import net.minecraft.item.ItemStack;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.misc.CBCAchievements;
 import cn.lambdacraft.core.prop.GeneralProps;
-import cn.lambdacraft.crafting.block.container.CRGuiElements;
 import cn.lambdacraft.crafting.command.CommandSpray;
 import cn.lambdacraft.crafting.command.CommandXHairColor;
 import cn.lambdacraft.crafting.entity.EntitySpray;
@@ -31,6 +30,7 @@ import cn.lambdacraft.crafting.recipe.RecipeRepair;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.lambdacraft.crafting.register.CBCBlocks;
 import cn.lambdacraft.crafting.register.CBCItems;
+import cn.lambdacraft.crafting.register.CRGuiElements;
 import cn.lambdacraft.crafting.world.CBCWorldGen;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.lambdacraft.deathmatch.register.DMItems;
@@ -48,7 +48,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 /**
- * @author Administrator
+ * @author WeAthFolD
  * 
  */
 @Mod(modid = "LambdaCraft|World", name = "LambdaCraft World", version = CBCMod.VERSION, dependencies = CBCMod.DEPENDENCY_CORE)
@@ -94,17 +94,13 @@ public class ModuleCrafting {
 	public void postInit(FMLPostInitializationEvent Init) {
 
 		CBCItems.addItemRecipes();
-/*
+
 		// 在这里添加武器合成机的合成表
 		// 普通武器合成机：十字弩以下级别的所有武器和弹药
 		// 高级武器合成机：十字弩以上级别的所有武器和弹药
 		// 以上两个都会自动加入电力合成机的列表中
 		// 电力武器合成机只需特别加入盔甲和装备（目前只有medkit）的合成即可
 		// 现在的热量和各种信息基本过时，建议完整重写一遍
-		String description[] = { "crafter.weapon", "crafter.ammo" };
-		String ecDescription[] = { "crafter.equipments" };
-		RecipeWeapons.InitializeRecipes(2, description);
-		RecipeWeapons.initliazeECRecipes(1, ecDescription);
 
 		// 这个是普通合成机的武器合成表
 		ICrafterRecipe wpnRecipes[] = {
@@ -189,14 +185,11 @@ public class ModuleCrafting {
 				new CrafterRecipeNormal(new ItemStack(DMItems.attach, 1, 5), 3000, CBCItems.materials.newStack(1, EnumMaterial.TECH), CBCItems.materials.newStack(1, EnumMaterial.ARMOR), new ItemStack(CBCItems.lambdaChip, 2))
 		};
 
-		RecipeWeapons.addNormalRecipe(0, wpnRecipes);
-		RecipeWeapons.addNormalRecipe(1, ammoRecipes);
-		RecipeWeapons.addAdvancedRecipe(0, advWeapons);
-		RecipeWeapons.addAdvancedRecipe(1, advAmmos);
-		RecipeWeapons.addECSpecificRecipe(2, armors);
-
-		RecipeWeapons.close();
-		*/
+		RecipeWeapons.addRecipe(0, 0, wpnRecipes);
+		RecipeWeapons.addRecipe(0, 1, ammoRecipes);
+		RecipeWeapons.addRecipe(1, 0, advWeapons);
+		RecipeWeapons.addRecipe(1, 1, advAmmos);
+		RecipeWeapons.addRecipe(2, 2, armors);
 	}
 
 	@EventHandler()

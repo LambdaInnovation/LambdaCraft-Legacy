@@ -12,7 +12,7 @@
  * LambdaCraft是完全开源的。它的发布遵从《LambdaCraft开源协议》。你允许阅读，修改以及调试运行
  * 源代码， 然而你不允许将源代码以另外任何的方式发布，除非你得到了版权所有者的许可。
  */
-package cn.lambdacraft.crafting.block;
+package cn.lambdacraft.crafting.block.generator;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.core.block.BlockElectricalBase;
 import cn.lambdacraft.core.prop.GeneralProps;
-import cn.lambdacraft.crafting.block.tile.TileGeneratorLava;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -32,17 +31,21 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  * 
  */
-public class BlockGeneratorLava extends BlockElectricalBase {
+public class BlockGeneratorFire extends BlockElectricalBase {
 
 	public IIcon iconSide, iconTop, iconBottom, iconMain;
 	private ForgeDirection[] dirs = ForgeDirection.values();
 
-	public BlockGeneratorLava() {
+	/**
+	 * @param par1
+	 * @param mat
+	 */
+	public BlockGeneratorFire() {
 		super(Material.rock);
 		setHardness(2.0F);
-		setTileType(TileGeneratorLava.class);
-		setGuiId(GeneralProps.GUI_ID_GENLAVA);
-		setBlockName("genLava");
+		setTileType(TileGeneratorFire.class);
+		setGuiId(GeneralProps.GUI_ID_GENFIRE);
+		setBlockName("genFire");
 	}
 
 	/**
@@ -73,11 +76,11 @@ public class BlockGeneratorLava extends BlockElectricalBase {
 
 	@Override
 	public void registerBlockIcons(IIconRegister par1IconRegister) {
-		iconSide = par1IconRegister.registerIcon("lambdacraft:genlava_side");
-		iconTop = par1IconRegister.registerIcon("lambdacraft:genlava_top");
+		iconSide = par1IconRegister.registerIcon("lambdacraft:genfire_side");
+		iconTop = par1IconRegister.registerIcon("lambdacraft:genfire_top");
 		iconBottom = par1IconRegister
 				.registerIcon("lambdacraft:crafter_bottom");
-		iconMain = par1IconRegister.registerIcon("lambdacraft:genlava_main");
+		iconMain = par1IconRegister.registerIcon("lambdacraft:genfire_back");
 		blockIcon = iconTop;
 	}
 
@@ -88,9 +91,7 @@ public class BlockGeneratorLava extends BlockElectricalBase {
 			return iconBottom;
 		if (par1 < 2)
 			return iconTop;
-		if (par1 == par2)
-			return iconMain;
-		if(par2 == 0)
+		if (par2 == 0 || par1 == par2)
 			return iconMain;
 		return iconSide;
 	}
