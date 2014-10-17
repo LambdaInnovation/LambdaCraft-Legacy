@@ -30,7 +30,6 @@ public class LCTickEvents {
 			if(player.worldObj.isRemote) {
 				cn.lambdacraft.core.proxy.ClientProxy.lcPlayer.tickEnd();
 			}
-			
 			return;
 		}
 		

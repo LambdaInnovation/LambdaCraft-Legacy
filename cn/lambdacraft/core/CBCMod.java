@@ -19,10 +19,12 @@ import java.util.logging.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.config.Configuration;
+import cn.lambdacraft.core.event.LCTickEvents;
 import cn.lambdacraft.core.network.MsgKeyUsing;
 import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.register.LIGuiHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -107,6 +109,8 @@ public class CBCMod {
 				"crafting HEV and gauss, battling with headcrabs, and travelling to XEN!";
 		meta.url = "http://lambdacraft.cn";
 		meta.version = "1.7.8";
+		
+		FMLCommonHandler.instance().bus().register(new LCTickEvents());
 	}
 
 	/**

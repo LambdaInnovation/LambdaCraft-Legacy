@@ -41,7 +41,7 @@ public class BlockXenLight extends CBCBlockContainer {
 		isBright = bright;
 		this.setStepSound(soundTypeCloth);
 		this.setBlockName("xenLight");
-		this.setBlockTextureName("xenlight");
+		this.setBlockTextureName("lambdacraft:xenlight");
 		this.setLightLevel(isBright ? 0.7F : 0.0F);
 	}
 

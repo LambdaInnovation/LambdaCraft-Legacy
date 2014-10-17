@@ -11,6 +11,7 @@ import cn.lambdacraft.core.item.ElectricArmor;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
 import cn.lambdacraft.deathmatch.item.ArmorHEV.EnumAttachment;
 import cn.lambdacraft.deathmatch.register.DMItems;
+import cn.lambdacraft.terrain.ModuleTerrain;
 //import cn.lambdacraft.terrain.ModuleTerrain;
 import cn.liutils.api.util.GenericUtils;
 import cpw.mods.fml.relauncher.Side;
@@ -42,7 +43,6 @@ public class LCClientPlayer {
 
 	//---------------通用支持部分------------------
 	public void beforeOnUpdate() {
-		
 		boolean preOnHEV = armorStat[2] &&  armorStat[3];
 		
 		//Update Armor Status
@@ -62,20 +62,21 @@ public class LCClientPlayer {
 		//putting HEV on at this tick
 		if(!preOnHEV && (armorStat[2] && armorStat[3])) {
 			//TODO：客户端声音播放需要修复
+			player.playSound("lambdacraft:hev.hev_logon", 0.5F, 1.0F);
 			//mc.getSoundHandler().playSoundFX("lambdacraft:hev.hev_logon", 0.5F, 1.0F);
 		} else if(preOnHEV && !(armorStat[2] && armorStat[3])) { //HEV 'Broke down' because player action or energy critical
 			if(player.inventory.armorInventory[2] != null && player.inventory.armorInventory[3] != null) {
-				//mc.sndManager.playSoundFX("lambdacraft:hev.hev_shutdown", 0.5F, 1.0F);
+				player.playSound("lambdacraft:hev.hev_shutdown", 0.5F, 1.0F);
 			}
 		}
 		
-		/*
+		
 		if(player.worldObj.provider.dimensionId == ModuleTerrain.xenIslandDimensionID 
 				|| player.worldObj.provider.dimensionId == ModuleTerrain.xenContinentDimensionID) {
 			if(!player.onGround && !player.capabilities.isFlying && !(player.isOnLadder() || player.isInWater())) {
 				player.motionY += 0.036;
 			}
-		}*/
+		}
 	}
 	
 	public void afterOnUpdate() {

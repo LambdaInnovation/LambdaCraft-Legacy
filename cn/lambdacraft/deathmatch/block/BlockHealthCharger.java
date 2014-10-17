@@ -47,7 +47,7 @@ public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
 	public BlockHealthCharger() {
 		super(Material.rock);
 		this.setBlockName("healthcharger");
-		this.setBlockTextureName("health");
+		this.setBlockTextureName("lambdacraft:health");
 		this.setHardness(2.0F);
 		this.setGuiId(GeneralProps.GUI_ID_HEALTH);
 	}

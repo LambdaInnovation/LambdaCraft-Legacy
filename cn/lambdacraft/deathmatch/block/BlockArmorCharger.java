@@ -46,7 +46,7 @@ public class BlockArmorCharger extends CBCBlockContainer implements IUseable {
 	public BlockArmorCharger() {
 		super(Material.rock);
 		this.setBlockName("armorcharger");
-		this.setBlockTextureName("charger");
+		this.setBlockTextureName("lambdacraft:charger");
 		this.setHardness(2.0F);
 		this.setGuiId(GeneralProps.GUI_ID_CHARGER);
 	}

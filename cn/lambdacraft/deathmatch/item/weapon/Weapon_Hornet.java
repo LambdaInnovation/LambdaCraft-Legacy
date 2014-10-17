@@ -21,6 +21,8 @@ import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.deathmatch.entity.EntityHornet;
 import cn.weaponmod.api.action.Action;
+import cn.weaponmod.api.action.ActionAutomaticShoot;
+import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionReload;
 import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.information.InfWeapon;
@@ -49,23 +51,35 @@ public class Weapon_Hornet extends WeaponGenericLC {
 	}
 
 	public static final int RECOVER_TIME = 10;
+	
+	private Action actionAutomShoot;
 
 	public Weapon_Hornet() {
 		super(null);
-		setMaxDamage(9);
+		setMaxDamage(8);
 		setCreativeTab(CBCMod.cct);
 		setIAndU("weapon_hornet");
-		actionShoot = new HornetShoot(true);
+		actionShoot = new ActionAutomaticShoot(new HornetShoot(true), 5, 300);
+		actionAutomShoot = new ActionAutomaticShoot(new HornetShoot(false), 3, 300);
+		actionJam = new ActionJam(20, "");
 		actionReload = null;
 	}
 	
 	@Override
 	public void onItemClick(World world, EntityPlayer player, ItemStack stack, int keyid) {
-		InfWeapon inf = loadInformation(stack, player);
+		InfWeapon inf = loadInformation(player);
 		super.onItemClick(world, player, stack, keyid);
 		if(keyid == 1) {
-			inf.executeAction(player, new HornetShoot(false));
+			inf.executeAction(actionAutomShoot);
 		}
+	}
+	
+	@Override
+	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,
+			int keyid) {
+		super.onItemRelease(world, pl, stack, keyid);
+		if(keyid == 1)
+			loadInformation(pl).removeAction("shoot_auto");
 	}
 
 	@Override

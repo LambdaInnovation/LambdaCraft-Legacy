@@ -3,6 +3,7 @@ package cn.lambdacraft.mob.register;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
+import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
 import cn.lambdacraft.mob.entity.EntityBigMomoa;
 import cn.lambdacraft.mob.entity.EntityHLZombie;
@@ -44,8 +45,8 @@ public class CBCMobItems {
 		vortigaunt = new LIMobSpawner(EntityAlienSlave.class).setTextureName("lambdacraft:egg4");
 		sentrySyncer = new ItemSentrySyncer();
 		dna = new ItemDNAFragment();
-		gonarch = new LIMobSpawner(EntityBigMomoa.class).setTextureName("lambdacraft:egg6");
-		mob_bull = new LIMobSpawner(EntityMobBull.class).setTextureName("lambdacraft:egg7");
+		gonarch = new LIMobSpawner(EntityBigMomoa.class).setCreativeTab(CBCMod.cct).setTextureName("lambdacraft:egg6");
+		mob_bull = new LIMobSpawner(EntityMobBull.class).setCreativeTab(CBCMod.cct).setTextureName("lambdacraft:egg7");
 		
 		GameRegistry.registerItem(weapon_snark, "lc_snark");
 		GameRegistry.registerItem(headcrab0w0, "lc_headcrab");

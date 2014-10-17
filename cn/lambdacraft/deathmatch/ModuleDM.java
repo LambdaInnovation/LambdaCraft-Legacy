@@ -1,10 +1,12 @@
 package cn.lambdacraft.deathmatch;
 
+import net.minecraftforge.common.MinecraftForge;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.deathmatch.block.container.DMGuiElements;
 import cn.lambdacraft.deathmatch.entity.*;
 import cn.lambdacraft.deathmatch.entity.fx.*;
+import cn.lambdacraft.deathmatch.event.DMEventListener;
 import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cpw.mods.fml.common.Mod;
@@ -65,6 +67,7 @@ public class ModuleDM {
 				GeneralProps.ENT_ID_BOW_STILL, CBCMod.instance, 16, 5, false);
 
 		proxy.init();
+		MinecraftForge.EVENT_BUS.register(new DMEventListener());
 	}
 
 	@EventHandler()

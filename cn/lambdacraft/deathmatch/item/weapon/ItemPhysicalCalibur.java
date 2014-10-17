@@ -63,7 +63,7 @@ public class ItemPhysicalCalibur extends Weapon_Crowbar {
 		attackedEntity.addVelocity(motionX, motionY, motionZ);
     	EntityLightningBolt bolt = new EntityLightningBolt(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ);
     	attackedEntity.worldObj.spawnEntityInWorld(bolt);
-		attackedEntity.onStruckByLightning(bolt);
+		//attackedEntity.onStruckByLightning(bolt);
         return true;
     }
 

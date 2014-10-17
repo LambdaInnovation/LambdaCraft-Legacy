@@ -34,7 +34,7 @@ public class EntitySatchel extends EntityThrowable {
 	public static double HEIGHT = 0.083, WIDTH1 = 0.2, WIDTH2 = 0.15;
 	
 	public boolean still;
-	public double stlX, stlY, stlZ;
+	public double stlY;
 
 	/**
 	 * 被击中时的tick数。
@@ -128,33 +128,25 @@ public class EntitySatchel extends EntityThrowable {
 		}
 		
 		this.still = true;
-		stlX = result.hitVec.xCoord + offX;
 		stlY = result.hitVec.yCoord + offY;
-		stlZ = result.hitVec.zCoord + offZ;
 		attemptUpdate();
 	}
 	
 	private void attemptUpdate() {
 		if(worldObj.isRemote) {
 			still = dataWatcher.getWatchableObjectByte(9) == 1;
-			stlX = dataWatcher.getWatchableObjectFloat(10);
 			stlY = dataWatcher.getWatchableObjectFloat(11);
-			stlZ = dataWatcher.getWatchableObjectFloat(12);
+			if(still)
+				posY = stlY;
 		} else {
 			dataWatcher.updateObject(9, still ? (byte)1 : (byte)0);
 			if(still) {
-				dataWatcher.updateObject(10, (float)stlX);
 				dataWatcher.updateObject(11, (float)stlY);
-				dataWatcher.updateObject(12, (float)stlZ);
 			}
 		}
 		
 		if(still) {
 			motionX = motionY = motionZ = 0;
-			posX = stlX;
-			posY = stlY;
-			posZ = stlZ;
-			
 			if(!acceptible((int)posX, (int)posY, (int)posZ)) still = false;
 		}
 	}

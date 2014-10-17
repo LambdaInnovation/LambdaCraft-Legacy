@@ -30,8 +30,10 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class Weapon_Egon extends WeaponGenericLC implements ISpecialCrosshair {
 
-	public static String SND_WINDUP = "lambdacraft:weapons.egon_windup",
-			SND_RUN = "lambdacraft:weapons.egon_run", SND_OFF = "lambdacraft:weapons.egon_off";
+	public static String
+		SND_WINDUP = "lambdacraft:weapons.egon_windup",
+		SND_RUN = "lambdacraft:weapons.egon_run",
+		SND_OFF = "lambdacraft:weapons.egon_off";
 
 	public IIcon iconEquipped;
 	
@@ -82,16 +84,9 @@ public class Weapon_Egon extends WeaponGenericLC implements ISpecialCrosshair {
 		super(CBCItems.ammo_uranium);
 		setCreativeTab(CBCMod.cct);
 		setUnlocalizedName("weapon_egon");
+		iconName = "weapon_egon";
 		
 		actionShoot = new ActionEgonShoot();
-		actionJam = new ActionJam(20, "cbc.weapons.gunjam_a");
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerIcons(IIconRegister reg) {
-		super.registerIcons(reg);
-		iconEquipped = reg.registerIcon("lambdacraft:weapon_egon0");
 	}
 
 	@Override

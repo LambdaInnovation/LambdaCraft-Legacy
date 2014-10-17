@@ -31,13 +31,12 @@ import cn.weaponmod.api.WeaponHelper;
 public class EntityHGrenade extends EntityThrowable {
 
 	int delay;
-	int time;
+	int lastBounceTime;
 
-	public EntityHGrenade(World par1World, EntityLivingBase par2EntityLiving,
-			int par3Fuse) {
-		super(par1World, par2EntityLiving);
-		delay = 60 - par3Fuse;
-		time = 0;
+	public EntityHGrenade(World world, EntityLivingBase player, int fuse) {
+		super(world, player);
+		delay = 60 - fuse;
+		lastBounceTime = 0;
 
 	}
 
@@ -47,6 +46,12 @@ public class EntityHGrenade extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition par1) {
+		
+		if(par1.typeOfHit == MovingObjectType.BLOCK) {
+			System.out.println("set" + worldObj.isRemote);
+			lastBounceTime = ticksExisted;
+		}
+		
 		if (worldObj.isRemote)
 			return;
 
@@ -85,9 +90,8 @@ public class EntityHGrenade extends EntityThrowable {
 		}
 		if(collideStrengh > 1.0) collideStrengh = 1.0;
 //		System.out.println(collideStrengh);
-		if (time == 0 || ticksExisted - time > 20) { // 最小时间间隔1s
+		if (lastBounceTime == 0 || ticksExisted - lastBounceTime > 20) { // 最小时间间隔1s
 			this.playSound("lambdacraft:weapons.hgrenadebounce", (float) (5F * collideStrengh), 1.0F);
-			time = ticksExisted;
 		}
 
 	}
@@ -101,10 +105,17 @@ public class EntityHGrenade extends EntityThrowable {
 
 	@Override
 	public void onUpdate() {
+		double lastPosY = posY;
 		super.onUpdate();
+		if(worldObj.isRemote) {
+			if(lastBounceTime != 0 && ticksExisted - lastBounceTime < 10 && posY - lastPosY < 0.02) {
+				posY = lastPosY;
+			}
+		}
+		
 		if (this.ticksExisted >= delay || this.isBurning()) // Time to explode
-															// >)
-			Explode();
+			Explode();											// >)
+			
 	}
 
 	@Override
