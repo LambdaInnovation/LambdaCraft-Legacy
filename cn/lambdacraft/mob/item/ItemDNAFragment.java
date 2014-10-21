@@ -16,6 +16,7 @@ package cn.lambdacraft.mob.item;
 
 import java.util.List;
 
+import cn.lambdacraft.core.CBCMod;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -48,7 +49,7 @@ public class ItemDNAFragment extends Item {
 	public ItemDNAFragment() {
 		super();
 		setUnlocalizedName("dna");
-		setCreativeTab(CreativeTabs.tabMisc);
+		setCreativeTab(CBCMod.cct);
 		this.hasSubtypes = true;
 	}
 	

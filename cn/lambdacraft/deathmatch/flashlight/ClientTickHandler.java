@@ -16,6 +16,7 @@ public class ClientTickHandler {
 	public boolean flag = false;
 
 	public void tickEnd(boolean renderTick) {
+		//FIXME
 		if (renderTick) {
 			this.onRenderTick();
 		} else {
@@ -40,9 +41,9 @@ public class ClientTickHandler {
 		++ticks;
 
 		if (ticks >= 5) {
+			ticks = 0;
 			Minecraft mc = Minecraft.getMinecraft();
 			EntityPlayerSP player = mc.thePlayer;
-			ticks = 0;
 			LightValue.resetAll();
 			LightValue.emptyData();
 			

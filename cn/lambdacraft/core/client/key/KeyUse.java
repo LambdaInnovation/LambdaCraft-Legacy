@@ -51,9 +51,12 @@ public class KeyUse implements IKeyHandler {
 			return;
 		CBCMod.netHandler.sendToServer(new MsgKeyUsing(false));
 		ItemStack armorStack = player.inventory.armorInventory[3];
+		System.out.println("www");
 		if (armorStack == null)
 			return;
+		System.out.println("www2");
 		ClientProxy.cth.flag = !ClientProxy.cth.flag;
+	
 		//if (armorStack.itemID == DMItems.armorHEVHelmet.itemID)
 		//	player.sendChatToPlayer(StatCollector.translateToLocal("flashlight.status.name") + (ClientProxy.cth.flag ? StatCollector.translateToLocal("flashlight.status.on.name") : StatCollector.translateToLocal("flashlight.status.off.name")));
 	}

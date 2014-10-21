@@ -10,7 +10,7 @@ public class RecipeRepair extends CrafterRecipeNormal {
 	public Item inputA, inputB;
 	public int scale;
 
-	public RecipeRepair(ItemAmmo ia, Item ib) {
+	public RecipeRepair(Item ia, Item ib) {
 		super(new ItemStack(ia, 1, 0), 0, new ItemStack(ia, 1,
 				ia.getMaxDamage() - 1),
 				new ItemStack(ib, ia.getMaxDamage() - 1));
@@ -19,7 +19,7 @@ public class RecipeRepair extends CrafterRecipeNormal {
 		scale = 1;
 	}
 
-	public RecipeRepair(ItemAmmo ia, Item ib, int s) {
+	public RecipeRepair(Item ia, Item ib, int s) {
 		super(new ItemStack(ia, 1, 0), 0, new ItemStack(ia, 1,
 				ia.getMaxDamage() - 1), new ItemStack(ib,
 				(ia.getMaxDamage() - 1) / s));

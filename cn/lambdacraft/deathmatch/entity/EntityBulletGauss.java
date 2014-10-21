@@ -49,14 +49,14 @@ public class EntityBulletGauss extends EntityBullet {
 		super(par1World, entityPlayer, damage);
 		motion = new Motion3D(entityPlayer, true);
 		itemStack = entityPlayer.getCurrentEquippedItem();
-		item = (Weapon_Gauss) itemStack.getItem();
 		
-		if(item == null) { //for safety
+		if(itemStack == null) { //for safety
 			System.out.println("Unexpected error in " + par1World.isRemote);
 			this.setDead();
 			return;
 		}
 		
+		item = (Weapon_Gauss) itemStack.getItem();
 		inf = item.loadInformation(entityPlayer);
 		worldObj.spawnEntityInWorld(new EntityGaussRay(new Motion3D(this, true), worldObj));
 		if (par1World.isRemote)

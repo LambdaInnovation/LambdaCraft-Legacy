@@ -89,9 +89,14 @@ public class ItemMaterial extends CBCGenericItem {
 	 * @param mat
 	 * @return
 	 */
+	public static ItemStack newStack(Item item, int stackSize, EnumMaterial mat) {
+		return new ItemStack(item, stackSize, mat.id);
+	}
+	
 	public ItemStack newStack(int stackSize, EnumMaterial mat) {
 		return new ItemStack(this, stackSize, mat.id);
 	}
+
 
 	@Override
 	@SideOnly(Side.CLIENT)

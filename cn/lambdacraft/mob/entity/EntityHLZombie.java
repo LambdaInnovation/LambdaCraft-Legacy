@@ -134,7 +134,7 @@ public class EntityHLZombie extends LIEntityMob {
 
 	@Override
 	public boolean attackEntityAsMob(Entity par1Entity) {
-		if(this.isBurning())
+		if(this.isBurning() || tickCountAttack > 0)
 			return false;
 		damagetype = this.worldObj.rand.nextInt(3);
 		if (damagetype == 0) {

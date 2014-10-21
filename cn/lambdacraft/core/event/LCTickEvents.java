@@ -9,6 +9,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 /**
  * @author WeathFolD
@@ -18,6 +19,12 @@ public class LCTickEvents {
 	
 	@SubscribeEvent
 	public void clientEvent(ClientTickEvent event) {
+		if(event.phase == Phase.START)
+			ClientProxy.cth.tickEnd(false);
+	}
+	
+	@SubscribeEvent
+	public void renderEvent(RenderTickEvent event) {
 		if(event.phase == Phase.START)
 			ClientProxy.cth.tickEnd(true);
 	}

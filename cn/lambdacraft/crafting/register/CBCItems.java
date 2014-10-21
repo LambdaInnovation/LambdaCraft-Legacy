@@ -47,6 +47,7 @@ import cn.lambdacraft.deathmatch.register.DMBlocks;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.lambdacraft.terrain.register.XenBlocks;
+import cn.liutils.api.util.RegUtils;
 //import cn.lambdacraft.terrain.register.XenBlocks;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -57,28 +58,33 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 public class CBCItems {
 
-	public static ItemAmmo ammo_uranium;
-	public static Ammo_9mm ammo_9mm;
-	public static Ammo_357 ammo_357;
-	public static Ammo_9mm2 ammo_9mm2;
-	public static Ammo_bow ammo_bow;
-	public static Ammo_rpg ammo_rpg;
-	public static ItemAmmo ammo_argrenade, ammo_shotgun;
-
-	public static Item bullet_9mm, bullet_steelbow;
-
-	public static CBCGenericItem ingotSteel;
-
+	public static Item 
+		ammo_uranium,
+		ammo_9mm,
+		ammo_357,
+		ammo_9mm2,
+		ammo_bow,
+		ammo_rpg,
+		ammo_argrenade,
+		ammo_shotgun,
+		bullet_9mm, 
+		bullet_steelbow,
+		ingotSteel,
+		lambdaChip,
+		ironBar,
+		ingotUranium,
+		halfLife01,
+		halfLife02,
+		halfLife03,
+		tin,
+		copper,
+		chip,
+		xenCrystal,
+		battery,
+		spray1[],
+		spray3;
+	
 	public static ItemMaterial materials;
-	public static CBCGenericItem lambdaChip;
-	public static SteelBar ironBar;
-	public static IngotUranium ingotUranium;
-	public static LCRecord halfLife01, halfLife02, halfLife03;
-	public static ItemSpray spray1, spray2;
-	public static HLSpray spray3;
-	public static Item tin, copper, chip, xenCrystal;
-
-	public static ItemBattery battery;
 
 	/**
 	 * 实际注册，请在Init中调用。
@@ -87,55 +93,42 @@ public class CBCItems {
 	 */
 	public static void init(Configuration conf) {
 
-		ammo_uranium = reg(Ammo_uranium.class, "lc_uranium_ingot");
-		ammo_9mm = reg(Ammo_9mm.class, "lc_9mmammo");
-		ammo_9mm2 = reg(Ammo_9mm2.class, "lc_9mmammo2");
-		ammo_357 = reg(Ammo_357.class, "lc_357ammo");
-		ammo_bow = reg(Ammo_bow.class, "lc_bowammo");
-		ammo_rpg = reg(Ammo_rpg.class, "lc_rpgammo");
-		ammo_argrenade = reg(Ammo_argrenade.class, "lc_argrenade");
-		ammo_shotgun = reg(Ammo_shotgun.class, "lc_sgammo");
+		ammo_uranium = RegUtils.reg(Ammo_uranium.class, "lc_uranium_ingot");
+		ammo_9mm = RegUtils.reg(Ammo_9mm.class, "lc_9mmammo");
+		ammo_9mm2 = RegUtils.reg(Ammo_9mm2.class, "lc_9mmammo2");
+		ammo_357 = RegUtils.reg(Ammo_357.class, "lc_357ammo");
+		ammo_bow = RegUtils.reg(Ammo_bow.class, "lc_bowammo");
+		ammo_rpg = RegUtils.reg(Ammo_rpg.class, "lc_rpgammo");
+		ammo_argrenade = RegUtils.reg(Ammo_argrenade.class, "lc_argrenade");
+		ammo_shotgun = RegUtils.reg(Ammo_shotgun.class, "lc_sgammo");
 		
-		bullet_9mm = reg(Bullet_9mm.class, "lc_9mmblt");
-		bullet_steelbow = reg(Bullet_steelbow.class, "lc_steelbow");
+		bullet_9mm = RegUtils.reg(Bullet_9mm.class, "lc_9mmblt");
+		bullet_steelbow = RegUtils.reg(Bullet_steelbow.class, "lc_steelbow");
 
-		materials = reg(ItemMaterial.class, "lc_mats");
+		materials = (ItemMaterial) RegUtils.reg(ItemMaterial.class, "lc_mats");
 
-		ironBar = reg(SteelBar.class, "lc_ironbar");
-		lambdaChip = reg(CBCGenericItem.class, "lc_lchip").setIAndU("lambdachip");
+		ironBar = RegUtils.reg(SteelBar.class, "lc_ironbar");
+		lambdaChip = ((CBCGenericItem)RegUtils.reg(CBCGenericItem.class, "lc_lchip")).setIAndU("lambdachip");
 		
-		ingotUranium = reg(IngotUranium.class, "lc_radioactive");
-		ingotSteel = reg(CBCGenericItem.class, "lc_universalrule").setIAndU("steel");
+		ingotUranium = RegUtils.reg(IngotUranium.class, "lc_radioactive");
+		ingotSteel = ((CBCGenericItem)RegUtils.reg(CBCGenericItem.class, "lc_universalrule")).setIAndU("steel");
 
 		halfLife01 = new LCRecord("hla", 0);
 		halfLife02 = new LCRecord("hlb", 1);
 		halfLife03 = new LCRecord("hlc", 2);
+		GameRegistry.registerItem(halfLife01, "lc_rec0");
+		GameRegistry.registerItem(halfLife02, "lc_rec1");
+		GameRegistry.registerItem(halfLife03, "lc_rec2");
 		
-		spray1 = new ItemSpray(0);
-		spray2 = new ItemSpray(1);
-		
-		spray3 = reg(HLSpray.class, "lc_hlspray");
+		spray1 = RegUtils.reg(ItemSpray.class, 2, "lc_spray");
+		spray3 = RegUtils.reg(HLSpray.class, "lc_hlspray");
 
-		tin = reg(CBCGenericItem.class, "lc_tin").setIAndU("tin");
-		copper = reg(CBCGenericItem.class, "lc_copper").setIAndU("copper");
-		chip = reg(CBCGenericItem.class, "lc_chip").setIAndU("chip");
-		xenCrystal = reg(CBCGenericItem.class, "lc_xcrystal").setIAndU("xencrystal");
+		tin = ((CBCGenericItem)RegUtils.reg(CBCGenericItem.class, "lc_tin")).setIAndU("tin");
+		copper = ((CBCGenericItem)RegUtils.reg(CBCGenericItem.class, "lc_copper")).setIAndU("copper");
+		chip = ((CBCGenericItem)RegUtils.reg(CBCGenericItem.class, "lc_chip")).setIAndU("chip");
+		xenCrystal = ((CBCGenericItem)RegUtils.reg(CBCGenericItem.class, "lc_xcrystal")).setIAndU("xencrystal");
 		
-		battery = reg(ItemBattery.class, "lc_battery");
-	}
-	
-	/**
-	 * Short alias.
-	 */
-	private static <T extends Item> T reg(Class<? extends T> cl, String k) {
-		T it = null;
-		try {
-			it = cl.newInstance();
-			GameRegistry.registerItem(it, k);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return it;
+		battery = RegUtils.reg(ItemBattery.class, "lc_battery");
 	}
 
 	/**
@@ -212,7 +205,7 @@ public class CBCItems {
 		};
 
 		ItemStack output[] = { 
-				materials.newStack(10, EnumMaterial.BOX),
+				ItemMaterial.newStack(materials, 10, EnumMaterial.BOX),
 				//iSweaponCrafter,
 				//iSadvCrafter, 
 				new ItemStack(CBCBlocks.wire, 6),
@@ -227,8 +220,8 @@ public class CBCItems {
 				new ItemStack(CBCItems.ironBar, 5),
 				new ItemStack(XenBlocks.xenPortal),
 				new ItemStack(CBCMobItems.sentrySyncer, 2),
-				new ItemStack(spray1),
-				new ItemStack(spray2),
+				new ItemStack(spray1[0]),
+				new ItemStack(spray1[1]),
 				new ItemStack(spray3)
 		};
 		addOreRecipes(output, input);
@@ -252,17 +245,17 @@ public class CBCItems {
 		
 		//Materials
 		IRecipe recipes[] = {
-				new ShapelessOreRecipe(materials.newStack(2, EnumMaterial.ARMOR), iSmaterials_1_0, "blockRefinedIron", iSdiamond, iSlambdaChip),
-				new ShapelessOreRecipe(materials.newStack(4, EnumMaterial.AMMUNITION), iSmaterials_1_0, "ingotCopper", iSredstone, iSgunpowder),
-				new ShapelessOreRecipe(materials.newStack(4, EnumMaterial.ACCESSORIES), iSmaterials_1_0, "ingotCopper", iSredstone, iScoal),
-				new ShapelessOreRecipe(materials.newStack(4, EnumMaterial.EXPLOSIVE), iSmaterials_1_0, "ingotRefinedIron", iStnt, iSgunpowder),
-				new ShapelessOreRecipe(materials.newStack(2, EnumMaterial.HEAVY), iSmaterials_1_0, "blockRefinedIron", iSblockLapis, iSblazePowder),
-				new ShapelessOreRecipe(materials.newStack(2, EnumMaterial.LIGHT), iSmaterials_1_0, "ingotRefinedIron", "ingotCopper", iSlightStoneDust),
-				new ShapelessOreRecipe(materials.newStack(2, EnumMaterial.PISTOL), iSmaterials_1_0, "ingotRefinedIron", "ingotCopper", "ingotRefinedIron"),
-				new ShapelessOreRecipe(materials.newStack(3, EnumMaterial.BIO), iSmaterials_1_0, srotten, sendereye, CBCMobItems.dna),
-				new ShapelessOreRecipe(materials.newStack(2, EnumMaterial.TECH), iSmaterials_1_0, iSdiamond, iSlambdaChip, iSlightStoneDust),
-				new RecipeRepair(spray1, iSredstone),
-				new RecipeRepair(spray2, iSredstone),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.ARMOR), iSmaterials_1_0, "blockRefinedIron", iSdiamond, iSlambdaChip),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 4, EnumMaterial.AMMUNITION), iSmaterials_1_0, "ingotCopper", iSredstone, iSgunpowder),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 4, EnumMaterial.ACCESSORIES), iSmaterials_1_0, "ingotCopper", iSredstone, iScoal),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 4, EnumMaterial.EXPLOSIVE), iSmaterials_1_0, "ingotRefinedIron", iStnt, iSgunpowder),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.HEAVY), iSmaterials_1_0, "blockRefinedIron", iSblockLapis, iSblazePowder),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.LIGHT), iSmaterials_1_0, "ingotRefinedIron", "ingotCopper", iSlightStoneDust),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.PISTOL), iSmaterials_1_0, "ingotRefinedIron", "ingotCopper", "ingotRefinedIron"),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 3, EnumMaterial.BIO), iSmaterials_1_0, srotten, sendereye, CBCMobItems.dna),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.TECH), iSmaterials_1_0, iSdiamond, iSlambdaChip, iSlightStoneDust),
+				new RecipeRepair(spray1[0], iSredstone),
+				new RecipeRepair(spray1[1], iSredstone),
 				new RecipeRepair(spray3, iSlightStoneDust)
 		};
 		for(IRecipe r : recipes)
