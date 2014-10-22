@@ -111,39 +111,7 @@ public class EntityHeadcrab extends LIEntityMob implements
 	public void onUpdate() {
 		super.onUpdate();
 
-		if (!this.dead && attacher != null) {
-			if (attacher instanceof EntityPlayer)
-				this.setPositionAndRotation(attacher.posX,
-						attacher.posY + 0.05, attacher.posZ,
-						attacher.rotationYaw, attacher.rotationPitch);
-			else
-				this.setPositionAndRotation(attacher.posX, attacher.posY
-						+ attacher.height + 0.05, attacher.posZ,
-						attacher.rotationYaw, attacher.rotationPitch);
-			if (++tickSinceBite >= 15) { //Drain health and indicate player stat
-				dataWatcher.updateObject(20, Integer.valueOf(attacher.getEntityId()));
-				tickSinceBite = 0;
-				float health = attacher.getHealth() - 1;
-				if (!(attacher instanceof EntityPlayer && ((EntityPlayer) attacher).capabilities.isCreativeMode)) {
-					attacher.setHealth(health);
-
-					if (health <= 0 && !worldObj.isRemote) {
-						NBTTagCompound nbt = attacher.getEntityData();
-						if(!nbt.getBoolean("spawnedZombie")) {
-							nbt.setBoolean("spawnedZombie", true);
-							attacher = null;
-							MobHelper.spawnCreature(worldObj, EntityHLZombie.class,
-								this, false);
-							dataWatcher.updateObject(20, Integer.valueOf(0));
-							this.setDead();
-						}
-					}
-				}
-			}
-			if (attacher != null && attacher.isDead) {
-				attacher = null;
-			}
-		} else {
+		if(!this.dead) {
 			if (worldObj.isRemote) {
 				int id = dataWatcher.getWatchableObjectInt(20);
 				Entity e = worldObj.getEntityByID(id);
@@ -151,6 +119,41 @@ public class EntityHeadcrab extends LIEntityMob implements
 					attacher = (EntityLivingBase) e;
 			} else {
 				dataWatcher.updateObject(20, Integer.valueOf(0));
+			}
+		
+			if (attacher != null) {
+				if (attacher instanceof EntityPlayer) {
+					this.setPositionAndRotation(attacher.posX,
+							attacher.posY + 0.05, attacher.posZ,
+							attacher.rotationYaw, attacher.rotationPitch);
+				} else {
+					this.setPositionAndRotation(attacher.posX, attacher.posY
+							+ attacher.height + 0.05, attacher.posZ,
+							attacher.rotationYaw, attacher.rotationPitch);
+				}
+				if (++tickSinceBite >= 15) { //Drain health and indicate player stat
+					dataWatcher.updateObject(20, Integer.valueOf(attacher.getEntityId()));
+					tickSinceBite = 0;
+					float health = attacher.getHealth() - 1;
+					if (!(attacher instanceof EntityPlayer && ((EntityPlayer) attacher).capabilities.isCreativeMode)) {
+						attacher.setHealth(health);
+
+						if (health <= 0 && !worldObj.isRemote) {
+							NBTTagCompound nbt = attacher.getEntityData();
+							if(!nbt.getBoolean("spawnedZombie")) {
+								nbt.setBoolean("spawnedZombie", true);
+								attacher = null;
+								MobHelper.spawnCreature(worldObj, EntityHLZombie.class,
+									this, false);
+								dataWatcher.updateObject(20, Integer.valueOf(0));
+								this.setDead();
+							}
+						}
+					}
+				}
+				if (attacher != null && attacher.isDead) {
+					attacher = null;
+				}
 			}
 		}
 	}

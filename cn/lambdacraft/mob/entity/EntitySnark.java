@@ -18,7 +18,7 @@ import java.util.List;
 
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -136,10 +136,10 @@ public class EntitySnark extends LIEntityMob implements IEntityLink<EntityPlayer
 	protected Entity findPlayerToAttack() {
 		AxisAlignedBB boundingBox = AxisAlignedBB.getBoundingBox(posX - 8.0,
 				posY - 8.0, posZ - 8.0, posX + 8.0, posY + 8.0, posZ + 8.0);
-		List<EntityLiving> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox,selector);
-		EntityLiving entity = null;
+		List<Entity> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, boundingBox,selector);
+		Entity entity = null;
 		double distance = 10000.0F;
-		for (EntityLiving s : list) {
+		for (Entity s : list) {
 			double dx = s.posX - posX, dy = s.posY - posY, dz = s.posZ - posZ;
 			double d = Math.sqrt(dx * dx + dy * dy + dz * dz);
 			if (d < distance) {

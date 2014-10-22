@@ -48,7 +48,9 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
 	public int tickSinceLastAttack = 0;
 	public float rotationYawSearch;
 	public boolean attackPlayer = false;
-	public static final float TURNING_SPEED = 5.0F;
+	public static final float 
+		TURNING_SPEED = 5.0F,
+		YOFFSET = 1.4F;
 	
 	protected IEntitySelector selector = new IEntitySelector() {
 
@@ -137,14 +139,13 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
 	public void sync() {
 		if(worldObj.isRemote) {
 			int entityid = dataWatcher.getWatchableObjectInt(15);
-			Entity e = worldObj.getEntityByID(entityid);
+			Entity e = entityid == 0 ? null : worldObj.getEntityByID(entityid);
 			currentTarget = e;
 			
-			this.isActivated = dataWatcher.getWatchableObjectByte(16) > 0;
+			this.isActivated = dataWatcher.getWatchableObjectByte(16) == 1;
 		} else {
-			if(currentTarget != null)
-				dataWatcher.updateObject(15, currentTarget.getEntityId());
-			dataWatcher.updateObject(16, Byte.valueOf((byte) (isActivated? 0x1 : 0x0)));
+			dataWatcher.updateObject(15, currentTarget == null ? 0 : currentTarget.getEntityId());
+			dataWatcher.updateObject(16, Byte.valueOf((byte) (isActivated? 1 : 0)));
 		}
 	}
 	
@@ -233,7 +234,9 @@ public class EntitySentry extends LIEntityMob implements IEntityLink {
 			} else { 
 				rotationSet = false;
 				this.playSound("lambdacraft:mobs.tu_fire", 0.5F, 1.0F);
-				worldObj.spawnEntityInWorld(new EntityBullet(worldObj, this, currentTarget, 5).setEntitySelector(selector));
+				worldObj.spawnEntityInWorld(new EntityBullet(worldObj, this, currentTarget, 5, 
+						YOFFSET, currentTarget.height * 0.7F)
+					.setEntitySelector(selector));
 			}
 			if(currentTarget.getDistanceSqToEntity(this) > 400) {
 				this.currentTarget = null;
