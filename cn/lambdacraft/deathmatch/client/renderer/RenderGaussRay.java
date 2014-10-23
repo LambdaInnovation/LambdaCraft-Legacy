@@ -26,6 +26,16 @@ public class RenderGaussRay extends RenderEntity {
 	public static double WIDTH = 0.05F;
 	private static Tessellator tessellator = Tessellator.instance;
 	protected boolean renderColor;
+	
+	public double 
+	fpOffsetX = 0.0,
+	fpOffsetY = -0.2,
+	fpOffsetZ = -0.2;
+
+	public double 
+	tpOffsetX = 0.0,
+	tpOffsetY = -1.2,
+	tpOffsetZ = -0.4;
 
 	public RenderGaussRay(boolean hasColor) {
 		this.renderColor = hasColor;
@@ -64,11 +74,20 @@ public class RenderGaussRay extends RenderEntity {
 		else {
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 		}
+		
 		GL11.glRotatef(-90.0F + gauss.rotationYaw, 0.0F, 1.0F, 0.0F); // 左右旋转
-		GL11.glRotatef(gauss.rotationPitch, 0.0F, 0.0F, -1.0F); // 上下旋转
-		GL11.glTranslatef(0, 0.4F, 0);
-		GL11.glRotatef(7.5F, -1.0F, 0.0F, 0.0F);
-		GL11.glTranslatef(0, -0.4F, 0);
+		GL11.glRotatef(gauss.rotationPitch, 0.0F, 0.0F, 1.0F); // 上下旋转
+		
+		boolean firstPerson = Minecraft.getMinecraft().gameSettings.thirdPersonView == 0;
+		if(firstPerson) {
+			GL11.glTranslated(fpOffsetX, fpOffsetY, -fpOffsetZ);
+		} else {
+			GL11.glTranslated(tpOffsetX, tpOffsetY, -tpOffsetZ);
+		}
+		
+		//GL11.glTranslatef(0, 0.4F, 0);
+		//GL11.glRotatef(7.5F, -1.0F, 0.0F, 0.0F);
+		//GL11.glTranslatef(0, -0.4F, 0);
 		
 		// drawing>)
 		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);

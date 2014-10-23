@@ -44,11 +44,12 @@ public class CBCMod {
 
 	public static final String VERSION = "1.7.8.2";
 
-	public static final String DEPENCY_CRAFTING = "required-after:LambdaCraft|World@" + VERSION,
-			DEPENDENCY_CORE = "required-after:LambdaCraft@" + VERSION,
-			DEPENDENCY_DEATHMATCH = "required-after:LambdaCraft|DeathMatch@" + VERSION,
-			DEPENDENCY_MOB = "required-after:LambdaCraft|Living@" + VERSION,
-			DEPENCY_XEN = "required-after:LambdaCraft|Xen@" + VERSION;
+	public static final String 
+		DEPENCY_CRAFTING = "required-after:LambdaCraft|World@" + VERSION,
+		DEPENDENCY_CORE = "required-after:LambdaCraft@" + VERSION,
+		DEPENDENCY_DEATHMATCH = "required-after:LambdaCraft|DeathMatch@" + VERSION,
+		DEPENDENCY_MOB = "required-after:LambdaCraft|Living@" + VERSION,
+		DEPENCY_XEN = "required-after:LambdaCraft|Xen@" + VERSION;
 
 	@SideOnly(Side.CLIENT)
 	private Minecraft mc;

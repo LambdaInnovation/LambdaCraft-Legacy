@@ -80,11 +80,11 @@ public class CBCItems {
 		copper,
 		chip,
 		xenCrystal,
-		battery,
 		spray1[],
 		spray3;
 	
 	public static ItemMaterial materials;
+	public static ItemBattery battery;
 
 	/**
 	 * 实际注册，请在Init中调用。
@@ -128,7 +128,7 @@ public class CBCItems {
 		chip = ((CBCGenericItem)RegUtils.reg(CBCGenericItem.class, "lc_chip")).setIAndU("chip");
 		xenCrystal = ((CBCGenericItem)RegUtils.reg(CBCGenericItem.class, "lc_xcrystal")).setIAndU("xencrystal");
 		
-		battery = RegUtils.reg(ItemBattery.class, "lc_battery");
+		battery = (ItemBattery) RegUtils.reg(ItemBattery.class, "lc_battery");
 	}
 
 	/**

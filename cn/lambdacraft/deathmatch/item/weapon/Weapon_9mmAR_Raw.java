@@ -36,7 +36,7 @@ public class Weapon_9mmAR_Raw extends WeaponGenericLC {
 		super(CBCItems.ammo_9mm2);
 		setIAndU("weapon_9mmar");
 		setCreativeTab(CBCMod.cct);
-		setMaxDamage(51);
+		setMaxDamage(50);
 		
 		actionShoot = new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa");
 		actionReload = new ActionReload(60, "lambdacraft:weapons.nmmarr", "");

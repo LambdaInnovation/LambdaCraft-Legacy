@@ -122,8 +122,8 @@ public class Weapon_Gauss extends WeaponGenericLC implements ISpecialCrosshair {
 		super.onItemClick(world, player, stack, keyid);
 		if(keyid == 1) {
 			InfWeapon inf = loadInformation(player);
-			System.out.println("Executing action in " + world.isRemote);
-			inf.executeAction(actionCharge);
+			if(this.canShoot(player, stack))
+				inf.executeAction(actionCharge);
 		}
 	}
 	
@@ -150,6 +150,9 @@ public class Weapon_Gauss extends WeaponGenericLC implements ISpecialCrosshair {
 		}
 		
 		public boolean onActionEnd(World world, EntityPlayer player, InfWeapon inf, boolean isRemoved) {
+			int ticks = maxTick - inf.getTickLeft(this);
+			if(ticks < 10)
+				return false;
 			
 			if(isRemoved) {
 				//Shoot
@@ -186,6 +189,14 @@ public class Weapon_Gauss extends WeaponGenericLC implements ISpecialCrosshair {
 			} else {
 				if((ticks - intvWindup * 4 - 1) % intvCharge == 0) {
 					world.playSoundAtEntity(player, SND_CHARGE_PATH, 0.5F, 1.0F);
+				}
+			}
+			if(ticks < 57 && ticks % 6 == 0) {
+				if(player.capabilities.isCreativeMode)
+					return true;
+				int cnt = WeaponHelper.consumeAmmo(player, Weapon_Gauss.this, 1);
+				if(cnt == 1) {
+					inf.removeAction(name);
 				}
 			}
 			

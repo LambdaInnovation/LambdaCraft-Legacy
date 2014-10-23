@@ -40,7 +40,7 @@ public class Weapon_Crossbow extends WeaponGenericLC implements
 		}
 		
 		protected Entity getProjectileEntity(World world, EntityPlayer player) {
-			return new EntityCrossbowArrow(world, player, getMode(player.getCurrentEquippedItem()) == 0);
+			return world.isRemote ? null : new EntityCrossbowArrow(world, player, getMode(player.getCurrentEquippedItem()) == 0);
 		}
 		
 	}
@@ -53,7 +53,7 @@ public class Weapon_Crossbow extends WeaponGenericLC implements
 		setUnlocalizedName("weapon_crossbow");
 		setCreativeTab(CBCMod.cct);
 		setMaxStackSize(1);
-		setMaxDamage(6);
+		setMaxDamage(5);
 		setNoRepair();
 		iconName = "weapon_crossbow";
 		

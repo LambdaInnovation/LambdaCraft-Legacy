@@ -92,7 +92,7 @@ public class EntityMedkit extends Entity {
 					player.addPotionEffect(eff);
 			}
 		}
-		this.playSound("cbc.entities.medkit", 0.5F, 1.0F);
+		this.playSound("lambdacraft:entities.medkit", 0.5F, 1.0F);
 		int damage = this.getEntityData().getInteger("damage");
 		if (damage < 25 && spawnItem)
 			worldObj.spawnEntityInWorld(new EntityItem(worldObj, posX, posY,

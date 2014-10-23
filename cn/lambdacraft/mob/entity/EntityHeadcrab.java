@@ -84,7 +84,7 @@ public class EntityHeadcrab extends LIEntityMob implements
 		this.motionX = 0.0;
 		this.motionZ = 0.0;
 		// Attaching on
-		if (par1Entity instanceof EntityPlayer) {
+		if (par1Entity instanceof EntityPlayer && !worldObj.isRemote) {
 			EntityPlayer player = (EntityPlayer) par1Entity;
 			ItemStack armorStack = player.inventory.armorInventory[3];
 			if (armorStack == null) {
@@ -114,11 +114,14 @@ public class EntityHeadcrab extends LIEntityMob implements
 		if(!this.dead) {
 			if (worldObj.isRemote) {
 				int id = dataWatcher.getWatchableObjectInt(20);
-				Entity e = worldObj.getEntityByID(id);
-				if (e == null || e instanceof EntityLivingBase) //一个逻辑判断解决一大个bug（笑
-					attacher = (EntityLivingBase) e;
+				if(id != -1) {
+					Entity e = worldObj.getEntityByID(id);
+					if (e == null || e instanceof EntityLivingBase)
+						attacher = (EntityLivingBase) e;
+				}
 			} else {
-				dataWatcher.updateObject(20, Integer.valueOf(0));
+				dataWatcher.updateObject(20, Integer.valueOf(
+						attacher == null ? -1 : attacher.getEntityId()));
 			}
 		
 			if (attacher != null) {
@@ -135,7 +138,8 @@ public class EntityHeadcrab extends LIEntityMob implements
 					dataWatcher.updateObject(20, Integer.valueOf(attacher.getEntityId()));
 					tickSinceBite = 0;
 					float health = attacher.getHealth() - 1;
-					if (!(attacher instanceof EntityPlayer && ((EntityPlayer) attacher).capabilities.isCreativeMode)) {
+					if (!(attacher instanceof EntityPlayer && 
+							((EntityPlayer) attacher).capabilities.isCreativeMode)) {
 						attacher.setHealth(health);
 
 						if (health <= 0 && !worldObj.isRemote) {
@@ -147,11 +151,12 @@ public class EntityHeadcrab extends LIEntityMob implements
 									this, false);
 								dataWatcher.updateObject(20, Integer.valueOf(0));
 								this.setDead();
+								return;
 							}
 						}
 					}
 				}
-				if (attacher != null && attacher.isDead) {
+				if (attacher.isDead) {
 					attacher = null;
 				}
 			}

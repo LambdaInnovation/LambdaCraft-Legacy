@@ -22,7 +22,7 @@ public class Weapon_Shotgun extends WeaponGenericLC {
 		super(CBCItems.ammo_shotgun);
 
 		setIAndU("weapon_shotgun");
-		setMaxDamage(9);
+		setMaxDamage(8);
 		setCreativeTab(CBCMod.cct);
 
 		actionShoot = new ActionBuckshot(2, 5, "lambdacraft:weapons.sbarrela").setShootRate(20);

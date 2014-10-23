@@ -17,6 +17,7 @@ import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionAutomaticShoot;
 import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionShoot;
+import cn.weaponmod.api.action.ActionUplift;
 import cn.weaponmod.api.information.InfUtils;
 import cn.weaponmod.api.information.InfWeapon;
 import cpw.mods.fml.relauncher.Side;
@@ -86,6 +87,7 @@ public class Weapon_Egon extends WeaponGenericLC implements ISpecialCrosshair {
 		setUnlocalizedName("weapon_egon");
 		iconName = "weapon_egon";
 		
+		actionUplift = new ActionUplift(0, 0, 0, 0);
 		actionShoot = new ActionEgonShoot();
 	}
 

@@ -54,7 +54,7 @@ public class EntityBulletGaussSec extends EntityBullet {
 		if (typeOfRay == EnumGaussRayType.NORMAL) {
 			damage = dmg;
 			worldObj.spawnEntityInWorld(new EntityGaussRayColored(
-					new Motion3D(this, true), worldObj));
+					new Motion3D(entityLivingBase, true), worldObj));
 			return;
 		} else {
 			real = new Motion3D(result.hitVec, motion.motionX, motion.motionY,
@@ -101,7 +101,7 @@ public class EntityBulletGaussSec extends EntityBullet {
 		this.setThrowableHeading(motionX, motionY, motionZ,
 				this.func_70182_d(), 1.0F);
 		if (!worldObj.isRemote) {
-			worldObj.spawnEntityInWorld(new EntityGaussRay(new Motion3D(this, true), worldObj));
+			worldObj.spawnEntityInWorld(new EntityGaussRay(new Motion3D(this, false), worldObj));
 		}
 	}
 
