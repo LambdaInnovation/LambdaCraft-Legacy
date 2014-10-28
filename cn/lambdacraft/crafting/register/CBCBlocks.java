@@ -65,9 +65,9 @@ public class CBCBlocks {
 		GameRegistry.registerBlock(oreTin, "lc_oretin");
 		GameRegistry.registerBlock(oreCopper, "lc_orecopper");
 		
-		//elCrafter = new BlockElectricCrafter();
-		//GameRegistry.registerBlock(elCrafter, "lc_elcrafter");
-		//GameRegistry.registerTileEntity(TileElCrafter.class, "tile_entity_elcrafter");
+		elCrafter = new BlockElectricCrafter();
+		GameRegistry.registerBlock(elCrafter, "lc_elcrafter");
+		GameRegistry.registerTileEntity(TileElCrafter.class, "tile_entity_elcrafter");
 		
 		GameRegistry.registerBlock(wire, "lc_wire");
 		GameRegistry.registerBlock(storageS, "lc_storages");

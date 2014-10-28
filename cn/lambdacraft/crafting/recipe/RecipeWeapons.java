@@ -26,7 +26,6 @@ public class RecipeWeapons {
 	 * 加入规则：
 	 * index大的一定拥有index小的recipe
 	 */
-	
 	public static final int
 		ID_NORMAL_CRAFTER = 0,
 		ID_ADVANCED_CRAFTER = 1,
@@ -47,8 +46,8 @@ public class RecipeWeapons {
 	}
 	
 	public static void addRecipe(int mid, int pid, ICrafterRecipe... recipes) {
-		for(int i = mid; i >= 0; --i) {
-			MachineRecipes machine = machineList.get(mid);
+		for(int i = mid; i <= 2; ++i) {
+			MachineRecipes machine = machineList.get(i);
 			machine.insertRecipe(pid, recipes);
 		}
 	}

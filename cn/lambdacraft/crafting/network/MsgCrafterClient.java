@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import cn.lambdacraft.crafting.block.crafter.TileCrafterBase;
 import cn.lambdacraft.crafting.block.crafter.TileWeaponCrafter;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -63,9 +64,9 @@ public class MsgCrafterClient implements IMessage {
 			TileEntity te = p.worldObj.getTileEntity(msg.blockX, msg.blockY, msg.blockZ);
 			if (te != null && !te.getWorldObj().isRemote) {
 				if (msg.id == 0) {
-					((TileWeaponCrafter) te).addScrollFactor(msg.direction);
+					((TileCrafterBase) te).addScrollFactor(msg.direction);
 				} else {
-					((TileWeaponCrafter) te).addPage(msg.direction);
+					((TileCrafterBase) te).addPage(msg.direction);
 				}
 			}
 			return null;

@@ -64,7 +64,7 @@ public class CrafterRecipeNormal implements ICrafterRecipe {
 				continue;
 			
 			//迭代输入并消耗~~
-			for(int j = 0; j < 3; ++j) {
+			for(int j = 0; j < 3 && j < input.length; ++j) {
 				ItemStack inp = input[j];
 				if(inp == null)
 					continue;

@@ -27,7 +27,7 @@ import net.minecraft.inventory.Slot;
  * @author WeAthFolD
  * 
  */
-public class ContainerElCrafter extends ContainerWeaponCrafter {
+public class ContainerElCrafter extends ContainerCrafterBase {
 
 	protected TileElCrafter tileEntity;
 
@@ -41,7 +41,7 @@ public class ContainerElCrafter extends ContainerWeaponCrafter {
 	}
 
 	@Override
-	protected void addSlots(TileWeaponCrafter te) {
+	protected void addSlots(TileCrafterBase te) {
 		// Crafting recipe slot
 		for (int i = 0; i < 3; i++) {
 			// output:0 4 8
@@ -52,9 +52,7 @@ public class ContainerElCrafter extends ContainerWeaponCrafter {
 				addSlotToContainer(new SlotLocked(te, j + i * 3, 6 + 18 * j,
 						14 + 18 * i));
 			}
-
 		}
-
 		addSlotToContainer(new Slot(te, 13, 95, 50));
 		addSlotToContainer(new SlotResult(te, 12, 95, 14));
 		// Block Storage
@@ -84,33 +82,18 @@ public class ContainerElCrafter extends ContainerWeaponCrafter {
 		super.detectAndSendChanges();
 		for (int i = 0; i < this.crafters.size(); ++i) {
 			ICrafting icrafting = (ICrafting) this.crafters.get(i);
-			icrafting.sendProgressBarUpdate(this, 0, tileEntity.currentPage);
-			icrafting.sendProgressBarUpdate(this, 1,
-					tileEntity.iconType.ordinal());
-			icrafting.sendProgressBarUpdate(this, 2,
+			icrafting.sendProgressBarUpdate(this, 4,
 					tileEntity.currentEnergy / 3);
-			icrafting.sendProgressBarUpdate(this, 3, tileEntity.heat);
-			if (tileEntity.currentRecipe != null) {
-				icrafting.sendProgressBarUpdate(this, 4,
-						tileEntity.currentRecipe.heatRequired);
-			} else
-				icrafting.sendProgressBarUpdate(this, 4, 0);
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void updateProgressBar(int par1, int par2) {
-		if (par1 == 0) {
-			tileEntity.currentPage = Math.abs(par2);
-		} else if (par1 == 1) {
-			tileEntity.iconType = CrafterIconType.values()[par2];
-		} else if (par1 == 2) {
+		super.updateProgressBar(par1, par2);
+		if (par1 == 4) {
 			tileEntity.currentEnergy = par2 * 3;
-		} else if (par1 == 3) {
-			tileEntity.heat = par2;
-		} else if (par1 == 4)
-			tileEntity.heatRequired = par2;
+		}
 	}
 
 }

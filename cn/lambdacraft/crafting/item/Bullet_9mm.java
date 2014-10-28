@@ -10,6 +10,7 @@ public class Bullet_9mm extends CBCGenericItem {
 		setCreativeTab(CBCMod.cct);
 		setIAndU("bullet_9mm");
 		setMaxStackSize(64);
+		System.out.println("FFFFFF:" + this.getMaxDamage());
 	}
 
 }

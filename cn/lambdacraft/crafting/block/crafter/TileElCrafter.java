@@ -16,34 +16,28 @@ package cn.lambdacraft.crafting.block.crafter;
 
 import ic2.api.energy.event.EnergyTileLoadEvent;
 import ic2.api.energy.tile.IEnergySink;
-
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
-import cn.lambdacraft.api.energy.events.EnergyTileSourceEvent;
 import cn.lambdacraft.core.util.EnergyUtils;
-import cn.lambdacraft.crafting.block.crafter.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.item.ItemMaterial;
-import cn.lambdacraft.crafting.recipe.CrafterRecipeNormal;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
+import cn.liutils.api.energy.event.EnergyTileSourceEvent;
 
 /**
  * @author WeAthFolD, Rikka
  * 
  */
-public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
+public class TileElCrafter extends TileCrafterBase implements IEnergySink {
 
 	/**
 	 * 最大存储
 	 */
 	public static int MAX_STORAGE = 80000;
-
 	public int currentEnergy;
-	public boolean isLoad = false;
+	public boolean isNetLoad = false;
 
 	public TileElCrafter() {
 		super();
@@ -52,51 +46,21 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 
 	@Override
 	public void updateEntity() {
-		if (!isLoad) {
+		if (!isNetLoad) {
 			this.onECNetLoad();
-			isLoad = true;
-			this.writeRecipeInfoToSlot();
+			isNetLoad = true;
 		}
-
-		if(worldObj.isRemote) {
-			if(isBuffering) {
-				if(heatForRendering < heat) {
-					heatForRendering += BUFFER_SPEED;
-					if(heatForRendering >= heat) {
-						heatForRendering = heat;
-						isBuffering = false;
-					}
-				} else {
-					heatForRendering -= BUFFER_SPEED;
-					if(heatForRendering <= heat) {
-						heatForRendering = heat;
-						isBuffering = false;
-					}
-				}
-			} else if(Math.abs(heat - heatForRendering) > 300) {
-				isBuffering = true;
-			} else heatForRendering = heat;
-			return;
-		}
-
-		if (heat > 0)
-			heat--;
-
-		if (iconType == CrafterIconType.NOMATERIAL
-				&& worldObj.getWorldTime() - lastActionTime > 20) {
-			iconType = isCrafting ? CrafterIconType.CRAFTING
-					: CrafterIconType.NONE;
-		}
-
-		if (isCrafting && currentRecipe != null) {
-			if (currentRecipe.heatRequired <= this.heat
-					&& hasEnoughMaterial(currentRecipe)) {
-				craftItem();
-			}
-			if (currentEnergy >= 7) {
-				currentEnergy -= 14;
-				heat += 6;
-			}
+		//System.out.println("HR:" + heatRequired);
+		super.updateEntity();
+		
+		//System.out.println(worldObj.isRemote + " " + heat + " " + heatRequired);
+		if(isCrafting && this.heat < this.heatRequired) {
+			double enereq = 14;
+			enereq = Math.min(enereq, currentEnergy);
+			currentEnergy -= enereq;
+			//System.out.println("Heating " + worldObj.isRemote + " " + currentRecipe);
+			this.heat += (int) (enereq * 3 / 7.0);
+			//System.out.println("CM " + enereq + "HEAT " + heat);
 		}
 
 		int energyReq = MAX_STORAGE - currentEnergy;
@@ -106,32 +70,10 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 			if (inventory[1].stackSize <= 0)
 				inventory[1] = null;
 		}
-
-		//if (++this.tickUpdate > 3)
-		//	this.onInventoryChanged();
 	}
 	
 	protected void onECNetLoad() {
 		MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
-	}
-
-	@Override
-	protected void writeRecipeInfoToSlot() {
-		clearRecipeInfo();
-		int length;
-		length = RecipeWeapons.getECRecipeLength(this.currentPage);
-
-		for (int i = 0; i < length && i < 3; i++) {
-			CrafterRecipeNormal r = RecipeWeapons.getECRecipe(this.currentPage, i
-					+ scrollFactor);
-			if (r == null)
-				return;
-			for (int j = 0; j < 3; j++) {
-				if (r.input.length > j)
-					this.setInventorySlotContents(j + i * 3, r.input[j]);
-			}
-			this.setInventorySlotContents(9 + i, r.output);
-		}
 	}
 
 	@Override
@@ -162,51 +104,6 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("energy", currentEnergy);
-	}
-
-	@Override
-	public void addScrollFactor(boolean isForward) {
-		if (!RecipeWeapons.doesECNeedScrollBar(currentPage))
-			return;
-		List<CrafterRecipeNormal> recipes[] = RecipeWeapons.recipeEC;
-		if (isForward) {
-			if (scrollFactor < recipes[currentPage].size() - 3) {
-				scrollFactor++;
-			}
-		} else {
-			if (scrollFactor > 0) {
-				scrollFactor--;
-			}
-		}
-		this.writeRecipeInfoToSlot();
-	}
-
-	@Override
-	public void addPage(boolean isForward) {
-		List<CrafterRecipeNormal> recipes[] = RecipeWeapons.recipeEC;
-		if (isForward) {
-			if (currentPage < recipes.length - 1) {
-				currentPage++;
-			}
-		} else {
-			if (currentPage > 0) {
-				currentPage--;
-			}
-		}
-		scrollFactor = 0;
-		this.writeRecipeInfoToSlot();
-	}
-
-	@Override
-	public CrafterRecipeNormal getRecipeBySlot(int slot, int factor) {
-		int i = 0;
-		if (slot == 0)
-			i = 0;
-		if (slot == 4)
-			i = 1;
-		if (slot == 8)
-			i = 2;
-		return RecipeWeapons.getECRecipe(currentPage, factor + i);
 	}
 
 	public int sendEnergy(int amm) {
@@ -240,6 +137,13 @@ public class TileElCrafter extends TileWeaponCrafter implements IEnergySink {
 	@Override
 	public int getMaxSafeInput() {
 		return 128;
+	}
+
+	@Override
+	protected boolean onCrafterLoad() {
+		this.recipes = RecipeWeapons.getMachineRecipes(2);
+		this.writeRecipeInfoToSlot();
+		return true;
 	}
 
 }

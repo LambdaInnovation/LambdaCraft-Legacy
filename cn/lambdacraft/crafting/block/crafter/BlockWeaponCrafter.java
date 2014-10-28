@@ -70,7 +70,7 @@ public class BlockWeaponCrafter extends CBCBlockContainer {
 
 	@Override
 	public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
-		TileWeaponCrafter te = (TileWeaponCrafter) world.getTileEntity(x, y, z);
+		TileCrafterBase te = (TileCrafterBase) world.getTileEntity(x, y, z);
 		dropItems(world, x, y, z, te.inventory);
 		
 		super.breakBlock(world, x, y, z, par5, par6);
@@ -83,9 +83,9 @@ public class BlockWeaponCrafter extends CBCBlockContainer {
 	@Override
 	public void randomDisplayTick(World par1World, int par2, int par3,
 			int par4, Random par5Random) {
-		TileWeaponCrafter te = (TileWeaponCrafter) par1World
+		TileCrafterBase te = (TileCrafterBase) par1World
 				.getTileEntity(par2, par3, par4);
-		if (te.isBurning) {
+		if (te instanceof TileWeaponCrafter && ((TileWeaponCrafter)te).isBurning) {
 			int l = par1World.getBlockMetadata(par2, par3, par4);
 			float f = par2 + 0.5F;
 			float f1 = par3 + 0.0F + par5Random.nextFloat() * 6.0F / 16.0F;

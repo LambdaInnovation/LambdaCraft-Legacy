@@ -61,7 +61,7 @@ public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergy
 		if (worldObj.isRemote)
 			return;
 
-		System.out.println(currentEnergy);
+		//System.out.println(currentEnergy);
 		
 		// emit the energy frequently
 		int amt = Math.min(32, currentEnergy);

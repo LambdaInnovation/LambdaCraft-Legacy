@@ -112,6 +112,8 @@ public class GuiElectricCrafter extends GuiContainerSP {
 				drawTexturedModalRect(x + 136, y + 63 - height, 207, 1, 6, 3);
 			}
 		}
+		
+		this.drawElements(i, j);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glPopMatrix();
 	}

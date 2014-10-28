@@ -35,38 +35,16 @@ import cn.weaponmod.api.WeaponHelper;
  * 武器合成机和高级武器合成机的TileEntity类。
  * @author WeAthFolD
  */
-public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
+public class TileWeaponCrafter extends TileCrafterBase {
 	
 	public static final int 
-		BUFFER_SPEED = 20,
 		MAX_HEAT_NORMAL = 4000,
 		MAX_HEAT_ADVANCED = 7000;
-	
-	public CrafterIconType iconType = CrafterIconType.NONE; //当前提示icon状态
-	public ItemStack[] inventory = new ItemStack[20];
-	public ItemStack[] craftingStacks = new ItemStack[12];
-	protected MachineRecipes recipes; //合成数据表
 
-	/**
-	 * 最大存储热量。
-	 */
-	public int maxHeat;
-	public int scrollFactor = 0; //滚动进度(0 ~ max{0, pageSize - 3})
-	public int currentPage = 0; //页面序号
-	public int 
-		heat,
-		burnTimeLeft,
-		maxBurnTime;
-	public ICrafterRecipe currentRecipe;
-	public int heatForRendering = 0; //缓存显示以防止突变
-	
-	protected long lastActionTime = 0; //上次动作的时间
-	private boolean isHeatBuffering;
-	protected boolean isCrafting, isBurning;
+	public int burnTimeLeft,
+			maxBurnTime;
+	protected boolean isBurning;
 	protected boolean isAdvanced;
-	protected boolean isLoaded;
-
-	public int heatRequired = 0; //用于客户端同步，是当前recipe所需热量
 
 	/**
 	 * inventory: 1-18：材料存储 19:燃料槽 20:合成结果槽
@@ -89,170 +67,23 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 			blockType.setLightLevel(0.4F);
 		}
 	}
-
-	/**
-	 * 被Container所调用，开始合成进程。
-	 */
-	public void startCrafting(int slot) {
-		ICrafterRecipe r = getRecipeBySlot(slot);
-		if (r == null)
-			return;
-		
-		if (r.doCrafting(inventory, true) != null) {
-			resetCraftingState();
-			iconType = CrafterIconType.CRAFTING;
-			this.isCrafting = true;
-			this.currentRecipe = r;
-		} else {
-			iconType = CrafterIconType.NOMATERIAL;
-		}
-		lastActionTime = worldObj.getWorldTime();
-	}
-
-	/**
-	 * 热量达到要求后进行实际的合成操作
-	 */
-	protected void craftItem() {
-		if (this.currentRecipe == null) {
-			resetCraftingState();
-			return;
-		}
-		
-		ItemStack output = currentRecipe.doCrafting(inventory, false);
-		
-		lastActionTime = worldObj.getWorldTime();
-		iconType = CrafterIconType.NOMATERIAL;
-		if(output != null) {
-			if(inventory[0] != null) {
-				inventory[0].stackSize += output.stackSize;
-			} else
-				inventory[0] = output;
-			iconType = CrafterIconType.NONE;
-		}
-		
-		resetCraftingState();
-	}
-
-	protected void writeRecipeInfoToSlot() {
-		clearRecipeInfo();
-		
-		int length = recipes.getRecipeSize(currentPage);
-
-		for (int i = 0; i < length - scrollFactor && i < 3; i++) {
-			ICrafterRecipe r = recipes.queryRecipe(currentPage, i + scrollFactor);
-			if (r == null)
-				return;
-			
-			for (int j = 0; j < 3; j++) {
-				if (r.getInputForDisplay().length > j)
-					this.setInventorySlotContents(j + i * 3, r.getInputForDisplay()[j]);
-			}
-			this.setInventorySlotContents(9 + i, r.getOutputForDisplay());
-		}
-	}
-
-	protected void clearRecipeInfo() {
-		for (int i = 0; i < 12; i++) {
-			this.setInventorySlotContents(i, null);
-		}
-	}
-	
-	protected void resetCraftingState() {
-		isCrafting = false;
-		currentRecipe = null;
-		iconType = CrafterIconType.NONE;
-	}
-
-	/**
-	 * 根据点击的槽获取对应的合成表
-	 * @param slot
-	 * @param factor
-	 * @return
-	 */
-	protected ICrafterRecipe getRecipeBySlot(int slot) {
-		int i = (slot + 1) % 4;
-		return recipes.queryRecipe(this.currentPage, i + scrollFactor);
-	}
-	
-	//----------BUTTONRESPONSE------------------
-	
-	public void addPage(boolean isForward) {
-		if (isForward) {
-			if (currentPage < recipes.getPageSize() - 1) {
-				currentPage++;
-			}
-		} else {
-			if (currentPage > 0) {
-				currentPage--;
-			}
-		}
-		scrollFactor = 0;
-		
-		this.writeRecipeInfoToSlot();
-	}
-
-	public void addScrollFactor(boolean isForward) {
-		int direction = isForward ? 1 : -1;
-		scrollFactor += direction;
-		if(scrollFactor < 0)
-			scrollFactor = 0;
-		else if(scrollFactor > 
-			recipes.getMaxScrollFactor(currentPage))
-			scrollFactor = recipes.getMaxScrollFactor(currentPage);
-		
-		this.writeRecipeInfoToSlot();
-	}
 	
 	//------------------TICKUPDATE-------------------------
 	@Override
 	public void updateEntity() {
-		
-		if (!isLoaded) {
-			if (this.getBlockType() == null)
-				return;
-			isAdvanced = !(this.blockType == CBCBlocks.weaponCrafter);
-			recipes = RecipeWeapons.getMachineRecipes(isAdvanced ? 1 : 0);
-			this.maxHeat = isAdvanced ? MAX_HEAT_ADVANCED : MAX_HEAT_NORMAL;
-			this.writeRecipeInfoToSlot();
-			isLoaded = true;
-		}
-		
-		if(worldObj.isRemote) {
-			updateClient();
-			return;
-		}
+		super.updateEntity();
 
 		//热量下降
 		if (heat > 0)
 			heat--;
-
-		//图标状态更新
-		if (iconType == CrafterIconType.NOMATERIAL &&
-			worldObj.getWorldTime() - lastActionTime > 20) {
-			iconType = isCrafting ? CrafterIconType.CRAFTING : CrafterIconType.NONE;
-		}
-
-		//合成状态检查
-		if (isCrafting) {
-			if (currentRecipe.getHeatConsumed() <= this.heat
-			 && currentRecipe.doCrafting(inventory, true) != null) {
-				craftItem();
-			}
-			if (!isBurning) {
-				tryBurn();
-			}
-			if (worldObj.getWorldTime() - lastActionTime > 1000) {
-				isCrafting = false;
-			}
-		}
+		
+		if(!worldObj.isRemote && isCrafting && !isBurning)
+			tryBurn();
 
 		//燃烧状态检查
 		if (isBurning) {
 			burnTimeLeft--;
-			if (heat < maxHeat)
-				heat += 3;
-			if(heat > maxHeat)
-				heat = maxHeat;
+			heat = Math.min(maxHeat, heat + 3);
 			if (burnTimeLeft <= 0) {
 				isBurning = false;
 			}
@@ -260,125 +91,21 @@ public class TileWeaponCrafter extends CBCTileEntity implements IInventory {
 		
 	}
 	
-	protected void updateClient() {
-		//热量显示缓冲
-		if(isHeatBuffering) {
-			if(heatForRendering < heat) {
-				heatForRendering += BUFFER_SPEED;
-				if(heatForRendering >= heat) {
-					heatForRendering = heat;
-					isHeatBuffering = false;
-				}
-			} else {
-				heatForRendering -= BUFFER_SPEED;
-				if(heatForRendering <= heat) {
-					heatForRendering = heat;
-					isHeatBuffering = false;
-				}
-			}
-		} else if(Math.abs(heat - heatForRendering) > 300) {
-			isHeatBuffering = true;
-		} else heatForRendering = heat;
-	}
-	
 	//---------------------MISC---------------------
 	@Override
 	public String getInventoryName() {
 		return "lambdacraft:weaponcrafter";
 	}
-
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-
-	@Override
-	public boolean hasCustomInventoryName() {
-		return false;
-	}
 	
 	@Override
-	public int getSizeInventory() {
-		return inventory.length;
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int i) {
-		if (i >= 12)
-			return inventory[i - 12];
-		return craftingStacks[i];
-	}
-	
-	@Override
-	public ItemStack getStackInSlotOnClosing(int slot) {
-		ItemStack stack = getStackInSlot(slot);
-		if (stack != null) {
-			setInventorySlotContents(slot, null);
-		}
-		return stack;
-	}
-	
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		return entityplayer.getDistanceSq(
-				xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) <= 64;
-	}
-
-	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+	protected boolean onCrafterLoad() {
+		if (this.getBlockType() == null)
+			return false;
+		isAdvanced = !(this.blockType == CBCBlocks.weaponCrafter);
+		recipes = RecipeWeapons.getMachineRecipes(isAdvanced ? 1 : 0);
+		this.maxHeat = isAdvanced ? MAX_HEAT_ADVANCED : MAX_HEAT_NORMAL;
+		this.writeRecipeInfoToSlot();
 		return true;
-	}
-
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		if (i < 12)
-			craftingStacks[i] = itemstack;
-		else
-			inventory[i - 12] = itemstack;
-	}
-
-	@Override
-	public void openInventory() {}
-
-	@Override
-	public void closeInventory() {}
-	
-	@Override
-	public ItemStack decrStackSize(int slot, int amt) {
-		ItemStack stack = getStackInSlot(slot);
-		if (stack != null) {
-			if (stack.stackSize <= amt) {
-				setInventorySlotContents(slot, null);
-			} else {
-				stack = stack.splitStack(amt);
-				if (stack.stackSize == 0) {
-					setInventorySlotContents(slot, null);
-				}
-			}
-		}
-		return stack;
-	}
-	
-	/**
-	 * Reads a tile entity from NBT.
-	 */
-	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		inventory = restoreInventory(nbt, "inv", 20);
-		this.currentPage = nbt.getByte("page");
-		this.scrollFactor = nbt.getShort("scroll");
-	}
-
-	/**
-	 * Writes a tile entity to NBT.
-	 */
-	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		storeInventory(nbt, inventory, "inv");
-		nbt.setByte("page", (byte) currentPage);
-		nbt.setShort("scroll", (short) scrollFactor);
 	}
 
 }
