@@ -151,9 +151,8 @@ public class ModuleCrafting {
 						600,CBCItems.materials.newStack(1, EnumMaterial.LIGHT),CBCItems.materials.newStack(2, EnumMaterial.EXPLOSIVE)),
 				new CrafterRecipeNormal(new ItemStack(CBCItems.ammo_rpg, 6), 1500,CBCItems.materials.newStack(1, EnumMaterial.HEAVY),CBCItems.materials.newStack(3, EnumMaterial.EXPLOSIVE)),
 				new CrafterRecipeNormal(new ItemStack(CBCItems.ammo_uranium, 1),
-						1500, CBCItems.materials.newStack(1, EnumMaterial.BOX),new ItemStack(CBCItems.ingotUranium, 3)),
-				new RecipeRepair(CBCItems.ammo_bow, CBCItems.bullet_steelbow),
-				new RecipeRepair(CBCItems.ammo_uranium, CBCItems.ingotUranium,33) },
+						1500, CBCItems.materials.newStack(1, EnumMaterial.BOX),new ItemStack(CBCItems.ingotUranium, 3))
+		},
 		// 电力合成机独有 装备合成表
 		armors[] = {
 				new CrafterRecipeNormal(new ItemStack(DMItems.armorHEVBoot), 6000,

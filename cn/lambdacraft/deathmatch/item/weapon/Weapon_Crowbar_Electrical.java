@@ -33,6 +33,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.item.LCElectItemManager;
+import cn.weaponmod.api.feature.IClickHandler;
 import cn.weaponmod.api.feature.IModdable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -41,7 +42,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  *
  */
-public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecialElectricItem, IModdable {
+public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecialElectricItem, IModdable, IClickHandler {
 
 
 	public Weapon_Crowbar_Electrical() {
@@ -173,6 +174,26 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecia
 	@Override
 	public Item getEmptyItem(ItemStack itemStack) {
 		return this;
+	}
+
+	@Override
+	public void onItemClick(World world, EntityPlayer player, ItemStack stack,
+			int keyid) {
+	}
+
+	@Override
+	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,
+			int keyid) {
+		if(keyid == 1) {
+			this.onModeChange(stack, pl, (getMode(stack) + 1) % 2);
+		}
+	}
+
+	@Override
+	public void onItemUsingTick(World world, EntityPlayer player,
+			ItemStack stack, int keyid, int ticks) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

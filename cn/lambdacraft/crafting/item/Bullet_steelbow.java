@@ -12,6 +12,6 @@ public class Bullet_steelbow extends CBCGenericItem {
 		super();
 		setCreativeTab(CBCMod.cct);
 		setUnlocalizedName("bullet_steelbow");
-		setTextureName("lambdacraft:steelbow");
+		setIconName("steelbow");
 	}
 }

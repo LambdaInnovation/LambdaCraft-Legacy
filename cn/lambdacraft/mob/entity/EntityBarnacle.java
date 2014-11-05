@@ -195,7 +195,7 @@ public class EntityBarnacle extends LIEntityMob {
 		} else detach = false;
 		
 		//Disappear if in peaceful
-		if(!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.EASY)
+		if(!worldObj.isRemote && worldObj.difficultySetting == EnumDifficulty.PEACEFUL)
 			this.setDead();
 	}
 	

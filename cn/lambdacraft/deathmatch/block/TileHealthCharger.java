@@ -103,14 +103,7 @@ public class TileHealthCharger extends TileElectricStorage implements IInventory
 
 	public TileHealthCharger() {
 		super(2, ENERGY_MAX);
-		try {
-			if(fldDuration == null) {
-				this.fldDuration = PotionEffect.class.getDeclaredField("duration");
-				fldDuration.setAccessible(true);
-			}
-		} catch(Exception e) {
-			//NOPE
-		}
+		
 	}
 
 	@Override
@@ -238,6 +231,16 @@ public class TileHealthCharger extends TileElectricStorage implements IInventory
 	}
 
 	public static Field fldDuration;
+	static {
+		try {
+			if(fldDuration == null) {
+				fldDuration = PotionEffect.class.getDeclaredField("duration");
+				fldDuration.setAccessible(true);
+			}
+		} catch(Exception e) {
+			//NOPE
+		}
+	}
 	
 	public void doHealing(EntityPlayer charger) {
 		if (mainEff > 0 && charger.getHealth() < 20) {

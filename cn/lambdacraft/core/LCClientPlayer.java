@@ -1,5 +1,7 @@
 package cn.lambdacraft.core;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.GameSettings;
@@ -8,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import cn.lambdacraft.core.item.ElectricArmor;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
 import cn.lambdacraft.deathmatch.item.ArmorHEV.EnumAttachment;
 import cn.lambdacraft.deathmatch.register.DMItems;
@@ -33,8 +36,11 @@ public class LCClientPlayer {
 	public static boolean drawArmorTip = false;
 	public static boolean armorStat[] = new boolean[4];
 	
-	ArmorHEV hevHead = DMItems.armorHEVHelmet, hevChest = DMItems.armorHEVChestplate,
-			hevBoots = DMItems.armorHEVBoot, hevLeggings = DMItems.armorHEVLeggings;
+	ArmorHEV 
+		hevHead = DMItems.armorHEVHelmet,
+		hevChest = DMItems.armorHEVChestplate,
+		hevBoots = DMItems.armorHEVBoot,
+		hevLeggings = DMItems.armorHEVLeggings;
 	
 	public LCClientPlayer() {
 		gameSettings = Minecraft.getMinecraft().gameSettings;
@@ -99,9 +105,9 @@ public class LCClientPlayer {
 	 * 自建跳跃，长跳包支持。
 	 */
 	public void jump() {
-		
+		//System.out.println(Keyboard.isKeyDown(ClientProps.KEY_ID_LONGJUMP_READY));
 		ItemStack slotChestplate = player.inventory.armorInventory[2];
-		if (slotChestplate != null && player.isSneaking()) {
+		if (slotChestplate != null && Keyboard.isKeyDown(ClientProps.KEY_ID_LONGJUMP_READY)) {
 			Item item = slotChestplate.getItem();
 			if (item instanceof ArmorHEV) {
 				ArmorHEV hev = (ArmorHEV) item;

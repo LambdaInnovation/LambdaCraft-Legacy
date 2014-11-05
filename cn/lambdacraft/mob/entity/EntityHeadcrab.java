@@ -118,7 +118,7 @@ public class EntityHeadcrab extends LIEntityMob implements
 					Entity e = worldObj.getEntityByID(id);
 					if (e == null || e instanceof EntityLivingBase)
 						attacher = (EntityLivingBase) e;
-				}
+				} else attacher = null;
 			} else {
 				dataWatcher.updateObject(20, Integer.valueOf(
 						attacher == null ? -1 : attacher.getEntityId()));

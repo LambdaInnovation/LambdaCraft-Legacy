@@ -50,7 +50,9 @@ public class ClientProxy extends Proxy {
 	
 	@Override
 	public void preInit() {
-		LIKeyProcess.addKey("key.cbcuse", Keyboard.KEY_F, true, new KeyUse());
+		ClientProps.loadProps(CBCMod.config);
+		
+		LIKeyProcess.addKey("key.cbcuse", ClientProps.KEY_ID_USE_BLOCK, true, new KeyUse());
 	}
 	
 	@Override
@@ -61,7 +63,6 @@ public class ClientProxy extends Proxy {
 		FMLCommonHandler.instance().bus().register(lcPlayer);
 		
 		RenderingRegistry.registerBlockHandler(new RenderEmptyBlock());
-		ClientProps.loadProps(CBCMod.config);
 		
 		//Records copy
 		File file;

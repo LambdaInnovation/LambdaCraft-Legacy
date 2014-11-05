@@ -34,6 +34,7 @@ import cn.lambdacraft.crafting.item.SteelBar;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
 import cn.lambdacraft.deathmatch.item.ItemAttachment;
 import cn.lambdacraft.deathmatch.item.ItemBattery;
+import cn.lambdacraft.deathmatch.item.RecipeMedkitFill;
 import cn.lambdacraft.deathmatch.item.ammos.Ammo_357;
 import cn.lambdacraft.deathmatch.item.ammos.Ammo_9mm;
 import cn.lambdacraft.deathmatch.item.ammos.Ammo_9mm2;
@@ -149,71 +150,81 @@ public class CBCItems {
 		OreDictionary.registerOre("ingotCopper", copper);
 
 		//Resources
-		ItemStack iSmaterials_1_0 = new ItemStack(CBCItems.materials, 1, 0), iSmaterials_1_1 = new ItemStack(
-				CBCItems.materials, 1, 1), iSmaterials_1_2 = new ItemStack(
-				CBCItems.materials, 1, 2), iSmaterials_1_3 = new ItemStack(
-				CBCItems.materials, 1, 3), iSmaterials_1_4 = new ItemStack(
-				CBCItems.materials, 1, 4), iSmaterials_1_5 = new ItemStack(
-				CBCItems.materials, 1, 5), iSmaterials_1_6 = new ItemStack(
-				CBCItems.materials, 1, 6), iSmaterials_1_7 = new ItemStack(
-				CBCItems.materials, 1, 7), iSmaterials_1_8 = new ItemStack(
-				CBCItems.materials, 1, 8), iSmaterials_1_9 = new ItemStack(
-				CBCItems.materials, 1, 9), iSredstone = new ItemStack(
-				Items.redstone), 
-				iSlightStoneDust = new ItemStack(Items.glowstone_dust),
-				iStnt = new ItemStack(Blocks.tnt), iSblockLapis = new ItemStack(
-				Blocks.lapis_block), iSdiamond = new ItemStack(Items.diamond), iSblazePowder = new ItemStack(
-				Items.blaze_powder), iSglass = new ItemStack(Blocks.glass), iSlambdaChip = new ItemStack(
-				CBCItems.lambdaChip), iScoal = new ItemStack(Items.coal), iSgunpowder = new ItemStack(
-				Items.gunpowder), iSingotGold = new ItemStack(Items.gold_ingot), iSblockRedstone = new ItemStack(
-				Blocks.redstone_block), iSfurnace = new ItemStack(
-				Blocks.furnace), iSchest = new ItemStack(Blocks.chest), iSweaponCrafter = new ItemStack(
-				CBCBlocks.weaponCrafter), iSadvCrafter = new ItemStack(
-				CBCBlocks.advCrafter), iSwire = new ItemStack(CBCBlocks.wire), iSemerald = new ItemStack(
-				Items.emerald), iSchip = new ItemStack(chip), iSelectricCrafter = new ItemStack(
-				CBCBlocks.elCrafter), iSbattery = new ItemStack(battery), iSgenFire = new ItemStack(
-				CBCBlocks.genFire), iSstorageS = new ItemStack(
-				CBCBlocks.storageS), iSstorageL = new ItemStack(
-				CBCBlocks.storageL), iSgenLava = new ItemStack(
-				CBCBlocks.genLava), iSbucketEmpty = new ItemStack(
-				Items.bucket), iSgenSolar = new ItemStack(
-				CBCBlocks.genSolar), iSnetherQuartz = new ItemStack(
-				Items.quartz), sfspieye = new ItemStack(
-				Items.fermented_spider_eye), srotten = new ItemStack(
-				Items.rotten_flesh), smagma = new ItemStack(Items.magma_cream), sendereye = new ItemStack(
-				Items.ender_eye), smedkit = new ItemStack(DMItems.medkit);
+		ItemStack 
+			smaterials_1_0 = new ItemStack(CBCItems.materials, 1, 0), 
+			smaterials_1_1 = new ItemStack(CBCItems.materials, 1, 1), 
+			smaterials_1_2 = new ItemStack(CBCItems.materials, 1, 2), 
+			smaterials_1_3 = new ItemStack(CBCItems.materials, 1, 3), 
+			smaterials_1_4 = new ItemStack(CBCItems.materials, 1, 4), 
+			smaterials_1_5 = new ItemStack(CBCItems.materials, 1, 5), 
+			smaterials_1_6 = new ItemStack(CBCItems.materials, 1, 6), 
+			smaterials_1_7 = new ItemStack(CBCItems.materials, 1, 7), 
+			smaterials_1_8 = new ItemStack(CBCItems.materials, 1, 8),
+			smaterials_1_9 = new ItemStack(CBCItems.materials, 1, 9), 
+			sredstone = new ItemStack(Items.redstone), 
+			slightStoneDust = new ItemStack(Items.glowstone_dust),
+			stnt = new ItemStack(Blocks.tnt), 
+			sblockLapis = new ItemStack(Blocks.lapis_block), 
+			sdiamond = new ItemStack(Items.diamond), 
+			sblazePowder = new ItemStack(Items.blaze_powder), 
+			sglass = new ItemStack(Blocks.glass), 
+			slambdaChip = new ItemStack(CBCItems.lambdaChip),
+			scoal = new ItemStack(Items.coal), 
+			sgunpowder = new ItemStack(Items.gunpowder), 
+			singotGold = new ItemStack(Items.gold_ingot), 
+			sblockRedstone = new ItemStack(Blocks.redstone_block), 
+			sfurnace = new ItemStack(Blocks.furnace), 
+			schest = new ItemStack(Blocks.chest), 
+			sweaponCrafter = new ItemStack(CBCBlocks.weaponCrafter), 
+			sadvCrafter = new ItemStack(CBCBlocks.advCrafter),
+			swire = new ItemStack(CBCBlocks.wire), semerald = new ItemStack(Items.emerald),
+			schip = new ItemStack(chip), 
+			selectricCrafter = new ItemStack(CBCBlocks.elCrafter), 
+			sbattery = new ItemStack(battery), 
+			sgenFire = new ItemStack(CBCBlocks.genFire), 
+			sstorageS = new ItemStack(CBCBlocks.storageS), 
+			sstorageL = new ItemStack(CBCBlocks.storageL), 
+			sgenLava = new ItemStack(CBCBlocks.genLava), 
+			sbucketEmpty = new ItemStack(Items.bucket),
+			sgenSolar = new ItemStack(CBCBlocks.genSolar), 
+			snetherQuartz = new ItemStack(Items.quartz), 
+			sfspieye = new ItemStack(Items.fermented_spider_eye), 
+			srotten = new ItemStack(Items.rotten_flesh), 
+			smagma = new ItemStack(Items.magma_cream), 
+			sendereye = new ItemStack(Items.ender_eye),
+			smedkit = new ItemStack(DMItems.medkit);
 
 		Object input[][] = {
-				{ "ABA", "AAA", 'A', "ingotTin", 'B', iSglass },
-				//{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSblockRedstone, 'C', "blockRefinedIron", 'D', iSfurnace, 'E', iSchest },
-				//{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSdiamond, 'C', iSweaponCrafter, 'D', "ingotCopper", 'E', "blockRefinedIron" },
+				{ "ABA", "AAA", 'A', "ingotTin", 'B', sglass },
+				{ "AAA", "BCB", "DED", 'A', sglass, 'B', sblockRedstone, 'C', "blockRefinedIron", 'D', sfurnace, 'E', schest },
+				{ "AAA", "BCB", "DED", 'A', sglass, 'B', sdiamond, 'C', sweaponCrafter, 'D', "ingotCopper", 'E', "blockRefinedIron" },
 				{ "ABA", "ABA", "ABA", 'A', Blocks.wool, 'B', "ingotCopper" },
-				{ "ABA", "CDC", "AEA", 'A', iSlightStoneDust, 'B', iSemerald, 'C', iSdiamond, 'D', iSchip, 'E', iSglass },
-				//{ "ABA", "CDC", "EAE", 'A', iSglass, 'B', iSwire, 'C', iSlambdaChip, 'D', iSadvCrafter, 'E', iSlightStoneDust },
-				{ "ABA", "ACA", "ACA", 'A', "ingotTin", 'B', iSwire, 'C', iSlightStoneDust },
-				{ "AAA", "BCB", "DED", 'A', iSglass, 'B', battery, 'C', iSredstone, 'D', iSchip, 'E', "blockRefinedIron" },
-				{ "ABA", "CDC", "ABA", 'A', iSwire, 'B', iSnetherQuartz, 'C', iSredstone, 'D', "ingotRefinedIron" },
-				{ "AAA", "CDC", "BEB", 'A', iSglass, 'B', smedkit, 'C', iSlambdaChip, 'D', "blockMFE", 'E', "blockRefinedIron" },
-				{ "AAA", "CDC", "BEB", 'A', iSglass, 'B', iSlambdaChip, 'C', battery, 'D', "blockMFSU", 'E', "blockRefinedIron" },
+				{ "ABA", "CDC", "AEA", 'A', slightStoneDust, 'B', semerald, 'C', sdiamond, 'D', schip, 'E', sglass },
+				{ "ABA", "CDC", "EAE", 'A', sglass, 'B', swire, 'C', slambdaChip, 'D', sadvCrafter, 'E', slightStoneDust },
+				{ "ABA", "ACA", "ACA", 'A', "ingotTin", 'B', swire, 'C', slightStoneDust },
+				{ "AAA", "BCB", "DED", 'A', sglass, 'B', battery, 'C', sredstone, 'D', schip, 'E', "blockRefinedIron" },
+				{ "ABA", "CDC", "ABA", 'A', swire, 'B', snetherQuartz, 'C', sredstone, 'D', "ingotRefinedIron" },
+				{ "AAA", "CDC", "BEB", 'A', sglass, 'B', smedkit, 'C', slambdaChip, 'D', "blockMFE", 'E', "blockRefinedIron" },
+				{ "AAA", "CDC", "BEB", 'A', sglass, 'B', slambdaChip, 'C', battery, 'D', "blockMFSU", 'E', "blockRefinedIron" },
 				{ "AAA", "AAA", "AAA", 'A', "ingotRefinedIron" } ,
 				{"A  ", "A  ", 'A', "ingotRefinedIron"},
-				{ "ABA", "CDC", "AEA", 'A', iSglass, 'B', iSdiamond, 'C', "blockMFSU", 'D', iSlambdaChip, 'E', iSemerald},
-				{" A ", "BCB", 'A', iSglass, 'B', iSwire, 'C', iSchip},
-				{" AA", "ABA", "ABA", 'A', "ingotCopper", 'B', iSredstone},
-				{" AA", "ABA", "ABA", 'A', "ingotTin", 'B', iSredstone},
-				{" AA", "ABA", "ABA", 'A', "ingotTin", 'B', iSlightStoneDust}
+				{ "ABA", "CDC", "AEA", 'A', sglass, 'B', sdiamond, 'C', "blockMFSU", 'D', slambdaChip, 'E', semerald},
+				{" A ", "BCB", 'A', sglass, 'B', swire, 'C', schip},
+				{" AA", "ABA", "ABA", 'A', "ingotCopper", 'B', sredstone},
+				{" AA", "ABA", "ABA", 'A', "ingotTin", 'B', sredstone},
+				{" AA", "ABA", "ABA", 'A', "ingotTin", 'B', slightStoneDust}
 		};
 
 		ItemStack output[] = { 
 				ItemMaterial.newStack(materials, 10, EnumMaterial.BOX),
-				//iSweaponCrafter,
-				//iSadvCrafter, 
+				sweaponCrafter,
+				sadvCrafter, 
 				new ItemStack(CBCBlocks.wire, 6),
 				new ItemStack(lambdaChip, 2),
-				//iSelectricCrafter, 
-				iSbattery,
-				iSstorageS, 
-				iSchip,
+				selectricCrafter, 
+				sbattery,
+				sstorageS, 
+				schip,
 				new ItemStack(DMBlocks.healthCharger),
 				new ItemStack(DMBlocks.armorCharger),
 				new ItemStack(CBCBlocks.blockRefined),
@@ -227,36 +238,39 @@ public class CBCItems {
 		addOreRecipes(output, input);
 		
 		Object[][] input2 = {
-				{ " A ", "BCB", "DED", 'A', iSstorageS, 'B', iSglass, 'C', "blockRefinedIron", 'D', iSblockLapis, 'E', iSfurnace },
-				{ " A ", "BCB", "DED", 'A', iSglass, 'B', iSblazePowder, 'C', iSbucketEmpty, 'D', "ingotRefinedIron", 'E', iSgenFire },
-				{ "AAA", "BCB", "DED", 'A', iSglass, 'B', iSnetherQuartz, 'C', iSchip, 'D', "ingotRefinedIron", 'E', iSgenFire },
+				{ " A ", "BCB", "DED", 'A', sstorageS, 'B', sglass, 'C', "blockRefinedIron", 'D', sblockLapis, 'E', sfurnace },
+				{ " A ", "BCB", "DED", 'A', sglass, 'B', sblazePowder, 'C', sbucketEmpty, 'D', "ingotRefinedIron", 'E', sgenFire },
+				{ "AAA", "BCB", "DED", 'A', sglass, 'B', snetherQuartz, 'C', schip, 'D', "ingotRefinedIron", 'E', sgenFire },
 		};
 		
-		ItemStack[] output2 = { iSgenFire, iSgenLava, iSgenSolar };
+		ItemStack[] output2 = { sgenFire, sgenLava, sgenSolar };
 		addOreRecipes(output2, input2);
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife01), lambdaChip, Items.diamond);
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife02), lambdaChip, Items.emerald);
 		GameRegistry.addShapelessRecipe(new ItemStack(halfLife03), lambdaChip, Items.ender_eye);
-		//GameRegistry.addShapelessRecipe(new ItemStack(XenBlocks.crystal), iSlightStoneDust, iSdiamond);
+		GameRegistry.addShapelessRecipe(new ItemStack(XenBlocks.crystal), slightStoneDust, sdiamond);
 		GameRegistry.addShapelessRecipe(new ItemStack(DMItems.weapon_crowbar_el), lambdaChip, new ItemStack(DMItems.weapon_crowbar));
-		GameRegistry.addShapelessRecipe(iSstorageL, CBCBlocks.storageS, lambdaChip);
+		GameRegistry.addShapelessRecipe(sstorageL, CBCBlocks.storageS, lambdaChip);
 		GameRegistry.addRecipe(new RecipeHEVAttach());
+		GameRegistry.addRecipe(new RecipeMedkitFill());
+		GameRegistry.addRecipe(new RecipeRepair(ammo_uranium, new ItemStack(ingotUranium)).setRepairAmt(34));
+		GameRegistry.addRecipe(new RecipeRepair(ammo_bow, new ItemStack(bullet_steelbow)));
 		
 		//Materials
 		IRecipe recipes[] = {
-				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.ARMOR), iSmaterials_1_0, "blockRefinedIron", iSdiamond, iSlambdaChip),
-				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 4, EnumMaterial.AMMUNITION), iSmaterials_1_0, "ingotCopper", iSredstone, iSgunpowder),
-				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 4, EnumMaterial.ACCESSORIES), iSmaterials_1_0, "ingotCopper", iSredstone, iScoal),
-				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 4, EnumMaterial.EXPLOSIVE), iSmaterials_1_0, "ingotRefinedIron", iStnt, iSgunpowder),
-				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.HEAVY), iSmaterials_1_0, "blockRefinedIron", iSblockLapis, iSblazePowder),
-				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.LIGHT), iSmaterials_1_0, "ingotRefinedIron", "ingotCopper", iSlightStoneDust),
-				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.PISTOL), iSmaterials_1_0, "ingotRefinedIron", "ingotCopper", "ingotRefinedIron"),
-				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 3, EnumMaterial.BIO), iSmaterials_1_0, srotten, sendereye, CBCMobItems.dna),
-				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.TECH), iSmaterials_1_0, iSdiamond, iSlambdaChip, iSlightStoneDust),
-				new RecipeRepair(spray1[0], iSredstone),
-				new RecipeRepair(spray1[1], iSredstone),
-				new RecipeRepair(spray3, iSlightStoneDust)
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.ARMOR), smaterials_1_0, "blockRefinedIron", sdiamond, slambdaChip),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 4, EnumMaterial.AMMUNITION), smaterials_1_0, "ingotCopper", sredstone, sgunpowder),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 4, EnumMaterial.ACCESSORIES), smaterials_1_0, "ingotCopper", sredstone, scoal),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 4, EnumMaterial.EXPLOSIVE), smaterials_1_0, "ingotRefinedIron", stnt, sgunpowder),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.HEAVY), smaterials_1_0, "blockRefinedIron", sblockLapis, sblazePowder),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.LIGHT), smaterials_1_0, "ingotRefinedIron", "ingotCopper", slightStoneDust),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.PISTOL), smaterials_1_0, "ingotRefinedIron", "ingotCopper", "ingotRefinedIron"),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 3, EnumMaterial.BIO), smaterials_1_0, srotten, sendereye, CBCMobItems.dna),
+				new ShapelessOreRecipe(ItemMaterial.newStack(materials, 2, EnumMaterial.TECH), smaterials_1_0, sdiamond, slambdaChip, slightStoneDust),
+				new RecipeRepair(spray1[0], sredstone),
+				new RecipeRepair(spray1[1], sredstone),
+				new RecipeRepair(spray3, slightStoneDust)
 		};
 		for(IRecipe r : recipes)
 			GameRegistry.addRecipe(r);
@@ -448,7 +462,7 @@ public class CBCItems {
 	}
 
 	/**
-	 * 使用一个物品来修复另一个物品，1stack数对应物品的1damage。
+	 * 使用一个物品来修复另一个物品，1stack数对应物品的[repairAmt]damage。
 	 * 
 	 * @author WeAthFolD
 	 * 
@@ -457,10 +471,16 @@ public class CBCItems {
 
 		private Item itemToRepair;
 		private ItemStack repairMat;
+		private int amt = 1;
 
 		public RecipeRepair(Item item, ItemStack mat) {
 			itemToRepair = item;
 			repairMat = mat;
+		}
+		
+		public RecipeRepair setRepairAmt(int a) {
+			amt = a;
+			return this;
 		}
 
 		@Override
@@ -499,7 +519,7 @@ public class CBCItems {
 				return null;
 			}
 			int damage = theItem.getItemDamage();
-			damage -= cntRep;
+			damage -= cntRep * amt;
 			if (damage < 0)
 				damage = 0;
 			return new ItemStack(itemToRepair, 1, damage);

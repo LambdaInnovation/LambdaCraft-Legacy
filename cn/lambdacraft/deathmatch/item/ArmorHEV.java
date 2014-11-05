@@ -104,7 +104,7 @@ public class ArmorHEV extends ElectricArmor {
 	
 	@Override
 	public int getDisplayDamage(ItemStack stack) {
-		return hasAttach(stack, EnumAttachment.ELECTRICITY) ? getMaxCharge(stack) - getItemCharge(stack) / 2 : getMaxCharge(stack) - getItemCharge(stack);
+		return getMaxCharge(stack) - getItemCharge(stack);
 	}
 	
 	@Override

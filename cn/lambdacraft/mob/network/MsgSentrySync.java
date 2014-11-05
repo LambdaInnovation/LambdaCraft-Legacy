@@ -24,6 +24,8 @@ import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * @author WeAthFolD
@@ -80,6 +82,7 @@ public class MsgSentrySync implements IMessage {
 	public static class Handler implements IMessageHandler<MsgSentrySync, IMessage> {
 
 		@Override
+		@SideOnly(Side.CLIENT)
 		public IMessage onMessage(MsgSentrySync msg, MessageContext ctx) {
 			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 			World world = player.worldObj;

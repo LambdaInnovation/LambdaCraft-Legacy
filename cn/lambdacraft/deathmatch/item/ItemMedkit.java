@@ -1,5 +1,5 @@
 /** 
- * Copyright (c) LambdaCraft Modding Team, 2013
+  * Copyright (c) LambdaCraft Modding Team, 2013
  * 版权许可：LambdaCraft 制作小组， 2013.
  * http://lambdacraft.half-life.cn/
  * 
@@ -14,7 +14,9 @@
  */
 package cn.lambdacraft.deathmatch.item;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.item.CBCGenericItem;
@@ -69,28 +71,55 @@ public class ItemMedkit extends CBCGenericItem {
 		}
 		return -1;
 	}
+	
+	private static Set<Integer> allowedPotions = new HashSet<Integer>();
+	static {
+		allowedPotions.add(Potion.damageBoost.id);
+		allowedPotions.add(Potion.digSpeed.id);
+		allowedPotions.add(Potion.fireResistance.id);
+		allowedPotions.add(Potion.heal.id);
+		allowedPotions.add(Potion.invisibility.id);
+		allowedPotions.add(Potion.jump.id);
+		allowedPotions.add(Potion.moveSpeed.id);
+		allowedPotions.add(Potion.nightVision.id);
+		allowedPotions.add(Potion.regeneration.id);
+		allowedPotions.add(Potion.resistance.id);
+		allowedPotions.add(Potion.waterBreathing.id);
+	}
 
+	/**
+	 * Try adding all the effects of a specific potion item into the medkit.
+	 * @param medkit
+	 * @param potion
+	 * @param type
+	 * @return How many effect(s) have(s) been added
+	 */
 	public static int tryAddEffectTo(ItemStack medkit, ItemStack potion,
 			EnumAddingType type) {
-		List<PotionEffect> list = Items.potionitem
-				.getEffects(potion.getItemDamage());
+		List<PotionEffect> list = 
+				Items.potionitem.getEffects(potion.getItemDamage());
 		NBTTagCompound nbt = loadCompound(potion);
-		int addCount = 0;
-
+		int res = 0;
 		try {
 			for (PotionEffect e : list) {
+				if(!allowedPotions.contains(e.getPotionID()))
+					continue;
 				for (int i = 0; i < 3; i++) {
+					int original = e.getDuration();
 					if(type == EnumAddingType.DURATION)
-						TileHealthCharger.fldDuration.set(e, (Double)TileHealthCharger.fldDuration.get(e) * 1.3);
+						TileHealthCharger.fldDuration.set(e, (int)((Integer)TileHealthCharger.fldDuration.get(e) * 1.3));
 					if (isSlotAvailable(medkit, i)) {
 						addEffect(medkit, e, i);
+						++res;
 						break;
 					}
+					TileHealthCharger.fldDuration.set(e, original);
 				}
-		} } catch(Exception e) {
+			} 
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return res;
 	}
 
 	/*

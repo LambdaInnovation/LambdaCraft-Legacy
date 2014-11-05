@@ -21,6 +21,8 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.logging.Level;
 
+import org.lwjgl.input.Keyboard;
+
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
 import net.minecraftforge.client.model.IModelCustom;
@@ -71,6 +73,12 @@ public class ClientProps {
 
 	@Configurable(category = "graphics", key = "Spray_ID", comment = "The id value of your custom spray, ranging from 0-9.", defValue = "0")
 	private static int sprayID = 0;
+	
+	@Configurable(category = "control", key = "Key_UseReady", comment = "The keyboard key id for block using", defValue = "33")
+	public static int KEY_ID_USE_BLOCK = Keyboard.KEY_F;
+	
+	@Configurable(category = "control", key = "Key_ReadyLongjump", comment = "The keyboard key id for preparing long jump", defValue = "47")
+	public static int KEY_ID_LONGJUMP_READY = Keyboard.KEY_V;
 	
 	public static Properties crosshairProps;
 	public static Properties sprayProps;
@@ -183,8 +191,8 @@ public class ClientProps {
 		}
 	}
 	
-	public static IModelCustom MDL_GONARCH = AdvancedModelLoader.loadModel(
-			new ResourceLocation("lambdacraft:models/bigmomoa.obj"));
+	public static IModelCustom 
+		MDL_GONARCH;
 	
 	private static String mf = "lambdacraft:textures/muz/muz";
 	public static final ResourceLocation MUZZLEFLASH[] = {
@@ -210,6 +218,8 @@ public class ClientProps {
 
 	public static void loadProps(Configuration config) {
 		LIGeneralRegistry.loadConfigurableClass(CBCMod.config, ClientProps.class);
+		
+		MDL_GONARCH = AdvancedModelLoader.loadModel(new ResourceLocation("lambdacraft:models/bigmomoa.obj"));
 		
 		crosshairProps = new Properties();
 		URL src = ClientProps.class.getResource("/assets/lambdacraft/crosshairs/crosshairs.properties");
