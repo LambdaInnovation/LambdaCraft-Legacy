@@ -14,6 +14,8 @@
  */
 package cn.lambdacraft.mob.client.renderer;
 
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -35,6 +37,7 @@ import cn.liutils.api.client.util.RenderUtils;
 public class RenderVortigauntRay extends Render {
 
 	public static final double WIDTH = 0.3F;
+	private static final Random RNG = new Random();
 	
 	/* (non-Javadoc)
 	 * @see net.minecraft.client.renderer.entity.Render#doRender(net.minecraft.entity.Entity, double, double, double, float, float)
@@ -69,7 +72,7 @@ public class RenderVortigauntRay extends Render {
 
 		GL11.glTranslatef((float) d0, (float) d1, (float) d2);
 		// GL11.glRotatef(angle, 1.0F, 0, 0);
-		int rand = RenderUtils.rand.nextInt(3);
+		int rand = RNG.nextInt(3);
 		Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.VORTIGAUNT_RAY_PATH[rand]);
 
 		

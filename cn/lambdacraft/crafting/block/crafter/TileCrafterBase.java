@@ -59,17 +59,17 @@ public abstract class TileCrafterBase extends CBCTileEntity implements IInventor
 		ICrafterRecipe r = getRecipeBySlot(slot);
 		if (r == null)
 			return;
-		System.out.print("Crafting->" + r.getOutputForDisplay().getDisplayName() + " " + worldObj.isRemote);
+		//System.out.print("Crafting->" + r.getOutputForDisplay().getDisplayName() + " " + worldObj.isRemote);
 		
 		if (r.doCrafting(inventory, true) != null) {
-			System.out.println(" START");
+			//System.out.println(" START");
 			resetCraftingState();
 			iconType = CrafterIconType.CRAFTING;
 			this.isCrafting = true;
 			this.currentRecipe = r;
 			this.heatRequired = r.getHeatConsumed();
 		} else {
-			System.out.println(" BAD");
+			//System.out.println(" BAD");
 			iconType = CrafterIconType.NOMATERIAL;
 			heatRequired = 0;
 		}

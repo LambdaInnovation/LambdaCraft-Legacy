@@ -138,7 +138,7 @@ public class EntityBigMomoa extends EntityMob implements IBossDisplayData {
 	
 	private void attackEntityInRange(int ATTACK_RANGE) {
 		this.currStat = stats.ATTACKING_RANGE;
-		System.err.println("[TESTING] {INVOKED}");
+		//System.err.println("[TESTING] {INVOKED}");
 	    List<EntityLiving> ls = worldObj.getEntitiesWithinAABB(Entity.class, AxisAlignedBB.getBoundingBox(posX - (ATTACK_RANGE), posY - (ATTACK_RANGE / 2), posZ - (ATTACK_RANGE), posX + (ATTACK_RANGE), posY + (ATTACK_RANGE), posZ + (ATTACK_RANGE)).expand(ATTACK_RANGE, ATTACK_RANGE, ATTACK_RANGE));
 	    for(int i=0; i<=ls.size(); i++) {
 	    	// YOU WILL BE PUNISHED!
@@ -147,7 +147,7 @@ public class EntityBigMomoa extends EntityMob implements IBossDisplayData {
 	    	    if(!toAttack.equals(this)) 
 	    	    	toAttack.attackEntityFrom(DamageSource.causeMobDamage(this), toAttack.getHealth() - 1.5f);
 	    	} catch(Exception ex) {
-	    		System.err.println("For heaven's sake... -w-");
+	    		//System.err.println("For heaven's sake... -w-");
 	    	}
 	    }
 		

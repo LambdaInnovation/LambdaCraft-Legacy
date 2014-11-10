@@ -46,7 +46,7 @@ public class BlockSentryRay extends CBCBlockContainer {
 		super(Material.rock);
 		this.setCreativeTab(null);
 		this.setHardness(1.0F);
-		setBlockTextureName("ss_1");
+		setBlockTextureName("lambdacraft:ss_1");
 	}
 	
 	@Override

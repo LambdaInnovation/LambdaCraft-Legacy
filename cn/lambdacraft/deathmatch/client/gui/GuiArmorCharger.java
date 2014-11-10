@@ -90,14 +90,16 @@ public class GuiArmorCharger extends GuiContainerSP {
 		int length = te.currentEnergy * 64 / TileArmorCharger.ENERGY_MAX;
 		this.drawTexturedModalRect(x + 80, y + 28, 176, 0, length, 10);
 
-		if (te.isCharging) {
+		if (te.isUsing) {
+			System.out.println("DRAWW");
 			int height = (int) (te.getWorldObj().getWorldTime() % 43);
 			this.drawTexturedModalRect(x + 29, y + 21, 176, 56, 43, height);
 		}
 	}
 
 	@Override
-	protected void addElements(Set<cn.liutils.api.client.gui.part.LIGuiPart> set) {
+	protected void addElements(Set<LIGuiPart> set) {
+		set.add(new LIGuiPart("energy", 80, 28, 64, 10).setTip(new TipEnergy()));
 	}
 
 	@Override

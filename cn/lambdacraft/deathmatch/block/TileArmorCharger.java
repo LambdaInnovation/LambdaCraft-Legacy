@@ -81,6 +81,7 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 
 	public void startUsing(EntityPlayer player) {
 		chargers.add(player);
+		//System.out.println("StartUsing " + worldObj.isRemote);
 		isUsing = true;
 	}
 
@@ -95,8 +96,10 @@ public class TileArmorCharger extends TileElectricStorage implements IInventory 
 		if(!this.addedToNet)
 			this.isRSActivated = worldObj.isBlockIndirectlyGettingPowered(xCoord, yCoord, zCoord);
 		super.updateEntity();
-		if (worldObj.isRemote)
+		if (worldObj.isRemote) {
+			//System.out.println(isCharging);
 			return;
+		}
 
 		int energyReq = ENERGY_MAX - currentEnergy;
 		// discharge

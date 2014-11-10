@@ -14,6 +14,8 @@
  */
 package cn.lambdacraft.crafting.block.generator;
 
+import cn.lambdacraft.core.CBCMod;
+import ic2.api.item.IC2Items;
 import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -31,6 +33,8 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 	public static final int ENERGY_PER_BUCKET = 20000;
 	public ItemStack[] slots = new ItemStack[2];
 	public int bucketCnt = 0;
+	
+	private ItemStack lavaCell;
 
 	/**
 	 * @param tier
@@ -38,6 +42,8 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 	 */
 	public TileGeneratorLava() {
 		super(1, 20);
+		lavaCell = IC2Items.getItem("lavaCell");
+		System.out.println("LavaCell:" + lavaCell);
 	}
 
 	@Override
@@ -67,9 +73,17 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 		int energyReq = maxStorage - bucketCnt;
 
 		if (energyReq >= 1 && slots[0] != null) {
-			if (slots[0].getItem() == Items.lava_bucket) {
-				this.setInventorySlotContents(0, new ItemStack(
-						Items.bucket, 1, 0));
+			Item item = slots[0].getItem();
+			if (item == Items.lava_bucket
+				|| (lavaCell != null && lavaCell.getItem() == item && 
+				lavaCell.getItemDamage() == slots[0].getItemDamage())) {
+				if(item == Items.lava_bucket) {
+					this.setInventorySlotContents(0, new ItemStack(Items.lava_bucket));
+				} else {
+					slots[0].stackSize--;
+					if(slots[0].stackSize == 0)
+						slots[0] = null;
+				}
 				bucketCnt += 1;
 			}
 		}

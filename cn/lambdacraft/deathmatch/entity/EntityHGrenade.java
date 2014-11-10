@@ -48,7 +48,7 @@ public class EntityHGrenade extends EntityThrowable {
 	protected void onImpact(MovingObjectPosition par1) {
 		
 		if(par1.typeOfHit == MovingObjectType.BLOCK) {
-			System.out.println("set" + worldObj.isRemote);
+			//System.out.println("set" + worldObj.isRemote);
 			lastBounceTime = ticksExisted;
 		}
 		

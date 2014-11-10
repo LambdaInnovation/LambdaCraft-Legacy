@@ -46,6 +46,7 @@ public class ArmorHEV extends ElectricArmor {
 		setUnlocalizedName("hev" + this.armorType);
 		this.setIconName("hev" + armorType);
 		this.setMaxCharge(100000);
+		this.setMaxDamage(100000);
 		this.setTier(2);
 		this.setTransferLimit(128);
 		this.setEnergyPerDamage(500);

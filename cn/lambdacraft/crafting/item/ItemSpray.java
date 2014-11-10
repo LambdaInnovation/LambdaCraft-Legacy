@@ -52,7 +52,7 @@ public class ItemSpray extends CBCGenericItem {
 			EntitySpray entity = new EntitySpray(world, x, y, z, direction, tId, player);
 			// 判断是否被放置在了可用的表面
 			if (entity.onValidSurface()) {
-				System.err.println("GENERATING IN SERVER SIDE...");
+				//System.err.println("GENERATING IN SERVER SIDE...");
 				world.spawnEntityInWorld(entity); // 生成entity
 				world.playSoundAtEntity(player, "lambdacraft:entities.sprayer", 0.7f, 1);
 				item_stack.damageItem(1, player);

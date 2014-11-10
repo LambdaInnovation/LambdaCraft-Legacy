@@ -162,6 +162,7 @@ public class BlockArmorCharger extends CBCBlockContainer implements IUseable {
 			int bz) {
 
 		TileEntity te = world.getTileEntity(bx, by, bz);
+		System.out.println("OnBlockUse " + world.isRemote);
 		if (te == null)
 			return;
 		TileArmorCharger te2 = (TileArmorCharger) te;

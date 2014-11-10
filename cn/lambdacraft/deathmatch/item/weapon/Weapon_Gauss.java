@@ -157,7 +157,7 @@ public class Weapon_Gauss extends WeaponGenericLC implements ISpecialCrosshair {
 			if(isRemoved) {
 				//Shoot
 				int strengh = getStrengh(inf);
-				System.out.println("STR " + strengh);
+				//System.out.println("STR " + strengh);
 				if(!world.isRemote) {
 					world.spawnEntityInWorld(new EntityBulletGauss(world, player, Math.max(5, strengh)));
 				}

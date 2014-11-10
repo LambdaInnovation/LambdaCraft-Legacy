@@ -129,6 +129,7 @@ public class CBCMod {
 		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMisc", "LambdaCraft-Misc");
 		netHandler.registerMessage(MsgKeyUsing.Handler.class, MsgKeyUsing.class, GeneralProps.NET_ID_USE, Side.SERVER);
 		proxy.init();
+		
 	}
 
 	/**

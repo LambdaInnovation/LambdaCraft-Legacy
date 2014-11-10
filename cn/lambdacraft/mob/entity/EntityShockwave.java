@@ -41,7 +41,6 @@ public class EntityShockwave extends Entity {
 	public static final float DAMAGE_SCALE = 15.0F;
 	protected boolean attacked = false;
 	
-	@SideOnly(Side.CLIENT)
 	private boolean firstUpdate = false;
 	
 	protected EntityHoundeye houndeye;

@@ -14,13 +14,17 @@
  */
 package cn.lambdacraft.core.client.key;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.MovingObjectPosition;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.network.MsgKeyUsing;
 import cn.lambdacraft.deathmatch.proxy.ClientProxy;
 import cn.liutils.api.client.key.IKeyHandler;
+import cn.liutils.api.util.BlockPos;
+import cn.liutils.api.util.Motion3D;
 
 /**
  * 使用按键的处理类，负责发包和功能性函数。
@@ -39,6 +43,16 @@ public class KeyUse implements IKeyHandler {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		if (player == null)
 			return;
+		EntityPlayer thePlayer = Minecraft.getMinecraft().thePlayer;
+		Motion3D begin = new Motion3D(thePlayer, true);
+		MovingObjectPosition mop = thePlayer.worldObj.rayTraceBlocks(
+				begin.getPosVec(thePlayer.worldObj), begin.move(8.0).getPosVec(thePlayer.worldObj)
+			);
+		if (mop == null || mop.sideHit == -1)
+			return;
+		Block block = thePlayer.worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ);
+		UsingUtils.useBlock(new BlockPos(mop.blockX, mop.blockY,
+				mop.blockZ, block), thePlayer.worldObj, thePlayer);
 		CBCMod.netHandler.sendToServer(new MsgKeyUsing(true));
 	}
 
@@ -49,12 +63,11 @@ public class KeyUse implements IKeyHandler {
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 		if (player == null)
 			return;
+		UsingUtils.stopUsingBlock(player.worldObj, player);
 		CBCMod.netHandler.sendToServer(new MsgKeyUsing(false));
 		ItemStack armorStack = player.inventory.armorInventory[3];
-		System.out.println("www");
 		if (armorStack == null)
 			return;
-		System.out.println("www2");
 		ClientProxy.cth.flag = !ClientProxy.cth.flag;
 	
 		//if (armorStack.itemID == DMItems.armorHEVHelmet.itemID)

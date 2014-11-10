@@ -70,10 +70,10 @@ public class EntityGaussRay extends Entity {
         this.motionY = par3;
         this.motionZ = par5;
         float f3 = MathHelper.sqrt_double(par1 * par1 + par5 * par5);
-        System.out.println("(" + par1 + ", " + par3 + ", " + par5 + ")");
+        //System.out.println("(" + par1 + ", " + par3 + ", " + par5 + ")");
         this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(par1, par5) * 180.0D / Math.PI);
         this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(par3, (double)f3) * 180.0D / Math.PI);
-        System.out.println(rotationYaw + " " + rotationPitch);
+       // System.out.println(rotationYaw + " " + rotationPitch);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class EntityGaussRay extends Entity {
 		double dy = end.yCoord - this.posY;
 		double dz = end.zCoord - this.posZ;
 		distanceToRender = Math.sqrt(dx * dx + dy * dy + dz * dz);
-		System.out.println(worldObj.isRemote + " " + this.rotationYaw);
+		//System.out.println(worldObj.isRemote + " " + this.rotationYaw);
 		
 		if(distanceToRender < 3)
 			distanceToRender = 50;

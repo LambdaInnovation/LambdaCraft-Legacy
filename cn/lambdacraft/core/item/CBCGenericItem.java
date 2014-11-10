@@ -82,6 +82,7 @@ public class CBCGenericItem extends Item {
 		this.itemIcon = par1IconRegister
 				.registerIcon("lambdacraft:" + iconName);
 	}
+	
     public String getLocalizedName(ItemStack par1ItemStack)
     {
         String s = this.getUnlocalizedName(par1ItemStack);
