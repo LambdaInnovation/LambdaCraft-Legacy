@@ -8,6 +8,7 @@ import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.util.GenericUtils;
+import cn.liutils.core.client.register.LIKeyProcess;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionBuckshot;
@@ -26,7 +27,7 @@ public class Weapon_Shotgun extends WeaponGenericLC {
 		setCreativeTab(CBCMod.cct);
 
 		actionShoot = new ActionBuckshot(2, 5, "lambdacraft:weapons.sbarrela").setShootRate(20);
-		actionReload = new ActionMultipleReload(15, 300).setSound("lambdacraft:weapons.reload");
+		actionReload = new ActionMultipleReload(8, 300).setSound("lambdacraft:weapons.reloadc").setSoundFinish("lambdacraft:weapons.scocka");
 	}
 
 	private Action actionDoubleBolt = new ActionBuckshot(2, 13, "lambdacraft:weapons.sbarrelb")
@@ -39,6 +40,7 @@ public class Weapon_Shotgun extends WeaponGenericLC {
 		if(keyid == 1) {
 			InfWeapon inf = loadInformation(pl);
 			inf.executeAction(actionDoubleBolt);
+			LIKeyProcess.getBindingByName(WMClientProxy.KEY_ID_RELOAD);
 		}
 	}
 

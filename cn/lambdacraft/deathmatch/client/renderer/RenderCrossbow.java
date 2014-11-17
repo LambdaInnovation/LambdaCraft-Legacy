@@ -63,7 +63,7 @@ public class RenderCrossbow extends RenderModelItem {
 		
 		if(entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
-			InfWeapon inf = WMInformation.getInformation(player);
+			InfWeapon inf = WMInformation.instance.getInformation(player);
 			if(inf != null) {
 				if(inf.isActionPresent("reload"))
 					return 0.0F;

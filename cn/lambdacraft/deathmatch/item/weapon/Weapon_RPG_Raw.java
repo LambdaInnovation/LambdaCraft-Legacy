@@ -73,7 +73,7 @@ public class Weapon_RPG_Raw extends WeaponGenericLC {
 		setCreativeTab(CBCMod.cct);
 		this.hasSubtypes = true;
 		
-		actionReload = new ActionReload(40, "", "");
+		actionReload = null; //Don't need any reload action
 		actionJam = new ActionJam(40, "lambdacraft:weapons.gunjam_a");
 		actionShoot = new ActionRocketShoot();
 	}

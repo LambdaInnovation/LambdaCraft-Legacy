@@ -31,6 +31,9 @@ import net.minecraftforge.common.config.Property;
 import cn.lambdacraft.core.CBCMod;
 import cn.liutils.api.LIGeneralRegistry;
 import cn.liutils.api.register.Configurable;
+import cn.liutils.core.client.register.LIKeyProcess;
+import cn.liutils.core.client.register.LIKeyProcess.LIKeyBinding;
+import cn.weaponmod.core.proxy.WMClientProxy;
 
 import com.google.common.base.Charsets;
 
@@ -79,6 +82,9 @@ public class ClientProps {
 	
 	@Configurable(category = "control", key = "Key_ReadyLongjump", comment = "The keyboard key id for preparing long jump", defValue = "47")
 	public static int KEY_ID_LONGJUMP_READY = Keyboard.KEY_V;
+	
+	@Configurable(category = "control", key = "Key_Reload", comment = "The keyboard key id for weapon reloading", defValue = "19")
+	public static int KEY_ID_RELOAD = Keyboard.KEY_R;
 	
 	public static Properties crosshairProps;
 	public static Properties sprayProps;
@@ -218,6 +224,8 @@ public class ClientProps {
 
 	public static void loadProps(Configuration config) {
 		LIGeneralRegistry.loadConfigurableClass(CBCMod.config, ClientProps.class);
+		LIKeyBinding proc = LIKeyProcess.getBindingByName(WMClientProxy.KEY_ID_RELOAD);
+		//proc.keyCode = KEY_ID_RELOAD;
 		
 		MDL_GONARCH = AdvancedModelLoader.loadModel(new ResourceLocation("lambdacraft:models/bigmomoa.obj"));
 		

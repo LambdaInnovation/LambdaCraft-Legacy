@@ -76,7 +76,7 @@ public class EntityEgonRay extends Entity {
 		if (stack == null || stack.getItem() != DMItems.weapon_egon)
 			return;
 
-		InfWeapon inf = WMInformation.getInformation(thrower);
+		InfWeapon inf = WMInformation.instance.getInformation(thrower);
 		Weapon_Egon egon = (Weapon_Egon) DMItems.weapon_egon;
 		
 		if (inf == null|| 

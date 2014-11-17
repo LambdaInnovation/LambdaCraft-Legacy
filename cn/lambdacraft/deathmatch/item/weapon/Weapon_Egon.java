@@ -128,6 +128,7 @@ public class Weapon_Egon extends WeaponGenericLC implements ISpecialCrosshair {
 		switch(keyid) {
 		case 0: //LMOUSE
 			inf.removeAction(actionShoot.name);
+			inf.removeAction(actionJam.name);
 			break;
 		default:
 			break;
