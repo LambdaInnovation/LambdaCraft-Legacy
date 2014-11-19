@@ -47,6 +47,8 @@ public class TileHealthCharger extends TileElectricStorage implements IInventory
 	public int mainEff = 0, sideEff = 0;
 	public int prgAddMain = 0, prgAddSide = 0;
 	private int sideEffectId = 0;
+	private int ticksExisted;
+	private int lastActivationTick;
 
 	public static Set<Integer> availableIds = new HashSet();
 	static {
@@ -67,14 +69,23 @@ public class TileHealthCharger extends TileElectricStorage implements IInventory
 	public ItemStack slots[] = new ItemStack[3];
 	public int currentBehavior;
 	public boolean isRSActivated;
+	
+	public boolean canUse() {
+		return currentEnergy > 0 && (sideEff > 0 || mainEff > 0);
+	}
 
 	public void startUsing(EntityPlayer player) {
 		chargers.add(player);
+		worldObj.playSoundAtEntity(player, "lambdacraft:entities.medshot", 0.5F, 1.0F);
+		lastActivationTick = ticksExisted;
 		isUsing = true;
 	}
 
 	public void stopUsing(EntityPlayer player) {
 		chargers.remove(player);
+		lastActivationTick = ticksExisted;
+		if(ticksExisted - lastActivationTick > 20)
+			worldObj.playSoundAtEntity(player, "lambdacraft:entities.medshotno", 0.5F, 1.0F);
 		if (chargers.size() == 0)
 			isUsing = false;
 	}
@@ -109,6 +120,7 @@ public class TileHealthCharger extends TileElectricStorage implements IInventory
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
+		++ticksExisted;
 		if (worldObj.isRemote)
 			return;
 		int energyReq = ENERGY_MAX - currentEnergy;

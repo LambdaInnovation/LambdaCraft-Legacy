@@ -113,13 +113,33 @@ public class ClientProxy extends Proxy {
 			.setInvOffset(-2.45F, 3.04F)
 			.setInvScale(0.912F)
 			.setInvRotation(-35.796F, -94.77F, -3.452F);
-		
-		handgun_render.setInventorySpin(false).setStdRotation(0F, 180F, 0F).setOffset(0.0F, 0.11F, -0.30F).setEquipOffset(0.91F, -0.12F, 0.132F)
-			.setScale(2.24F).setInvOffset(-0.422F, 1.90F).setInvScale(1.164F).setInvRotation(-40.54F, -66F, 8F);
-		ar_render.setOffset(0.0F, 0.242F, -0.588F).setEquipOffset(0.852F, -0.118F, -0.01F)
-			.setScale(1.352F).setStdRotation(0F, -177.768F, 0F).setInventorySpin(false).setInvOffset(-0.408F, 2.75F).setInvScale(0.908F).setInvRotation(-42.78F, -65.428F, -11F);
-		uranium_render.setInventorySpin(false).setOffset(0F, -0.14F, 0F).setEquipRotation(-130.276F, -42.034F, -101.67F).setEquipOffset(0.562F, 0.118F, -0.248F).setStdRotation(0F, 0F, 0F)
-			.setInvRotation(0F, -45F, -26F).setInvOffset(0.01F, 2.318F).setScale(1.05F).setEntityItemRotation(0F, 0F, 0F).setInvScale(1.424F);
+		handgun_render.setInventorySpin(false)
+			.setStdRotation(0F, 180F, 0F)
+			.setOffset(0.0F, 0.11F, -0.30F)
+			.setEquipOffset(0.91F, -0.12F, 0.132F)
+			.setScale(2.24F)
+			.setInvOffset(-0.422F, 1.90F)
+			.setInvScale(1.164F)
+			.setInvRotation(-40.54F, -66F, 8F);
+		ar_render.setOffset(0.0F, 0.242F, -0.588F)
+			.setEquipOffset(0.852F, -0.118F, -0.01F)
+			.setScale(1.352F)
+			.setStdRotation(0F, -177.768F, 0F)
+			.setInventorySpin(false)
+			.setInvOffset(-0.408F, 2.75F)
+			.setInvScale(0.908F)
+			.setInvRotation(-42.78F, -65.428F, -11F)
+			.setUpliftFactor(2.5F);
+		uranium_render.setInventorySpin(false)
+			.setOffset(0F, -0.14F, 0F)
+			.setEquipRotation(-130.276F, -42.034F, -101.67F)
+			.setEquipOffset(0.562F, 0.118F, -0.248F)
+			.setStdRotation(0F, 0F, 0F)
+			.setInvRotation(0F, -45F, -26F)
+			.setInvOffset(0.01F, 2.318F)
+			.setScale(1.05F)
+			.setEntityItemRotation(0F, 0F, 0F)
+			.setInvScale(1.424F);
 		MinecraftForgeClient.registerItemRenderer(DMItems.crossbow, new RenderCrossbow());
 		MinecraftForgeClient.registerItemRenderer(DMItems.weapon_egon,new RenderEgon());
 		MinecraftForgeClient.registerItemRenderer(DMItems.gauss,new RenderGauss());

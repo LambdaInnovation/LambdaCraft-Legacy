@@ -25,6 +25,7 @@ import cn.weaponmod.api.action.ActionAutomaticShoot;
 import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionReload;
 import cn.weaponmod.api.action.ActionShoot;
+import cn.weaponmod.api.action.ActionUplift;
 
 /**
  * @author WeAthFolD
@@ -39,7 +40,8 @@ public class Weapon_9mmAR_Raw extends WeaponGenericLC {
 		setMaxDamage(50);
 		
 		actionShoot = new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa");
-		actionReload = new ActionReload(60, "lambdacraft:weapons.nmmarr", "");
+		actionReload = new ActionReload(50, "lambdacraft:weapons.nmmarr", "");
 		actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
+		actionUplift = new ActionUplift();
 	}
 }

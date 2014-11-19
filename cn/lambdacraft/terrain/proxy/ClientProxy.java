@@ -41,8 +41,8 @@ public class ClientProxy extends Proxy {
 	public void init() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenPortal.class, new RenderXenPortal());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenLight.class, new RenderTileEntityModel(new ModelXenLight(), ClientProps.XENLIGHT_PATH).setReverse(true));
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenAmethyst.class, new RenderTileEntityModel(new ModelXenAmethyst(), ClientProps.AMETHYST_PATH));
-		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenAmethyst.class, new RenderTileXenAmethyst());
+		//ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenAmethyst.class, new RenderTileEntityModel(new ModelXenAmethyst(), ClientProps.AMETHYST_PATH));
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityXenAmethyst.class, new RenderTileXenAmethyst());
 		RenderingRegistry.registerEntityRenderingHandler(EntityXenPortalFX.class, new RenderXenPortalFX());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(XenBlocks.xenPortal), new RenderItemPortal());
 	}

@@ -52,7 +52,7 @@ public class ClientProxy extends Proxy {
 	public void preInit() {
 		ClientProps.loadProps(CBCMod.config);
 		
-		LIKeyProcess.addKey("key.cbcuse", ClientProps.KEY_ID_USE_BLOCK, true, new KeyUse());
+		LIKeyProcess.addKey("key.cbcuse", ClientProps.KEY_ID_USE_BLOCK, false, new KeyUse());
 	}
 	
 	@Override

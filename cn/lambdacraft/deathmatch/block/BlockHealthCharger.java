@@ -171,18 +171,18 @@ public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
 	@Override
 	public void onBlockUse(World world, EntityPlayer player, int bx, int by,
 			int bz) {
-
+		System.out.println("obu");
 		TileEntity te = world.getTileEntity(bx, by, bz);
 		if (te == null)
 			return;
 		TileHealthCharger te2 = (TileHealthCharger) te;
-		String path = te2.currentEnergy > 0 ? "lambdacraft:entities.medshot"
-				: "lambdacraft:entities.medshotno";
-		world.playSoundAtEntity(player, path, 0.5F, 1.0F);
-		UsingUtils.setBlockInUse(player, bx, by, bz);
-		if (te2.currentEnergy > 0)
+		if(te2.canUse()) {
 			te2.startUsing(player);
-
+			UsingUtils.setBlockInUse(player, bx, by, bz);
+		} else {
+			world.playSoundAtEntity(player, "lambdacraft:entities.medshotno", 0.5F, 1.0F);
+		}
+		
 	}
 
 	@Override

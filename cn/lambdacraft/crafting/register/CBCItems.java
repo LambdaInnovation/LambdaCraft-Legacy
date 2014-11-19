@@ -256,6 +256,8 @@ public class CBCItems {
 		GameRegistry.addRecipe(new RecipeMedkitFill());
 		GameRegistry.addRecipe(new RecipeRepair(ammo_uranium, new ItemStack(ingotUranium)).setRepairAmt(34));
 		GameRegistry.addRecipe(new RecipeRepair(ammo_bow, new ItemStack(bullet_steelbow)));
+		GameRegistry.addRecipe(new RecipeRepair(ammo_9mm, new ItemStack(bullet_9mm)));
+		GameRegistry.addRecipe(new RecipeRepair(ammo_9mm2, new ItemStack(bullet_9mm)));
 		
 		//Materials
 		IRecipe recipes[] = {
@@ -490,7 +492,9 @@ public class CBCItems {
 				ItemStack s = inv.getStackInSlot(i);
 				if (s != null) {
 					if (s.getItem() == itemToRepair) {
-						b1 = true;
+						if(b1) return false;
+						if(s.getItemDamage() > 0)
+							b1 = true;
 					} else if (s.getItem() == repairMat.getItem()) {
 						b2 = true;
 					}
@@ -511,8 +515,10 @@ public class CBCItems {
 							return null;
 						}
 						theItem = s;
-					} else if (s.getItem() == repairMat.getItem())
+					} else if (s.getItem() == repairMat.getItem()) {
+						
 						++cntRep;
+					}
 				}
 			}
 			if (theItem == null) {

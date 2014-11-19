@@ -46,7 +46,7 @@ public class TileEntityXenAmethyst extends TileEntity {
     			ticksSinceLastAtack = 0;
     			e.attackEntityFrom(DamageSource.generic, 2);
     				lastxCoord = e.posX - xCoord - 0.5;
-    				lastyCoord = e.posY + e.height - yCoord - 0.5;
+    				lastyCoord = e.posY + e.height * 0.5 - yCoord - 0.1;
     				lastzCoord = e.posZ - zCoord - 0.5;
     		}
     	}
