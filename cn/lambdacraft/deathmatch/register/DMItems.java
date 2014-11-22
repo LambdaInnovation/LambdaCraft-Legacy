@@ -13,6 +13,7 @@ import cn.lambdacraft.deathmatch.item.weapon.Weapon_9mmhandgun;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Crossbow;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Crowbar;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Crowbar_Electrical;
+import cn.lambdacraft.deathmatch.item.weapon.Weapon_Displacer;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Egon;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Gauss;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_Hgrenade;
@@ -34,6 +35,7 @@ public class DMItems {
 		weapon_357,
 		weapon_shotgun,
 		weapon_hornet,
+		weapon_displacer,
 		medkit,
 		weapon_crowbar_el;
 	
@@ -52,7 +54,7 @@ public class DMItems {
 	public static void init(Configuration conf) {
 
 		weapon_crowbar = reg(Weapon_Crowbar.class, "lc_crowbar");
-		
+		weapon_displacer = reg(Weapon_Displacer.class, "lc_displacer");
 		weapon_shotgun = reg(Weapon_Shotgun.class, "lc_shotgun");
 		weapon_hgrenade = reg(Weapon_Hgrenade.class, "lc_hgren");
 		weapon_9mmhandgun = reg(Weapon_9mmhandgun.class, "lc_9mmhg");
