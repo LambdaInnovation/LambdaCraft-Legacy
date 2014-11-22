@@ -40,7 +40,7 @@ public class EntityRocket extends EntityThrowable {
 		super(par1World, player);
 		rotationPitch = player.rotationPitch;
 		rotationYaw = player.rotationYaw;
-		worldObj.playSoundAtEntity(this, "cbc.weapons.rocket", 0.3F, 1.0F);
+		worldObj.playSoundAtEntity(this, "lambdacraft:weapons.rocket", 0.3F, 1.0F);
 		theStack = is;
 	}
 

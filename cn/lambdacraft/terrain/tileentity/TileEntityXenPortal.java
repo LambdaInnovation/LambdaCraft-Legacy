@@ -6,6 +6,10 @@ import net.minecraft.tileentity.TileEntity;
  * 
  * @author F
  */
-public class TileEntityXenPortal extends TileEntity{
-
+public class TileEntityXenPortal extends TileEntity {
+	
+	@Override public boolean canUpdate() {
+		return false;
+	}
+	
 }

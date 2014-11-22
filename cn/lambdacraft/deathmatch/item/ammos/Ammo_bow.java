@@ -8,6 +8,7 @@ public class Ammo_bow extends ItemAmmo {
 		super();
 		setCreativeTab(CBCMod.cct);
 		setIAndU("ammo_bow");
+		setFull3D();
 		setMaxDamage(6);
 	}
 	
