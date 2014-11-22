@@ -252,6 +252,14 @@ public class TileHealthCharger extends TileElectricStorage implements IInventory
 		} catch(Exception e) {
 			//NOPE
 		}
+		try {
+			if(fldDuration == null) {
+				fldDuration = PotionEffect.class.getDeclaredField("field_76460_b");
+				fldDuration.setAccessible(true);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void doHealing(EntityPlayer charger) {

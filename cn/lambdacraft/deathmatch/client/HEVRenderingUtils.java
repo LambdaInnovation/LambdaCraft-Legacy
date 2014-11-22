@@ -160,7 +160,7 @@ public class HEVRenderingUtils {
 				hev = (ArmorHEV) is.getItem();
 				int energy = ArmorHEV.getItemCharge(is);
 				int heightToDraw = energy * 16 / hev.getMaxDamage(is);
-				System.out.println(hev + " " + energy + "/" + ArmorHEV.getItemCharge(is));
+				//System.out.println(hev + " " + energy + "/" + ArmorHEV.getItemCharge(is));
 				int height = l - 65 - i * 16;
 				if (is.getItemSpriteNumber() == 0) {
 					renderEngine.bindTexture(renderEngine.getResourceLocation(0)); 

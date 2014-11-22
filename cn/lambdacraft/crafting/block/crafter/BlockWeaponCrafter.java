@@ -13,12 +13,12 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
-import cn.lambdacraft.core.block.CBCBlockContainer;
 import cn.lambdacraft.core.prop.GeneralProps;
+import cn.liutils.api.block.LIBlockContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockWeaponCrafter extends CBCBlockContainer {
+public class BlockWeaponCrafter extends LIBlockContainer {
 
 	public IIcon iconSide, iconTop, iconBottom, iconMain;
 

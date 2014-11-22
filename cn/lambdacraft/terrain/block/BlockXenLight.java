@@ -27,12 +27,13 @@ import cn.lambdacraft.core.block.*;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.register.XenBlocks;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenLight;
+import cn.liutils.api.block.LIBlockContainer;
 
 /**
  * @author WeAthFolD
  *
  */
-public class BlockXenLight extends CBCBlockContainer {
+public class BlockXenLight extends LIBlockContainer {
 
 	private boolean isBright;
 
