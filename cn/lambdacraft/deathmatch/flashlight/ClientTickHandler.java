@@ -1,7 +1,5 @@
 package cn.lambdacraft.deathmatch.flashlight;
 
-import java.util.EnumSet;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;

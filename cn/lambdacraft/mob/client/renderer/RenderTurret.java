@@ -24,7 +24,6 @@ import cn.lambdacraft.mob.client.model.ModelTurret;
 import cn.lambdacraft.mob.entity.EntitySentry;
 import cn.liutils.api.client.render.LIRenderMob;
 import cn.liutils.api.client.util.RenderUtils;
-import cn.liutils.api.util.GenericUtils;
 
 /**
  * @author WeAthFolD

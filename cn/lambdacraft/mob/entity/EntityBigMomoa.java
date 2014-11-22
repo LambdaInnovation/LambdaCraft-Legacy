@@ -2,7 +2,6 @@ package cn.lambdacraft.mob.entity;
 
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,10 +12,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import cn.liutils.api.entity.LIEntityMob;
-import cn.lambdacraft.core.prop.ClientProps;
 
 /* 表示加了CASE后代码行数瞬间上去了 -w- */
 

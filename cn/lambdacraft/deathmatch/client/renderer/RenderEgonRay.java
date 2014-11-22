@@ -64,9 +64,9 @@ public class RenderEgonRay extends RenderEntity {
 		double tx = .0, tz = .07;
 		double ty = -0.15;
 		if(!fp) {
-			tx = .7;
+			tx = .3;
 			tz = .6;
-			ty = -1.2;
+			ty = -0.2;
 		}
 		
 		//光束

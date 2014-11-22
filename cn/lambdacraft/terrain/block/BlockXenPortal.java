@@ -89,7 +89,7 @@ public class BlockXenPortal extends BlockContainer {
         {
             int l;
 
-            for (l = par3; !par1World.doesBlockHaveSolidTopSurface(par1World, par2, l, par4) && l > 0; --l)
+            for (l = par3; !World.doesBlockHaveSolidTopSurface(par1World, par2, l, par4) && l > 0; --l)
             {
                 ;
             }

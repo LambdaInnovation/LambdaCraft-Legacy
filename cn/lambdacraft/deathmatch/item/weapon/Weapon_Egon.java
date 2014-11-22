@@ -1,6 +1,5 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -11,17 +10,11 @@ import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityBulletEgon;
 import cn.lambdacraft.deathmatch.entity.fx.EntityEgonRay;
-import cn.liutils.api.entity.EntityBullet;
-import cn.weaponmod.api.WeaponHelper;
-import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionAutomaticShoot;
-import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.action.ActionUplift;
 import cn.weaponmod.api.information.InfUtils;
 import cn.weaponmod.api.information.InfWeapon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * Egon energy weapon.
@@ -44,6 +37,7 @@ public class Weapon_Egon extends WeaponGenericLC implements ISpecialCrosshair {
 			super(10, 2, "");
 		}
 		
+		@Override
 		protected Entity getProjectileEntity(World world, EntityPlayer player) {
 			return world.isRemote ? null : new EntityBulletEgon(world, player);
 		}

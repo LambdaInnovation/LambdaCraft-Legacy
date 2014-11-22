@@ -14,17 +14,12 @@
  */
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.register.CBCItems;
-import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionAutomaticShoot;
 import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionReload;
-import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.action.ActionUplift;
 
 /**
@@ -39,7 +34,7 @@ public class Weapon_9mmAR_Raw extends WeaponGenericLC {
 		setCreativeTab(CBCMod.cct);
 		setMaxDamage(50);
 		
-		actionShoot = new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa");
+		actionShoot = new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa").setMuzzleflash(ClientProps.MUZZLEFLASH).setMuzOffset(0.3, 0.28, 0);
 		actionReload = new ActionReload(50, "lambdacraft:weapons.nmmarr", "");
 		actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 		actionUplift = new ActionUplift();

@@ -16,10 +16,10 @@ package cn.lambdacraft.deathmatch.block;
 
 import cn.lambdacraft.api.tile.IUseable;
 import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.block.CBCBlockContainer;
 import cn.lambdacraft.core.client.key.UsingUtils;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.core.prop.GeneralProps;
-import cn.liutils.api.block.LIBlockContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -36,7 +36,7 @@ import net.minecraft.world.World;
  * @author Administrator
  * 
  */
-public class BlockHealthCharger extends LIBlockContainer implements IUseable {
+public class BlockHealthCharger extends CBCBlockContainer implements IUseable {
 
 	protected final float WIDTH = 0.3F, HEIGHT = 0.4F, LENGTH = 0.08F;
 

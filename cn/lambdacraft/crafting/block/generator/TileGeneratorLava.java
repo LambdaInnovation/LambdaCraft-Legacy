@@ -14,7 +14,6 @@
  */
 package cn.lambdacraft.crafting.block.generator;
 
-import cn.lambdacraft.core.CBCMod;
 import ic2.api.item.IC2Items;
 import ic2.api.item.ISpecialElectricItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,7 +42,6 @@ public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 	public TileGeneratorLava() {
 		super(1, 20);
 		lavaCell = IC2Items.getItem("lavaCell");
-		System.out.println("LavaCell:" + lavaCell);
 	}
 
 	@Override

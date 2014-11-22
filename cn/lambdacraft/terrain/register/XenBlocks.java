@@ -15,9 +15,6 @@
 package cn.lambdacraft.terrain.register;
 
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockSand;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import cn.lambdacraft.terrain.block.BlockBlackPillar;
 import cn.lambdacraft.terrain.block.BlockSlimeFlow;

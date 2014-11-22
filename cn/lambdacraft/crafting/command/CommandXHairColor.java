@@ -48,10 +48,10 @@ public class CommandXHairColor extends LICommandBase {
 		if(astring[0].equals("color")) {
 			if(astring.length != 4) {
 				if(astring.length == 1) {
-					this.sendWithTranslation(ics, "spray.color.name",
+					LICommandBase.sendWithTranslation(ics, "spray.color.name",
 							ClientProps.xHairR, ClientProps.xHairG, ClientProps.xHairB);
 				} else 
-					this.sendChat(ics, "spray.argument.name");
+					LICommandBase.sendChat(ics, "spray.argument.name");
 			} else {
 				try {
 					int r = Integer.valueOf(astring[1]);
@@ -59,12 +59,12 @@ public class CommandXHairColor extends LICommandBase {
 					int b = Integer.valueOf(astring[3]);
 					ClientProps.setCrosshairColor(r, g, b);
 				} catch(NumberFormatException e) {
-					this.sendChat(ics, "spray.format.name");
+					LICommandBase.sendChat(ics, "spray.format.name");
 				}
-				this.sendChat(ics, "spray.successful.name");
+				LICommandBase.sendChat(ics, "spray.successful.name");
 			}
 		} else {
-			this.sendChat(ics, EnumChatFormatting.RED + getCommandUsage(ics));
+			LICommandBase.sendChat(ics, EnumChatFormatting.RED + getCommandUsage(ics));
 		}	
 	}
 

@@ -23,7 +23,6 @@ import cn.lambdacraft.deathmatch.entity.EntityHornet;
 import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionAutomaticShoot;
 import cn.weaponmod.api.action.ActionJam;
-import cn.weaponmod.api.action.ActionReload;
 import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.core.event.ItemControlHandler;
@@ -44,6 +43,7 @@ public class Weapon_Hornet extends WeaponGenericLC {
 			setShootRate(b ? 5 : 3);
 		}
 		
+		@Override
 		protected Entity getProjectileEntity(World world, EntityPlayer player) {
 			return world.isRemote ? null : new EntityHornet(world, player, side);
 		}

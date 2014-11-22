@@ -34,9 +34,7 @@ import cn.lambdacraft.mob.entity.EntitySentry;
 import cn.lambdacraft.mob.network.MsgSentrySync;
 import cn.liutils.api.command.LICommandBase;
 import cn.liutils.api.util.BlockPos;
-import cn.liutils.api.util.EntityUtils;
 import cn.liutils.api.util.GenericUtils;
-import cn.weaponmod.api.WeaponHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

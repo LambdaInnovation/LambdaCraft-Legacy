@@ -1,7 +1,5 @@
 package cn.lambdacraft.terrain.block;
 
-import java.util.Random;
-
 import cn.lambdacraft.core.CBCMod;
 
 import cpw.mods.fml.relauncher.Side;
@@ -10,7 +8,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.item.Item;
 /**
  * Xen水晶方块 掉落水晶材料
  * @author F

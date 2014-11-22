@@ -24,11 +24,11 @@ import cn.lambdacraft.core.network.MsgKeyUsing;
 import cn.lambdacraft.core.prop.GeneralProps;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.liutils.api.register.LIGuiHandler;
+import cn.liutils.core.LIUtils;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -40,10 +40,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = "LambdaCraft", name = "LambdaCraft Core", version = CBCMod.VERSION, 
-dependencies = "required-after:LIUtils-Weapons@1.7.2.305")
+dependencies = LIUtils.DEPENDENCY)
 public class CBCMod {
 
-	public static final String VERSION = "1.8.0alpha"; //alpha!
+	public static final String VERSION = "1.8.0beta";
 
 	public static final String 
 		DEPENCY_CRAFTING = "required-after:LambdaCraft|World@" + VERSION,
@@ -99,18 +99,12 @@ public class CBCMod {
 	public void preInit(FMLPreInitializationEvent event) {
 
 		log.info("Starting LambdaCraft " + CBCMod.VERSION);
-		log.info("Copyright (c) Lambda Innovation, 2013");
+		log.info("Copyright (c) Lambda Innovation, 2013-2014");
 		log.info("http://www.lambdacraft.cn");
 		
 		config = new Configuration(event.getSuggestedConfigurationFile());
 		proxy.preInit();
 		GeneralProps.loadProps(config);
-		ModMetadata meta = event.getModMetadata();
-		meta.logoFile = "\\lambdacraft.png";
-		meta.description = "A minecraft mod re-making Half-Life worldview! Enjoy your experience" +
-				"crafting HEV and gauss, battling with headcrabs, and travelling to XEN!";
-		meta.url = "http://lambdacraft.cn";
-		meta.version = "1.7.8";
 		
 		FMLCommonHandler.instance().bus().register(new LCTickEvents());
 	}
@@ -127,7 +121,6 @@ public class CBCMod {
 		// Blocks, Items, GUI Handler,Key Process.
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMod", "LambdaCraft");
-		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMisc", "LambdaCraft-Misc");
 		netHandler.registerMessage(MsgKeyUsing.Handler.class, MsgKeyUsing.class, GeneralProps.NET_ID_USE, Side.SERVER);
 		proxy.init();
 		

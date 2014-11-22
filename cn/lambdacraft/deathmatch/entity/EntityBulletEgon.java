@@ -24,7 +24,6 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.entity.EntityBullet;
 import cn.liutils.api.util.GenericUtils;
 

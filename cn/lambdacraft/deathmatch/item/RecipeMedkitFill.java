@@ -3,16 +3,12 @@
  */
 package cn.lambdacraft.deathmatch.item;
 
-import java.util.Set;
-
 import cn.lambdacraft.deathmatch.item.ItemMedkit.EnumAddingType;
 import cn.lambdacraft.deathmatch.register.DMItems;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.potion.Potion;
 import net.minecraft.world.World;
 
 /**

@@ -11,14 +11,9 @@ import cn.lambdacraft.api.hud.ISpecialCrosshair;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityCrossbowArrow;
-import cn.liutils.api.entity.EntityBullet;
-import cn.weaponmod.api.WMInformation;
-import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionReload;
 import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.feature.IModdable;
-import cn.weaponmod.api.information.InfUtils;
-import cn.weaponmod.api.information.InfWeapon;
 import cn.weaponmod.api.weapon.IZoomable;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -39,6 +34,7 @@ public class Weapon_Crossbow extends WeaponGenericLC implements
 			setShootRate(30);
 		}
 		
+		@Override
 		protected Entity getProjectileEntity(World world, EntityPlayer player) {
 			return world.isRemote ? null : new EntityCrossbowArrow(world, player, getMode(player.getCurrentEquippedItem()) == 0);
 		}

@@ -63,7 +63,6 @@ import cn.weaponmod.api.client.render.RendererModelBulletWeapon;
 import cn.weaponmod.api.weapon.WeaponGeneric;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 /**
  * @author WeAthFolD
@@ -107,7 +106,7 @@ public class ClientProxy extends Proxy {
 			.setOffset(0.002F, 0.402F, -0.314F)
 			.setScale(1.212F)
 			.setStdRotation(0F, 181.13414F, 0F)
-			.setEquipOffset(1.15, -0.447, 0.325)
+			.setEquipOffset(1.15, -0.447, 0.154)
 			.setEquipRotation(0.066F, 0.844F, -8.483F)
 			.setInventorySpin(false)
 			.setInvOffset(-2.45F, 3.04F)

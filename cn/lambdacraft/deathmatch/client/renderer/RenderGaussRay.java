@@ -34,7 +34,7 @@ public class RenderGaussRay extends RenderEntity {
 
 	public double 
 	tpOffsetX = 0.0,
-	tpOffsetY = -1.2,
+	tpOffsetY = -0.2,
 	tpOffsetZ = -0.4;
 
 	public RenderGaussRay(boolean hasColor) {

@@ -18,7 +18,6 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.client.EntityXenPortalFX;
-import cn.lambdacraft.terrain.client.model.ModelXenAmethyst;
 import cn.lambdacraft.terrain.client.model.ModelXenLight;
 import cn.lambdacraft.terrain.client.renderer.RenderItemPortal;
 import cn.lambdacraft.terrain.client.renderer.RenderTileXenAmethyst;

@@ -15,8 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.util.EnumHelper;
-
 import org.lwjgl.opengl.GL11;
 
 import cn.lambdacraft.core.item.ElectricArmor;

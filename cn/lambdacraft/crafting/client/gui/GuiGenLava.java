@@ -28,7 +28,6 @@ import cn.lambdacraft.crafting.block.generator.TileGeneratorLava;
 import cn.lambdacraft.crafting.register.CBCBlocks;
 import cn.liutils.api.client.gui.GuiContainerSP;
 import cn.liutils.api.client.gui.IGuiTip;
-import cn.liutils.api.client.gui.part.LIGuiButton;
 import cn.liutils.api.client.gui.part.LIGuiPart;
 import cn.liutils.api.client.util.RenderUtils;
 

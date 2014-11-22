@@ -24,7 +24,6 @@ import java.util.Set;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -32,6 +31,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.core.block.TileElectricStorage;
+import cn.liutils.api.util.RegUtils;
 
 /**
  * 
@@ -245,20 +245,10 @@ public class TileHealthCharger extends TileElectricStorage implements IInventory
 	public static Field fldDuration;
 	static {
 		try {
-			if(fldDuration == null) {
-				fldDuration = PotionEffect.class.getDeclaredField("duration");
-				fldDuration.setAccessible(true);
-			}
-		} catch(Exception e) {
-			//NOPE
-		}
-		try {
-			if(fldDuration == null) {
-				fldDuration = PotionEffect.class.getDeclaredField("field_76460_b");
-				fldDuration.setAccessible(true);
-			}
+			fldDuration = RegUtils.getObfField(PotionEffect.class, "duration", "field_76460_b");
 		} catch(Exception e) {
 			e.printStackTrace();
+			//NOPE
 		}
 	}
 	

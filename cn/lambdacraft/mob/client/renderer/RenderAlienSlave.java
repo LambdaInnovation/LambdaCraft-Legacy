@@ -28,7 +28,6 @@ import cn.lambdacraft.mob.client.model.ModelVortigaunt;
 import cn.lambdacraft.mob.entity.EntityAlienSlave;
 import cn.liutils.api.client.render.LIRenderMob;
 import cn.liutils.api.client.util.RenderUtils;
-import cn.liutils.api.util.GenericUtils;
 
 /**
  * @author WeAthFolD

@@ -5,9 +5,8 @@ import java.util.Random;
 
 import cn.lambdacraft.terrain.ModuleTerrain;
 import cn.lambdacraft.terrain.register.XenBlocks;
-import cn.lambdacraft.terrain.world.biome.MainBiomes;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSand;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
@@ -156,7 +155,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
         {
             for (int k = -2; k <= 2; ++k)
             {
-                float f = 10.0F / MathHelper.sqrt_float((float)(j * j + k * k) + 0.2F);
+                float f = 10.0F / MathHelper.sqrt_float(j * j + k * k + 0.2F);
                 this.parabolicField[j + 2 + (k + 2) * 5] = f;
             }
         }
@@ -166,7 +165,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
         {
             for (int k = -2; k <= 2; ++k)
             {
-                float f = 10.0F / MathHelper.sqrt_float((float)(j * j + k * k) + 0.2F);
+                float f = 10.0F / MathHelper.sqrt_float(j * j + k * k + 0.2F);
                 this.parabolicFieldXen[j + 2 + (k + 2) * 5] = f;
             }
         }
@@ -424,15 +423,15 @@ public class ChunkProviderXenContinent implements IChunkProvider
                 }
 
                 ++i1;
-                double d13 = (double)f1;
-                double d14 = (double)f;
+                double d13 = f1;
+                double d14 = f;
                 d13 += d12 * 0.2D;
                 d13 = d13 * 8.5D / 8.0D;
                 double d5 = 8.5D + d13 * 4.0D;
 
                 for (int j2 = 0; j2 < 33; ++j2)
                 {
-                    double d6 = ((double)j2 - d5) * 12.0D * 128.0D / 256.0D / d14;
+                    double d6 = (j2 - d5) * 12.0D * 128.0D / 256.0D / d14;
 
                     if (d6 < 0.0D)
                     {
@@ -446,7 +445,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
 
                     if (j2 > 29)
                     {
-                        double d11 = (double)((float)(j2 - 29) / 3.0F);
+                        double d11 = (j2 - 29) / 3.0F;
                         d10 = d10 * (1.0D - d11) + -10.0D * d11;
                     }
 
@@ -546,15 +545,15 @@ public class ChunkProviderXenContinent implements IChunkProvider
                 }
 
                 ++i1;
-                double d13 = (double)f1;
-                double d14 = (double)f;
+                double d13 = f1;
+                double d14 = f;
                 d13 += d12 * 0.2D;
                 d13 = d13 * 8.5D / 8.0D;
                 double d5 = 8.5D + d13 * 4.0D;
 
                 for (int j2 = 0; j2 < 33; ++j2)
                 {
-                    double d6 = ((double)j2 - d5) * 12.0D * 128.0D / 256.0D / d14;
+                    double d6 = (j2 - d5) * 12.0D * 128.0D / 256.0D / d14;
 
                     if (d6 < 0.0D)
                     {
@@ -568,7 +567,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
 
                     if (j2 > 29)
                     {
-                        double d11 = (double)((float)(j2 - 29) / 3.0F);
+                        double d11 = (j2 - 29) / 3.0F;
                         d10 = d10 * (1.0D - d11) + -10.0D * d11;
                     }
 
@@ -630,7 +629,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
     	/**    海平面数值 在主世界中海的水方块所在Y轴最大值为该值减一     */
         byte seaLevel = 35;
         double d0 = 0.03125D;
-        this.stoneNoise = this.noiseGen4.func_151599_a(this.stoneNoise, (double)(par1 * 16), (double)(par2 * 16), 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
+        this.stoneNoise = this.noiseGen4.func_151599_a(this.stoneNoise, par1 * 16, par2 * 16, 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
 
         for (int k = 0; k < 16; ++k)
         {
@@ -702,7 +701,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
     @Override
 	public void populate(IChunkProvider par1IChunkProvider, int par2, int par3)
     {
-        BlockSand.fallInstantly = true;
+        BlockFalling.fallInstantly = true;
         int k = par2 * 16;
         int l = par3 * 16;
         BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(k + 16, l + 16);
@@ -733,7 +732,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
         }
 
         biomegenbase.decorate(this.worldObj, this.rand, k, l);
-        BlockSand.fallInstantly = false;
+        BlockFalling.fallInstantly = false;
     }
 
     /**

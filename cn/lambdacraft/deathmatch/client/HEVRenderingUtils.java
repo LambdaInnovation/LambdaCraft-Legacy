@@ -16,15 +16,12 @@ package cn.lambdacraft.deathmatch.client;
 
 import java.util.HashMap;
 
-import javax.swing.Icon;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
@@ -34,6 +31,7 @@ import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.api.hud.IHudTipProvider;
 import cn.lambdacraft.api.hud.ISpecialCrosshair;
 import cn.lambdacraft.core.LCClientPlayer;
+import cn.lambdacraft.core.item.ElectricArmor;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.deathmatch.item.ArmorHEV;
 import cn.liutils.api.client.util.HudUtils;
@@ -158,7 +156,7 @@ public class HEVRenderingUtils {
 			ArmorHEV hev;
 			if(is != null && is.getItem() instanceof ArmorHEV) {
 				hev = (ArmorHEV) is.getItem();
-				int energy = ArmorHEV.getItemCharge(is);
+				int energy = ElectricArmor.getItemCharge(is);
 				int heightToDraw = energy * 16 / hev.getMaxDamage(is);
 				//System.out.println(hev + " " + energy + "/" + ArmorHEV.getItemCharge(is));
 				int height = l - 65 - i * 16;

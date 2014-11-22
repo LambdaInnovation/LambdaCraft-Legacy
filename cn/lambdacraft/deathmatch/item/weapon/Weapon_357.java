@@ -5,8 +5,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.register.CBCItems;
-import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionReload;
 import cn.weaponmod.api.action.ActionShoot;
@@ -31,7 +31,7 @@ public class Weapon_357 extends WeaponGenericLC {
 		setMaxDamage(6);
 		setNoRepair();
 		
-		this.actionShoot = new ActionShoot(7, 2, "lambdacraft:weapons.pyt_shota").setShootRate(20);
+		this.actionShoot = new ActionShoot(7, 2, "lambdacraft:weapons.pyt_shota").setShootRate(20).setMuzzle(ClientProps.MUZZLEFLASH2).setMuzzleOffset(0.44, 0.12, 0.1);
 		this.actionReload = new ActionReload(70, "lambdacraft:weapons.pyt_reloada", "");
 		this.actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
 	}

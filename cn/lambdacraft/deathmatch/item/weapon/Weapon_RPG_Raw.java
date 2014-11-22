@@ -24,18 +24,10 @@ import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.crafting.register.CBCItems;
-import cn.lambdacraft.deathmatch.entity.EntityRPGDot;
 import cn.lambdacraft.deathmatch.entity.EntityRocket;
-import cn.liutils.api.entity.EntityBullet;
-import cn.weaponmod.api.WMInformation;
 import cn.weaponmod.api.WeaponHelper;
-import cn.weaponmod.api.action.Action;
-import cn.weaponmod.api.action.ActionDummy;
 import cn.weaponmod.api.action.ActionJam;
-import cn.weaponmod.api.action.ActionReload;
 import cn.weaponmod.api.action.ActionShoot;
-import cn.weaponmod.api.feature.IModdable;
-import cn.weaponmod.api.weapon.WeaponGenericBase;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 

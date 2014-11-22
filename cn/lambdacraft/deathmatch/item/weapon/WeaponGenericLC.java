@@ -12,7 +12,6 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.api.hud.IHudTipProvider;
-import cn.lambdacraft.core.prop.GeneralProps;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.weapon.WeaponGenericBase;
@@ -72,7 +71,8 @@ public class WeaponGenericLC extends WeaponGeneric implements IHudTipProvider {
 
 			@Override
 			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return WeaponGenericLC.this.getAmmo(itemStack) + "|" + WeaponHelper.getAmmoCapacity(ammoItem, player.inventory);
+				return WeaponGenericLC.this.getMaxDamage() == 0 ? String.valueOf(WeaponHelper.getAmmoCapacity(ammoItem, player.inventory)) : 
+					WeaponGenericLC.this.getAmmo(itemStack) + "|" + WeaponHelper.getAmmoCapacity(ammoItem, player.inventory);
 			}
 
 			@Override

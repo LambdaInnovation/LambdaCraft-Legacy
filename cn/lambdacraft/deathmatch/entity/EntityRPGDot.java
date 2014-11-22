@@ -25,7 +25,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cn.lambdacraft.deathmatch.item.weapon.Weapon_RPG;
 import cn.liutils.api.util.GenericUtils;
 import cn.liutils.api.util.Motion3D;
-import cn.weaponmod.api.WeaponHelper;
 
 /**
  * RPG制导红点。

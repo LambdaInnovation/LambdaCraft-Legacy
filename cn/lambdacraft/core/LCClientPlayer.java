@@ -2,8 +2,6 @@ package cn.lambdacraft.core;
 
 import org.lwjgl.input.Keyboard;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.settings.GameSettings;

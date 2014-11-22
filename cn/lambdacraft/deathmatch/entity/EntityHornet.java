@@ -30,7 +30,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.prop.ClientProps;
-import cn.lambdacraft.deathmatch.register.DMItems;
 import cn.liutils.api.entity.EntityTrailFX;
 import cn.liutils.api.util.GenericUtils;
 import cn.weaponmod.api.WeaponHelper;

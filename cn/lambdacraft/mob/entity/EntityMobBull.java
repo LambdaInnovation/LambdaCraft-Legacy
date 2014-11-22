@@ -2,12 +2,9 @@ package cn.lambdacraft.mob.entity;
 
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.core.prop.GeneralProps;
-import cn.lambdacraft.mob.entity.EntityBigMomoa.stats;
 import cn.liutils.api.entity.LIEntityMob;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -75,7 +72,7 @@ public class EntityMobBull extends LIEntityMob {
 
 	private void attackLongRange(Entity entity) {
 		int r2 = rand.nextInt();
-		if(r2 % 12 == 0) entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (((EntityLivingBase) entity).getHealth() - (double) (ATTACK_DAMAGE / 4)));
+		if(r2 % 12 == 0) entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (((EntityLivingBase) entity).getHealth() - ATTACK_DAMAGE / 4));
 	}
 	
 	@Override

@@ -14,22 +14,9 @@
  */
 package cn.lambdacraft.crafting.block.crafter;
 
-import java.util.List;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
-import cn.lambdacraft.core.block.CBCTileEntity;
-import cn.lambdacraft.crafting.block.crafter.BlockWeaponCrafter.CrafterIconType;
-import cn.lambdacraft.crafting.recipe.ICrafterRecipe;
-import cn.lambdacraft.crafting.recipe.CrafterRecipeNormal;
-import cn.lambdacraft.crafting.recipe.MachineRecipes;
-import cn.lambdacraft.crafting.recipe.RecipeRepair;
 import cn.lambdacraft.crafting.recipe.RecipeWeapons;
 import cn.lambdacraft.crafting.register.CBCBlocks;
-import cn.weaponmod.api.WeaponHelper;
 
 /**
  * 武器合成机和高级武器合成机的TileEntity类。

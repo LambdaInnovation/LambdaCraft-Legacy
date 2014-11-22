@@ -18,16 +18,15 @@ import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.block.CBCBlockContainer;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
-import cn.liutils.api.block.LIBlockContainer;
 
 /**
  * @author WeAthFolD
  *
  */
-public class BlockXenAmethyst extends LIBlockContainer {
+public class BlockXenAmethyst extends CBCBlockContainer {
 
 	public BlockXenAmethyst() {
 		super(Material.rock);

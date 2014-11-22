@@ -91,7 +91,6 @@ public class GuiArmorCharger extends GuiContainerSP {
 		this.drawTexturedModalRect(x + 80, y + 28, 176, 0, length, 10);
 
 		if (te.isUsing) {
-			System.out.println("DRAWW");
 			int height = (int) (te.getWorldObj().getWorldTime() % 43);
 			this.drawTexturedModalRect(x + 29, y + 21, 176, 56, 43, height);
 		}

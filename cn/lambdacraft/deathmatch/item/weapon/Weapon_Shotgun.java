@@ -1,15 +1,12 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.register.CBCItems;
-import cn.liutils.api.entity.EntityBullet;
-import cn.liutils.api.util.GenericUtils;
 import cn.liutils.core.client.register.LIKeyProcess;
-import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionBuckshot;
 import cn.weaponmod.api.action.ActionMultipleReload;
@@ -26,7 +23,7 @@ public class Weapon_Shotgun extends WeaponGenericLC {
 		setMaxDamage(8);
 		setCreativeTab(CBCMod.cct);
 
-		actionShoot = new ActionBuckshot(2, 5, "lambdacraft:weapons.sbarrela").setShootRate(20);
+		actionShoot = new ActionBuckshot(2, 5, "lambdacraft:weapons.sbarrela").setShootRate(20).setMuzzle(ClientProps.MUZZLEFLASH2).setMuzzleOffset(0, 0, 0.1);
 		actionReload = new ActionMultipleReload(8, 300).setSound("lambdacraft:weapons.reloadc").setSoundFinish("lambdacraft:weapons.scocka");
 	}
 

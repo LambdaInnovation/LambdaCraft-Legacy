@@ -19,7 +19,8 @@ public abstract class ItemAmmo extends CBCGenericItem {
 		return this.hasSubtypes;
 	}
 	
-    @SideOnly(Side.CLIENT)
+    @Override
+	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
     	if(this.getMaxDamage() > 0)
     		list.add("" + ((stack.getMaxDamage() - stack.getItemDamage() - 1) + "/" + (stack.getMaxDamage() - 1)));

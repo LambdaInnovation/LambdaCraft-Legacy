@@ -15,7 +15,6 @@
 package cn.lambdacraft.core.prop;
 
 import net.minecraftforge.common.config.Configuration;
-import cn.lambdacraft.core.CBCMod;
 import cn.liutils.api.LIGeneralRegistry;
 import cn.liutils.api.register.Configurable;
 

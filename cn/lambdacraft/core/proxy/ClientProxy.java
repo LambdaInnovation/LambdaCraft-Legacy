@@ -23,8 +23,6 @@ import java.net.URL;
 
 import net.minecraft.client.Minecraft;
 
-import org.lwjgl.input.Keyboard;
-
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.LCClientPlayer;
 import cn.lambdacraft.core.client.key.KeyUse;

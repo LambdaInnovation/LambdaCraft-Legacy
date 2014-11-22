@@ -6,7 +6,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockDynamicLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.IIcon;
 
 public class BlockSlimeFlow extends BlockDynamicLiquid 
@@ -31,6 +30,7 @@ public class BlockSlimeFlow extends BlockDynamicLiquid
 	    this.blockIcon = par1.registerIcon("lambdacraft:" + this.getTextureName());
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
     public IIcon getIcon(int p_149691_1_, int p_149691_2_)
     {

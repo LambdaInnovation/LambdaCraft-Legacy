@@ -23,10 +23,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import cn.lambdacraft.core.block.CBCBlockContainer;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.mob.block.tile.TileSentryRay;
 import cn.lambdacraft.mob.register.CBCMobItems;
-import cn.liutils.api.block.LIBlockContainer;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -34,7 +34,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * @author WeAthFolD
  *
  */
-public class BlockSentryRay extends LIBlockContainer {
+public class BlockSentryRay extends CBCBlockContainer {
 
 	public static final float HEIGHT = 0.1F, WIDTH = 0.2F;
 			

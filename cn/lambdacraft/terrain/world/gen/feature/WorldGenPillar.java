@@ -7,7 +7,6 @@ import cn.lambdacraft.terrain.register.XenBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -25,7 +24,8 @@ public class WorldGenPillar extends WorldGenerator
         super(false);
     }
 
-    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    @Override
+	public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
     {
         int l = par2Random.nextInt(10) + 20;
         boolean flag = true;

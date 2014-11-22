@@ -14,7 +14,6 @@ import cn.liutils.api.client.render.RenderModelItem;
 import cn.weaponmod.api.WMInformation;
 import cn.weaponmod.api.client.render.RendererBulletWeapon;
 import cn.weaponmod.api.information.InfWeapon;
-import cn.weaponmod.core.event.ItemControlHandler;
 
 /**
  * Weapon Egon Renderer Class.
@@ -26,7 +25,7 @@ public class RenderEgon extends RenderModelItem {
 		this.renderInventory = false;
 		this.setStdRotation(5.0F, 173.42F, 0.0F);
 		this.inventorySpin = false;
-		this.setEquipOffset(0.318, -0.142, -0.142);
+		this.setEquipOffset(0.318, -0.248, -0.142);
 		this.setOffset(0.0F, 0.2F, -0.302F);
 		this.setScale(2.46F);
 	}

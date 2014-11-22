@@ -7,14 +7,10 @@ import cn.lambdacraft.core.block.CBCTileEntity;
 import cn.lambdacraft.crafting.block.crafter.BlockWeaponCrafter.CrafterIconType;
 import cn.lambdacraft.crafting.recipe.ICrafterRecipe;
 import cn.lambdacraft.crafting.recipe.MachineRecipes;
-import cn.lambdacraft.crafting.recipe.RecipeWeapons;
-import cn.lambdacraft.crafting.register.CBCBlocks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityFurnace;
 
 /**
  * @author WeathFolD

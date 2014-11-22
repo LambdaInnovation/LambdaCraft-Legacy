@@ -15,11 +15,7 @@
 package cn.lambdacraft.crafting.recipe;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import net.minecraft.command.WrongUsageException;
-import net.minecraft.item.ItemStack;
 
 public class RecipeWeapons {
 	/*

@@ -22,10 +22,8 @@ import net.minecraft.util.MathHelper;
 
 import org.lwjgl.opengl.GL11;
 
-import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.terrain.tileentity.TileEntityXenLight;
 import cn.liutils.api.client.model.ITileEntityModel;
-import cn.liutils.api.client.util.RenderUtils;
 
 /**
  * @author WeAthFolD

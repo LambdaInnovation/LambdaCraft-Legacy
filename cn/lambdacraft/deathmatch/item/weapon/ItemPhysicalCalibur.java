@@ -15,7 +15,6 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
 import cn.lambdacraft.core.CBCMod;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.item.ItemStack;

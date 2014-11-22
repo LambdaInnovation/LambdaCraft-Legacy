@@ -41,7 +41,7 @@ public class KeyUse implements IKeyHandler {
 		if(isEnd)
 			return;
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		if (player == null)
+		if (player == null || Minecraft.getMinecraft().currentScreen != null)
 			return;
 		EntityPlayer thePlayer = Minecraft.getMinecraft().thePlayer;
 		Motion3D begin = new Motion3D(thePlayer, true);
@@ -61,7 +61,7 @@ public class KeyUse implements IKeyHandler {
 		if(isEnd)
 			return;
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		if (player == null)
+		if (player == null || Minecraft.getMinecraft().currentScreen != null)
 			return;
 		UsingUtils.stopUsingBlock(player.worldObj, player);
 		CBCMod.netHandler.sendToServer(new MsgKeyUsing(false));

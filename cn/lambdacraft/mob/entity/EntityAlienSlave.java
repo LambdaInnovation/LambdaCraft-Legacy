@@ -35,7 +35,6 @@ import cn.lambdacraft.mob.register.CBCMobItems;
 import cn.liutils.api.entity.LIEntityMob;
 import cn.liutils.api.util.BlockPos;
 import cn.liutils.api.util.GenericUtils;
-import cn.weaponmod.api.WeaponHelper;
 
 /**
  * @author WeAthFolD

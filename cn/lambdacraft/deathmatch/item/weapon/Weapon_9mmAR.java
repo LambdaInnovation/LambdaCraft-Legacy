@@ -1,22 +1,17 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import javax.swing.Icon;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cn.lambdacraft.api.hud.IHudTip;
 import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityARGrenade;
-import cn.liutils.api.entity.EntityBullet;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionShoot;
 import cn.weaponmod.api.information.InfWeapon;
-import cn.weaponmod.api.weapon.WeaponGenericBase;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -40,6 +35,7 @@ public class Weapon_9mmAR extends Weapon_9mmAR_Raw {
 			return WeaponHelper.consumeInventoryItem(player.inventory.mainInventory, CBCItems.ammo_argrenade, amount) == 0;
 		}
 		
+		@Override
 		protected Entity getProjectileEntity(World world, EntityPlayer player) {
 			return world.isRemote ? null : new EntityARGrenade(world, player);
 		}

@@ -1,12 +1,6 @@
 package cn.lambdacraft.terrain.world.biome;
 
-import java.util.Random;
-
 import cn.lambdacraft.terrain.register.XenBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.init.Blocks;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 /**
  * Xen平原生态地貌

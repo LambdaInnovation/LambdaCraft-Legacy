@@ -16,8 +16,6 @@ package cn.lambdacraft.deathmatch.item;
 
 import java.util.List;
 
-import javax.swing.Icon;
-
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;

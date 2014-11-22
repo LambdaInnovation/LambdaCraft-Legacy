@@ -1,8 +1,6 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,19 +12,13 @@ import cn.lambdacraft.crafting.register.CBCItems;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGauss;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGaussSec;
 import cn.lambdacraft.deathmatch.entity.EntityBulletGaussSec.EnumGaussRayType;
-import cn.liutils.api.entity.EntityBullet;
-import cn.liutils.api.util.DebugUtils;
 import cn.liutils.api.util.GenericUtils;
 import cn.liutils.api.util.Motion3D;
 import cn.weaponmod.api.WeaponHelper;
 import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionShoot;
-import cn.weaponmod.api.information.InfUtils;
 import cn.weaponmod.api.information.InfWeapon;
-import cn.weaponmod.core.event.ItemControlHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 /**
  * 喜闻乐见的Gauss！有穿墙和击飞效果喔~
@@ -51,16 +43,18 @@ public class Weapon_Gauss extends WeaponGenericLC implements ISpecialCrosshair {
 		setUnlocalizedName("weapon_gauss");
 		setTextureName("lambdacraft:weapon_gauss");
 		
-		actionShoot = new ActionShoot(0, this.SND_SHOOT_PATH) {
+		actionShoot = new ActionShoot(0, Weapon_Gauss.SND_SHOOT_PATH) {
 			
 			{
 				setShootRate(7);
 			}
 			
+			@Override
 			protected Entity getProjectileEntity(World world, EntityPlayer player) {
 				return world.isRemote ? null : new EntityBulletGaussSec(EnumGaussRayType.NORMAL, world, player, player.getCurrentEquippedItem(), null, null, 8);
 			}
 			
+			@Override
 			protected void doSpawnEntity(World world, EntityPlayer player) {
 				super.doSpawnEntity(world, player);
 				Weapon_Gauss.setVelocity(player.getCurrentEquippedItem(), 10.0F);
@@ -143,12 +137,14 @@ public class Weapon_Gauss extends WeaponGenericLC implements ISpecialCrosshair {
 			return 3;
 		}
 		
+		@Override
 		public boolean onActionBegin(World world, EntityPlayer player, InfWeapon information) {
 			//Just get ready
 			player.playSound(SND_CHARGEA_PATH[0], 0.5F, 1.0F);
 			return true;
 		}
 		
+		@Override
 		public boolean onActionEnd(World world, EntityPlayer player, InfWeapon inf, boolean isRemoved) {
 			int ticks = maxTick - inf.getTickLeft(this);
 			if(ticks < 10)
@@ -179,6 +175,7 @@ public class Weapon_Gauss extends WeaponGenericLC implements ISpecialCrosshair {
 			return Math.min((int) (0.7 * (this.maxTick - inf.getTickLeft(this))), 40);
 		}
 		
+		@Override
 		public boolean onActionTick(World world, EntityPlayer player, InfWeapon inf) {
 			int ticks = maxTick - inf.getTickLeft(this);
 			final int intvWindup = 10, intvCharge = 13;

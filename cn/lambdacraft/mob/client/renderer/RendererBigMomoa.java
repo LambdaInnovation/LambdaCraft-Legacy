@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GL11;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.mob.entity.EntityBigMomoa;
 import cn.liutils.api.client.util.RenderUtils;
-import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;

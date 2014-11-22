@@ -14,6 +14,8 @@
  */
 package cn.lambdacraft.deathmatch.entity.fx;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -50,6 +52,7 @@ public class EntityEgonRay extends Entity {
 		isClient = true;
 	}
 
+	@SideOnly(Side.CLIENT)
 	public EntityEgonRay(World world) {
 		super(world);
 		thrower = Minecraft.getMinecraft().thePlayer;

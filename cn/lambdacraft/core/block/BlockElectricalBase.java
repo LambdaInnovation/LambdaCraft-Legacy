@@ -14,7 +14,6 @@
  */
 package cn.lambdacraft.core.block;
 
-import cn.liutils.api.block.LIBlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -24,7 +23,7 @@ import net.minecraft.world.World;
  * @author WeAthFolD
  * 
  */
-public class BlockElectricalBase extends LIBlockContainer {
+public class BlockElectricalBase extends CBCBlockContainer {
 
 	private Class<? extends TileEntity> generatorType;
 

@@ -14,7 +14,6 @@
  */
 package cn.lambdacraft.mob.item;
 
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

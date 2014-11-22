@@ -7,11 +7,9 @@ import net.minecraft.world.World;
 import cn.lambdacraft.core.CBCMod;
 import cn.lambdacraft.core.prop.ClientProps;
 import cn.lambdacraft.crafting.register.CBCItems;
-import cn.weaponmod.api.action.Action;
 import cn.weaponmod.api.action.ActionAutomaticShoot;
 import cn.weaponmod.api.action.ActionJam;
 import cn.weaponmod.api.action.ActionReload;
-import cn.weaponmod.api.action.ActionShoot;
 
 public class Weapon_9mmhandgun_Raw extends WeaponGenericLC {
 
