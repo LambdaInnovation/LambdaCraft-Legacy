@@ -1,6 +1,10 @@
 package cn.lambdacraft.deathmatch.item.weapon;
 
 import cn.lambdacraft.core.CBCMod;
+import cn.lambdacraft.deathmatch.entity.EntityDisplacerCannon;
+import cn.lambdacraft.deathmatch.item.ItemDisplacerCannon;
+import cn.weaponmod.api.feature.IClickHandler;
+import cn.weaponmod.api.weapon.WeaponGeneric;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntitySnowball;
@@ -8,7 +12,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class Weapon_Displacer extends Item {
+public class Weapon_Displacer extends Item implements IClickHandler{
+	
+	private boolean currMode = false; // 'F' for fire, 'T' for teleport.
 	
     public Weapon_Displacer() {
         super();
@@ -17,16 +23,25 @@ public class Weapon_Displacer extends Item {
     }
     
     @Override
-    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
-        if (!par3EntityPlayer.capabilities.isCreativeMode)
-        {
-            --par1ItemStack.stackSize;
-        }
-        par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-        if (!par2World.isRemote)
-        {
-            par2World.spawnEntityInWorld(new EntitySnowball(par2World, par3EntityPlayer));
-        }
-        return par1ItemStack;
+    public void onItemClick(World world, EntityPlayer player, ItemStack stack, int keyid) {
+    	if(keyid == 1) // Change Mode
+    		currMode = !currMode;
+    	world.spawnEntityInWorld(new EntityDisplacerCannon(world, player, currMode));
     }
+
+	@Override
+	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,
+			int keyid) {
+		
+	}
+
+	@Override
+	public void onItemUsingTick(World world, EntityPlayer player,
+			ItemStack stack, int keyid, int ticks) {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    
+    
 }
