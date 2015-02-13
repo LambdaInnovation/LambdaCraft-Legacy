@@ -8,10 +8,15 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+/**
+ * @author jiangyue
+ * The entity class of Mob Bull.
+ * No right reserved.
+ */
 
 public class EntityMobBull extends LIEntityMob {
-	
-	/* Fields Decl. */
+
+	/* Fields Declaration. Do not change unless nessessary. */
 	protected final double MAX_HEALTH = 40.0;
 	protected final double FOLLOW_RANGE = 6.5;
 	protected final double MOVE_SPEED = 0.6;
@@ -21,27 +26,32 @@ public class EntityMobBull extends LIEntityMob {
 	public enum stats {
 		ATTACKING, SPITTING_TOXIC, ATTACKING_TAIL, ATTACKED, IDLE
 	}
-	
+
 	public EntityMobBull(World worldcfg) {
 		super(worldcfg);
+	}
+	
+	public EntityMobBull(World worldcfg, int x, int y, int z) {
+	    this(worldcfg);
+	    this.posX = x;
+	    this.posY = y;
+	    this.posZ = z;
 	}
 
 	@Override
 	public void onUpdate() {
-		// On update of mob
+		/* Implements onUpdate by the System */
 		super.onUpdate();
 	}
-	
+
 	@Override
+	/**
+	 * Obviously, there are two ways of attacking an entity:
+	 * One is directly attack with interacting,
+	 * Another is attack long with toxic.
+	 * Reference: Half-life Wiki
+	 */
 	protected void attackEntity(Entity par1Entity, float par2) {
-		/*
-		 * They viciously attack Headcrabs, not stopping until a
-		 * -ll Headcrabs in their sight are eliminated, while th
-		 * -ey do not harm Houndeyes. They however do not attack
-		 * , even when attacked themselves, when encountered dur
-		 * -ing the Resonance Cascade in Half-Life and in the sa
-		 * me map in Opposing Force. -- Half-Life wiki
-		 */
 		if(par1Entity.getEntityId() == GeneralProps.ENT_ID_HOUNDEYE) {
 			return;
 		} else {
@@ -58,10 +68,10 @@ public class EntityMobBull extends LIEntityMob {
 			}
 		}
 	}
-	
+
 	private void doNothing() {
 		// Just for readable code, NOTHING ELSE!
-		
+
 	}
 
 	private void attackShortRange(Entity par1Entity, float par2) {
@@ -70,35 +80,51 @@ public class EntityMobBull extends LIEntityMob {
 		super.attackEntity(par1Entity, par2);
 	}
 
+	/**
+	 * Issue a spit of toxic to object from long range.
+	 * @param entity the entity to attack.
+	 */
 	private void attackLongRange(Entity entity) {
 		int r2 = rand.nextInt();
-		if(r2 % 12 == 0) entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) (((EntityLivingBase) entity).getHealth() - ATTACK_DAMAGE / 4));
+		if(r2 % 60 == 0) worldObj.spawnEntityInWorld(new EntityToxic(worldObj, entity, posX, posY, posZ));
 	}
-	
+
 	@Override
 	public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
 		this.currStat = stats.ATTACKED;
 		return super.attackEntityFrom(par1DamageSource, par2);
 	}
-	
-	// Properties
+
+	// Properties implementations: Refer to beginning of the code
 	@Override
-	protected double getMaxHealth2() { return this.MAX_HEALTH; }
+	protected double getMaxHealth2() {
+		return this.MAX_HEALTH;
+    }
 
 	@Override
-	protected double getFollowRange() { return this.FOLLOW_RANGE; }
+	protected double getFollowRange() {
+		return this.FOLLOW_RANGE;
+	}
 
 	@Override
-	protected double getMoveSpeed() { return this.MOVE_SPEED; }
+	protected double getMoveSpeed() {
+		return this.MOVE_SPEED;
+	}
 
 	@Override
-	protected double getKnockBackResistance() { return this.KNOCKBACK_RESISTANCE; }
+	protected double getKnockBackResistance() {
+		return this.KNOCKBACK_RESISTANCE;
+	}
 
 	@Override
-	protected double getAttackDamage() { return this.ATTACK_DAMAGE; }
+	protected double getAttackDamage() {
+		return this.ATTACK_DAMAGE;
+	}
 
 	@Override
-	public ResourceLocation getTexture() { return ClientProps.BULL_MOB_PATH; }
-	
-	
+	public ResourceLocation getTexture() {
+		return ClientProps.BULL_MOB_PATH;
+	}
+
+
 }
