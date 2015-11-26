@@ -1,0 +1,71 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+version = "1.9"
+group= "cn.lambdacraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "LambdaCraft"
+
+minecraft {
+    version = "1.7.10-10.13.4.1517-1.7.10"
+    runDir = "eclipse"
+}
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+}
+
+dependencies {
+	compile "cn.liutils:LIUtils:1.7.10.000:dev"
+	compile "net.industrial-craft:industrialcraft-2:2.1.484-experimental:dev"
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.java
+    from sourceSets.main.scala
+    classifier = 'sources'
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = "UTF-8"
+}
+
+processResources
+{
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+install.dependsOn build
