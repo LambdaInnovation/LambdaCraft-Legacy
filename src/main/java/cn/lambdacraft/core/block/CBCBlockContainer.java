@@ -42,6 +42,7 @@ public abstract class CBCBlockContainer extends BlockContainer {
 	 */
 	public CBCBlockContainer(Material mat) {
 		super(mat);
+		this.setCreativeTab(CBCMod.cct);
 	}
 
 	public CBCBlockContainer setGuiId(int id) {

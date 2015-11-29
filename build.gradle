@@ -32,17 +32,15 @@ minecraft {
 repositories {
 	mavenCentral()
 	mavenLocal()
+	maven {
+		name = "ic2"
+		url = "http://maven.ic2.player.to"
+	}
 }
 
 dependencies {
 	compile "cn.liutils:LIUtils:1.7.10.000:dev"
-	compile "net.industrial-craft:industrialcraft-2:2.1.484-experimental:dev"
-}
-
-task sourcesJar(type: Jar) {
-    from sourceSets.main.java
-    from sourceSets.main.scala
-    classifier = 'sources'
+	compile "net.industrial-craft:industrialcraft-2:2.2.717-experimental:dev"
 }
 
 tasks.withType(JavaCompile) {
