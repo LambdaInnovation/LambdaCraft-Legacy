@@ -33,34 +33,34 @@ import cn.liutils.api.util.GenericUtils;
  */
 public class EntityBulletEgon extends EntityBullet {
 
-	public EntityBulletEgon(World par1World, EntityLivingBase par2EntityLiving) {
-		super(par1World, par2EntityLiving, 8);
-	}
+    public EntityBulletEgon(World par1World, EntityLivingBase par2EntityLiving) {
+        super(par1World, par2EntityLiving, 8);
+    }
 
-	public EntityBulletEgon(World world) {
-		super(world);
-	}
-	
-	@Override
-	protected void doBlockCollision(MovingObjectPosition result) {
-		AxisAlignedBB box = AxisAlignedBB.getBoundingBox(result.hitVec.xCoord - 2, result.hitVec.yCoord - 2, result.hitVec.zCoord - 2,
-				result.hitVec.xCoord + 2, result.hitVec.yCoord + 2, result.hitVec.zCoord + 2);
-		List<Entity> ents = worldObj.getEntitiesWithinAABBExcludingEntity(this, box, GenericUtils.selectorLiving);
-		for(Entity e : ents) {
-			double distance = e.getDistance(result.hitVec.xCoord, result.hitVec.yCoord, result.hitVec.zCoord);
-			int damage = (int) (7.0 / distance);
-			e.attackEntityFrom(DamageSource.causeMobDamage(getThrower()), damage);
-		}
-		if(rand.nextFloat() < 0.1)  {
-			Block block = worldObj.getBlock(result.blockX, result.blockY, result.blockZ);
-			//检查以防破坏基岩等重要方块
-			if(block != null) {
-				float hardness = block.getBlockHardness(worldObj, result.blockX, result.blockY, result.blockZ);
-				if(hardness >= 0.0F && hardness < 5.0F)
-					worldObj.destroyBlockInWorldPartially(result.blockX, result.blockY, result.blockZ, 0, 0);
-			} else worldObj.setBlock(result.blockX, result.blockY, result.blockZ, Blocks.air, 0, 3);
-		}
-		this.setDead();
-	}
+    public EntityBulletEgon(World world) {
+        super(world);
+    }
+    
+    @Override
+    protected void doBlockCollision(MovingObjectPosition result) {
+        AxisAlignedBB box = AxisAlignedBB.getBoundingBox(result.hitVec.xCoord - 2, result.hitVec.yCoord - 2, result.hitVec.zCoord - 2,
+                result.hitVec.xCoord + 2, result.hitVec.yCoord + 2, result.hitVec.zCoord + 2);
+        List<Entity> ents = worldObj.getEntitiesWithinAABBExcludingEntity(this, box, GenericUtils.selectorLiving);
+        for(Entity e : ents) {
+            double distance = e.getDistance(result.hitVec.xCoord, result.hitVec.yCoord, result.hitVec.zCoord);
+            int damage = (int) (7.0 / distance);
+            e.attackEntityFrom(DamageSource.causeMobDamage(getThrower()), damage);
+        }
+        if(rand.nextFloat() < 0.1)  {
+            Block block = worldObj.getBlock(result.blockX, result.blockY, result.blockZ);
+            //检查以防破坏基岩等重要方块
+            if(block != null) {
+                float hardness = block.getBlockHardness(worldObj, result.blockX, result.blockY, result.blockZ);
+                if(hardness >= 0.0F && hardness < 5.0F)
+                    worldObj.destroyBlockInWorldPartially(result.blockX, result.blockY, result.blockZ, 0, 0);
+            } else worldObj.setBlock(result.blockX, result.blockY, result.blockZ, Blocks.air, 0, 3);
+        }
+        this.setDead();
+    }
 
 }

@@ -33,77 +33,77 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class MsgSentrySync implements IMessage {
 
-	public int xCoord, yCoord, zCoord;
-	public boolean isValid;
-	public int linkX, linkY, linkZ;
-	
-	public MsgSentrySync(TileSentryRay tile) {
-		xCoord = tile.xCoord;
-		yCoord = tile.yCoord;
-		zCoord = tile.zCoord;
-		isValid = tile.isActivated && tile.linkedBlock != null;
-		if(isValid) {
-			linkX = tile.linkedBlock.xCoord;
-			linkY = tile.linkedBlock.yCoord;
-			linkZ = tile.linkedBlock.zCoord;
-		}
-	}
-	
-	public MsgSentrySync() {
-		
-	}
+    public int xCoord, yCoord, zCoord;
+    public boolean isValid;
+    public int linkX, linkY, linkZ;
+    
+    public MsgSentrySync(TileSentryRay tile) {
+        xCoord = tile.xCoord;
+        yCoord = tile.yCoord;
+        zCoord = tile.zCoord;
+        isValid = tile.isActivated && tile.linkedBlock != null;
+        if(isValid) {
+            linkX = tile.linkedBlock.xCoord;
+            linkY = tile.linkedBlock.yCoord;
+            linkZ = tile.linkedBlock.zCoord;
+        }
+    }
+    
+    public MsgSentrySync() {
+        
+    }
 
-	@Override
-	public void fromBytes(ByteBuf stream) {
-		xCoord = stream.readInt();
-		yCoord = stream.readInt();
-		zCoord = stream.readInt();
-		isValid = stream.readBoolean();
-		if (isValid) {
-			linkX = stream.readInt();
-			linkY = stream.readInt();
-			linkZ = stream.readInt();
-		}
-	}
+    @Override
+    public void fromBytes(ByteBuf stream) {
+        xCoord = stream.readInt();
+        yCoord = stream.readInt();
+        zCoord = stream.readInt();
+        isValid = stream.readBoolean();
+        if (isValid) {
+            linkX = stream.readInt();
+            linkY = stream.readInt();
+            linkZ = stream.readInt();
+        }
+    }
 
-	@Override
-	public void toBytes(ByteBuf outputStream) {
-		outputStream.writeInt(xCoord);
-		outputStream.writeInt(yCoord);
-		outputStream.writeInt(zCoord);
-		outputStream.writeBoolean(isValid);
-		if (isValid) {
-			outputStream.writeInt(linkX);
-			outputStream.writeInt(linkY);
-			outputStream.writeInt(linkZ);
-		}
-	}
-	
-	public static class Handler implements IMessageHandler<MsgSentrySync, IMessage> {
+    @Override
+    public void toBytes(ByteBuf outputStream) {
+        outputStream.writeInt(xCoord);
+        outputStream.writeInt(yCoord);
+        outputStream.writeInt(zCoord);
+        outputStream.writeBoolean(isValid);
+        if (isValid) {
+            outputStream.writeInt(linkX);
+            outputStream.writeInt(linkY);
+            outputStream.writeInt(linkZ);
+        }
+    }
+    
+    public static class Handler implements IMessageHandler<MsgSentrySync, IMessage> {
 
-		@Override
-		@SideOnly(Side.CLIENT)
-		public IMessage onMessage(MsgSentrySync msg, MessageContext ctx) {
-			EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-			World world = player.worldObj;
-			TileEntity te = world.getTileEntity(msg.xCoord, msg.yCoord, msg.zCoord);
-			if (te == null || !(te instanceof TileSentryRay)) {
-				return null;
-			}
-			TileSentryRay ray = (TileSentryRay) te;
-			if(msg.isValid) {
-				te = world.getTileEntity(msg.linkX, msg.linkY, msg.linkZ);
-				if (te == null || !(te instanceof TileSentryRay)) {
-					Proxy.logExceptionMessage(te, "Couldn't find the right partner TileEntity.");
-					return null;
-				}
-				ray.linkedBlock = (TileSentryRay) te;
-			} else {
-				ray.linkedBlock = null;
-			}
-			return null;
-		}
-		
-	}
+        @Override
+        @SideOnly(Side.CLIENT)
+        public IMessage onMessage(MsgSentrySync msg, MessageContext ctx) {
+            EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+            World world = player.worldObj;
+            TileEntity te = world.getTileEntity(msg.xCoord, msg.yCoord, msg.zCoord);
+            if (te == null || !(te instanceof TileSentryRay)) {
+                return null;
+            }
+            TileSentryRay ray = (TileSentryRay) te;
+            if(msg.isValid) {
+                te = world.getTileEntity(msg.linkX, msg.linkY, msg.linkZ);
+                if (te == null || !(te instanceof TileSentryRay)) {
+                    Proxy.logExceptionMessage(te, "Couldn't find the right partner TileEntity.");
+                    return null;
+                }
+                ray.linkedBlock = (TileSentryRay) te;
+            } else {
+                ray.linkedBlock = null;
+            }
+            return null;
+        }
+        
+    }
 
 }

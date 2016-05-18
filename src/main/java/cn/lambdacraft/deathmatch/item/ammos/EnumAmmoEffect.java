@@ -19,9 +19,9 @@ package cn.lambdacraft.deathmatch.item.ammos;
  *
  */
 public enum EnumAmmoEffect {
-	KNOCKBACK(false), FIRE(true), POISONIOUS(true);
-	private boolean isContinousEffect;
-	private EnumAmmoEffect(boolean isContinous) {
-		
-	}
+    KNOCKBACK(false), FIRE(true), POISONIOUS(true);
+    private boolean isContinousEffect;
+    private EnumAmmoEffect(boolean isContinous) {
+        
+    }
 }

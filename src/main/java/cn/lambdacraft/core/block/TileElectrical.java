@@ -27,41 +27,41 @@ import cn.liutils.api.energy.event.EnergyTileSourceEvent;
  */
 public abstract class TileElectrical extends CBCTileEntity implements IEnergyTile {
 
-	public boolean addedToNet = false;
-	
-	public TileElectrical() {
+    public boolean addedToNet = false;
+    
+    public TileElectrical() {
 
-	}
+    }
 
-	@Override
-	public void updateEntity() {
-		super.updateEntity();
-		if (!this.addedToNet) {
-			if(!worldObj.isRemote) //executes event only on server side
-				this.onElectricTileLoad();
-			this.addedToNet = true;
-		}
-	}
-	
-	public boolean onElectricTileLoad() {
-		return MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
-	}
+    @Override
+    public void updateEntity() {
+        super.updateEntity();
+        if (!this.addedToNet) {
+            if(!worldObj.isRemote) //executes event only on server side
+                this.onElectricTileLoad();
+            this.addedToNet = true;
+        }
+    }
+    
+    public boolean onElectricTileLoad() {
+        return MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this));
+    }
 
-	@Override
-	public void onTileUnload() {
-		super.onTileUnload();
-	    if (!worldObj.isRemote && (this.addedToNet)) 
-	        MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
-		this.addedToNet = false;
-	}
+    @Override
+    public void onTileUnload() {
+        super.onTileUnload();
+        if (!worldObj.isRemote && (this.addedToNet)) 
+            MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this));
+        this.addedToNet = false;
+    }
 
-	public int sendEnergy(int amm) {
-		if(CBCMod.ic2Installed) return amm;
-		int amount = 0;
-		EnergyTileSourceEvent event = new EnergyTileSourceEvent(this, amm);
-		MinecraftForge.EVENT_BUS.post(event);
-		amount += event.amount;
-		return amount;
-	}
+    public int sendEnergy(int amm) {
+        if(CBCMod.ic2Installed) return amm;
+        int amount = 0;
+        EnergyTileSourceEvent event = new EnergyTileSourceEvent(this, amm);
+        MinecraftForge.EVENT_BUS.post(event);
+        amount += event.amount;
+        return amount;
+    }
 
 }

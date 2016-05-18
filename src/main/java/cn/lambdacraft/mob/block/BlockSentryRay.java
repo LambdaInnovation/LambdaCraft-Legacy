@@ -36,91 +36,91 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class BlockSentryRay extends CBCBlockContainer {
 
-	public static final float HEIGHT = 0.1F, WIDTH = 0.2F;
-			
-	/**
-	 * @param par1
-	 * @param par2Material
-	 */
-	public BlockSentryRay() {
-		super(Material.rock);
-		this.setCreativeTab(null);
-		this.setHardness(1.0F);
-		setBlockTextureName("lambdacraft:ss_1");
-	}
-	
-	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess,
-			int par2, int par3, int par4) {
-
-		int var5 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-		float var6 = HEIGHT;
-		float var7 = WIDTH;
-		if (var5 == 5) // X+
-		{
-			this.setBlockBounds(0.0F, 0.5F - var7, 0.5F - var7, var6 * 2.0F,
-					0.5F + var7, 0.5F + var7); // (0, 0.5) (0.3, 0.7), (0.2,
-												// 0.8)
-		} else if (var5 == 4) // X-
-		{
-			this.setBlockBounds(1.0F - var6 * 2.0F, 0.5F - var7, 0.5F - var7,
-					1.0F, 0.5F + var7, 0.5F + var7);
-		} else if (var5 == 3) // Z+
-		{
-			this.setBlockBounds(0.5F - var7, 0.5F - var7, 0.0F, 0.5F + var7,
-					0.5F + var7, var6 * 2.0F);
-		} else if (var5 == 2) // Z-
-		{
-			this.setBlockBounds(0.5F - var7, 0.5F - var7, 1.0F - var6 * 2.0F,
-					0.5F + var7, 0.5F + var7, 1.0F);
-		} else if(var5 == 1) {//Y+
-			this.setBlockBounds(0.5F - var7, 0.0F, 0.5F-var7,
-					0.5F + var7, 2 * var6, 0.5F + var7);
-		} else if(var5 == 0) {//Y-
-			this.setBlockBounds(0.5F - var7, 1.0F - 2 * var6, 0.5F-var7,
-					0.5F + var7, 1.0F, 0.5F + var7);
-		}
-	}
-	
+    public static final float HEIGHT = 0.1F, WIDTH = 0.2F;
+            
+    /**
+     * @param par1
+     * @param par2Material
+     */
+    public BlockSentryRay() {
+        super(Material.rock);
+        this.setCreativeTab(null);
+        this.setHardness(1.0F);
+        setBlockTextureName("lambdacraft:ss_1");
+    }
+    
     @Override
-	public Item getItemDropped(int par1, Random par2Random, int par3)
+    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess,
+            int par2, int par3, int par4) {
+
+        int var5 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        float var6 = HEIGHT;
+        float var7 = WIDTH;
+        if (var5 == 5) // X+
+        {
+            this.setBlockBounds(0.0F, 0.5F - var7, 0.5F - var7, var6 * 2.0F,
+                    0.5F + var7, 0.5F + var7); // (0, 0.5) (0.3, 0.7), (0.2,
+                                                // 0.8)
+        } else if (var5 == 4) // X-
+        {
+            this.setBlockBounds(1.0F - var6 * 2.0F, 0.5F - var7, 0.5F - var7,
+                    1.0F, 0.5F + var7, 0.5F + var7);
+        } else if (var5 == 3) // Z+
+        {
+            this.setBlockBounds(0.5F - var7, 0.5F - var7, 0.0F, 0.5F + var7,
+                    0.5F + var7, var6 * 2.0F);
+        } else if (var5 == 2) // Z-
+        {
+            this.setBlockBounds(0.5F - var7, 0.5F - var7, 1.0F - var6 * 2.0F,
+                    0.5F + var7, 0.5F + var7, 1.0F);
+        } else if(var5 == 1) {//Y+
+            this.setBlockBounds(0.5F - var7, 0.0F, 0.5F-var7,
+                    0.5F + var7, 2 * var6, 0.5F + var7);
+        } else if(var5 == 0) {//Y-
+            this.setBlockBounds(0.5F - var7, 1.0F - 2 * var6, 0.5F-var7,
+                    0.5F + var7, 1.0F, 0.5F + var7);
+        }
+    }
+    
+    @Override
+    public Item getItemDropped(int par1, Random par2Random, int par3)
     {
-    	return CBCMobItems.sentrySyncer;
+        return CBCMobItems.sentrySyncer;
     }
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.block.ITileEntityProvider#createNewTileEntity(net.minecraft.world.World)
-	 */
-	@Override
-	public TileEntity createNewTileEntity(World world, int i) {
-		return new TileSentryRay();
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderType() {
-		return ClientProps.RENDER_TYPE_EMPTY;
-	}
+    /* (non-Javadoc)
+     * @see net.minecraft.block.ITileEntityProvider#createNewTileEntity(net.minecraft.world.World)
+     */
+    @Override
+    public TileEntity createNewTileEntity(World world, int i) {
+        return new TileSentryRay();
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getRenderType() {
+        return ClientProps.RENDER_TYPE_EMPTY;
+    }
 
-	
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
 
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
-	
-	@Override
-	public void onNeighborBlockChange(World world, int par2, int par3,
-			int par4, Block par5) {
-		super.onNeighborBlockChange(world, par2, par3, par4, par5);
-		int meta = world.getBlockMetadata(par2, par3, par4); //ForgeDirecton真的是个好东西~ 
-		ForgeDirection dir = ForgeDirection.values()[meta].getOpposite();
-		if(!world.isBlockNormalCubeDefault(par2 + dir.offsetX, par3 + dir.offsetY, par4 + dir.offsetZ, false))
-			world.destroyBlockInWorldPartially(par2, par3, par4, 0, 0);
-	}
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+    
+    @Override
+    public void onNeighborBlockChange(World world, int par2, int par3,
+            int par4, Block par5) {
+        super.onNeighborBlockChange(world, par2, par3, par4, par5);
+        int meta = world.getBlockMetadata(par2, par3, par4); //ForgeDirecton真的是个好东西~ 
+        ForgeDirection dir = ForgeDirection.values()[meta].getOpposite();
+        if(!world.isBlockNormalCubeDefault(par2 + dir.offsetX, par3 + dir.offsetY, par4 + dir.offsetZ, false))
+            world.destroyBlockInWorldPartially(par2, par3, par4, 0, 0);
+    }
 
 }

@@ -25,12 +25,12 @@ import cn.liutils.api.util.Motion3D;
  */
 public class EntityGaussRayColored extends EntityGaussRay {
 
-	public EntityGaussRayColored(Motion3D begin, World par1World) {
-		super(begin, par1World);
-	}
+    public EntityGaussRayColored(Motion3D begin, World par1World) {
+        super(begin, par1World);
+    }
 
-	public EntityGaussRayColored(World world) {
-		super(world);
-	}
+    public EntityGaussRayColored(World world) {
+        super(world);
+    }
 
 }

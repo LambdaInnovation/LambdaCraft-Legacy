@@ -25,16 +25,16 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
  * @author WeAthFolD
  */
 public class DMEventHandler {
-	
-	  @SubscribeEvent
-	  public void onInteract(EntityInteractEvent event)
-	  {
-		  ItemStack curItem = event.entityPlayer.getCurrentEquippedItem();
-		  if(curItem == null)
-			  return;
-		  if(curItem.getItem() instanceof Weapon_Satchel) {
-			  event.setCanceled(true);
-		  }
-	  }
-	
+    
+      @SubscribeEvent
+      public void onInteract(EntityInteractEvent event)
+      {
+          ItemStack curItem = event.entityPlayer.getCurrentEquippedItem();
+          if(curItem == null)
+              return;
+          if(curItem.getItem() instanceof Weapon_Satchel) {
+              event.setCanceled(true);
+          }
+      }
+    
 }

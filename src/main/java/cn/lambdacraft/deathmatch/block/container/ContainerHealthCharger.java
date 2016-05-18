@@ -31,102 +31,102 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class ContainerHealthCharger extends Container {
 
-	protected TileHealthCharger te;
+    protected TileHealthCharger te;
 
-	/**
-	 * 
-	 */
-	public ContainerHealthCharger(TileHealthCharger t, InventoryPlayer playerinv) {
-		te = t;
-		addSlotToContainer(new Slot(t, 0, 19, 60));
-		addSlotToContainer(new Slot(t, 1, 41, 60));
-		addSlotToContainer(new Slot(t, 2, 149, 60));
-		bindPlayerInventory(playerinv);
+    /**
+     * 
+     */
+    public ContainerHealthCharger(TileHealthCharger t, InventoryPlayer playerinv) {
+        te = t;
+        addSlotToContainer(new Slot(t, 0, 19, 60));
+        addSlotToContainer(new Slot(t, 1, 41, 60));
+        addSlotToContainer(new Slot(t, 2, 149, 60));
+        bindPlayerInventory(playerinv);
 
-	}
+    }
 
-	protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 9; j++) {
-				addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-						8 + j * 18, 84 + i * 18));
-			}
-		}
-		for (int i = 0; i < 9; i++) {
-			addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
-		}
-	}
+    protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
+                addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
+                        8 + j * 18, 84 + i * 18));
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
+        }
+    }
 
-	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
-		for (int i = 0; i < this.crafters.size(); ++i) {
-			ICrafting icrafting = (ICrafting) this.crafters.get(i);
-			icrafting.sendProgressBarUpdate(this, 0, te.currentEnergy);
-			icrafting.sendProgressBarUpdate(this, 1, te.mainEff);
-			icrafting.sendProgressBarUpdate(this, 2, te.sideEff);
-			icrafting.sendProgressBarUpdate(this, 3, te.prgAddMain);
-			icrafting.sendProgressBarUpdate(this, 4, te.prgAddSide);
-		}
-	}
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+        for (int i = 0; i < this.crafters.size(); ++i) {
+            ICrafting icrafting = (ICrafting) this.crafters.get(i);
+            icrafting.sendProgressBarUpdate(this, 0, te.currentEnergy);
+            icrafting.sendProgressBarUpdate(this, 1, te.mainEff);
+            icrafting.sendProgressBarUpdate(this, 2, te.sideEff);
+            icrafting.sendProgressBarUpdate(this, 3, te.prgAddMain);
+            icrafting.sendProgressBarUpdate(this, 4, te.prgAddSide);
+        }
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void updateProgressBar(int par1, int par2) {
-		if (par1 == 0)
-			te.currentEnergy = par2;
-		else if (par1 == 1)
-			te.mainEff = par2;
-		else if (par1 == 2)
-			te.sideEff = par2;
-		else if (par1 == 3)
-			te.prgAddMain = par2;
-		else
-			te.prgAddSide = par2;
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void updateProgressBar(int par1, int par2) {
+        if (par1 == 0)
+            te.currentEnergy = par2;
+        else if (par1 == 1)
+            te.mainEff = par2;
+        else if (par1 == 2)
+            te.sideEff = par2;
+        else if (par1 == 3)
+            te.prgAddMain = par2;
+        else
+            te.prgAddSide = par2;
+    }
 
-	@Override
-	public boolean canInteractWith(EntityPlayer player) {
-		return te.isUseableByPlayer(player);
-	}
+    @Override
+    public boolean canInteractWith(EntityPlayer player) {
+        return te.isUseableByPlayer(player);
+    }
 
-	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
-		ItemStack stack = null;
-		Slot slotObject = (Slot) inventorySlots.get(slot);
-		// null checks and checks if the item can be stacked (maxStackSize > 1)
-		if (slotObject != null && slotObject.getHasStack()) {
-			ItemStack stackInSlot = slotObject.getStack();
-			stack = stackInSlot.copy();
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+        ItemStack stack = null;
+        Slot slotObject = (Slot) inventorySlots.get(slot);
+        // null checks and checks if the item can be stacked (maxStackSize > 1)
+        if (slotObject != null && slotObject.getHasStack()) {
+            ItemStack stackInSlot = slotObject.getStack();
+            stack = stackInSlot.copy();
 
-			// places it into the tileEntity is possible since its in the player
-			// inventory
-			if (slot >= 3) {
-				if (stackInSlot.getItem() instanceof IElectricItem) {
-					if (!this.mergeItemStack(stackInSlot, 2, 3, true)) {
-						return null;
-					}
-				} else if (!this.mergeItemStack(stackInSlot, 0, 2, true)) {
-					return null;
-				}
-			}
-			// merges the item into player inventory since its in the tileEntity
-			else {
-				if (!this.mergeItemStack(stackInSlot, 4, 39, false))
-					return null;
-			}
+            // places it into the tileEntity is possible since its in the player
+            // inventory
+            if (slot >= 3) {
+                if (stackInSlot.getItem() instanceof IElectricItem) {
+                    if (!this.mergeItemStack(stackInSlot, 2, 3, true)) {
+                        return null;
+                    }
+                } else if (!this.mergeItemStack(stackInSlot, 0, 2, true)) {
+                    return null;
+                }
+            }
+            // merges the item into player inventory since its in the tileEntity
+            else {
+                if (!this.mergeItemStack(stackInSlot, 4, 39, false))
+                    return null;
+            }
 
-			if (stackInSlot.stackSize == 0) {
-				slotObject.putStack(null);
-			} else {
-				slotObject.onSlotChanged();
-			}
+            if (stackInSlot.stackSize == 0) {
+                slotObject.putStack(null);
+            } else {
+                slotObject.onSlotChanged();
+            }
 
-			if (stackInSlot.stackSize == stack.stackSize) {
-				return null;
-			}
-			slotObject.onPickupFromSlot(player, stackInSlot);
-		}
-		return stack;
-	}
+            if (stackInSlot.stackSize == stack.stackSize) {
+                return null;
+            }
+            slotObject.onPickupFromSlot(player, stackInSlot);
+        }
+        return stack;
+    }
 }

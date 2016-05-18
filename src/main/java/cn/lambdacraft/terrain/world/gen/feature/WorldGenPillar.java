@@ -25,7 +25,7 @@ public class WorldGenPillar extends WorldGenerator
     }
 
     @Override
-	public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
     {
         int l = par2Random.nextInt(10) + 20;
         boolean flag = true;

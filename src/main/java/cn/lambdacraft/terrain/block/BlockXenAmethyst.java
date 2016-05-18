@@ -28,40 +28,40 @@ import cn.lambdacraft.terrain.tileentity.TileEntityXenAmethyst;
  */
 public class BlockXenAmethyst extends CBCBlockContainer {
 
-	public BlockXenAmethyst() {
-		super(Material.rock);
-		setHardness(1.0F);
-		this.setLightLevel(0.7F);
-		setBlockName("xenAmethyst");
-		setBlockTextureName("lambdacraft:amethyst");
-	}
+    public BlockXenAmethyst() {
+        super(Material.rock);
+        setHardness(1.0F);
+        this.setLightLevel(0.7F);
+        setBlockName("xenAmethyst");
+        setBlockTextureName("lambdacraft:amethyst");
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World var1, int var2) {
-		return new TileEntityXenAmethyst();
-	}
-	
-	@Override
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2) {
+        return new TileEntityXenAmethyst();
+    }
+    
+    @Override
     public boolean canPlaceBlockOnSide(World par1World, int par2, int par3, int par4, int par5)
     {
-    	return this.canPlaceBlockAt(par1World, par2, par3, par4) && par5 == 0;
+        return this.canPlaceBlockAt(par1World, par2, par3, par4) && par5 == 0;
     }
-	
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
 
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
-	
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+    
     /**
      * The type of render function that is called for this block
      */
     @Override
-	public int getRenderType()
+    public int getRenderType()
     {
         return ClientProps.RENDER_TYPE_EMPTY;
     }
@@ -70,8 +70,8 @@ public class BlockXenAmethyst extends CBCBlockContainer {
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
     @Override
-	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-    	this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, 1.0F, 0.7F);
+    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
+        this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, 1.0F, 0.7F);
     }
 
 }

@@ -32,71 +32,71 @@ import net.minecraft.world.World;
  * 
  */
 public class BlockWire extends BlockElectricalBase {
-	
-	public static final float  WIDTH = 0.16666666F;
+    
+    public static final float  WIDTH = 0.16666666F;
 
-	public BlockWire() {
-		super(Material.cake);
-		this.setBlockTextureName("lambdacraft:wire");
-		this.setStepSound(Block.soundTypeCloth);
-		this.setBlockName("wire");
-		this.setHardness(1.0F);
-		this.setGuiId(-1);
-		this.setTileType(TileWire.class);
-	}
+    public BlockWire() {
+        super(Material.cake);
+        this.setBlockTextureName("lambdacraft:wire");
+        this.setStepSound(Block.soundTypeCloth);
+        this.setBlockName("wire");
+        this.setHardness(1.0F);
+        this.setGuiId(-1);
+        this.setTileType(TileWire.class);
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderType() {
-		return ClientProps.RENDER_TYPE_EMPTY;
-	}
-
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
-
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
-	
-	
     @Override
-	public void addCollisionBoxesToList(World world, int par2, int par3, int par4, AxisAlignedBB aabb, List list, Entity par7Entity)
+    @SideOnly(Side.CLIENT)
+    public int getRenderType() {
+        return ClientProps.RENDER_TYPE_EMPTY;
+    }
+
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
+    
+    
+    @Override
+    public void addCollisionBoxesToList(World world, int par2, int par3, int par4, AxisAlignedBB aabb, List list, Entity par7Entity)
     {
-    	//super.addCollisionBoxesToList(world, par2, par3, par4, aabb, list, par7Entity);
-    	TileWire tile = (TileWire) world.getTileEntity(par2, par3, par4);
-    	boolean[] arr = tile.renderSides;
-    	float minA = 0.5F - WIDTH, maxA = 0.5F + WIDTH;
-    	float
-    	minX = arr[4] ? 0.0F : minA,
-    	minY = arr[0] ? 0.0F : minA,
-    	minZ = arr[2] ? 0.0F : minA,
-    	maxX = arr[5] ? 1.0F : maxA,
-    	maxY = arr[1] ? 1.0F : maxA,
-    	maxZ = arr[3] ? 1.0F : maxA;
-    	
-    	setBlockBounds(minA, minY, minA, maxA, maxY, maxA);
-    	super.addCollisionBoxesToList(world, par2, par3, par4, aabb, list, par7Entity);
-    	setBlockBounds(minX, minA, minA, maxX, maxA, maxA);
-    	super.addCollisionBoxesToList(world, par2, par3, par4, aabb, list, par7Entity);
-    	setBlockBounds(minA, minA, minZ, maxA, maxA, maxZ);
-    	super.addCollisionBoxesToList(world, par2, par3, par4, aabb, list, par7Entity);
+        //super.addCollisionBoxesToList(world, par2, par3, par4, aabb, list, par7Entity);
+        TileWire tile = (TileWire) world.getTileEntity(par2, par3, par4);
+        boolean[] arr = tile.renderSides;
+        float minA = 0.5F - WIDTH, maxA = 0.5F + WIDTH;
+        float
+        minX = arr[4] ? 0.0F : minA,
+        minY = arr[0] ? 0.0F : minA,
+        minZ = arr[2] ? 0.0F : minA,
+        maxX = arr[5] ? 1.0F : maxA,
+        maxY = arr[1] ? 1.0F : maxA,
+        maxZ = arr[3] ? 1.0F : maxA;
+        
+        setBlockBounds(minA, minY, minA, maxA, maxY, maxA);
+        super.addCollisionBoxesToList(world, par2, par3, par4, aabb, list, par7Entity);
+        setBlockBounds(minX, minA, minA, maxX, maxA, maxA);
+        super.addCollisionBoxesToList(world, par2, par3, par4, aabb, list, par7Entity);
+        setBlockBounds(minA, minA, minZ, maxA, maxA, maxZ);
+        super.addCollisionBoxesToList(world, par2, par3, par4, aabb, list, par7Entity);
     }
     
     
     @Override
-	public void setBlockBoundsBasedOnState(IBlockAccess ws, int x, int y, int z) {
-    	TileWire te = (TileWire) ws.getTileEntity(x, y, z);
-    	boolean[] arr = te.renderSides;
-    	float minA = 0.5F - WIDTH, maxA = 0.5F + WIDTH;
-    			minX = arr[4] ? 0.0F : minA;
-    	    	minY = arr[0] ? 0.0F : minA;
-    	    	minZ = arr[2] ? 0.0F : minA;
-    	    	maxX = arr[5] ? 1.0F : maxA;
-    	    	maxY = arr[1] ? 1.0F : maxA;
-    	    	maxZ = arr[3] ? 1.0F : maxA;
+    public void setBlockBoundsBasedOnState(IBlockAccess ws, int x, int y, int z) {
+        TileWire te = (TileWire) ws.getTileEntity(x, y, z);
+        boolean[] arr = te.renderSides;
+        float minA = 0.5F - WIDTH, maxA = 0.5F + WIDTH;
+                minX = arr[4] ? 0.0F : minA;
+                minY = arr[0] ? 0.0F : minA;
+                minZ = arr[2] ? 0.0F : minA;
+                maxX = arr[5] ? 1.0F : maxA;
+                maxY = arr[1] ? 1.0F : maxA;
+                maxZ = arr[3] ? 1.0F : maxA;
     }
-	
+    
 }

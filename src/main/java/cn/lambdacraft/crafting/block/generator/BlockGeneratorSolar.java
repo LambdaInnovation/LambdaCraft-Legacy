@@ -28,33 +28,33 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class BlockGeneratorSolar extends BlockElectricalBase {
 
-	public IIcon iconSide, iconTop, iconBottom;
+    public IIcon iconSide, iconTop, iconBottom;
 
-	public BlockGeneratorSolar() {
-		super(Material.rock);
-		this.setHardness(2.0F);
-		setTileType(TileGeneratorSolar.class);
-		setGuiId(GeneralProps.GUI_ID_GENSOLAR);
-		setBlockName("genSolar");
-	}
+    public BlockGeneratorSolar() {
+        super(Material.rock);
+        this.setHardness(2.0F);
+        setTileType(TileGeneratorSolar.class);
+        setGuiId(GeneralProps.GUI_ID_GENSOLAR);
+        setBlockName("genSolar");
+    }
 
-	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
-		iconSide = par1IconRegister.registerIcon("lambdacraft:gensolar_main");
-		iconTop = par1IconRegister.registerIcon("lambdacraft:gensolar_top");
-		iconBottom = par1IconRegister
-				.registerIcon("lambdacraft:crafter_bottom");
-		blockIcon = iconTop;
-	}
+    @Override
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        iconSide = par1IconRegister.registerIcon("lambdacraft:gensolar_main");
+        iconTop = par1IconRegister.registerIcon("lambdacraft:gensolar_top");
+        iconBottom = par1IconRegister
+                .registerIcon("lambdacraft:crafter_bottom");
+        blockIcon = iconTop;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int par1, int par2) {
-		if (par1 < 1)
-			return iconBottom;
-		if (par1 < 2)
-			return iconTop;
-		return iconSide;
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int par1, int par2) {
+        if (par1 < 1)
+            return iconBottom;
+        if (par1 < 2)
+            return iconTop;
+        return iconSide;
+    }
 
 }

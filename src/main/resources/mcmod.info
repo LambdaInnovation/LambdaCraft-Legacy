@@ -1,0 +1,15 @@
+[
+{
+  "modid": "LambdaCraft",
+  "name": "LambdaCraft core",
+  "description": "Minecraft Half-Life expansion. Ready your H.E.V. and slay some headcrabs!",
+  "version": "${version}",
+  "url": "http://www.li-dev.cn/",
+  "updateUrl": "",
+  "authorList": ["Lambda Innovation"],
+  "credits": "Valve Software for the great original game",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

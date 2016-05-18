@@ -18,9 +18,9 @@ import cn.lambdacraft.core.item.CBCGenericItem;
 
 public class SteelBar extends CBCGenericItem {
 
-	public SteelBar() {
-		super();
-		setIAndU("steelbar");
-	}
+    public SteelBar() {
+        super();
+        setIAndU("steelbar");
+    }
 
 }

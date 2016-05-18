@@ -20,6 +20,6 @@ package cn.lambdacraft.deathmatch.util;
  */
 public class AmmoEffectHelper {
 
-	
+    
 
 }

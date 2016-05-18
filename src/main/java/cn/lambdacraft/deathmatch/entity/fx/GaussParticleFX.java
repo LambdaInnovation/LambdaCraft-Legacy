@@ -23,40 +23,40 @@ import net.minecraft.world.World;
  */
 public class GaussParticleFX extends Entity {
 
-	public float currentAlpha;
-	
-	/**
-	 * @param par1World
-	 * @param par2 x
-	 * @param par4 y 
-	 * @param par6 z
-	 */
-	public GaussParticleFX(World par1World, double par2, double par4,
-			double par6) {
-		super(par1World);
-		this.setPosition(par2, par4, par6);
-	}
-	
-	public GaussParticleFX(World world) {
-		super(world);
-	}
-	
-	@Override
-	protected void entityInit() {
-		currentAlpha = 1.0F;
-	}
+    public float currentAlpha;
+    
+    /**
+     * @param par1World
+     * @param par2 x
+     * @param par4 y 
+     * @param par6 z
+     */
+    public GaussParticleFX(World par1World, double par2, double par4,
+            double par6) {
+        super(par1World);
+        this.setPosition(par2, par4, par6);
+    }
+    
+    public GaussParticleFX(World world) {
+        super(world);
+    }
+    
+    @Override
+    protected void entityInit() {
+        currentAlpha = 1.0F;
+    }
 
-	@Override
-	public void onUpdate() {
-		currentAlpha -= 0.02F;
-		if(currentAlpha <= 0.0F)
-			this.setDead();
-	}
+    @Override
+    public void onUpdate() {
+        currentAlpha -= 0.02F;
+        if(currentAlpha <= 0.0F)
+            this.setDead();
+    }
 
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {}
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {}
 
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {}
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {}
 
 }

@@ -28,44 +28,44 @@ import net.minecraft.util.AxisAlignedBB;
  */
 public class TileEntityXenLight extends TileEntity {
 
-	private static final int TICKRATE = 4;
-	public boolean isLighting = false;
-	private int tickSinceLastUpdate;
-	public int tickSinceChange = 0;
-	public int ticksExisted = 0;
-	
+    private static final int TICKRATE = 4;
+    public boolean isLighting = false;
+    private int tickSinceLastUpdate;
+    public int tickSinceChange = 0;
+    public int ticksExisted = 0;
+    
     /**
      * Allows the entity to update its state. Overridden in most subclasses, e.g. the mob spawner uses this to count
      * ticks and creates a new spawn inside its implementation.
      */
     @Override
-	public void updateEntity() {
-    	Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
-    	++tickSinceChange;
-    	++ticksExisted;
-    	if(block == XenBlocks.light_on) {
-    		isLighting = true;
-    		if(++tickSinceLastUpdate >= TICKRATE) {
-    			tickSinceLastUpdate = 0;
-    			List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.
-    				getBoundingBox(xCoord - 2, yCoord - 2, zCoord - 2, xCoord + 3, yCoord + 3, zCoord + 3), GenericUtils.selectorPlayer);
-    			if(list != null && list.size() > 0) {
-    				worldObj.setBlock(xCoord, yCoord, zCoord, XenBlocks.light_off, 0, 3);
-    				tickSinceChange = 0;
-    			}
-    		}
-    	} else {
-    		isLighting = false;
-    		if(++tickSinceLastUpdate >= 80) {
-    			tickSinceLastUpdate = 0;
-    			List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.
-        				getBoundingBox(xCoord - 2, yCoord - 2, zCoord - 2, xCoord + 3, yCoord + 3, zCoord + 3), GenericUtils.selectorPlayer);
-        		if(list == null || list.size() == 0) {
-        			worldObj.setBlock(xCoord, yCoord, zCoord, XenBlocks.light_on, 0, 3);
-        			tickSinceChange = 0;
-        		}
-    		}
-    	}
+    public void updateEntity() {
+        Block block = worldObj.getBlock(xCoord, yCoord, zCoord);
+        ++tickSinceChange;
+        ++ticksExisted;
+        if(block == XenBlocks.light_on) {
+            isLighting = true;
+            if(++tickSinceLastUpdate >= TICKRATE) {
+                tickSinceLastUpdate = 0;
+                List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.
+                    getBoundingBox(xCoord - 2, yCoord - 2, zCoord - 2, xCoord + 3, yCoord + 3, zCoord + 3), GenericUtils.selectorPlayer);
+                if(list != null && list.size() > 0) {
+                    worldObj.setBlock(xCoord, yCoord, zCoord, XenBlocks.light_off, 0, 3);
+                    tickSinceChange = 0;
+                }
+            }
+        } else {
+            isLighting = false;
+            if(++tickSinceLastUpdate >= 80) {
+                tickSinceLastUpdate = 0;
+                List list = worldObj.getEntitiesWithinAABBExcludingEntity(null, AxisAlignedBB.
+                        getBoundingBox(xCoord - 2, yCoord - 2, zCoord - 2, xCoord + 3, yCoord + 3, zCoord + 3), GenericUtils.selectorPlayer);
+                if(list == null || list.size() == 0) {
+                    worldObj.setBlock(xCoord, yCoord, zCoord, XenBlocks.light_on, 0, 3);
+                    tickSinceChange = 0;
+                }
+            }
+        }
     }
 
 }

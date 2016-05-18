@@ -9,15 +9,15 @@ import cn.lambdacraft.terrain.ModuleTerrain;
  *
  */
 public class MainBiomes {
-	
-	public static final BiomeGenBase.Height height_xen_hill = new BiomeGenBase.Height(-0.5F, 0.5F);
-	public static final BiomeGenBase.Height height_xen_plain = new BiomeGenBase.Height(-1.0F, 0.2F);
-	
-	public static final BiomeGenHill xenHill = new BiomeGenHill(ModuleTerrain.xenHillBiomeId);
-	public static final BiomeGenPlain xenPlain = new BiomeGenPlain(ModuleTerrain.xenPlainBiomeId);
-	public static final BiomeGenVoid xenVoid = new BiomeGenVoid(ModuleTerrain.xenVoidBiomeId);
-	public static final BiomeGenBroken xenBroken = new BiomeGenBroken(ModuleTerrain.xenBrokenBiomeId);
-	public static final BiomeGenStonePlain xenStonePlain = new BiomeGenStonePlain(ModuleTerrain.xenStonePlainBiomeId);
-	public static final BiomeGenXenPlainInDefaultWorld xenPlainInDefaultWorld = new BiomeGenXenPlainInDefaultWorld(ModuleTerrain.xenPlainInDefaultWorldBiomeId);
+    
+    public static final BiomeGenBase.Height height_xen_hill = new BiomeGenBase.Height(-0.5F, 0.5F);
+    public static final BiomeGenBase.Height height_xen_plain = new BiomeGenBase.Height(-1.0F, 0.2F);
+    
+    public static final BiomeGenHill xenHill = new BiomeGenHill(ModuleTerrain.xenHillBiomeId);
+    public static final BiomeGenPlain xenPlain = new BiomeGenPlain(ModuleTerrain.xenPlainBiomeId);
+    public static final BiomeGenVoid xenVoid = new BiomeGenVoid(ModuleTerrain.xenVoidBiomeId);
+    public static final BiomeGenBroken xenBroken = new BiomeGenBroken(ModuleTerrain.xenBrokenBiomeId);
+    public static final BiomeGenStonePlain xenStonePlain = new BiomeGenStonePlain(ModuleTerrain.xenStonePlainBiomeId);
+    public static final BiomeGenXenPlainInDefaultWorld xenPlainInDefaultWorld = new BiomeGenXenPlainInDefaultWorld(ModuleTerrain.xenPlainInDefaultWorldBiomeId);
 
 }

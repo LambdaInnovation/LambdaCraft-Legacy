@@ -36,177 +36,177 @@ import cpw.mods.fml.relauncher.SideOnly;
  * 
  */
 public abstract class ElectricArmor extends CBCGenericArmor implements
-	ISpecialElectricItem, ISpecialArmor {
+    ISpecialElectricItem, ISpecialArmor {
 
-	protected int tier = 1, transferLimit = 100, maxCharge;
+    protected int tier = 1, transferLimit = 100, maxCharge;
 
-	protected int energyPerDamage = 500;
+    protected int energyPerDamage = 500;
 
-	/**
-	 * @param mat
-	 * @param renderIndex
-	 * @param armorType
-	 */
-	public ElectricArmor(ArmorMaterial mat, int renderIndex,
-			int armorType) {
-		super(mat, renderIndex, armorType);
-	}
+    /**
+     * @param mat
+     * @param renderIndex
+     * @param armorType
+     */
+    public ElectricArmor(ArmorMaterial mat, int renderIndex,
+            int armorType) {
+        super(mat, renderIndex, armorType);
+    }
 
-	public void setEnergyPerDamage(int p) {
-		energyPerDamage = p;
-	}
+    public void setEnergyPerDamage(int p) {
+        energyPerDamage = p;
+    }
 
-	public void setMaxCharge(int p) {
-		maxCharge = p;
-	}
+    public void setMaxCharge(int p) {
+        maxCharge = p;
+    }
 
-	public void setTier(int p) {
-		tier = p;
-	}
+    public void setTier(int p) {
+        tier = p;
+    }
 
-	protected void setTransferLimit(int p) {
-		transferLimit = p;
-	}
+    protected void setTransferLimit(int p) {
+        transferLimit = p;
+    }
 
-	@Override
-	//public int getItemMaxDamageFromStack(ItemStack is) {
-	public int getMaxDamage(ItemStack stack){
-		return maxCharge;
-	}
+    @Override
+    //public int getItemMaxDamageFromStack(ItemStack is) {
+    public int getMaxDamage(ItemStack stack){
+        return maxCharge;
+    }
 
-	/**
-	 * Return the itemDamage represented by this ItemStack. Defaults to the
-	 * itemDamage field on ItemStack, but can be overridden here for other
-	 * sources such as NBT.
-	 * 
-	 * @param stack
-	 *            The itemstack that is damaged
-	 * @return the damage value
-	 */
-	@Override
-	//public int getItemDamageFromStack(ItemStack stack) {
-	public int getDamage(ItemStack stack) {
-		return getMaxDamage(stack) - getItemCharge(stack);
-	}
+    /**
+     * Return the itemDamage represented by this ItemStack. Defaults to the
+     * itemDamage field on ItemStack, but can be overridden here for other
+     * sources such as NBT.
+     * 
+     * @param stack
+     *            The itemstack that is damaged
+     * @return the damage value
+     */
+    @Override
+    //public int getItemDamageFromStack(ItemStack stack) {
+    public int getDamage(ItemStack stack) {
+        return getMaxDamage(stack) - getItemCharge(stack);
+    }
 
-	/**
-	 * Return the itemDamage display value represented by this itemstack.
-	 * 
-	 * @param stack
-	 *            the stack
-	 * @return the damage value
-	 */
-	@Override
-	//public int getItemDamageFromStackForDisplay(ItemStack stack) {
-	public int getDisplayDamage(ItemStack stack)
-	{
-		return (int) (getMaxCharge(stack) - getItemCharge(stack));
-	}
+    /**
+     * Return the itemDamage display value represented by this itemstack.
+     * 
+     * @param stack
+     *            the stack
+     * @return the damage value
+     */
+    @Override
+    //public int getItemDamageFromStackForDisplay(ItemStack stack) {
+    public int getDisplayDamage(ItemStack stack)
+    {
+        return (int) (getMaxCharge(stack) - getItemCharge(stack));
+    }
 
-	@Override
-	public Item getChargedItem(ItemStack itemStack) {
-		return this;
-	}
+    @Override
+    public Item getChargedItem(ItemStack itemStack) {
+        return this;
+    }
 
-	@Override
-	public Item getEmptyItem(ItemStack itemStack) {
-		return this;
-	}
+    @Override
+    public Item getEmptyItem(ItemStack itemStack) {
+        return this;
+    }
 
-	@Override
-	public double getMaxCharge(ItemStack itemStack) {
-		return this.maxCharge;
-	}
+    @Override
+    public double getMaxCharge(ItemStack itemStack) {
+        return this.maxCharge;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-			par3List.add(StatCollector.translateToLocal("gui.curenergy.name")
-					+ " : " + getItemCharge(par1ItemStack) + "/"
-					+ getMaxDamage(par1ItemStack) + " EU");
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack par1ItemStack,
+            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+            par3List.add(StatCollector.translateToLocal("gui.curenergy.name")
+                    + " : " + getItemCharge(par1ItemStack) + "/"
+                    + getMaxDamage(par1ItemStack) + " EU");
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
-		par3List.add(new ItemStack(par1, 1, 0));
-		ItemStack chargedItem = new ItemStack(par1, 1, 0);
-		this.setItemCharge(chargedItem, maxCharge);
-		par3List.add(chargedItem);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+        par3List.add(new ItemStack(par1, 1, 0));
+        ItemStack chargedItem = new ItemStack(par1, 1, 0);
+        this.setItemCharge(chargedItem, maxCharge);
+        par3List.add(chargedItem);
+    }
 
-	protected void setItemCharge(ItemStack stack, int charge) {
-		loadCompound(stack).setInteger(
-				"charge",
-				(charge > 0) ? (charge > getMaxDamage(stack) ? getMaxDamage(stack)
-						: charge) : 0);
-	}
+    protected void setItemCharge(ItemStack stack, int charge) {
+        loadCompound(stack).setInteger(
+                "charge",
+                (charge > 0) ? (charge > getMaxDamage(stack) ? getMaxDamage(stack)
+                        : charge) : 0);
+    }
 
-	public static int getItemCharge(ItemStack stack) {
-		return loadCompound(stack).getInteger("charge");
-	}
+    public static int getItemCharge(ItemStack stack) {
+        return loadCompound(stack).getInteger("charge");
+    }
 
-	private static NBTTagCompound loadCompound(ItemStack stack) {
-		if (stack.stackTagCompound == null)
-			stack.stackTagCompound = new NBTTagCompound();
-		return stack.stackTagCompound;
-	}
+    private static NBTTagCompound loadCompound(ItemStack stack) {
+        if (stack.stackTagCompound == null)
+            stack.stackTagCompound = new NBTTagCompound();
+        return stack.stackTagCompound;
+    }
 
-	/**
-	 * Set the damage for this itemstack. Note, this method is responsible for
-	 * zero checking.
-	 * 
-	 * @param stack
-	 *            the stack
-	 * @param damage
-	 *            the new damage value
-	 */
-	@Override
-	public void setDamage(ItemStack stack, int damage) {
-		setItemCharge(stack, maxCharge - damage);
-	}
+    /**
+     * Set the damage for this itemstack. Note, this method is responsible for
+     * zero checking.
+     * 
+     * @param stack
+     *            the stack
+     * @param damage
+     *            the new damage value
+     */
+    @Override
+    public void setDamage(ItemStack stack, int damage) {
+        setItemCharge(stack, maxCharge - damage);
+    }
 
-	/**
-	 * Return if this itemstack is damaged. Note only called if
-	 * {@link #isDamageable()} is true.
-	 * 
-	 * @param stack
-	 *            the stack
-	 * @return if the stack is damaged
-	 */
-	@Override
-	//public boolean isItemStackDamaged(ItemStack stack) {
-	public boolean isDamaged(ItemStack stack){
-		return getItemCharge(stack) < getMaxDamage();
-	}
+    /**
+     * Return if this itemstack is damaged. Note only called if
+     * {@link #isDamageable()} is true.
+     * 
+     * @param stack
+     *            the stack
+     * @return if the stack is damaged
+     */
+    @Override
+    //public boolean isItemStackDamaged(ItemStack stack) {
+    public boolean isDamaged(ItemStack stack){
+        return getItemCharge(stack) < getMaxDamage();
+    }
 
-	@Override
-	public int getTier(ItemStack itemStack) {
-		return tier;
-	}
+    @Override
+    public int getTier(ItemStack itemStack) {
+        return tier;
+    }
 
-	@Override
-	public double getTransferLimit(ItemStack itemStack) {
-		return this.transferLimit;
-	}
-	@Override
-	public void damageArmor(EntityLivingBase entity, ItemStack stack,
-			DamageSource source, int damage, int slot) {
-		getManager(stack).discharge(stack, damage * this.energyPerDamage, 2, true, false, false);
-		if(getItemCharge(stack) < this.energyPerDamage)
-			this.setItemCharge(stack, 0);
-	}
+    @Override
+    public double getTransferLimit(ItemStack itemStack) {
+        return this.transferLimit;
+    }
+    @Override
+    public void damageArmor(EntityLivingBase entity, ItemStack stack,
+            DamageSource source, int damage, int slot) {
+        getManager(stack).discharge(stack, damage * this.energyPerDamage, 2, true, false, false);
+        if(getItemCharge(stack) < this.energyPerDamage)
+            this.setItemCharge(stack, 0);
+    }
 
-	@Override
-	public boolean canProvideEnergy(ItemStack itemStack) {
-		return false;
-	}
+    @Override
+    public boolean canProvideEnergy(ItemStack itemStack) {
+        return false;
+    }
 
-	@Override
-	public IElectricItemManager getManager(ItemStack itemStack) {
-		return LCElectItemManager.INSTANCE;
-	}
+    @Override
+    public IElectricItemManager getManager(ItemStack itemStack) {
+        return LCElectItemManager.INSTANCE;
+    }
 
 }

@@ -29,62 +29,62 @@ import cn.lambdacraft.crafting.register.CBCItems;
  */
 public class CBCAchievements {
 
-	public static Achievement[] oreAchievements = new Achievement[3];
+    public static Achievement[] oreAchievements = new Achievement[3];
 
-	/* Radioactive Beryl */
-	public static Achievement radioactiveBeryl;
+    /* Radioactive Beryl */
+    public static Achievement radioactiveBeryl;
 
-	/* Oh my teeth! */
-	public static Achievement ohMyTeeth;
+    /* Oh my teeth! */
+    public static Achievement ohMyTeeth;
 
-	/* Let's Moe! */
-	public static Achievement letsMoe;
+    /* Let's Moe! */
+    public static Achievement letsMoe;
 
-	/* The Page of Achs */
-	public static AchievementPage achpage;
+    /* The Page of Achs */
+    public static AchievementPage achpage;
 
-	public static void init(Configuration conf) {
-		
-		try {
+    public static void init(Configuration conf) {
+        
+        try {
 
-			oreAchievements[0] = (new Achievement(conf.get("achievements",
-					"nuclearRawMaterial", "uranium").getString(), "nuclearRawMaterial", 0, 0,
-					CBCBlocks.uraniumOre, (Achievement) null))
-					.registerStat();
-			oreAchievements[1] = (new Achievement(conf.get("achievements", "newTinOre",
-					"tin").getString(), "newTinOre", 2, 0, CBCBlocks.oreTin,
-					(Achievement) null)).registerStat();
-			oreAchievements[2] = (new Achievement(conf.get("achievements",
-					"newCopperOre", "copper").getString(), "newCopperOre", 4, 0,
-					CBCBlocks.oreCopper, (Achievement) null))
-					.registerStat();
-			radioactiveBeryl = (new Achievement(conf.get("achievements", 
-					"radioactiveBeryl", "radioactive").getString(), "radioactiveBeryl", 1, 2,
-					CBCItems.ingotUranium, oreAchievements[0]))
-					.registerStat();
-			ohMyTeeth = (new Achievement(conf.get("achievements", "ohMyTeeth", "steel").getString(),
-					"ohMyTeeth", 3, 0, CBCItems.ingotSteel, (Achievement) null))
-					.registerStat();
-			letsMoe = (new Achievement(conf.get("achievements", "letsMoe", "moe").getString(),
-					"letsMoe", 12, 12, CBCItems.halfLife01, (Achievement) null))
-					.registerStat();
-//			System.out.println("finish achievements");
-			achpage = new AchievementPage("LambdaCraft", oreAchievements[0],
+            oreAchievements[0] = (new Achievement(conf.get("achievements",
+                    "nuclearRawMaterial", "uranium").getString(), "nuclearRawMaterial", 0, 0,
+                    CBCBlocks.uraniumOre, (Achievement) null))
+                    .registerStat();
+            oreAchievements[1] = (new Achievement(conf.get("achievements", "newTinOre",
+                    "tin").getString(), "newTinOre", 2, 0, CBCBlocks.oreTin,
+                    (Achievement) null)).registerStat();
+            oreAchievements[2] = (new Achievement(conf.get("achievements",
+                    "newCopperOre", "copper").getString(), "newCopperOre", 4, 0,
+                    CBCBlocks.oreCopper, (Achievement) null))
+                    .registerStat();
+            radioactiveBeryl = (new Achievement(conf.get("achievements", 
+                    "radioactiveBeryl", "radioactive").getString(), "radioactiveBeryl", 1, 2,
+                    CBCItems.ingotUranium, oreAchievements[0]))
+                    .registerStat();
+            ohMyTeeth = (new Achievement(conf.get("achievements", "ohMyTeeth", "steel").getString(),
+                    "ohMyTeeth", 3, 0, CBCItems.ingotSteel, (Achievement) null))
+                    .registerStat();
+            letsMoe = (new Achievement(conf.get("achievements", "letsMoe", "moe").getString(),
+                    "letsMoe", 12, 12, CBCItems.halfLife01, (Achievement) null))
+                    .registerStat();
+//            System.out.println("finish achievements");
+            achpage = new AchievementPage("LambdaCraft", oreAchievements[0],
 
-			oreAchievements[1], oreAchievements[2], radioactiveBeryl,
-					ohMyTeeth, letsMoe);
+            oreAchievements[1], oreAchievements[2], radioactiveBeryl,
+                    ohMyTeeth, letsMoe);
 
-			AchievementPage.registerAchievementPage(achpage);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+            AchievementPage.registerAchievementPage(achpage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	public CBCAchievements() {
+    public CBCAchievements() {
 
-	}
+    }
 
-	public static void getAchievement(EntityPlayer player, Achievement ach) {
-		player.addStat(ach, 1);
-	}
+    public static void getAchievement(EntityPlayer player, Achievement ach) {
+        player.addStat(ach, 1);
+    }
 }

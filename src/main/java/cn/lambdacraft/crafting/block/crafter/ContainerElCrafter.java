@@ -29,71 +29,71 @@ import net.minecraft.inventory.Slot;
  */
 public class ContainerElCrafter extends ContainerCrafterBase {
 
-	protected TileElCrafter tileEntity;
+    protected TileElCrafter tileEntity;
 
-	/**
-	 * @param inventoryPlayer
-	 * @param te
-	 */
-	public ContainerElCrafter(InventoryPlayer inventoryPlayer, TileElCrafter te) {
-		super(inventoryPlayer, te);
-		this.tileEntity = te;
-	}
+    /**
+     * @param inventoryPlayer
+     * @param te
+     */
+    public ContainerElCrafter(InventoryPlayer inventoryPlayer, TileElCrafter te) {
+        super(inventoryPlayer, te);
+        this.tileEntity = te;
+    }
 
-	@Override
-	protected void addSlots(TileCrafterBase te) {
-		// Crafting recipe slot
-		for (int i = 0; i < 3; i++) {
-			// output:0 4 8
-			Slot s = addSlotToContainer(new SlotOutput(te, 9 + i, 63,
-					14 + 18 * i));
-			// input :123 567 9.10.11
-			for (int j = 0; j < 3; j++) {
-				addSlotToContainer(new SlotLocked(te, j + i * 3, 6 + 18 * j,
-						14 + 18 * i));
-			}
-		}
-		addSlotToContainer(new Slot(te, 13, 95, 50));
-		addSlotToContainer(new SlotResult(te, 12, 95, 14));
-		// Block Storage
-		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 9; j++) {
-				addSlotToContainer(new Slot(te, 14 + 9 * i + j, 6 + 18 * j,
-						72 + 18 * i));
-			}
-		}
-	}
+    @Override
+    protected void addSlots(TileCrafterBase te) {
+        // Crafting recipe slot
+        for (int i = 0; i < 3; i++) {
+            // output:0 4 8
+            Slot s = addSlotToContainer(new SlotOutput(te, 9 + i, 63,
+                    14 + 18 * i));
+            // input :123 567 9.10.11
+            for (int j = 0; j < 3; j++) {
+                addSlotToContainer(new SlotLocked(te, j + i * 3, 6 + 18 * j,
+                        14 + 18 * i));
+            }
+        }
+        addSlotToContainer(new Slot(te, 13, 95, 50));
+        addSlotToContainer(new SlotResult(te, 12, 95, 14));
+        // Block Storage
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 9; j++) {
+                addSlotToContainer(new Slot(te, 14 + 9 * i + j, 6 + 18 * j,
+                        72 + 18 * i));
+            }
+        }
+    }
 
-	@Override
-	protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 9; j++) {
-				addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
-						6 + j * 18, 112 + i * 18));
-			}
-		}
-		for (int i = 0; i < 9; i++) {
-			addSlotToContainer(new Slot(inventoryPlayer, i, 6 + i * 18, 170));
-		}
-	}
+    @Override
+    protected void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 9; j++) {
+                addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
+                        6 + j * 18, 112 + i * 18));
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            addSlotToContainer(new Slot(inventoryPlayer, i, 6 + i * 18, 170));
+        }
+    }
 
-	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
-		for (int i = 0; i < this.crafters.size(); ++i) {
-			ICrafting icrafting = (ICrafting) this.crafters.get(i);
-			icrafting.sendProgressBarUpdate(this, 4,
-					tileEntity.currentEnergy / 3);
-		}
-	}
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+        for (int i = 0; i < this.crafters.size(); ++i) {
+            ICrafting icrafting = (ICrafting) this.crafters.get(i);
+            icrafting.sendProgressBarUpdate(this, 4,
+                    tileEntity.currentEnergy / 3);
+        }
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void updateProgressBar(int par1, int par2) {
-		super.updateProgressBar(par1, par2);
-		if (par1 == 4) {
-			tileEntity.currentEnergy = par2 * 3;
-		}
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void updateProgressBar(int par1, int par2) {
+        super.updateProgressBar(par1, par2);
+        if (par1 == 4) {
+            tileEntity.currentEnergy = par2 * 3;
+        }
+    }
 
 }

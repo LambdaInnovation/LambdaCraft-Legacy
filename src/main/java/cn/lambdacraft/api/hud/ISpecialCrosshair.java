@@ -7,18 +7,18 @@ import net.minecraft.item.ItemStack;
  * @author WeAthFolD
  */
 public interface ISpecialCrosshair {
-	
-	/**
-	 * 获取准星贴图的size的一半
-	 * @return
-	 */
-	public int getHalfWidth();
-	
-	/**
-	 * 获取准星id
-	 * @see cn.lambdacraft.core.prop.ClientProps
-	 * @param itemStack
-	 * @return
-	 */
-	public int getCrosshairID(ItemStack itemStack);
+    
+    /**
+     * 获取准星贴图的size的一半
+     * @return
+     */
+    public int getHalfWidth();
+    
+    /**
+     * 获取准星id
+     * @see cn.lambdacraft.core.prop.ClientProps
+     * @param itemStack
+     * @return
+     */
+    public int getCrosshairID(ItemStack itemStack);
 }

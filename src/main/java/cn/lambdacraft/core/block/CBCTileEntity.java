@@ -26,68 +26,68 @@ import net.minecraft.tileentity.TileEntity;
  */
 public abstract class CBCTileEntity extends TileEntity {
 
-	protected int lastTick;
-	private int updateFreq = GeneralProps.updateRate;
-	
+    protected int lastTick;
+    private int updateFreq = GeneralProps.updateRate;
+    
 
-	@Override
-	public boolean canUpdate() {
-		return true;
-	}
+    @Override
+    public boolean canUpdate() {
+        return true;
+    }
 
-	protected void setUpdateFreq(int freq) {
-		updateFreq = freq;
-	}
+    protected void setUpdateFreq(int freq) {
+        updateFreq = freq;
+    }
 
-	@Override
-	public void updateEntity() {
-		if (++this.lastTick > updateFreq) {
-			lastTick = 0;
-			this.frequentUpdate();
-			//this.onInventoryChanged();
-		}
-	}
+    @Override
+    public void updateEntity() {
+        if (++this.lastTick > updateFreq) {
+            lastTick = 0;
+            this.frequentUpdate();
+            //this.onInventoryChanged();
+        }
+    }
 
-	public void frequentUpdate() {
+    public void frequentUpdate() {
 
-	}
+    }
 
-	@Override
-	public void onChunkUnload() {
-		this.onTileUnload();
-		super.onChunkUnload();
-	}
+    @Override
+    public void onChunkUnload() {
+        this.onTileUnload();
+        super.onChunkUnload();
+    }
 
-	@Override
-	public void invalidate() {
-		super.invalidate();
-		onTileUnload();
-	}
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        onTileUnload();
+    }
 
-	public void onTileUnload() {
-	};
-	
-	protected void storeInventory(NBTTagCompound nbt, ItemStack[] inv, String key) {
-		for (int i = 0; i < inv.length; i++) {
-			if (inv[i] == null)
-				continue;
-			nbt.setShort(key + "_id" + i, (short) Item.getIdFromItem(inv[i].getItem()));
-			nbt.setByte(key + "_count" + i, (byte) inv[i].stackSize);
-			nbt.setShort(key + "_damage" + i, (short) inv[i].getItemDamage());
-		}
-	}
-	
-	protected ItemStack[] restoreInventory(NBTTagCompound nbt, String key, int len) {
-		ItemStack[] inv = new ItemStack[len];
-		for (int i = 0; i < len; i++) {
-			short id = nbt.getShort(key + "_id" + i), 
-				damage = nbt.getShort(key + "_damage" + i);
-			byte count = nbt.getByte(key + "_count" + i);
-			if (id == 0)
-				continue;
-			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
-			inv[i] = is;
-		}
-		return inv;
-	}
+    public void onTileUnload() {
+    };
+    
+    protected void storeInventory(NBTTagCompound nbt, ItemStack[] inv, String key) {
+        for (int i = 0; i < inv.length; i++) {
+            if (inv[i] == null)
+                continue;
+            nbt.setShort(key + "_id" + i, (short) Item.getIdFromItem(inv[i].getItem()));
+            nbt.setByte(key + "_count" + i, (byte) inv[i].stackSize);
+            nbt.setShort(key + "_damage" + i, (short) inv[i].getItemDamage());
+        }
+    }
+    
+    protected ItemStack[] restoreInventory(NBTTagCompound nbt, String key, int len) {
+        ItemStack[] inv = new ItemStack[len];
+        for (int i = 0; i < len; i++) {
+            short id = nbt.getShort(key + "_id" + i), 
+                damage = nbt.getShort(key + "_damage" + i);
+            byte count = nbt.getByte(key + "_count" + i);
+            if (id == 0)
+                continue;
+            ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
+            inv[i] = is;
+        }
+        return inv;
+    }
 }

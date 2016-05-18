@@ -34,73 +34,73 @@ import cn.weaponmod.api.WeaponHelper;
  */
 public class EntityCrossbowArrow extends EntityThrowable {
 
-	public boolean isExplosive;
-	public int damage;
-	
-	public EntityCrossbowArrow(World par1World, EntityLivingBase par2EntityLiving, boolean explode) {
-		super(par1World, par2EntityLiving);
-		isExplosive = explode;
-		damage = 20;
-	}
+    public boolean isExplosive;
+    public int damage;
+    
+    public EntityCrossbowArrow(World par1World, EntityLivingBase par2EntityLiving, boolean explode) {
+        super(par1World, par2EntityLiving);
+        isExplosive = explode;
+        damage = 20;
+    }
 
-	public EntityCrossbowArrow(World world) {
-		super(world);
-	}
-	
-	@Override
-	public void onUpdate() {
-		super.onUpdate();
-	}
+    public EntityCrossbowArrow(World world) {
+        super(world);
+    }
+    
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+    }
 
-	@Override
-	protected void onImpact(MovingObjectPosition var1) {
-		if(!worldObj.isRemote) {
-			if(isExplosive)
-				Explode();
-			else {
-				if(var1.typeOfHit == MovingObjectType.ENTITY) {
-					if(damage <= 3)
-						setDead();
-					WeaponHelper.doEntityAttack(var1.entityHit, DamageSource.causeMobDamage(getThrower()), damage);
-					if(var1.entityHit instanceof EntityLivingBase) {
-						EntityLivingBase living = (EntityLivingBase) var1.entityHit;
-						living.setArrowCountInEntity(living.getArrowCountInEntity() + 1);
-					}
-					damage *= 0.6;
-				}
-				else {
-					Block block = worldObj.getBlock(var1.blockX, var1.blockY, var1.blockZ);
-					if(block == Blocks.glass_pane || block == Blocks.glass) {
-						worldObj.destroyBlockInWorldPartially(var1.blockX, var1.blockY, var1.blockZ, 0, 0);
-					} else { 
-						this.setDead();
-						worldObj.spawnEntityInWorld(
-							new EntityCrossbowStill(worldObj, new Motion3D(var1.hitVec.xCoord, var1.hitVec.yCoord, var1.hitVec.zCoord, motionX, motionY, motionZ),
-									this.rotationYaw, this.rotationPitch));
-					}
-				}
-			}
-		}
-	}
+    @Override
+    protected void onImpact(MovingObjectPosition var1) {
+        if(!worldObj.isRemote) {
+            if(isExplosive)
+                Explode();
+            else {
+                if(var1.typeOfHit == MovingObjectType.ENTITY) {
+                    if(damage <= 3)
+                        setDead();
+                    WeaponHelper.doEntityAttack(var1.entityHit, DamageSource.causeMobDamage(getThrower()), damage);
+                    if(var1.entityHit instanceof EntityLivingBase) {
+                        EntityLivingBase living = (EntityLivingBase) var1.entityHit;
+                        living.setArrowCountInEntity(living.getArrowCountInEntity() + 1);
+                    }
+                    damage *= 0.6;
+                }
+                else {
+                    Block block = worldObj.getBlock(var1.blockX, var1.blockY, var1.blockZ);
+                    if(block == Blocks.glass_pane || block == Blocks.glass) {
+                        worldObj.destroyBlockInWorldPartially(var1.blockX, var1.blockY, var1.blockZ, 0, 0);
+                    } else { 
+                        this.setDead();
+                        worldObj.spawnEntityInWorld(
+                            new EntityCrossbowStill(worldObj, new Motion3D(var1.hitVec.xCoord, var1.hitVec.yCoord, var1.hitVec.zCoord, motionX, motionY, motionZ),
+                                    this.rotationYaw, this.rotationPitch));
+                    }
+                }
+            }
+        }
+    }
 
-	private void Explode() {
-		WeaponHelper.Explode(worldObj, this, 1.0F, 3.0F, posX, posY, posZ, 30);
-		this.setDead();
-	}
+    private void Explode() {
+        WeaponHelper.Explode(worldObj, this, 1.0F, 3.0F, posX, posY, posZ, 30);
+        this.setDead();
+    }
 
-	@Override
-	protected float getGravityVelocity() {
-		return 0.0F;
-	}
+    @Override
+    protected float getGravityVelocity() {
+        return 0.0F;
+    }
 
-	@Override
-	protected float func_70182_d() {
-		return 5.0F;
-	}
+    @Override
+    protected float func_70182_d() {
+        return 5.0F;
+    }
 
-	@Override
-	public boolean canBeCollidedWith() {
-		return true;
-	}
+    @Override
+    public boolean canBeCollidedWith() {
+        return true;
+    }
 
 }

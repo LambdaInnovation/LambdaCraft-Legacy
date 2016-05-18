@@ -14,20 +14,20 @@ import net.minecraft.client.renderer.texture.IIconRegister;
  */
 public class BlockXenDesertedDirt extends Block {
 
-	public BlockXenDesertedDirt() 
-	{
-		super(Material.ground);
-		this.setBlockName("xendeserteddirt");
-		this.setBlockTextureName("xen_deserted_dirt");
-		this.setHardness(0.8F);
-		this.setStepSound(soundTypeGravel);
-		setCreativeTab(CBCMod.cct);
-	}
+    public BlockXenDesertedDirt() 
+    {
+        super(Material.ground);
+        this.setBlockName("xendeserteddirt");
+        this.setBlockTextureName("xen_deserted_dirt");
+        this.setHardness(0.8F);
+        this.setStepSound(soundTypeGravel);
+        setCreativeTab(CBCMod.cct);
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister p_149651_1_)
-	{
-	    this.blockIcon = p_149651_1_.registerIcon("lambdacraft:" + this.getTextureName());
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister p_149651_1_)
+    {
+        this.blockIcon = p_149651_1_.registerIcon("lambdacraft:" + this.getTextureName());
+    }
 }

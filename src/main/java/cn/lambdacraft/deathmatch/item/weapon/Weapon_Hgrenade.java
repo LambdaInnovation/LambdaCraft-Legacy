@@ -29,55 +29,55 @@ import net.minecraft.world.World;
  */
 public class Weapon_Hgrenade extends CBCGenericItem {
 
-	public Weapon_Hgrenade() {
-		super();
-		setUnlocalizedName("weapon_hgrenade");
-		setCreativeTab(CBCMod.cct);
-		setIconName("weapon_hgrenade");
-		setMaxStackSize(8);
-	}
+    public Weapon_Hgrenade() {
+        super();
+        setUnlocalizedName("weapon_hgrenade");
+        setCreativeTab(CBCMod.cct);
+        setIconName("weapon_hgrenade");
+        setMaxStackSize(8);
+    }
 
-	@Override
-	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
-			EntityPlayer par3EntityPlayer, int par4) {
+    @Override
+    public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer, int par4) {
 
-		if (par4 >= 395) {
-			return;
-		}
+        if (par4 >= 395) {
+            return;
+        }
 
-		int duration = (par4 > 340) ? 400 - par4 : 60; // used time: if large
-														// than 3s use 3s
+        int duration = (par4 > 340) ? 400 - par4 : 60; // used time: if large
+                                                        // than 3s use 3s
 
-		if (par1ItemStack.stackSize > 0 && !par2World.isRemote)
-			par2World.spawnEntityInWorld(new EntityHGrenade(par2World,
-					par3EntityPlayer, duration));
+        if (par1ItemStack.stackSize > 0 && !par2World.isRemote)
+            par2World.spawnEntityInWorld(new EntityHGrenade(par2World,
+                    par3EntityPlayer, duration));
 
-		if (!par3EntityPlayer.capabilities.isCreativeMode) {
-			--par1ItemStack.stackSize;
-			if (par1ItemStack.stackSize == 0)
-				par1ItemStack = null;
-		}
+        if (!par3EntityPlayer.capabilities.isCreativeMode) {
+            --par1ItemStack.stackSize;
+            if (par1ItemStack.stackSize == 0)
+                par1ItemStack = null;
+        }
 
-		return;
-	}
+        return;
+    }
 
-	@Override
-	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
-			EntityPlayer par3EntityPlayer) {
+    @Override
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
 
-		par2World.playSoundAtEntity(par3EntityPlayer,
-				"lambdacraft:weapons.hgrenadepin", 0.5F,
-				0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+        par2World.playSoundAtEntity(par3EntityPlayer,
+                "lambdacraft:weapons.hgrenadepin", 0.5F,
+                0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-		par3EntityPlayer.setItemInUse(par1ItemStack,
-				this.getMaxItemUseDuration(par1ItemStack));
-		return par1ItemStack;
+        par3EntityPlayer.setItemInUse(par1ItemStack,
+                this.getMaxItemUseDuration(par1ItemStack));
+        return par1ItemStack;
 
-	}
+    }
 
-	@Override
-	public int getMaxItemUseDuration(ItemStack par1ItemStack) {
-		return 400; // 20s
-	}
+    @Override
+    public int getMaxItemUseDuration(ItemStack par1ItemStack) {
+        return 400; // 20s
+    }
 
 }

@@ -31,52 +31,52 @@ import cpw.mods.fml.common.IWorldGenerator;
  */
 public class CBCWorldGen implements IWorldGenerator {
 
-	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world,
-			IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
-		switch (world.provider.dimensionId) {
-		case -1:
-			generateNether(world, random, chunkX * 16, chunkZ * 16);
-			break;
-		case 0:
-			generateSurface(world, random, chunkX * 16, chunkZ * 16);
-			break;
-		case 1:
-			generateEnd(world, random, chunkX * 16, chunkZ * 16);
-			break;
-		}
-	}
+    @Override
+    public void generate(Random random, int chunkX, int chunkZ, World world,
+            IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
+        switch (world.provider.dimensionId) {
+        case -1:
+            generateNether(world, random, chunkX * 16, chunkZ * 16);
+            break;
+        case 0:
+            generateSurface(world, random, chunkX * 16, chunkZ * 16);
+            break;
+        case 1:
+            generateEnd(world, random, chunkX * 16, chunkZ * 16);
+            break;
+        }
+    }
 
-	private void generateEnd(World world, Random random, int i, int j) {
-	}
+    private void generateEnd(World world, Random random, int i, int j) {
+    }
 
-	private void generateSurface(World world, Random random, int i, int j) {
-		for (int k = 0; k < 5; k++) {
-			int uraniumOreXCoord = i + random.nextInt(16);
-			int uraniumOreYCoord = random.nextInt(35);
-			int uraniumOreZCoord = j + random.nextInt(16);
-			(new WorldGenMinable(CBCBlocks.uraniumOre, 3)).generate(
-					world, random, uraniumOreXCoord, uraniumOreYCoord,
-					uraniumOreZCoord);
-		}
-		for (int k = 0; k < 36; k++) {
-			int tinOreXCoord = i + random.nextInt(16);
-			int tinOreYCoord = random.nextInt(48);
-			int tinOreZCoord = j + random.nextInt(16);
-			(new WorldGenMinable(CBCBlocks.oreTin, 3)).generate(world,
-					random, tinOreXCoord, tinOreYCoord, tinOreZCoord);
-		}
-		for (int k = 0; k < 36; k++) {
-			int copperOreXCoord = i + random.nextInt(16);
-			int copperOreYCoord = random.nextInt(48);
-			int copperOreZCoord = j + random.nextInt(16);
-			(new WorldGenMinable(CBCBlocks.oreCopper, 3)).generate(
-					world, random, copperOreXCoord, copperOreYCoord,
-					copperOreZCoord);
-		}
-	}
+    private void generateSurface(World world, Random random, int i, int j) {
+        for (int k = 0; k < 5; k++) {
+            int uraniumOreXCoord = i + random.nextInt(16);
+            int uraniumOreYCoord = random.nextInt(35);
+            int uraniumOreZCoord = j + random.nextInt(16);
+            (new WorldGenMinable(CBCBlocks.uraniumOre, 3)).generate(
+                    world, random, uraniumOreXCoord, uraniumOreYCoord,
+                    uraniumOreZCoord);
+        }
+        for (int k = 0; k < 36; k++) {
+            int tinOreXCoord = i + random.nextInt(16);
+            int tinOreYCoord = random.nextInt(48);
+            int tinOreZCoord = j + random.nextInt(16);
+            (new WorldGenMinable(CBCBlocks.oreTin, 3)).generate(world,
+                    random, tinOreXCoord, tinOreYCoord, tinOreZCoord);
+        }
+        for (int k = 0; k < 36; k++) {
+            int copperOreXCoord = i + random.nextInt(16);
+            int copperOreYCoord = random.nextInt(48);
+            int copperOreZCoord = j + random.nextInt(16);
+            (new WorldGenMinable(CBCBlocks.oreCopper, 3)).generate(
+                    world, random, copperOreXCoord, copperOreYCoord,
+                    copperOreZCoord);
+        }
+    }
 
-	private void generateNether(World world, Random random, int i, int j) {
-	}
+    private void generateNether(World world, Random random, int i, int j) {
+    }
 
 }

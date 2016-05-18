@@ -30,34 +30,34 @@ import cn.liutils.api.client.render.LIRenderMob;
  */
 public class RenderHoundeye extends LIRenderMob {
 
-	protected static ModelHoundeye model = new ModelHoundeye();
-	protected Random rand = new Random();
-	/**
-	 * @param par1ModelBase
-	 * @param par2
-	 */
-	public RenderHoundeye() {
-		super(model, 0.5F);
-		// TODO Auto-generated constructor stub
-	}
-	
+    protected static ModelHoundeye model = new ModelHoundeye();
+    protected Random rand = new Random();
+    /**
+     * @param par1ModelBase
+     * @param par2
+     */
+    public RenderHoundeye() {
+        super(model, 0.5F);
+        // TODO Auto-generated constructor stub
+    }
+    
     @Override
-	public void func_110827_b(EntityLiving ent, double par2, double par4, double par6, float par8, float par9)
+    public void func_110827_b(EntityLiving ent, double par2, double par4, double par6, float par8, float par9)
     {
-    	GL11.glPushMatrix();
-    	float yOffset = ent.prevLimbSwingAmount + (ent.limbSwingAmount - ent.prevLimbSwingAmount) * par9;
-    	float xOffset = 0.0F, zOffset = 0.0F;
-    	if(((EntityHoundeye)ent).isCharging) {
-    		xOffset = rand.nextFloat() * 0.3F;
-    		zOffset = rand.nextFloat() * 0.3F;
-    		yOffset += rand.nextFloat() * 0.3F;
-    	}
-    	if(yOffset > 1.0F)
-    		yOffset = 1.0F;
-    	yOffset *= 0.2F;
-    	GL11.glTranslatef(xOffset, yOffset, zOffset);
-    	super.func_110827_b(ent, par2, par4, par6, par8, par9);
-    	GL11.glPopMatrix();
+        GL11.glPushMatrix();
+        float yOffset = ent.prevLimbSwingAmount + (ent.limbSwingAmount - ent.prevLimbSwingAmount) * par9;
+        float xOffset = 0.0F, zOffset = 0.0F;
+        if(((EntityHoundeye)ent).isCharging) {
+            xOffset = rand.nextFloat() * 0.3F;
+            zOffset = rand.nextFloat() * 0.3F;
+            yOffset += rand.nextFloat() * 0.3F;
+        }
+        if(yOffset > 1.0F)
+            yOffset = 1.0F;
+        yOffset *= 0.2F;
+        GL11.glTranslatef(xOffset, yOffset, zOffset);
+        super.func_110827_b(ent, par2, par4, par6, par8, par9);
+        GL11.glPopMatrix();
     }
 
 }

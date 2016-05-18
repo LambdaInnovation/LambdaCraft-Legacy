@@ -43,97 +43,97 @@ import cpw.mods.fml.relauncher.SideOnly;
 dependencies = LIUtils.DEPENDENCY)
 public class CBCMod {
 
-	public static final String VERSION = "1.9";
+    public static final String VERSION = "1.9";
 
-	public static final String 
-		DEPENCY_CRAFTING = "required-after:LambdaCraft|World@" + VERSION,
-		DEPENDENCY_CORE = "required-after:LambdaCraft@" + VERSION,
-		DEPENDENCY_DEATHMATCH = "required-after:LambdaCraft|DeathMatch@" + VERSION,
-		DEPENDENCY_MOB = "required-after:LambdaCraft|Living@" + VERSION,
-		DEPENCY_XEN = "required-after:LambdaCraft|Xen@" + VERSION;
+    public static final String 
+        DEPENCY_CRAFTING = "required-after:LambdaCraft|World@" + VERSION,
+        DEPENDENCY_CORE = "required-after:LambdaCraft@" + VERSION,
+        DEPENDENCY_DEATHMATCH = "required-after:LambdaCraft|DeathMatch@" + VERSION,
+        DEPENDENCY_MOB = "required-after:LambdaCraft|Living@" + VERSION,
+        DEPENCY_XEN = "required-after:LambdaCraft|Xen@" + VERSION;
 
-	@SideOnly(Side.CLIENT)
-	private Minecraft mc;
-	
-	/**
-	 * 日志
-	 */
-	public static Logger log = Logger.getLogger("LambdaCraft");
+    @SideOnly(Side.CLIENT)
+    private Minecraft mc;
+    
+    /**
+     * 日志
+     */
+    public static Logger log = Logger.getLogger("LambdaCraft");
 
-	/**
-	 * 武器制作机的合成表。
-	 */
-	public static RecipeWeapons recipeWeapons;
+    /**
+     * 武器制作机的合成表。
+     */
+    public static RecipeWeapons recipeWeapons;
 
-	/**
-	 * Creative Tab.
-	 */
-	public static CreativeTabs cct = new CBCCreativeTab("CBCMod");
+    /**
+     * Creative Tab.
+     */
+    public static CreativeTabs cct = new CBCCreativeTab("CBCMod");
 
-	/**
-	 * 公用设置。
-	 */
-	public static Configuration config;
+    /**
+     * 公用设置。
+     */
+    public static Configuration config;
 
-	@Instance("LambdaCraft")
-	public static CBCMod instance;
+    @Instance("LambdaCraft")
+    public static CBCMod instance;
 
-	/**
-	 * 加载代理。
-	 */
-	@SidedProxy(clientSide = "cn.lambdacraft.core.proxy.ClientProxy", serverSide = "cn.lambdacraft.core.proxy.Proxy")
-	public static cn.lambdacraft.core.proxy.Proxy proxy;
+    /**
+     * 加载代理。
+     */
+    @SidedProxy(clientSide = "cn.lambdacraft.core.proxy.ClientProxy", serverSide = "cn.lambdacraft.core.proxy.Proxy")
+    public static cn.lambdacraft.core.proxy.Proxy proxy;
 
-	public static boolean ic2Installed = false;
-	
-	public static LIGuiHandler guiHandler = new LIGuiHandler();
-	
-	public static SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(GeneralProps.NET_CHANNEL);
+    public static boolean ic2Installed = false;
+    
+    public static LIGuiHandler guiHandler = new LIGuiHandler();
+    
+    public static SimpleNetworkWrapper netHandler = NetworkRegistry.INSTANCE.newSimpleChannel(GeneralProps.NET_CHANNEL);
 
-	/**
-	 * 预加载（设置、世界生成、注册Event）
-	 * 
-	 * @param event
-	 */
-	@EventHandler()
-	public void preInit(FMLPreInitializationEvent event) {
+    /**
+     * 预加载（设置、世界生成、注册Event）
+     * 
+     * @param event
+     */
+    @EventHandler()
+    public void preInit(FMLPreInitializationEvent event) {
 
-		log.info("Starting LambdaCraft " + CBCMod.VERSION);
-		log.info("Copyright (c) Lambda Innovation, 2013-2014");
-		log.info("http://www.lambdacraft.cn");
-		
-		config = new Configuration(event.getSuggestedConfigurationFile());
-		proxy.preInit();
-		GeneralProps.loadProps(config);
-		
-		FMLCommonHandler.instance().bus().register(new LCTickEvents());
-	}
+        log.info("Starting LambdaCraft " + CBCMod.VERSION);
+        log.info("Copyright (c) Lambda Innovation, 2013-2014");
+        log.info("http://www.lambdacraft.cn");
+        
+        config = new Configuration(event.getSuggestedConfigurationFile());
+        proxy.preInit();
+        GeneralProps.loadProps(config);
+        
+        FMLCommonHandler.instance().bus().register(new LCTickEvents());
+    }
 
-	/**
-	 * 加载（方块、物品、网络处理、其他)
-	 * 
-	 * @param Init
-	 */
-	@EventHandler()
-	public void init(FMLInitializationEvent Init) {
-		
-		log.fine("LambdaCraft IC2 Intergration Module STATE : " + ic2Installed);
-		// Blocks, Items, GUI Handler,Key Process.
-		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
-		LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMod", "LambdaCraft");
-		netHandler.registerMessage(MsgKeyUsing.Handler.class, MsgKeyUsing.class, GeneralProps.NET_ID_USE, Side.SERVER);
-		proxy.init();
-		
-	}
+    /**
+     * 加载（方块、物品、网络处理、其他)
+     * 
+     * @param Init
+     */
+    @EventHandler()
+    public void init(FMLInitializationEvent Init) {
+        
+        log.fine("LambdaCraft IC2 Intergration Module STATE : " + ic2Installed);
+        // Blocks, Items, GUI Handler,Key Process.
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
+        LanguageRegistry.instance().addStringLocalization("itemGroup.CBCMod", "LambdaCraft");
+        netHandler.registerMessage(MsgKeyUsing.Handler.class, MsgKeyUsing.class, GeneralProps.NET_ID_USE, Side.SERVER);
+        proxy.init();
+        
+    }
 
-	/**
-	 * 加载后（保存设置）
-	 * 
-	 * @param Init
-	 */
-	@EventHandler()
-	public void postInit(FMLPostInitializationEvent Init) {
-		config.save();
-	}
+    /**
+     * 加载后（保存设置）
+     * 
+     * @param Init
+     */
+    @EventHandler()
+    public void postInit(FMLPostInitializationEvent Init) {
+        config.save();
+    }
 
 }

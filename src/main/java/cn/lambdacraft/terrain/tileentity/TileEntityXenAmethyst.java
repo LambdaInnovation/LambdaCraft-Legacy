@@ -29,31 +29,31 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class TileEntityXenAmethyst extends TileEntity {
 
-	public int ticksSinceLastAtack;
-	public double lastxCoord, lastyCoord, lastzCoord;
-	
-	/**
+    public int ticksSinceLastAtack;
+    public double lastxCoord, lastyCoord, lastzCoord;
+    
+    /**
      * Allows the entity to update its state. Overridden in most subclasses, e.g. the mob spawner uses this to count
      * ticks and creates a new spawn inside its implementation.
      */
     @Override
-	public void updateEntity() {
-    	if(++ticksSinceLastAtack > 40) {
-    		Entity e = MobHelper.getNearestTargetWithinAABB(worldObj, 
-    				xCoord + 0.5, yCoord - 3.0, zCoord + 0.5, 5.0F,
-    				GenericUtils.selectorLiving);
-    		if(e != null) {
-    			ticksSinceLastAtack = 0;
-    			e.attackEntityFrom(DamageSource.generic, 2);
-    				lastxCoord = e.posX - xCoord - 0.5;
-    				lastyCoord = e.posY + e.height * 0.5 - yCoord - 0.1;
-    				lastzCoord = e.posZ - zCoord - 0.5;
-    		}
-    	}
+    public void updateEntity() {
+        if(++ticksSinceLastAtack > 40) {
+            Entity e = MobHelper.getNearestTargetWithinAABB(worldObj, 
+                    xCoord + 0.5, yCoord - 3.0, zCoord + 0.5, 5.0F,
+                    GenericUtils.selectorLiving);
+            if(e != null) {
+                ticksSinceLastAtack = 0;
+                e.attackEntityFrom(DamageSource.generic, 2);
+                    lastxCoord = e.posX - xCoord - 0.5;
+                    lastyCoord = e.posY + e.height * 0.5 - yCoord - 0.1;
+                    lastzCoord = e.posZ - zCoord - 0.5;
+            }
+        }
     }
     
     @Override
-	@SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
     {
         return TileEntity.INFINITE_EXTENT_AABB;

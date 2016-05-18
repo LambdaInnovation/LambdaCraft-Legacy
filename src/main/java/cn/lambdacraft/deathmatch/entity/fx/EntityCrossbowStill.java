@@ -25,51 +25,51 @@ import cn.liutils.api.util.Motion3D;
  */
 public class EntityCrossbowStill extends Entity {
 
-	/**
-	 * @param par1World
-	 */
-	public EntityCrossbowStill(World world, Motion3D motion, float yaw, float pitch) {
-		super(world);
-		motion.applyToEntity(this);
-		this.setRotation(yaw, pitch);
-		this.onGround = false;
-	}
-	
-	public EntityCrossbowStill(World world) {
-		super(world);
-		this.onGround = false;
-	}
+    /**
+     * @param par1World
+     */
+    public EntityCrossbowStill(World world, Motion3D motion, float yaw, float pitch) {
+        super(world);
+        motion.applyToEntity(this);
+        this.setRotation(yaw, pitch);
+        this.onGround = false;
+    }
+    
+    public EntityCrossbowStill(World world) {
+        super(world);
+        this.onGround = false;
+    }
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.entity.Entity#entityInit()
-	 */
-	@Override
-	protected void entityInit() {}
+    /* (non-Javadoc)
+     * @see net.minecraft.entity.Entity#entityInit()
+     */
+    @Override
+    protected void entityInit() {}
 
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound nbt) {
-		posX = nbt.getDouble("posX");
-		posY = nbt.getDouble("posY");
-		posZ = nbt.getDouble("posZ");
-	}
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound nbt) {
+        posX = nbt.getDouble("posX");
+        posY = nbt.getDouble("posY");
+        posZ = nbt.getDouble("posZ");
+    }
 
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbt) {
-		nbt.setDouble("posX", posX);
-		nbt.setDouble("posY", posY);
-		nbt.setDouble("posZ", posZ);
-	}
-	
-	@Override
-	public void onUpdate() {
-		if(++ticksExisted > 12000)
-			this.setDead();
-	}
-	
-	@Override
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound nbt) {
+        nbt.setDouble("posX", posX);
+        nbt.setDouble("posY", posY);
+        nbt.setDouble("posZ", posZ);
+    }
+    
+    @Override
+    public void onUpdate() {
+        if(++ticksExisted > 12000)
+            this.setDead();
+    }
+    
+    @Override
     public void onEntityUpdate()
     {
-    	
+        
     }
 
 

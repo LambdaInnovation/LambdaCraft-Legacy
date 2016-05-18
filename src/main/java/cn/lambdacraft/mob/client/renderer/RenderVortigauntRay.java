@@ -36,73 +36,73 @@ import cn.liutils.api.client.util.RenderUtils;
  */
 public class RenderVortigauntRay extends Render {
 
-	public static final double WIDTH = 0.3F;
-	private static final Random RNG = new Random();
-	
-	/* (non-Javadoc)
-	 * @see net.minecraft.client.renderer.entity.Render#doRender(net.minecraft.entity.Entity, double, double, double, float, float)
-	 */
-	@Override
-	public void doRender(Entity entity, double d0, double d1, double d2,
-			float f, float f1) {
-		EntityVortigauntRay ray = (EntityVortigauntRay)entity;
+    public static final double WIDTH = 0.3F;
+    private static final Random RNG = new Random();
+    
+    /* (non-Javadoc)
+     * @see net.minecraft.client.renderer.entity.Render#doRender(net.minecraft.entity.Entity, double, double, double, float, float)
+     */
+    @Override
+    public void doRender(Entity entity, double d0, double d1, double d2,
+            float f, float f1) {
+        EntityVortigauntRay ray = (EntityVortigauntRay)entity;
 
-		Tessellator tessellator = Tessellator.instance;
+        Tessellator tessellator = Tessellator.instance;
 
-		GL11.glPushMatrix();
+        GL11.glPushMatrix();
 
-		double dx = ray.destX - ray.startX;
-		double dy = ray.destY - ray.startY;
-		double dz = ray.destZ - ray.startZ;
-		double d = Math.sqrt(dx * dx + dy * dy + dz * dz);
-		float angle = ray.ticksExisted;
-		double tx = 0.0, tz = 0.0;
-		double ty = -0.63;
-		
-		Vec3 v1 = RenderUtils.newV3(0, 0, -WIDTH), v2 = RenderUtils.newV3(0, 0,
-				WIDTH),
+        double dx = ray.destX - ray.startX;
+        double dy = ray.destY - ray.startY;
+        double dz = ray.destZ - ray.startZ;
+        double d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        float angle = ray.ticksExisted;
+        double tx = 0.0, tz = 0.0;
+        double ty = -0.63;
+        
+        Vec3 v1 = RenderUtils.newV3(0, 0, -WIDTH), v2 = RenderUtils.newV3(0, 0,
+                WIDTH),
 
-		v5 = RenderUtils.newV3(0, WIDTH, 0), v6 = RenderUtils.newV3(0, -WIDTH, 0);
+        v5 = RenderUtils.newV3(0, WIDTH, 0), v6 = RenderUtils.newV3(0, -WIDTH, 0);
 
-		// Translations and rotations
-		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glDisable(GL11.GL_CULL_FACE);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        // Translations and rotations
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_CULL_FACE);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-		GL11.glTranslatef((float) d0, (float) d1, (float) d2);
-		// GL11.glRotatef(angle, 1.0F, 0, 0);
-		int rand = RNG.nextInt(3);
-		Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.VORTIGAUNT_RAY_PATH[rand]);
+        GL11.glTranslatef((float) d0, (float) d1, (float) d2);
+        // GL11.glRotatef(angle, 1.0F, 0, 0);
+        int rand = RNG.nextInt(3);
+        Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.VORTIGAUNT_RAY_PATH[rand]);
 
-		
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
-		tessellator.startDrawingQuads();
-		tessellator.setBrightness(15728880);
-		tessellator.setColorRGBA(50, 200, 50, 200);
-		
-		RenderUtils.addVertex(v1.addVector(tx, ty, tz), 0, 0);
-		RenderUtils.addVertex(v2.addVector(tx, ty, tz), 1, 0);
-		RenderUtils.addVertex(v2.addVector(dx, dy, dz), 1, d);
-		RenderUtils.addVertex(v1.addVector(dx, dy, dz), 0, d);
+        
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
+        tessellator.startDrawingQuads();
+        tessellator.setBrightness(15728880);
+        tessellator.setColorRGBA(50, 200, 50, 200);
+        
+        RenderUtils.addVertex(v1.addVector(tx, ty, tz), 0, 0);
+        RenderUtils.addVertex(v2.addVector(tx, ty, tz), 1, 0);
+        RenderUtils.addVertex(v2.addVector(dx, dy, dz), 1, d);
+        RenderUtils.addVertex(v1.addVector(dx, dy, dz), 0, d);
 
-		RenderUtils.addVertex(v5.addVector(tx, ty, tz), 0, d);
-		RenderUtils.addVertex(v6.addVector(tx, ty, tz), 1, d);
-		RenderUtils.addVertex(v6.addVector(dx, dy, dz), 1, 0);
-		RenderUtils.addVertex(v5.addVector(dx, dy, dz), 0, 0);
+        RenderUtils.addVertex(v5.addVector(tx, ty, tz), 0, d);
+        RenderUtils.addVertex(v6.addVector(tx, ty, tz), 1, d);
+        RenderUtils.addVertex(v6.addVector(dx, dy, dz), 1, 0);
+        RenderUtils.addVertex(v5.addVector(dx, dy, dz), 0, 0);
 
-		tessellator.draw();
+        tessellator.draw();
 
-		GL11.glEnable(GL11.GL_LIGHTING);
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glPopMatrix();
-	}
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glPopMatrix();
+    }
 
 
-	@Override
-	protected ResourceLocation getEntityTexture(Entity entity) {
-		return null;
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        return null;
+    }
 
 }

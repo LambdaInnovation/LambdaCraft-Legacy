@@ -25,18 +25,18 @@ import cn.lambdacraft.core.prop.ClientProps;
  */
 public class HLSpray extends ItemSpray {
 
-	public HLSpray() {
-		super(ClientProps.getSprayId() + 2);
-		setIAndU("hlspray");
-	}
-	
-	@Override
-	public boolean onItemUse(ItemStack item_stack, EntityPlayer player,
-			World world, int x, int y, int z, int side, float x_off,
-			float y_off, float z_off) {
-		//胡妹你看看你这参传的，既然tID是Item构建时确定，运行时修改当然不会影响结果= =
-		this.tId = ClientProps.getSprayId() + 2;
-		return super.onItemUse(item_stack, player, world, x, y, z, side, x_off, y_off, z_off);
-	}
+    public HLSpray() {
+        super(ClientProps.getSprayId() + 2);
+        setIAndU("hlspray");
+    }
+    
+    @Override
+    public boolean onItemUse(ItemStack item_stack, EntityPlayer player,
+            World world, int x, int y, int z, int side, float x_off,
+            float y_off, float z_off) {
+        //胡妹你看看你这参传的，既然tID是Item构建时确定，运行时修改当然不会影响结果= =
+        this.tId = ClientProps.getSprayId() + 2;
+        return super.onItemUse(item_stack, player, world, x, y, z, side, x_off, y_off, z_off);
+    }
 
 }

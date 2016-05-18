@@ -37,7 +37,7 @@ public class TeleporterXen extends Teleporter
 
     public TeleporterXen(WorldServer par1WorldServer)
     {
-    	super(par1WorldServer);
+        super(par1WorldServer);
         this.worldServerInstance = par1WorldServer;
         this.random = new Random(par1WorldServer.getSeed());
     }
@@ -46,9 +46,9 @@ public class TeleporterXen extends Teleporter
      * Place an entity in a nearby portal, creating one if necessary.
      */
     @Override
-	public void placeInPortal(Entity par1Entity, double par2, double par4, double par6, float par8)
+    public void placeInPortal(Entity par1Entity, double par2, double par4, double par6, float par8)
     {
-    	if (!this.placeInExistingPortal(par1Entity, par2, par4, par6, par8))
+        if (!this.placeInExistingPortal(par1Entity, par2, par4, par6, par8))
         {
             this.makePortal(par1Entity);
             this.placeInExistingPortal(par1Entity, par2, par4, par6, par8);
@@ -59,7 +59,7 @@ public class TeleporterXen extends Teleporter
      * Place an entity in a nearby portal which already exists.
      */
     @Override
-	public boolean placeInExistingPortal(Entity par1Entity, double par2, double par4, double par6, float par8)
+    public boolean placeInExistingPortal(Entity par1Entity, double par2, double par4, double par6, float par8)
     {
         short short1 = 128;
         double d3 = -1.0D;
@@ -224,7 +224,7 @@ public class TeleporterXen extends Teleporter
     }
 
     @Override
-	public boolean makePortal(Entity par1Entity)
+    public boolean makePortal(Entity par1Entity)
     {
         byte b0 = 16;
         double d0 = -1.0D;
@@ -426,7 +426,7 @@ public class TeleporterXen extends Teleporter
      * WorldServer.getTotalWorldTime() value.
      */
     @Override
-	public void removeStalePortalLocations(long par1)
+    public void removeStalePortalLocations(long par1)
     {
         if (par1 % 100L == 0L)
         {

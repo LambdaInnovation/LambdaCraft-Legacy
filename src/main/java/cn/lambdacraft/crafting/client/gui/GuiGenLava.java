@@ -38,62 +38,62 @@ import cn.liutils.api.client.util.RenderUtils;
  */
 public class GuiGenLava extends GuiContainerSP {
 
-	TileGeneratorLava te;
+    TileGeneratorLava te;
 
-	private class TipEnergy implements IGuiTip {
+    private class TipEnergy implements IGuiTip {
 
-		@Override
-		public String getHeader() {
-			return EnumChatFormatting.RED + StatCollector.translateToLocal("gui.curenergy.name");
-		}
+        @Override
+        public String getHeader() {
+            return EnumChatFormatting.RED + StatCollector.translateToLocal("gui.curenergy.name");
+        }
 
-		@Override
-		public String getText() {
-			return te.bucketCnt * TileGeneratorLava.ENERGY_PER_BUCKET + te.currentEnergy
-					+ "/420000 EU";
-		}
+        @Override
+        public String getText() {
+            return te.bucketCnt * TileGeneratorLava.ENERGY_PER_BUCKET + te.currentEnergy
+                    + "/420000 EU";
+        }
 
-	}
+    }
 
-	public GuiGenLava(TileGeneratorLava gen, InventoryPlayer inv) {
-		super(173, 178, new ContainerGeneratorLava(gen, inv));
-		te = gen;
-	}
-	
-	@Override
-	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		String guiName = CBCBlocks.genLava.getLocalizedName();
-		this.fontRendererObj.drawString(guiName, 7, 7, 0xff9944);
-		super.drawGuiContainerForegroundLayer(par1, par2);
-	}
+    public GuiGenLava(TileGeneratorLava gen, InventoryPlayer inv) {
+        super(173, 178, new ContainerGeneratorLava(gen, inv));
+        te = gen;
+    }
+    
+    @Override
+    protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        String guiName = CBCBlocks.genLava.getLocalizedName();
+        this.fontRendererObj.drawString(guiName, 7, 7, 0xff9944);
+        super.drawGuiContainerForegroundLayer(par1, par2);
+    }
 
-	@Override
-	protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-		GL11.glPushMatrix();
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderUtils.loadTexture(ClientProps.GUI_GENLAVA_PATH);
-		int x = (width - xSize) / 2;
-		int y = (height - ySize) / 2;
-		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-		int len = 0;
-		len = te.bucketCnt * 47 / te.maxStorage;
-		len += Math.round(2.35F * te.currentEnergy / TileGeneratorLava.ENERGY_PER_BUCKET);
-		this.drawTexturedModalRect(x + 91, y + 65 - len, 173, 59 - len, 6, len);
-		this.drawElements(i, j);
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glPopMatrix();
-	}
+    @Override
+    protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
+        GL11.glPushMatrix();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderUtils.loadTexture(ClientProps.GUI_GENLAVA_PATH);
+        int x = (width - xSize) / 2;
+        int y = (height - ySize) / 2;
+        this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+        int len = 0;
+        len = te.bucketCnt * 47 / te.maxStorage;
+        len += Math.round(2.35F * te.currentEnergy / TileGeneratorLava.ENERGY_PER_BUCKET);
+        this.drawTexturedModalRect(x + 91, y + 65 - len, 173, 59 - len, 6, len);
+        this.drawElements(i, j);
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glPopMatrix();
+    }
 
-	@Override
-	protected void addElements(Set<LIGuiPart> set) {
-		LIGuiPart energy = new LIGuiPart("energy", 91, 18, 6, 47).setTip(new TipEnergy());
-		set.add(energy);
-	}
+    @Override
+    protected void addElements(Set<LIGuiPart> set) {
+        LIGuiPart energy = new LIGuiPart("energy", 91, 18, 6, 47).setTip(new TipEnergy());
+        set.add(energy);
+    }
 
-	@Override
-	protected void onPartClicked(LIGuiPart part, float mx, float my) {
-	}
+    @Override
+    protected void onPartClicked(LIGuiPart part, float mx, float my) {
+    }
 }

@@ -13,9 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class Weapon_Displacer extends Item implements IClickHandler{
-	
-	private boolean currMode = false; // 'F' for fire, 'T' for teleport.
-	
+    
+    private boolean currMode = false; // 'F' for fire, 'T' for teleport.
+    
     public Weapon_Displacer() {
         super();
         setCreativeTab(CBCMod.cct);
@@ -24,23 +24,23 @@ public class Weapon_Displacer extends Item implements IClickHandler{
     
     @Override
     public void onItemClick(World world, EntityPlayer player, ItemStack stack, int keyid) {
-    	if(keyid == 1) // Change Mode
-    		currMode = !currMode;
-    	world.spawnEntityInWorld(new EntityDisplacerCannon(world, player, currMode));
+        if(keyid == 1) // Change Mode
+            currMode = !currMode;
+        world.spawnEntityInWorld(new EntityDisplacerCannon(world, player, currMode));
     }
 
-	@Override
-	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,
-			int keyid) {
-		
-	}
+    @Override
+    public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,
+            int keyid) {
+        
+    }
 
-	@Override
-	public void onItemUsingTick(World world, EntityPlayer player,
-			ItemStack stack, int keyid, int ticks) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onItemUsingTick(World world, EntityPlayer player,
+            ItemStack stack, int keyid, int ticks) {
+        // TODO Auto-generated method stub
+        
+    }
     
     
     

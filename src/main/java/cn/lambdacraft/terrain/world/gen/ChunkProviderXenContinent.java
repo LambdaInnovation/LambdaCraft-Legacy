@@ -177,7 +177,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
      */
     public void generateTerrain(int par1, int par2, Block[] par3ArrayOfBlock)
     {
-    	byte b0 = 63;
+        byte b0 = 63;
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().getBiomesForGeneration(this.biomesForGeneration, par1 * 4 - 2, par2 * 4 - 2, 10, 10);
         this.func_147423_a(par1 * 4, 0, par2 * 4);
 
@@ -226,15 +226,15 @@ public class ChunkProviderXenContinent implements IChunkProvider
                             {
                                 if ((d15 += d16) > 0.0D)
                                 {
-                                	par3ArrayOfBlock[j3 += short1] = XenBlocks.stone;
+                                    par3ArrayOfBlock[j3 += short1] = XenBlocks.stone;
                                 }
                                 else if (k2 * 8 + l2 < b0)
                                 {
-                                	par3ArrayOfBlock[j3 += short1] = Blocks.air;
+                                    par3ArrayOfBlock[j3 += short1] = Blocks.air;
                                 }
                                 else
                                 {
-                                	par3ArrayOfBlock[j3 += short1] = Blocks.air;
+                                    par3ArrayOfBlock[j3 += short1] = Blocks.air;
                                 }
                             }
 
@@ -259,7 +259,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
      */
     public void generateTerrainXen(int par1, int par2, Block[] par3ArrayOfBlock)
     {
-    	byte b0 = 63;
+        byte b0 = 63;
         this.biomesForGeneration = this.worldObj.getWorldChunkManager().getBiomesForGeneration(this.biomesForGeneration, par1 * 4 - 2, par2 * 4 - 2, 10, 10);
         this.func_147423_aXen(par1 * 4, 0, par2 * 4);
 
@@ -308,15 +308,15 @@ public class ChunkProviderXenContinent implements IChunkProvider
                             {
                                 if ((d15 += d16) > 0.0D)
                                 {
-                                	par3ArrayOfBlock[j3 += short1] = Blocks.air;
+                                    par3ArrayOfBlock[j3 += short1] = Blocks.air;
                                 }
                                 else if (k2 * 8 + l2 < b0)
                                 {
-                                	par3ArrayOfBlock[j3 += short1] = par3ArrayOfBlock[j3];
+                                    par3ArrayOfBlock[j3 += short1] = par3ArrayOfBlock[j3];
                                 }
                                 else
                                 {
-                                	par3ArrayOfBlock[j3 += short1] = par3ArrayOfBlock[j3];
+                                    par3ArrayOfBlock[j3 += short1] = par3ArrayOfBlock[j3];
                                 }
                             }
 
@@ -582,7 +582,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
      * loads or generates the chunk at the chunk location specified
      */
     @Override
-	public Chunk loadChunk(int par1, int par2)
+    public Chunk loadChunk(int par1, int par2)
     {
         return this.provideChunk(par1, par2);
     }
@@ -592,7 +592,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
      * specified chunk from the map seed and chunk seed
      */
     @Override
-	public Chunk provideChunk(int par1, int par2)
+    public Chunk provideChunk(int par1, int par2)
     {
         this.rand.setSeed(par1 * 341873128712L + par2 * 132897987541L);
         Block[] ablock = new Block[65536];
@@ -626,7 +626,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
     public void replaceBlocksForBiome(int par1, int par2, Block[] block, byte[] ArrayOfByte, BiomeGenBase[] ArrayOfBiomeGenBase)
     {
 
-    	/**    海平面数值 在主世界中海的水方块所在Y轴最大值为该值减一     */
+        /**    海平面数值 在主世界中海的水方块所在Y轴最大值为该值减一     */
         byte seaLevel = 35;
         double d0 = 0.03125D;
         this.stoneNoise = this.noiseGen4.func_151599_a(this.stoneNoise, par1 * 16, par2 * 16, 16, 16, d0 * 2.0D, d0 * 2.0D, 1.0D);
@@ -662,7 +662,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
             
             if (block2 != null && block2.getMaterial() != Material.air && block2 == XenBlocks.stone)
             {
-            	if (k == -1)
+                if (k == -1)
                 {
                     k = l;
                     arrayOfBlock[i2] = block;
@@ -681,7 +681,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
             
             if(biomegenbase.biomeID == ModuleTerrain.xenBrokenBiomeId && rand.nextInt(45) != 0)
             {
-            	arrayOfBlock[i2] = null;
+                arrayOfBlock[i2] = null;
             }
         }
     }
@@ -690,7 +690,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
      * Checks to see if a chunk exists at x, y
      */
     @Override
-	public boolean chunkExists(int par1, int par2)
+    public boolean chunkExists(int par1, int par2)
     {
         return true;
     }
@@ -699,7 +699,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
      * Populates chunk with ores etc etc
      */
     @Override
-	public void populate(IChunkProvider par1IChunkProvider, int par2, int par3)
+    public void populate(IChunkProvider par1IChunkProvider, int par2, int par3)
     {
         BlockFalling.fallInstantly = true;
         int k = par2 * 16;
@@ -740,19 +740,19 @@ public class ChunkProviderXenContinent implements IChunkProvider
      * Return true if all chunks have been saved.
      */
     @Override
-	public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate)
+    public boolean saveChunks(boolean par1, IProgressUpdate par2IProgressUpdate)
     {
         return true;
     }
 
     @Override
-	public void saveExtraData() {}
+    public void saveExtraData() {}
 
     /**
      * Unloads chunks that are marked to be unloaded. This is not guaranteed to unload every such chunk.
      */
     @Override
-	public boolean unloadQueuedChunks()
+    public boolean unloadQueuedChunks()
     {
         return false;
     }
@@ -761,7 +761,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
      * Returns if the IChunkProvider supports saving.
      */
     @Override
-	public boolean canSave()
+    public boolean canSave()
     {
         return true;
     }
@@ -770,7 +770,7 @@ public class ChunkProviderXenContinent implements IChunkProvider
      * Converts the instance data to a readable string.
      */
     @Override
-	public String makeString()
+    public String makeString()
     {
         return "RandomLevelSource";
     }
@@ -779,29 +779,29 @@ public class ChunkProviderXenContinent implements IChunkProvider
      * Returns a list of creatures of the specified type that can spawn at the given location.
      */
     @Override
-	public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4)
+    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int par2, int par3, int par4)
     {
         BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(par2, par4);
         return biomegenbase.getSpawnableList(par1EnumCreatureType);
     }
 
     @Override
-	public int getLoadedChunkCount()
+    public int getLoadedChunkCount()
     {
         return 0;
     }
 
     @Override
-	public void recreateStructures(int par1, int par2)
+    public void recreateStructures(int par1, int par2)
     {
         if (this.mapFeaturesEnabled){}
     }
 
-	@Override
-	public ChunkPosition func_147416_a(World var1, String var2, int var3,
-			int var4, int var5) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public ChunkPosition func_147416_a(World var1, String var2, int var3,
+            int var4, int var5) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
 }

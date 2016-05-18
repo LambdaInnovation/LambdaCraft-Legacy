@@ -29,137 +29,137 @@ import net.minecraftforge.client.IRenderHandler;
  * 
  */
 public class RenderXenSky extends IRenderHandler {
-	private Minecraft mc;
+    private Minecraft mc;
 
-	public RenderXenSky() {
-		//this.glSkyList2 = (this.glSkyList = (this.starGLCallList = ReflectionHelper.getPrivateValue(RenderGlobal.class, renderGlobal, "starGLCallList")) + 1) + 1;
-		//混淆使用它
-		//this.glSkyList2 = (this.glSkyList = (this.starGLCallList = ReflectionHelper.getPrivateValue(RenderGlobal.class, renderGlobal, "field_72772_v")) + 1) + 1;
-	}
+    public RenderXenSky() {
+        //this.glSkyList2 = (this.glSkyList = (this.starGLCallList = ReflectionHelper.getPrivateValue(RenderGlobal.class, renderGlobal, "starGLCallList")) + 1) + 1;
+        //混淆使用它
+        //this.glSkyList2 = (this.glSkyList = (this.starGLCallList = ReflectionHelper.getPrivateValue(RenderGlobal.class, renderGlobal, "field_72772_v")) + 1) + 1;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void render(float partialTicks, WorldClient world, Minecraft mc) {
-		this.mc = mc;
-		renderSky();
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void render(float partialTicks, WorldClient world, Minecraft mc) {
+        this.mc = mc;
+        renderSky();
+    }
 
-	private void renderSky() {
-		{ // Starting
-			glDisable(GL_FOG);
-			glDisable(GL_ALPHA_TEST);
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			RenderHelper.disableStandardItemLighting();
-			glDepthMask(false);
-		}
-		{ // Rendering
-			glPushMatrix();
-			glPushAttrib(GL_ENABLE_BIT);
-			glCullFace(GL_FRONT);
-			glColor4f(1, 1, 1, 1);
+    private void renderSky() {
+        { // Starting
+            glDisable(GL_FOG);
+            glDisable(GL_ALPHA_TEST);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            RenderHelper.disableStandardItemLighting();
+            glDepthMask(false);
+        }
+        { // Rendering
+            glPushMatrix();
+            glPushAttrib(GL_ENABLE_BIT);
+            glCullFace(GL_FRONT);
+            glColor4f(1, 1, 1, 1);
 
-			fomartAndBind("rt"); 
-			glBegin(GL_QUADS);
-			{
-				glTexCoord2f(1, 1);
-				glVertex3f(100f, -100f, -100f);
-				glTexCoord2f(0, 1);
-				glVertex3f(-100f, -100f, -100f);
-				glTexCoord2f(0, 0);
-				glVertex3f(-100f, 100f, -100f);
-				glTexCoord2f(1, 0);
-				glVertex3f(100f, 100f, -100f);
-			}
-			glEnd();
-			
+            fomartAndBind("rt"); 
+            glBegin(GL_QUADS);
+            {
+                glTexCoord2f(1, 1);
+                glVertex3f(100f, -100f, -100f);
+                glTexCoord2f(0, 1);
+                glVertex3f(-100f, -100f, -100f);
+                glTexCoord2f(0, 0);
+                glVertex3f(-100f, 100f, -100f);
+                glTexCoord2f(1, 0);
+                glVertex3f(100f, 100f, -100f);
+            }
+            glEnd();
+            
 
-			fomartAndBind("bk");
-			glBegin(GL_QUADS);
-			{
-				glTexCoord2f(1, 1);
-				glVertex3f(100f, -100f, 100f);
-				glTexCoord2f(0, 1);
-				glVertex3f(100f, -100f, -100f);
-				glTexCoord2f(0, 0);
-				glVertex3f(100f, 100f, -100f);
-				glTexCoord2f(1, 0);
-				glVertex3f(100f, 100f, 100f);
-			}
-			glEnd();
+            fomartAndBind("bk");
+            glBegin(GL_QUADS);
+            {
+                glTexCoord2f(1, 1);
+                glVertex3f(100f, -100f, 100f);
+                glTexCoord2f(0, 1);
+                glVertex3f(100f, -100f, -100f);
+                glTexCoord2f(0, 0);
+                glVertex3f(100f, 100f, -100f);
+                glTexCoord2f(1, 0);
+                glVertex3f(100f, 100f, 100f);
+            }
+            glEnd();
 
-			fomartAndBind("lf"); 
-			glBegin(GL_QUADS);
-			{
-				glTexCoord2f(1, 1);
-				glVertex3f(-100f, -100f, 100f);
-				glTexCoord2f(0, 1);
-				glVertex3f(100f, -100f, 100f);
-				glTexCoord2f(0, 0);
-				glVertex3f(100f, 100f, 100f);
-				glTexCoord2f(1, 0);
-				glVertex3f(-100f, 100f, 100f);
-			}
-			glEnd();
+            fomartAndBind("lf"); 
+            glBegin(GL_QUADS);
+            {
+                glTexCoord2f(1, 1);
+                glVertex3f(-100f, -100f, 100f);
+                glTexCoord2f(0, 1);
+                glVertex3f(100f, -100f, 100f);
+                glTexCoord2f(0, 0);
+                glVertex3f(100f, 100f, 100f);
+                glTexCoord2f(1, 0);
+                glVertex3f(-100f, 100f, 100f);
+            }
+            glEnd();
 
-			fomartAndBind("ft"); 
-			glBegin(GL_QUADS);
-			{
-				glTexCoord2f(1, 1);
-				glVertex3f(-100f, -100f, -100f);
-				glTexCoord2f(0, 1);
-				glVertex3f(-100f, -100f, 100f);
-				glTexCoord2f(0, 0);
-				glVertex3f(-100f, 100f, 100f);
-				glTexCoord2f(1, 0);
-				glVertex3f(-100f, 100f, -100f);
-			}
-			glEnd();
+            fomartAndBind("ft"); 
+            glBegin(GL_QUADS);
+            {
+                glTexCoord2f(1, 1);
+                glVertex3f(-100f, -100f, -100f);
+                glTexCoord2f(0, 1);
+                glVertex3f(-100f, -100f, 100f);
+                glTexCoord2f(0, 0);
+                glVertex3f(-100f, 100f, 100f);
+                glTexCoord2f(1, 0);
+                glVertex3f(-100f, 100f, -100f);
+            }
+            glEnd();
 
-			fomartAndBind("up");
-			glBegin(GL_QUADS);
-			{
-				glTexCoord2f(1, 1);
-				glVertex3f(-100f, 100f, -100f);
-				glTexCoord2f(0, 1);
-				glVertex3f(-100f, 100f, 100f);
-				glTexCoord2f(0, 0);
-				glVertex3f(100f, 100f, 100f);
-				glTexCoord2f(1, 0);
-				glVertex3f(100f, 100f, -100f);
-			}
-			glEnd();
+            fomartAndBind("up");
+            glBegin(GL_QUADS);
+            {
+                glTexCoord2f(1, 1);
+                glVertex3f(-100f, 100f, -100f);
+                glTexCoord2f(0, 1);
+                glVertex3f(-100f, 100f, 100f);
+                glTexCoord2f(0, 0);
+                glVertex3f(100f, 100f, 100f);
+                glTexCoord2f(1, 0);
+                glVertex3f(100f, 100f, -100f);
+            }
+            glEnd();
 
 
-			glScalef(1f, 1f, -1f);
-			fomartAndBind("dn");
-			glBegin(GL_QUADS);
-			{
-				glTexCoord2f(0, 0);
-				glVertex3f(-100f, -100f, -100f);
-				glTexCoord2f(1, 0);
-				glVertex3f(-100f, -100f, 100f);
-				glTexCoord2f(1, 1);
-				glVertex3f(100f, -100f, 100f);
-				glTexCoord2f(0, 1);
-				glVertex3f(100f, -100f, -100f);
-			}
-			glEnd();
-			
-			glCullFace(GL_BACK);
-			
-			glPopAttrib();
-			glPopMatrix();
-		}
-		{ // Ending
-			glDepthMask(true);
-			glEnable(GL_TEXTURE_2D);
-			glEnable(GL_ALPHA_TEST);
-		}
+            glScalef(1f, 1f, -1f);
+            fomartAndBind("dn");
+            glBegin(GL_QUADS);
+            {
+                glTexCoord2f(0, 0);
+                glVertex3f(-100f, -100f, -100f);
+                glTexCoord2f(1, 0);
+                glVertex3f(-100f, -100f, 100f);
+                glTexCoord2f(1, 1);
+                glVertex3f(100f, -100f, 100f);
+                glTexCoord2f(0, 1);
+                glVertex3f(100f, -100f, -100f);
+            }
+            glEnd();
+            
+            glCullFace(GL_BACK);
+            
+            glPopAttrib();
+            glPopMatrix();
+        }
+        { // Ending
+            glDepthMask(true);
+            glEnable(GL_TEXTURE_2D);
+            glEnable(GL_ALPHA_TEST);
+        }
 
-	}
+    }
 
-	private void fomartAndBind(String s) {
-		mc.renderEngine.bindTexture(new ResourceLocation(String.format(cn.lambdacraft.core.prop.ClientProps.SKYBOX_PATH, s)));
-	}
+    private void fomartAndBind(String s) {
+        mc.renderEngine.bindTexture(new ResourceLocation(String.format(cn.lambdacraft.core.prop.ClientProps.SKYBOX_PATH, s)));
+    }
 }

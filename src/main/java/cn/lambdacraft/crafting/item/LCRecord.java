@@ -37,59 +37,59 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class LCRecord extends ItemRecord {
 
-	int recID; // Record的ID
+    int recID; // Record的ID
 
-	/**
-	 * 
-	 * @param par1
-	 *            ItemID
-	 * @param par2Str
-	 *            RecordName
-	 * @param subID
-	 *            Record的ID
-	 */
-	public LCRecord(String par2Str, int subID) {
-		super(par2Str);
-		setCreativeTab(CBCMod.cct);
-		setUnlocalizedName("lcrecord");
-		recID = subID;
-	}
+    /**
+     * 
+     * @param par1
+     *            ItemID
+     * @param par2Str
+     *            RecordName
+     * @param subID
+     *            Record的ID
+     */
+    public LCRecord(String par2Str, int subID) {
+        super(par2Str);
+        setCreativeTab(CBCMod.cct);
+        setUnlocalizedName("lcrecord");
+        recID = subID;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int par1) {
-		return this.itemIcon;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int par1) {
+        return this.itemIcon;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public EnumRarity getRarity(ItemStack par1ItemStack) {
-		return EnumRarity.rare;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public EnumRarity getRarity(ItemStack par1ItemStack) {
+        return EnumRarity.rare;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		par3List.add("Half - Life0" + (recID + 1) + " by Valve");
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack par1ItemStack,
+            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        par3List.add("Half - Life0" + (recID + 1) + " by Valve");
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public String getRecordNameLocal() {
-		return "Valve - " + "Half - Life0" + (recID + 1);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public String getRecordNameLocal() {
+        return "Valve - " + "Half - Life0" + (recID + 1);
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
-		super.getSubItems(par1, par2CreativeTabs, par3List);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+        super.getSubItems(par1, par2CreativeTabs, par3List);
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:record"
-				+ recID);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister par1IconRegister) {
+        this.itemIcon = par1IconRegister.registerIcon("lambdacraft:record"
+                + recID);
+    }
 }

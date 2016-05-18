@@ -25,31 +25,31 @@ import net.minecraft.world.World;
  */
 public class BlockElectricalBase extends CBCBlockContainer {
 
-	private Class<? extends TileEntity> generatorType;
+    private Class<? extends TileEntity> generatorType;
 
-	public BlockElectricalBase(Material mat) {
-		super(mat);
-		this.setHardness(2.0F);
-	}
+    public BlockElectricalBase(Material mat) {
+        super(mat);
+        this.setHardness(2.0F);
+    }
 
-	/**
-	 * 设置生成的TileEntity类型（反射大法好~）
-	 * @param type
-	 * @return
-	 */
-	public BlockElectricalBase setTileType(Class<? extends TileEntity> type) {
-		this.generatorType = type;
-		return this;
-	}
+    /**
+     * 设置生成的TileEntity类型（反射大法好~）
+     * @param type
+     * @return
+     */
+    public BlockElectricalBase setTileType(Class<? extends TileEntity> type) {
+        this.generatorType = type;
+        return this;
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World world, int var2) {
-		try {
-			return generatorType.getConstructor().newInstance();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    @Override
+    public TileEntity createNewTileEntity(World world, int var2) {
+        try {
+            return generatorType.getConstructor().newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

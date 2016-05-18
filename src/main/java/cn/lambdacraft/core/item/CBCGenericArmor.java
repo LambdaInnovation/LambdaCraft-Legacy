@@ -29,51 +29,51 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class CBCGenericArmor extends ItemArmor {
 
-	private String iconName = "";
-	protected String description;
-	protected boolean useDescription = false;
+    private String iconName = "";
+    protected String description;
+    protected boolean useDescription = false;
 
-	/**
-	 * @param id
-	 * @param mat
-	 * @param renderIndex
-	 * @param armorType
-	 */
-	public CBCGenericArmor(ArmorMaterial mat, int renderIndex,
-			int armorType) {
-		super(mat, renderIndex, armorType);
-		setCreativeTab(CBCMod.cct);
-	}
-	
-	 public CBCGenericArmor setIAndU(String names) {
-		this.setUnlocalizedName(names);
-		this.setIconName(names);
-		return this;
-	} 
+    /**
+     * @param id
+     * @param mat
+     * @param renderIndex
+     * @param armorType
+     */
+    public CBCGenericArmor(ArmorMaterial mat, int renderIndex,
+            int armorType) {
+        super(mat, renderIndex, armorType);
+        setCreativeTab(CBCMod.cct);
+    }
+    
+     public CBCGenericArmor setIAndU(String names) {
+        this.setUnlocalizedName(names);
+        this.setIconName(names);
+        return this;
+    } 
 
-	public void setIconName(String name) {
-		this.iconName = name;
-	}
+    public void setIconName(String name) {
+        this.iconName = name;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerIcons(IIconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister
-				.registerIcon("lambdacraft:" + iconName);
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IIconRegister par1IconRegister) {
+        this.itemIcon = par1IconRegister
+                .registerIcon("lambdacraft:" + iconName);
+    }
 
-	public CBCGenericArmor setDescription(String d) {
-		this.description = d;
-		useDescription = true;
-		return this;
-	}
+    public CBCGenericArmor setDescription(String d) {
+        this.description = d;
+        useDescription = true;
+        return this;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		if (useDescription)
-			par3List.add(description);
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack par1ItemStack,
+            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        if (useDescription)
+            par3List.add(description);
+    }
 
 }

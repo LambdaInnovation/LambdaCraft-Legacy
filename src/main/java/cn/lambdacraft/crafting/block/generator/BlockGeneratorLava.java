@@ -33,65 +33,65 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class BlockGeneratorLava extends BlockElectricalBase {
 
-	public IIcon iconSide, iconTop, iconBottom, iconMain;
-	private ForgeDirection[] dirs = ForgeDirection.values();
+    public IIcon iconSide, iconTop, iconBottom, iconMain;
+    private ForgeDirection[] dirs = ForgeDirection.values();
 
-	public BlockGeneratorLava() {
-		super(Material.rock);
-		setHardness(2.0F);
-		setTileType(TileGeneratorLava.class);
-		setGuiId(GeneralProps.GUI_ID_GENLAVA);
-		setBlockName("genLava");
-	}
+    public BlockGeneratorLava() {
+        super(Material.rock);
+        setHardness(2.0F);
+        setTileType(TileGeneratorLava.class);
+        setGuiId(GeneralProps.GUI_ID_GENLAVA);
+        setBlockName("genLava");
+    }
 
-	/**
-	 * Called when the block is placed in the world.
-	 */
-	@Override
-	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
-			EntityLivingBase par5EntityLiving, ItemStack par6ItemStack) {
-		int l = MathHelper
-				.floor_double(par5EntityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+    /**
+     * Called when the block is placed in the world.
+     */
+    @Override
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
+            EntityLivingBase par5EntityLiving, ItemStack par6ItemStack) {
+        int l = MathHelper
+                .floor_double(par5EntityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
-		if (l == 0) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
-		}
+        if (l == 0) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
+        }
 
-		if (l == 1) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
-		}
+        if (l == 1) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
+        }
 
-		if (l == 2) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
-		}
+        if (l == 2) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
+        }
 
-		if (l == 3) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
-		}
-	}
+        if (l == 3) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+        }
+    }
 
-	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
-		iconSide = par1IconRegister.registerIcon("lambdacraft:genlava_side");
-		iconTop = par1IconRegister.registerIcon("lambdacraft:genlava_top");
-		iconBottom = par1IconRegister
-				.registerIcon("lambdacraft:crafter_bottom");
-		iconMain = par1IconRegister.registerIcon("lambdacraft:genlava_main");
-		blockIcon = iconTop;
-	}
+    @Override
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        iconSide = par1IconRegister.registerIcon("lambdacraft:genlava_side");
+        iconTop = par1IconRegister.registerIcon("lambdacraft:genlava_top");
+        iconBottom = par1IconRegister
+                .registerIcon("lambdacraft:crafter_bottom");
+        iconMain = par1IconRegister.registerIcon("lambdacraft:genlava_main");
+        blockIcon = iconTop;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int par1, int par2) {
-		if (par1 < 1)
-			return iconBottom;
-		if (par1 < 2)
-			return iconTop;
-		if (par1 == par2)
-			return iconMain;
-		if(par2 == 0)
-			return iconMain;
-		return iconSide;
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int par1, int par2) {
+        if (par1 < 1)
+            return iconBottom;
+        if (par1 < 2)
+            return iconTop;
+        if (par1 == par2)
+            return iconMain;
+        if(par2 == 0)
+            return iconMain;
+        return iconSide;
+    }
 
 }

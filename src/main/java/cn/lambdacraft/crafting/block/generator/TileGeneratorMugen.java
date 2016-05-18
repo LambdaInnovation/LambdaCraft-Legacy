@@ -23,35 +23,35 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public class TileGeneratorMugen extends TileGeneratorBase {
 
-	public TileGeneratorMugen() {
-		super(3, 50000);
-	}
+    public TileGeneratorMugen() {
+        super(3, 50000);
+    }
 
-	@Override
-	public void updateEntity() {
-		super.updateEntity();
-		if (this.addedToNet)
-			this.sendEnergy(32);
-	}
+    @Override
+    public void updateEntity() {
+        super.updateEntity();
+        if (this.addedToNet)
+            this.sendEnergy(32);
+    }
 
-	@Override
-	public boolean emitsEnergyTo(TileEntity emTileEntity, ForgeDirection emDirection) {
-		return true;
-	}
+    @Override
+    public boolean emitsEnergyTo(TileEntity emTileEntity, ForgeDirection emDirection) {
+        return true;
+    }
 
-	@Override
-	public double getOfferedEnergy() {
-		return 256;
-	}
+    @Override
+    public double getOfferedEnergy() {
+        return 256;
+    }
 
-	@Override
-	public void drawEnergy(double amount) {
-		
-	}
+    @Override
+    public void drawEnergy(double amount) {
+        
+    }
 
-	@Override
-	public int getSourceTier() {
-		return 2;
-	}
+    @Override
+    public int getSourceTier() {
+        return 2;
+    }
 
 }

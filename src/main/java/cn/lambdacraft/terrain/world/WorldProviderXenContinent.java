@@ -32,66 +32,66 @@ import net.minecraftforge.client.IRenderHandler;
  *
  */
 public class WorldProviderXenContinent extends WorldProvider {
-	
-	@Override
-	public String getDimensionName() {
-		return "XenContinent";
-	}
+    
+    @Override
+    public String getDimensionName() {
+        return "XenContinent";
+    }
 
-	@Override
-	public void registerWorldChunkManager() {
-		this.worldChunkMgr = new WorldChunkManagerXenContinent(worldObj.getSeed(), terrainType);
-		this.dimensionId = ModuleTerrain.xenContinentDimensionID;
-	}
-	
+    @Override
+    public void registerWorldChunkManager() {
+        this.worldChunkMgr = new WorldChunkManagerXenContinent(worldObj.getSeed(), terrainType);
+        this.dimensionId = ModuleTerrain.xenContinentDimensionID;
+    }
+    
     /**
      * True if the player can respawn in this dimension (true = overworld, false = nether).
      */
     @Override
-	public boolean canRespawnHere()
+    public boolean canRespawnHere()
     {
         return false;
     }
-	
+    
     @Override
     public IChunkProvider createChunkGenerator()
     {
-    	return new ChunkProviderXenContinent(worldObj, worldObj.getSeed(), false);
+        return new ChunkProviderXenContinent(worldObj, worldObj.getSeed(), false);
     }
 
-	@Override
-	public String getSaveFolder() 
-	{
-		return "DIM_XEN_CONTINENT";
-	}
+    @Override
+    public String getSaveFolder() 
+    {
+        return "DIM_XEN_CONTINENT";
+    }
 
-	@Override
-	public String getWelcomeMessage()
-	{
-		return "Welcome to the borderworld, Xen";
-	}
+    @Override
+    public String getWelcomeMessage()
+    {
+        return "Welcome to the borderworld, Xen";
+    }
 
-	@Override
-	public String getDepartMessage() 
-	{
-			return "See you next time";
-	}
-	
-	@Override
+    @Override
+    public String getDepartMessage() 
+    {
+            return "See you next time";
+    }
+    
+    @Override
     public long getWorldTime()
     {
         return 12000L;
     }
-	
-    @Override
-	public void updateWeather(){}
     
     @Override
-	public boolean canDoLightning(Chunk chunk)
+    public void updateWeather(){}
+    
+    @Override
+    public boolean canDoLightning(Chunk chunk)
     {
         return false;
     }
-	
+    
     @SideOnly(Side.CLIENT)
     @Override
     /**
@@ -120,26 +120,26 @@ public class WorldProviderXenContinent extends WorldProvider {
         return Vec3.createVectorHelper(f3, f4, f5);
     }
 
-	@Override
-	public boolean canDoRainSnowIce(Chunk chunk) 
-	{
-		return false;
-	}
-	
-	@Override
+    @Override
+    public boolean canDoRainSnowIce(Chunk chunk) 
+    {
+        return false;
+    }
+    
+    @Override
     public boolean isSurfaceWorld()
     {
         return false;
     }
     
-	@Override
+    @Override
     public boolean isDaytime()
     {
-    	return false;
+        return false;
     }
     
     @Override
-	@SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public IRenderHandler getSkyRenderer()
     {
         return new RenderXenSky();

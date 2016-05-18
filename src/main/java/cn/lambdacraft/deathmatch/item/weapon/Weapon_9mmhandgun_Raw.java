@@ -13,35 +13,35 @@ import cn.weaponmod.api.action.ActionReload;
 
 public class Weapon_9mmhandgun_Raw extends WeaponGenericLC {
 
-	public Weapon_9mmhandgun_Raw() {
+    public Weapon_9mmhandgun_Raw() {
 
-		super(CBCItems.ammo_9mm);
+        super(CBCItems.ammo_9mm);
 
-		setUnlocalizedName("weapon_9mmhandgun");
-		setCreativeTab(CBCMod.cct);
-		setMaxStackSize(1);
-		setMaxDamage(18);
-		iconName = "weapon_9mmhandgun";
-		setNoRepair();
-		
-		actionShoot = new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c")
-			.setMuzzleflash(ClientProps.MUZZLEFLASH);
-		actionReload = new ActionReload(35, "lambdacraft:weapons.nmmclipa", "");
-		actionJam = new ActionJam(10, "lambdacraft:weapons.gunjam_a");
-	}
+        setUnlocalizedName("weapon_9mmhandgun");
+        setCreativeTab(CBCMod.cct);
+        setMaxStackSize(1);
+        setMaxDamage(18);
+        iconName = "weapon_9mmhandgun";
+        setNoRepair();
+        
+        actionShoot = new ActionAutomaticShoot(300, 10, 3, 5, "lambdacraft:weapons.plgun_c")
+            .setMuzzleflash(ClientProps.MUZZLEFLASH);
+        actionReload = new ActionReload(35, "lambdacraft:weapons.nmmclipa", "");
+        actionJam = new ActionJam(10, "lambdacraft:weapons.gunjam_a");
+    }
 
-	@Override
-	public void onUpdate(ItemStack par1ItemStack, World par2World,
-			Entity par3Entity, int par4, boolean par5) {
-		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4,
-				par5);
-	}
+    @Override
+    public void onUpdate(ItemStack par1ItemStack, World par2World,
+            Entity par3Entity, int par4, boolean par5) {
+        super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4,
+                par5);
+    }
 
-	@Override
-	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
-			EntityPlayer par3EntityPlayer, int par4) {
-		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
-				par4);
-	}
+    @Override
+    public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer, int par4) {
+        super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
+                par4);
+    }
 
 }

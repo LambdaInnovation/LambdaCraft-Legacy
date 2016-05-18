@@ -43,66 +43,66 @@ import cpw.mods.fml.common.registry.EntityRegistry;
  */
 @Mod(modid = "LambdaCraft|Terrain", name = "LambdaCraft Terrain", version = CBCMod.VERSION, dependencies = CBCMod.DEPENDENCY_CORE)
 public class ModuleTerrain {
-	
-	public static final String DEPENCY_TERRAIN = "required-after:LambdaCraft|World@" + CBCMod.VERSION;
-	
-	@Configurable(key = "xenContinentDimensionID", defValue = "5")
-	public static int xenContinentDimensionID;
-	
-	@Configurable(key = "xenIslandDimensionID", defValue = "6")
-	public static int xenIslandDimensionID;
-	
-	@Configurable(key = "xenHillBiomeId", defValue = "30")
-	public static int xenHillBiomeId;
-	
-	@Configurable(key = "xenPlainBiomeId", defValue = "31")
-	public static int xenPlainBiomeId;
-	
-	@Configurable(key = "xenVoidBiomeId", defValue = "32")
-	public static int xenVoidBiomeId;
-	
-	@Configurable(key = "xenBrokenBiomeId", defValue = "33")
-	public static int xenBrokenBiomeId;
-	
-	@Configurable(key = "xenStonePlainBiomeId", defValue = "34")
-	public static int xenStonePlainBiomeId;
-	
-	@Configurable(key = "xenPlainInDefaultWorldBiomeId", defValue = "35")
-	public static int xenPlainInDefaultWorldBiomeId;
-	
-	@SidedProxy(clientSide = "cn.lambdacraft.terrain.proxy.ClientProxy", serverSide = "cn.lambdacraft.terrain.proxy.Proxy")
-	public static cn.lambdacraft.terrain.proxy.Proxy proxy;
-	
-	@Instance("LambdaCraft|Terrain")
-	public static ModuleTerrain instance;
-	
-	@EventHandler()
-	public void preInit(FMLPreInitializationEvent Init) {
-	}
-	
-	@EventHandler()
-	public void Init(FMLInitializationEvent Init) {
-		loadProps(CBCMod.config);
-		XenBlocks.init(CBCMod.config);
-		proxy.init();
-		DimensionManager.registerProviderType(xenContinentDimensionID, WorldProviderXenContinent.class, true);
-		DimensionManager.registerDimension(xenContinentDimensionID, xenContinentDimensionID);
-		EntityRegistry.addSpawn(EntityHoundeye.class, 25, 15, 15, EnumCreatureType.monster, MainBiomes.xenHill, MainBiomes.xenPlain);
-		EntityRegistry.addSpawn(EntityHeadcrab.class, 25, 15, 15, EnumCreatureType.monster, MainBiomes.xenHill,  MainBiomes.xenPlain);
-		EntityRegistry.addSpawn(EntityAlienSlave.class, 10, 15, 15, EnumCreatureType.monster, MainBiomes.xenHill);
-		EntityRegistry.addSpawn(EntityBarnacle.class, 6, 15, 15, EnumCreatureType.monster, MainBiomes.xenHill,  MainBiomes.xenPlain);
-	}
-	
-	@EventHandler()
-	public void postInit(FMLPostInitializationEvent event) {
-		
-	}
-	
-	@EventHandler()
-	public void serverStarting(FMLServerStartingEvent event) {
-	}
-	
-	private static void loadProps(Configuration config) {
-		LIGeneralRegistry.loadConfigurableClass(CBCMod.config, ModuleTerrain.class);
-	}
+    
+    public static final String DEPENCY_TERRAIN = "required-after:LambdaCraft|World@" + CBCMod.VERSION;
+    
+    @Configurable(key = "xenContinentDimensionID", defValue = "5")
+    public static int xenContinentDimensionID;
+    
+    @Configurable(key = "xenIslandDimensionID", defValue = "6")
+    public static int xenIslandDimensionID;
+    
+    @Configurable(key = "xenHillBiomeId", defValue = "30")
+    public static int xenHillBiomeId;
+    
+    @Configurable(key = "xenPlainBiomeId", defValue = "31")
+    public static int xenPlainBiomeId;
+    
+    @Configurable(key = "xenVoidBiomeId", defValue = "32")
+    public static int xenVoidBiomeId;
+    
+    @Configurable(key = "xenBrokenBiomeId", defValue = "33")
+    public static int xenBrokenBiomeId;
+    
+    @Configurable(key = "xenStonePlainBiomeId", defValue = "34")
+    public static int xenStonePlainBiomeId;
+    
+    @Configurable(key = "xenPlainInDefaultWorldBiomeId", defValue = "35")
+    public static int xenPlainInDefaultWorldBiomeId;
+    
+    @SidedProxy(clientSide = "cn.lambdacraft.terrain.proxy.ClientProxy", serverSide = "cn.lambdacraft.terrain.proxy.Proxy")
+    public static cn.lambdacraft.terrain.proxy.Proxy proxy;
+    
+    @Instance("LambdaCraft|Terrain")
+    public static ModuleTerrain instance;
+    
+    @EventHandler()
+    public void preInit(FMLPreInitializationEvent Init) {
+    }
+    
+    @EventHandler()
+    public void Init(FMLInitializationEvent Init) {
+        loadProps(CBCMod.config);
+        XenBlocks.init(CBCMod.config);
+        proxy.init();
+        DimensionManager.registerProviderType(xenContinentDimensionID, WorldProviderXenContinent.class, true);
+        DimensionManager.registerDimension(xenContinentDimensionID, xenContinentDimensionID);
+        EntityRegistry.addSpawn(EntityHoundeye.class, 25, 15, 15, EnumCreatureType.monster, MainBiomes.xenHill, MainBiomes.xenPlain);
+        EntityRegistry.addSpawn(EntityHeadcrab.class, 25, 15, 15, EnumCreatureType.monster, MainBiomes.xenHill,  MainBiomes.xenPlain);
+        EntityRegistry.addSpawn(EntityAlienSlave.class, 10, 15, 15, EnumCreatureType.monster, MainBiomes.xenHill);
+        EntityRegistry.addSpawn(EntityBarnacle.class, 6, 15, 15, EnumCreatureType.monster, MainBiomes.xenHill,  MainBiomes.xenPlain);
+    }
+    
+    @EventHandler()
+    public void postInit(FMLPostInitializationEvent event) {
+        
+    }
+    
+    @EventHandler()
+    public void serverStarting(FMLServerStartingEvent event) {
+    }
+    
+    private static void loadProps(Configuration config) {
+        LIGeneralRegistry.loadConfigurableClass(CBCMod.config, ModuleTerrain.class);
+    }
 }

@@ -11,63 +11,63 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
 public class MsgCrafterClient implements IMessage {
 
-	public short id;
-	public int blockX, blockY, blockZ;
-	public boolean direction;
+    public short id;
+    public int blockX, blockY, blockZ;
+    public boolean direction;
 
-	/**
-	 * Creates the WeaponCrafter information message.
-	 * 
-	 * @param i
-	 *            id(0 = factor, 1 = page)
-	 * @param dir
-	 *            方向（true=下，false=上）
-	 */
-	public MsgCrafterClient(int id, TileEntity te, boolean dir) {
-		this.id = (short) id;
-		blockX = te.xCoord;
-		blockY = te.yCoord;
-		blockZ = te.zCoord;
-		direction = dir;
-	}
-	
-	public MsgCrafterClient() {
-	}
-	
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		id = buf.readByte();
-		blockX = buf.readInt();
-		blockY = buf.readShort();
-		blockZ = buf.readInt();
-		direction = buf.readBoolean();
-	}
+    /**
+     * Creates the WeaponCrafter information message.
+     * 
+     * @param i
+     *            id(0 = factor, 1 = page)
+     * @param dir
+     *            方向（true=下，false=上）
+     */
+    public MsgCrafterClient(int id, TileEntity te, boolean dir) {
+        this.id = (short) id;
+        blockX = te.xCoord;
+        blockY = te.yCoord;
+        blockZ = te.zCoord;
+        direction = dir;
+    }
+    
+    public MsgCrafterClient() {
+    }
+    
+    @Override
+    public void fromBytes(ByteBuf buf) {
+        id = buf.readByte();
+        blockX = buf.readInt();
+        blockY = buf.readShort();
+        blockZ = buf.readInt();
+        direction = buf.readBoolean();
+    }
 
-	@Override
-	public void toBytes(ByteBuf buf) {
-		buf.writeByte((byte) id);
-		buf.writeInt(blockX);
-		buf.writeShort(blockY);
-		buf.writeInt(blockZ);
-		buf.writeBoolean(direction);
-	}
-	
-	public static class Handler implements IMessageHandler<MsgCrafterClient, IMessage> {
+    @Override
+    public void toBytes(ByteBuf buf) {
+        buf.writeByte((byte) id);
+        buf.writeInt(blockX);
+        buf.writeShort(blockY);
+        buf.writeInt(blockZ);
+        buf.writeBoolean(direction);
+    }
+    
+    public static class Handler implements IMessageHandler<MsgCrafterClient, IMessage> {
 
-		@Override
-		public IMessage onMessage(MsgCrafterClient msg, MessageContext ctx) {
-			EntityPlayer p = ctx.getServerHandler().playerEntity;
-			TileEntity te = p.worldObj.getTileEntity(msg.blockX, msg.blockY, msg.blockZ);
-			if (te != null && !te.getWorldObj().isRemote) {
-				if (msg.id == 0) {
-					((TileCrafterBase) te).addScrollFactor(msg.direction);
-				} else {
-					((TileCrafterBase) te).addPage(msg.direction);
-				}
-			}
-			return null;
-		}
-		
-	}
+        @Override
+        public IMessage onMessage(MsgCrafterClient msg, MessageContext ctx) {
+            EntityPlayer p = ctx.getServerHandler().playerEntity;
+            TileEntity te = p.worldObj.getTileEntity(msg.blockX, msg.blockY, msg.blockZ);
+            if (te != null && !te.getWorldObj().isRemote) {
+                if (msg.id == 0) {
+                    ((TileCrafterBase) te).addScrollFactor(msg.direction);
+                } else {
+                    ((TileCrafterBase) te).addPage(msg.direction);
+                }
+            }
+            return null;
+        }
+        
+    }
 
 }

@@ -14,6 +14,6 @@ public class LightValuePoint
     }
     
     public static void does() {
-    	return;
+        return;
     }
 }

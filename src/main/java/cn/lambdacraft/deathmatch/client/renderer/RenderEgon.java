@@ -20,31 +20,31 @@ import cn.weaponmod.api.information.InfWeapon;
  */
 public class RenderEgon extends RenderModelItem {
 
-	public RenderEgon() {
-		super(new ModelEgonHead(), ClientProps.EGON_HEAD_PATH);
-		this.renderInventory = false;
-		this.setStdRotation(5.0F, 173.42F, 0.0F);
-		this.inventorySpin = false;
-		this.setEquipOffset(0.318, -0.248, -0.142);
-		this.setOffset(0.0F, 0.2F, -0.302F);
-		this.setScale(2.46F);
-	}
+    public RenderEgon() {
+        super(new ModelEgonHead(), ClientProps.EGON_HEAD_PATH);
+        this.renderInventory = false;
+        this.setStdRotation(5.0F, 173.42F, 0.0F);
+        this.inventorySpin = false;
+        this.setEquipOffset(0.318, -0.248, -0.142);
+        this.setOffset(0.0F, 0.2F, -0.302F);
+        this.setScale(2.46F);
+    }
 
-	Tessellator t = Tessellator.instance;
+    Tessellator t = Tessellator.instance;
 
-	@Override
-	public void renderEquipped(ItemStack item, RenderBlocks render,
-			EntityLivingBase entity, ItemRenderType type) {
-		super.renderEquipped(item, render, entity, type);
-		if(entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
-			if(player.getCurrentEquippedItem() == item) {
-				InfWeapon inf = WMInformation.instance.getInformation(player);
-				GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
-				if(inf.isActionPresent("shoot_auto"))
-					RendererBulletWeapon.renderMuzzleflashIn2d(Tessellator.instance, ClientProps.EGON_MUZZLE, 0.0F, -0.12F, -0.2F);
-			}
-		}
-	}
-	
+    @Override
+    public void renderEquipped(ItemStack item, RenderBlocks render,
+            EntityLivingBase entity, ItemRenderType type) {
+        super.renderEquipped(item, render, entity, type);
+        if(entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            if(player.getCurrentEquippedItem() == item) {
+                InfWeapon inf = WMInformation.instance.getInformation(player);
+                GL11.glColor4f(1.0F, 1.0F, 1.0F, 0.5F);
+                if(inf.isActionPresent("shoot_auto"))
+                    RendererBulletWeapon.renderMuzzleflashIn2d(Tessellator.instance, ClientProps.EGON_MUZZLE, 0.0F, -0.12F, -0.2F);
+            }
+        }
+    }
+    
 }

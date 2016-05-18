@@ -26,33 +26,33 @@ import net.minecraft.util.ResourceLocation;
  */
 public class RenderTileHeCharger extends RendererSidedCube {
 
-	public RenderTileHeCharger(Block block) {
-		super(block);
-	}
+    public RenderTileHeCharger(Block block) {
+        super(block);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer#
-	 * renderTileEntityAt(net.minecraft.tileentity.TileEntity, double, double,
-	 * double, float)
-	 */
-	@Override
-	public void renderTileEntityAt(TileEntity tileentity, double x, double y,
-			double z, float f) {
-		this.doRender(tileentity, x, y, z, f);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer#
+     * renderTileEntityAt(net.minecraft.tileentity.TileEntity, double, double,
+     * double, float)
+     */
+    @Override
+    public void renderTileEntityAt(TileEntity tileentity, double x, double y,
+            double z, float f) {
+        this.doRender(tileentity, x, y, z, f);
+    }
 
-	@Override
-	public ResourceLocation getTexture(TileEntity te, int side, int metadata) {
-		if (side == 0 || side == 1)
-			return ClientProps.HECHARGER_TD_PATH;
-		if (side == metadata)
-			return ClientProps.HECHARGER_MAIN_PATH;
-		if (metadata == 5 || metadata == 3)
-			if (side == metadata - 2)
-				return ClientProps.HECHARGER_BACK_PATH;
-		return ClientProps.HECHARGER_SIDE_PATH;
-	}
+    @Override
+    public ResourceLocation getTexture(TileEntity te, int side, int metadata) {
+        if (side == 0 || side == 1)
+            return ClientProps.HECHARGER_TD_PATH;
+        if (side == metadata)
+            return ClientProps.HECHARGER_MAIN_PATH;
+        if (metadata == 5 || metadata == 3)
+            if (side == metadata - 2)
+                return ClientProps.HECHARGER_BACK_PATH;
+        return ClientProps.HECHARGER_SIDE_PATH;
+    }
 
 }

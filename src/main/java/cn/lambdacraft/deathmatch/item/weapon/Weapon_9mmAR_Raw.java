@@ -28,15 +28,15 @@ import cn.weaponmod.api.action.ActionUplift;
  */
 public class Weapon_9mmAR_Raw extends WeaponGenericLC {
 
-	public Weapon_9mmAR_Raw() {
-		super(CBCItems.ammo_9mm2);
-		setIAndU("weapon_9mmar");
-		setCreativeTab(CBCMod.cct);
-		setMaxDamage(50);
-		
-		actionShoot = new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa").setMuzzleflash(ClientProps.MUZZLEFLASH).setMuzOffset(0.3, 0.28, 0);
-		actionReload = new ActionReload(50, "lambdacraft:weapons.nmmarr", "");
-		actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
-		actionUplift = new ActionUplift();
-	}
+    public Weapon_9mmAR_Raw() {
+        super(CBCItems.ammo_9mm2);
+        setIAndU("weapon_9mmar");
+        setCreativeTab(CBCMod.cct);
+        setMaxDamage(50);
+        
+        actionShoot = new ActionAutomaticShoot(300, 4, 3, "lambdacraft:weapons.hksa").setMuzzleflash(ClientProps.MUZZLEFLASH).setMuzOffset(0.3, 0.28, 0);
+        actionReload = new ActionReload(50, "lambdacraft:weapons.nmmarr", "");
+        actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
+        actionUplift = new ActionUplift();
+    }
 }

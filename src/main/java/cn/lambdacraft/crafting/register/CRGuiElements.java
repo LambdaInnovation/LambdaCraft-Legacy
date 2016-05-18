@@ -41,112 +41,112 @@ import net.minecraft.world.World;
  * 
  */
 public class CRGuiElements {
-	public static class ElementCrafter implements IGuiElement {
+    public static class ElementCrafter implements IGuiElement {
 
-		@Override
-		public Object getServerContainer(EntityPlayer player, World world,
-				int x, int y, int z) {
-			return new ContainerWeaponCrafter(player.inventory,
-					(TileWeaponCrafter) world.getTileEntity(x, y, z));
-		}
+        @Override
+        public Object getServerContainer(EntityPlayer player, World world,
+                int x, int y, int z) {
+            return new ContainerWeaponCrafter(player.inventory,
+                    (TileWeaponCrafter) world.getTileEntity(x, y, z));
+        }
 
-		@Override
-		public Object getClientGui(EntityPlayer player, World world, int x,
-				int y, int z) {
-			return new GuiWeaponCrafter(player.inventory,
-					(TileWeaponCrafter) world.getTileEntity(x, y, z));
-		}
-	}
+        @Override
+        public Object getClientGui(EntityPlayer player, World world, int x,
+                int y, int z) {
+            return new GuiWeaponCrafter(player.inventory,
+                    (TileWeaponCrafter) world.getTileEntity(x, y, z));
+        }
+    }
 
-	public static class ElementElCrafter implements IGuiElement {
+    public static class ElementElCrafter implements IGuiElement {
 
-		@Override
-		public Object getServerContainer(EntityPlayer player, World world,
-				int x, int y, int z) {
-			return new ContainerElCrafter(player.inventory,
-					(TileElCrafter) world.getTileEntity(x, y, z));
-		}
+        @Override
+        public Object getServerContainer(EntityPlayer player, World world,
+                int x, int y, int z) {
+            return new ContainerElCrafter(player.inventory,
+                    (TileElCrafter) world.getTileEntity(x, y, z));
+        }
 
-		@Override
-		public Object getClientGui(EntityPlayer player, World world, int x,
-				int y, int z) {
-			return new GuiElectricCrafter(player.inventory,
-					(TileElCrafter) world.getTileEntity(x, y, z));
-		}
-	}
+        @Override
+        public Object getClientGui(EntityPlayer player, World world, int x,
+                int y, int z) {
+            return new GuiElectricCrafter(player.inventory,
+                    (TileElCrafter) world.getTileEntity(x, y, z));
+        }
+    }
 
-	public static class ElementGenFire implements IGuiElement {
+    public static class ElementGenFire implements IGuiElement {
 
-		@Override
-		public Object getServerContainer(EntityPlayer player, World world,
-				int x, int y, int z) {
-			return new ContainerGenerator(
-					(TileGeneratorFire) world.getTileEntity(x, y, z),
-					player.inventory);
-		}
+        @Override
+        public Object getServerContainer(EntityPlayer player, World world,
+                int x, int y, int z) {
+            return new ContainerGenerator(
+                    (TileGeneratorFire) world.getTileEntity(x, y, z),
+                    player.inventory);
+        }
 
-		@Override
-		public Object getClientGui(EntityPlayer player, World world, int x,
-				int y, int z) {
-			return new GuiGenFire((TileGeneratorFire) world.getTileEntity(
-					x, y, z), player.inventory);
-		}
-	}
+        @Override
+        public Object getClientGui(EntityPlayer player, World world, int x,
+                int y, int z) {
+            return new GuiGenFire((TileGeneratorFire) world.getTileEntity(
+                    x, y, z), player.inventory);
+        }
+    }
 
-	public static class ElementGenLava implements IGuiElement {
+    public static class ElementGenLava implements IGuiElement {
 
-		@Override
-		public Object getServerContainer(EntityPlayer player, World world,
-				int x, int y, int z) {
-			return new ContainerGeneratorLava(
-					(TileGeneratorLava) world.getTileEntity(x, y, z),
-					player.inventory);
-		}
+        @Override
+        public Object getServerContainer(EntityPlayer player, World world,
+                int x, int y, int z) {
+            return new ContainerGeneratorLava(
+                    (TileGeneratorLava) world.getTileEntity(x, y, z),
+                    player.inventory);
+        }
 
-		@Override
-		public Object getClientGui(EntityPlayer player, World world, int x,
-				int y, int z) {
-			return new GuiGenLava((TileGeneratorLava) world.getTileEntity(
-					x, y, z), player.inventory);
-		}
-	}
+        @Override
+        public Object getClientGui(EntityPlayer player, World world, int x,
+                int y, int z) {
+            return new GuiGenLava((TileGeneratorLava) world.getTileEntity(
+                    x, y, z), player.inventory);
+        }
+    }
 
-	public static class ElementGenSolar implements IGuiElement {
+    public static class ElementGenSolar implements IGuiElement {
 
-		@Override
-		public Object getServerContainer(EntityPlayer player, World world,
-				int x, int y, int z) {
-			return new ContainerGeneratorSolar(
-					(TileGeneratorSolar) world.getTileEntity(x, y, z),
-					player.inventory);
-		}
+        @Override
+        public Object getServerContainer(EntityPlayer player, World world,
+                int x, int y, int z) {
+            return new ContainerGeneratorSolar(
+                    (TileGeneratorSolar) world.getTileEntity(x, y, z),
+                    player.inventory);
+        }
 
-		@Override
-		public Object getClientGui(EntityPlayer player, World world, int x,
-				int y, int z) {
-			return new GuiGenSolar(
-					(TileGeneratorSolar) world.getTileEntity(x, y, z),
-					player.inventory);
-		}
-	}
+        @Override
+        public Object getClientGui(EntityPlayer player, World world, int x,
+                int y, int z) {
+            return new GuiGenSolar(
+                    (TileGeneratorSolar) world.getTileEntity(x, y, z),
+                    player.inventory);
+        }
+    }
 
-	public static class ElementBatbox implements IGuiElement {
+    public static class ElementBatbox implements IGuiElement {
 
-		@Override
-		public Object getServerContainer(EntityPlayer player, World world,
-				int x, int y, int z) {
-			return new ContainerBatBox((TileBatBox) world.getTileEntity(x,
-					y, z), player.inventory);
-		}
+        @Override
+        public Object getServerContainer(EntityPlayer player, World world,
+                int x, int y, int z) {
+            return new ContainerBatBox((TileBatBox) world.getTileEntity(x,
+                    y, z), player.inventory);
+        }
 
-		@Override
-		public Object getClientGui(EntityPlayer player, World world, int x,
-				int y, int z) {
-			return new GuiBatBox(
-					(TileBatBox) world.getTileEntity(x, y, z),
-					player.inventory);
-		}
+        @Override
+        public Object getClientGui(EntityPlayer player, World world, int x,
+                int y, int z) {
+            return new GuiBatBox(
+                    (TileBatBox) world.getTileEntity(x, y, z),
+                    player.inventory);
+        }
 
-	}
+    }
 
 }

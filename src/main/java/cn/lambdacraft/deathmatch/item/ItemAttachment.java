@@ -33,30 +33,30 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class ItemAttachment extends Item {
 
-	EnumAttachment[] attaches = EnumAttachment.values();
-	IIcon[] icons = new IIcon[attaches.length];
-	
-	/**
-	 * @param par1
-	 */
-	public ItemAttachment() {
-		super();
-		setUnlocalizedName("attaches");
-		setCreativeTab(CBCMod.cct);
-		this.hasSubtypes = true;
-	}
-	
+    EnumAttachment[] attaches = EnumAttachment.values();
+    IIcon[] icons = new IIcon[attaches.length];
+    
+    /**
+     * @param par1
+     */
+    public ItemAttachment() {
+        super();
+        setUnlocalizedName("attaches");
+        setCreativeTab(CBCMod.cct);
+        this.hasSubtypes = true;
+    }
+    
     @Override
-	@SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister ir)
     {
         for(int i = 0; i < icons.length; i++) {
-        	icons[i] = ir.registerIcon("lambdacraft:attach" + i);
+            icons[i] = ir.registerIcon("lambdacraft:attach" + i);
         }
     }
-	
+    
     @Override
-	@SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
 
     /**
      * Gets an icon index based on an item's damage value
@@ -72,21 +72,21 @@ public class ItemAttachment extends Item {
      * allows items to add custom lines of information to the mouseover description
      */
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List list, boolean par4) {
-    	int dmg = par1ItemStack.getItemDamage();
-    	list.add(StatCollector.translateToLocal(attaches[dmg].toString()));
+        int dmg = par1ItemStack.getItemDamage();
+        list.add(StatCollector.translateToLocal(attaches[dmg].toString()));
     }
     
     @Override
-	@SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
 
     /**
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list)
     {
-    	for(int i = 0; i < icons.length; i ++) {
-    		list.add(new ItemStack(par1, 1, i));
-    	}
+        for(int i = 0; i < icons.length; i ++) {
+            list.add(new ItemStack(par1, 1, i));
+        }
     }
 
 

@@ -27,49 +27,49 @@ import net.minecraft.world.World;
  */
 public class EntityARGrenade extends EntityThrowable {
 
-	public EntityARGrenade(World par1World, EntityLivingBase par2EntityLiving) {
-		super(par1World, par2EntityLiving);
-	}
+    public EntityARGrenade(World par1World, EntityLivingBase par2EntityLiving) {
+        super(par1World, par2EntityLiving);
+    }
 
-	public EntityARGrenade(World world) {
-		super(world);
-	}
+    public EntityARGrenade(World world) {
+        super(world);
+    }
 
-	/**
-	 * Explode once impact.
-	 */
-	@Override
-	protected void onImpact(MovingObjectPosition par1) {
-		if(par1.entityHit != null && par1.entityHit == this.getThrower())
-			return;
-		explode();
-	}
+    /**
+     * Explode once impact.
+     */
+    @Override
+    protected void onImpact(MovingObjectPosition par1) {
+        if(par1.entityHit != null && par1.entityHit == this.getThrower())
+            return;
+        explode();
+    }
 
-	@Override
-	public void onUpdate() {
-		super.onUpdate();
-		if (this.isBurning())
-			explode();
-	}
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        if (this.isBurning())
+            explode();
+    }
 
-	private void explode() {
-		WeaponHelper.Explode(worldObj, this, 3.0F, 4.0F, posX, posY, posZ, 35);
-		this.setDead();
-	}
+    private void explode() {
+        WeaponHelper.Explode(worldObj, this, 3.0F, 4.0F, posX, posY, posZ, 35);
+        this.setDead();
+    }
 
-	@Override
-	protected float getGravityVelocity() {
-		return 0.03F;
-	}
+    @Override
+    protected float getGravityVelocity() {
+        return 0.03F;
+    }
 
-	@Override
-	protected float func_70182_d() {
-		return 1.5F;
-	}
+    @Override
+    protected float func_70182_d() {
+        return 1.5F;
+    }
 
-	@Override
-	public boolean canBeCollidedWith() {
-		return true;
-	}
+    @Override
+    public boolean canBeCollidedWith() {
+        return true;
+    }
 
 }

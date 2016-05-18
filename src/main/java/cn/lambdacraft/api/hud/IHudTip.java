@@ -25,17 +25,17 @@ import net.minecraft.util.IIcon;
  *
  */
 public interface IHudTip {
-	
-	public IIcon getRenderingIcon(ItemStack itemStack, EntityPlayer player);
-	
-	public int getTextureSheet(ItemStack itemStack);
-	
-	/**
-	 * 只能使用0~9的数字和"|"作为tip。
-	 * @param itemStack
-	 * @param player
-	 * @return
-	 */
-	public String getTip(ItemStack itemStack, EntityPlayer player);
-	
+    
+    public IIcon getRenderingIcon(ItemStack itemStack, EntityPlayer player);
+    
+    public int getTextureSheet(ItemStack itemStack);
+    
+    /**
+     * 只能使用0~9的数字和"|"作为tip。
+     * @param itemStack
+     * @param player
+     * @return
+     */
+    public String getTip(ItemStack itemStack, EntityPlayer player);
+    
 }

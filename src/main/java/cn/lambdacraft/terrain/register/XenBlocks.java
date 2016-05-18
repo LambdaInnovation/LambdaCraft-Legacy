@@ -38,53 +38,53 @@ import cn.lambdacraft.terrain.tileentity.TileEntityXenPortal;
  *
  */
 public class XenBlocks {
-	
-	public static BlockXenPortal xenPortal;
-	public static BlockXenDesertedDirt desertedDirt;
-	public static BlockXenCrystal crystal;
-	public static BlockXenStone stone;
-	public static BlockXenDirt dirt;
-	public static BlockXenGrass grass;
-	public static BlockXenLight light_on, light_off;
-	public static BlockXenAmethyst amethyst;
-	public static BlockBlackPillar pillar;
-	public static BlockSlimeFlow slimeFlow;
-	public static BlockSlimeStill slimeStill;
-	public static BlockXenSand sand;
-	
-	public static void init(Configuration conf) {
-		
-		xenPortal = new BlockXenPortal();
-		desertedDirt = new BlockXenDesertedDirt();
-		crystal = new BlockXenCrystal();
-		stone = new BlockXenStone();
-		dirt = new BlockXenDirt();
-		grass = new BlockXenGrass();
-		light_on = new BlockXenLight(true);
-		light_off = new BlockXenLight(false);
-		amethyst = new BlockXenAmethyst();
-		pillar = new BlockBlackPillar();
-		slimeFlow = new BlockSlimeFlow();
-		slimeStill = new BlockSlimeStill();
-		sand = new BlockXenSand();
-		
-		GameRegistry.registerBlock(xenPortal, "lc_xenportal");
-		GameRegistry.registerBlock(desertedDirt, "lc_xendeserteddirt");
-		GameRegistry.registerBlock(crystal, "lc_xencrystal");
-		GameRegistry.registerBlock(stone, "lc_xenstone");
-		GameRegistry.registerBlock(dirt, "lc_xendirt");
-		GameRegistry.registerBlock(grass, "lc_xengrass");
-		GameRegistry.registerBlock(pillar, "lc_xenpillar");
-		GameRegistry.registerBlock(slimeFlow, "lc_xenslimeflow");
-		GameRegistry.registerBlock(slimeStill, "lc_xenslimestill");
-		GameRegistry.registerBlock(light_on, "lc_xenlight_on");
-		GameRegistry.registerBlock(light_off, "lc_xenlight_off");
-		GameRegistry.registerBlock(amethyst, "lc_xenamethyst");
-		GameRegistry.registerBlock(sand, "lc_xensand");
-	
-		GameRegistry.registerTileEntity(TileEntityXenPortal.class, "tile_entity_xen_portal");
-		GameRegistry.registerTileEntity(TileEntityXenLight.class, "tile_entity_xen_light");
-		GameRegistry.registerTileEntity(TileEntityXenAmethyst.class, "tile_entity_xen_amethyst");
-	}
-	
+    
+    public static BlockXenPortal xenPortal;
+    public static BlockXenDesertedDirt desertedDirt;
+    public static BlockXenCrystal crystal;
+    public static BlockXenStone stone;
+    public static BlockXenDirt dirt;
+    public static BlockXenGrass grass;
+    public static BlockXenLight light_on, light_off;
+    public static BlockXenAmethyst amethyst;
+    public static BlockBlackPillar pillar;
+    public static BlockSlimeFlow slimeFlow;
+    public static BlockSlimeStill slimeStill;
+    public static BlockXenSand sand;
+    
+    public static void init(Configuration conf) {
+        
+        xenPortal = new BlockXenPortal();
+        desertedDirt = new BlockXenDesertedDirt();
+        crystal = new BlockXenCrystal();
+        stone = new BlockXenStone();
+        dirt = new BlockXenDirt();
+        grass = new BlockXenGrass();
+        light_on = new BlockXenLight(true);
+        light_off = new BlockXenLight(false);
+        amethyst = new BlockXenAmethyst();
+        pillar = new BlockBlackPillar();
+        slimeFlow = new BlockSlimeFlow();
+        slimeStill = new BlockSlimeStill();
+        sand = new BlockXenSand();
+        
+        GameRegistry.registerBlock(xenPortal, "lc_xenportal");
+        GameRegistry.registerBlock(desertedDirt, "lc_xendeserteddirt");
+        GameRegistry.registerBlock(crystal, "lc_xencrystal");
+        GameRegistry.registerBlock(stone, "lc_xenstone");
+        GameRegistry.registerBlock(dirt, "lc_xendirt");
+        GameRegistry.registerBlock(grass, "lc_xengrass");
+        GameRegistry.registerBlock(pillar, "lc_xenpillar");
+        GameRegistry.registerBlock(slimeFlow, "lc_xenslimeflow");
+        GameRegistry.registerBlock(slimeStill, "lc_xenslimestill");
+        GameRegistry.registerBlock(light_on, "lc_xenlight_on");
+        GameRegistry.registerBlock(light_off, "lc_xenlight_off");
+        GameRegistry.registerBlock(amethyst, "lc_xenamethyst");
+        GameRegistry.registerBlock(sand, "lc_xensand");
+    
+        GameRegistry.registerTileEntity(TileEntityXenPortal.class, "tile_entity_xen_portal");
+        GameRegistry.registerTileEntity(TileEntityXenLight.class, "tile_entity_xen_light");
+        GameRegistry.registerTileEntity(TileEntityXenAmethyst.class, "tile_entity_xen_amethyst");
+    }
+    
 }

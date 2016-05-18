@@ -25,13 +25,13 @@ import net.minecraft.item.Item;
  */
 public class CBCCreativeTab extends CreativeTabs {
 
-	public CBCCreativeTab(String label) {
-		super(label);
-	}
+    public CBCCreativeTab(String label) {
+        super(label);
+    }
 
-	@Override
-	public Item getTabIconItem() {
-		return DMItems.gauss;
-	}
+    @Override
+    public Item getTabIconItem() {
+        return DMItems.gauss;
+    }
 
 }

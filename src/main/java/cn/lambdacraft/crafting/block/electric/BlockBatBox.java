@@ -35,102 +35,102 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class BlockBatBox extends BlockElectricalBase {
 
-	public IIcon iconSide, iconTop, iconBottom, iconMain;
+    public IIcon iconSide, iconTop, iconBottom, iconMain;
 
-	private final int type;
+    private final int type;
 
-	/**
-	 * @param par1
-	 * @param mat
-	 */
-	public BlockBatBox(int typ) {
-		super(Material.rock);
-		this.setBlockName("batbox" + typ);
-		type = typ;
-		this.setGuiId(GeneralProps.GUI_ID_BATBOX);
-		if (type != 0 && type != 1)
-			throw new RuntimeException();
+    /**
+     * @param par1
+     * @param mat
+     */
+    public BlockBatBox(int typ) {
+        super(Material.rock);
+        this.setBlockName("batbox" + typ);
+        type = typ;
+        this.setGuiId(GeneralProps.GUI_ID_BATBOX);
+        if (type != 0 && type != 1)
+            throw new RuntimeException();
 
-	}
+    }
 
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z,
-			EntityPlayer player, int side, float what, float these, float are) {
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (player.isSneaking()) {
-			world.setBlockMetadataWithNotify(x, y, z, side, 2);
-			return true;
-		}
-		if (guiId == -1 || tileEntity == null)
-			return false;
-		player.openGui(CBCMod.instance, guiId, world, x, y, z);
-		return true;
-	}
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z,
+            EntityPlayer player, int side, float what, float these, float are) {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (player.isSneaking()) {
+            world.setBlockMetadataWithNotify(x, y, z, side, 2);
+            return true;
+        }
+        if (guiId == -1 || tileEntity == null)
+            return false;
+        player.openGui(CBCMod.instance, guiId, world, x, y, z);
+        return true;
+    }
 
-	@Override
-	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
-			EntityLivingBase par5EntityLiving, ItemStack par6ItemStack) {
-		int l = MathHelper.floor_double(par5EntityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-		int pitch = Math.round(par5EntityLiving.rotationPitch);
+    @Override
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
+            EntityLivingBase par5EntityLiving, ItemStack par6ItemStack) {
+        int l = MathHelper.floor_double(par5EntityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+        int pitch = Math.round(par5EntityLiving.rotationPitch);
 
-		if (pitch >= 65) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 1, 2);
-			return;
-		} else if (pitch <= -65) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 2);
-			return;
-		}
-		if (l == 0) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
-		}
+        if (pitch >= 65) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 1, 2);
+            return;
+        } else if (pitch <= -65) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 2);
+            return;
+        }
+        if (l == 0) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
+        }
 
-		if (l == 1) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
-		}
+        if (l == 1) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
+        }
 
-		if (l == 2) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
-		}
+        if (l == 2) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
+        }
 
-		if (l == 3) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
-		}
-	}
+        if (l == 3) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+        }
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World world, int i) {
-		return (type == 1 ? new TileBatBox.TileBoxLarge()
-				: new TileBatBox.TileBoxSmall());
-	}
+    @Override
+    public TileEntity createNewTileEntity(World world, int i) {
+        return (type == 1 ? new TileBatBox.TileBoxLarge()
+                : new TileBatBox.TileBoxSmall());
+    }
 
-	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
-		if (type == 0) {
-			iconSide = par1IconRegister.registerIcon("lambdacraft:batbox_side");
-			iconTop = par1IconRegister.registerIcon("lambdacraft:batbox_top_s");
-			iconBottom = par1IconRegister.registerIcon("lambdacraft:crafter_bottom");
-			iconMain = par1IconRegister.registerIcon("lambdacraft:batbox_main_s");
-		} else {
-			iconSide = par1IconRegister.registerIcon("lambdacraft:batbox_large_side");
-			iconTop = par1IconRegister.registerIcon("lambdacraft:batbox_top");
-			iconBottom = par1IconRegister.registerIcon("lambdacraft:crafter_bottom");
-			iconMain = par1IconRegister.registerIcon("lambdacraft:batbox_main");
-		}
-		blockIcon = iconTop;
-	}
+    @Override
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        if (type == 0) {
+            iconSide = par1IconRegister.registerIcon("lambdacraft:batbox_side");
+            iconTop = par1IconRegister.registerIcon("lambdacraft:batbox_top_s");
+            iconBottom = par1IconRegister.registerIcon("lambdacraft:crafter_bottom");
+            iconMain = par1IconRegister.registerIcon("lambdacraft:batbox_main_s");
+        } else {
+            iconSide = par1IconRegister.registerIcon("lambdacraft:batbox_large_side");
+            iconTop = par1IconRegister.registerIcon("lambdacraft:batbox_top");
+            iconBottom = par1IconRegister.registerIcon("lambdacraft:crafter_bottom");
+            iconMain = par1IconRegister.registerIcon("lambdacraft:batbox_main");
+        }
+        blockIcon = iconTop;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int par1, int par2) {
-		if (par1 == par2)
-			return iconMain;
-		if (par1 < 1)
-			return iconBottom;
-		if (par1 < 2)
-			return iconTop;
-		if(par1 == 0)
-			return iconMain;
-		return iconSide;
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int par1, int par2) {
+        if (par1 == par2)
+            return iconMain;
+        if (par1 < 1)
+            return iconBottom;
+        if (par1 < 2)
+            return iconTop;
+        if(par1 == 0)
+            return iconMain;
+        return iconSide;
+    }
 
 }

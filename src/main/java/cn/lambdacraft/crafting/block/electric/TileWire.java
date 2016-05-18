@@ -29,78 +29,78 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class TileWire extends TileElectrical implements IEnergyConductor {
 
-	public boolean[] renderSides = new boolean[6];
+    public boolean[] renderSides = new boolean[6];
 
-	public TileWire() {
-	}
+    public TileWire() {
+    }
 
-	@Override
-	public void updateEntity() {
-		super.updateEntity();
-	}
-
-	@Override
-	public void frequentUpdate() {
-		updateSides();
-	}
-
-	public void updateSides() {
-		ForgeDirection[] dirs = ForgeDirection.values();
-		for (int i = 0; i < 6; i++) {
-			TileEntity ent = worldObj.getTileEntity(xCoord
-					+ dirs[i].offsetX, yCoord + dirs[i].offsetY, zCoord
-					+ dirs[i].offsetZ);
-			if (ent != null && ent instanceof IEnergyTile) {
-				renderSides[i] = true;
-			} else
-				renderSides[i] = false;
-		}
-	}
-
-	@Override
-	public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction) {
-		return true;
-	}
-
-	@Override
-	public double getConductionLoss() {
-		return 1.0;
-	}
-
-	@Override
-	public double getInsulationEnergyAbsorption() {
-		return 512;
-	}
-
-	@Override
-	public double getInsulationBreakdownEnergy() {
-		return 512;
-	}
-
-	@Override
-	public double getConductorBreakdownEnergy() {
-		return 512;
-	}
-
-	@Override
-	public void removeInsulation() {
-	}
-
-	@Override
-	public void removeConductor() {
-		this.onTileUnload();
-	}
-	
     @Override
-	@SideOnly(Side.CLIENT)
+    public void updateEntity() {
+        super.updateEntity();
+    }
+
+    @Override
+    public void frequentUpdate() {
+        updateSides();
+    }
+
+    public void updateSides() {
+        ForgeDirection[] dirs = ForgeDirection.values();
+        for (int i = 0; i < 6; i++) {
+            TileEntity ent = worldObj.getTileEntity(xCoord
+                    + dirs[i].offsetX, yCoord + dirs[i].offsetY, zCoord
+                    + dirs[i].offsetZ);
+            if (ent != null && ent instanceof IEnergyTile) {
+                renderSides[i] = true;
+            } else
+                renderSides[i] = false;
+        }
+    }
+
+    @Override
+    public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction) {
+        return true;
+    }
+
+    @Override
+    public double getConductionLoss() {
+        return 1.0;
+    }
+
+    @Override
+    public double getInsulationEnergyAbsorption() {
+        return 512;
+    }
+
+    @Override
+    public double getInsulationBreakdownEnergy() {
+        return 512;
+    }
+
+    @Override
+    public double getConductorBreakdownEnergy() {
+        return 512;
+    }
+
+    @Override
+    public void removeInsulation() {
+    }
+
+    @Override
+    public void removeConductor() {
+        this.onTileUnload();
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
     public AxisAlignedBB getRenderBoundingBox()
     {
         return AxisAlignedBB.getBoundingBox(xCoord, yCoord, zCoord, xCoord + 1, yCoord + 1, zCoord + 1);
     }
 
-	@Override
-	public boolean emitsEnergyTo(TileEntity paramTileEntity,
-			ForgeDirection paramDirection) {
-		return true;
-	}
+    @Override
+    public boolean emitsEnergyTo(TileEntity paramTileEntity,
+            ForgeDirection paramDirection) {
+        return true;
+    }
 }

@@ -6,9 +6,9 @@ import cn.lambdacraft.core.CBCMod;
 
 public class CBCBlock extends Block {
 
-	public CBCBlock(Material par2Material) {
-		super(par2Material);
-		setCreativeTab(CBCMod.cct);
-	}
+    public CBCBlock(Material par2Material) {
+        super(par2Material);
+        setCreativeTab(CBCMod.cct);
+    }
 
 }

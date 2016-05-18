@@ -36,84 +36,84 @@ import cn.liutils.api.client.util.RenderUtils;
  */
 public class RenderBarnacle extends Render {
 
-	private ModelBase model = new ModelBarnacle();
-	public static final double WIDTH = 0.05;
-	
-	public RenderBarnacle() {
-	}
+    private ModelBase model = new ModelBarnacle();
+    public static final double WIDTH = 0.05;
+    
+    public RenderBarnacle() {
+    }
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.client.renderer.entity.Render#doRender(net.minecraft.entity.Entity, double, double, double, float, float)
-	 */
-	@Override
-	public void doRender(Entity entity, double par2, double par4, double par6,
-			float par8, float par9) {
-		EntityBarnacle barnacle = (EntityBarnacle) entity;
-		Tessellator t = Tessellator.instance;
-		GL11.glPushMatrix();
-		Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.BARNACLE_PATH);
-		GL11.glTranslatef((float) par2, (float) par4 + 2 * entity.height,
-				(float) par6);
-		GL11.glScalef(-1.0F, -1.0F, 1.0F);
-		GL11.glTranslatef(0.0F, 1.5F, 0.0F);
-		if(barnacle.getHealth() <= 0)
-			GL11.glRotatef(barnacle.deathTime * 6.5F, 1.0F, 0.0F, -1.0F);
-		GL11.glTranslatef(0.0F, -1.5F, 0.0F);
-		if(barnacle.hurtResistantTime > 10)
-			GL11.glColor3f(1.0F, 0.5F, 0.5F);
-		
-		this.model.render(entity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F,
-				0.0625F);
-	
-		if(barnacle.getHealth() > 0) {
-			//Barnacle Tentacle Render
-			double length = barnacle.tentacleLength;
-			double h1 = 0.5, h2 = length + 1.0;
-			Vec3 v1 = RenderUtils.newV3(-WIDTH, h1, -WIDTH),
-				 v2 = RenderUtils.newV3(-WIDTH, h1, WIDTH),
-				 v3 = RenderUtils.newV3(WIDTH, h1, WIDTH),
-				 v4 = RenderUtils.newV3(WIDTH, h1, -WIDTH);
-			Vec3 v5 = RenderUtils.newV3(-WIDTH, h1, -WIDTH),
-					 v6 = RenderUtils.newV3(-WIDTH, h2, WIDTH),
-					 v7 = RenderUtils.newV3(WIDTH, h2, WIDTH),
-					 v8 = RenderUtils.newV3(WIDTH, h2, -WIDTH);
-			Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.BARNACLE_TENTACLE_PATH);
-			
-			t.startDrawingQuads();
-			RenderUtils.addVertex(v1, 0.0, 0.0);
-			RenderUtils.addVertex(v5, 0.0, length);
-			RenderUtils.addVertex(v6, 1.0, length);
-			RenderUtils.addVertex(v2, 1.0, 0.0);
-		
-			RenderUtils.addVertex(v2, 0.0, 0.0);
-			RenderUtils.addVertex(v6, 0.0, length);
-			RenderUtils.addVertex(v7, 1.0, length);
-			RenderUtils.addVertex(v3, 1.0, 0.0);
-		
-			RenderUtils.addVertex(v3, 0.0, 0.0);
-			RenderUtils.addVertex(v7, 0.0, length);
-			RenderUtils.addVertex(v8, 1.0, length);
-			RenderUtils.addVertex(v4, 1.0, 0.0);
-		
-			RenderUtils.addVertex(v4, 0.0, 0.0);
-			RenderUtils.addVertex(v8, 0.0, length);
-			RenderUtils.addVertex(v5, 1.0, length);
-			RenderUtils.addVertex(v1, 1.0, 0.0);
-		
-			RenderUtils.addVertex(v8, 0.0, 0.0);
-			RenderUtils.addVertex(v7, 0.0, 0.1);
-			RenderUtils.addVertex(v6, 0.1, 0.1);
-			RenderUtils.addVertex(v5, 0.1, 0.0);
-			t.draw();
-		}
-		GL11.glColor3f(1.0F,1.0F,1.0F);
-		GL11.glPopMatrix();
-	}
+    /* (non-Javadoc)
+     * @see net.minecraft.client.renderer.entity.Render#doRender(net.minecraft.entity.Entity, double, double, double, float, float)
+     */
+    @Override
+    public void doRender(Entity entity, double par2, double par4, double par6,
+            float par8, float par9) {
+        EntityBarnacle barnacle = (EntityBarnacle) entity;
+        Tessellator t = Tessellator.instance;
+        GL11.glPushMatrix();
+        Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.BARNACLE_PATH);
+        GL11.glTranslatef((float) par2, (float) par4 + 2 * entity.height,
+                (float) par6);
+        GL11.glScalef(-1.0F, -1.0F, 1.0F);
+        GL11.glTranslatef(0.0F, 1.5F, 0.0F);
+        if(barnacle.getHealth() <= 0)
+            GL11.glRotatef(barnacle.deathTime * 6.5F, 1.0F, 0.0F, -1.0F);
+        GL11.glTranslatef(0.0F, -1.5F, 0.0F);
+        if(barnacle.hurtResistantTime > 10)
+            GL11.glColor3f(1.0F, 0.5F, 0.5F);
+        
+        this.model.render(entity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F,
+                0.0625F);
+    
+        if(barnacle.getHealth() > 0) {
+            //Barnacle Tentacle Render
+            double length = barnacle.tentacleLength;
+            double h1 = 0.5, h2 = length + 1.0;
+            Vec3 v1 = RenderUtils.newV3(-WIDTH, h1, -WIDTH),
+                 v2 = RenderUtils.newV3(-WIDTH, h1, WIDTH),
+                 v3 = RenderUtils.newV3(WIDTH, h1, WIDTH),
+                 v4 = RenderUtils.newV3(WIDTH, h1, -WIDTH);
+            Vec3 v5 = RenderUtils.newV3(-WIDTH, h1, -WIDTH),
+                     v6 = RenderUtils.newV3(-WIDTH, h2, WIDTH),
+                     v7 = RenderUtils.newV3(WIDTH, h2, WIDTH),
+                     v8 = RenderUtils.newV3(WIDTH, h2, -WIDTH);
+            Minecraft.getMinecraft().renderEngine.bindTexture(ClientProps.BARNACLE_TENTACLE_PATH);
+            
+            t.startDrawingQuads();
+            RenderUtils.addVertex(v1, 0.0, 0.0);
+            RenderUtils.addVertex(v5, 0.0, length);
+            RenderUtils.addVertex(v6, 1.0, length);
+            RenderUtils.addVertex(v2, 1.0, 0.0);
+        
+            RenderUtils.addVertex(v2, 0.0, 0.0);
+            RenderUtils.addVertex(v6, 0.0, length);
+            RenderUtils.addVertex(v7, 1.0, length);
+            RenderUtils.addVertex(v3, 1.0, 0.0);
+        
+            RenderUtils.addVertex(v3, 0.0, 0.0);
+            RenderUtils.addVertex(v7, 0.0, length);
+            RenderUtils.addVertex(v8, 1.0, length);
+            RenderUtils.addVertex(v4, 1.0, 0.0);
+        
+            RenderUtils.addVertex(v4, 0.0, 0.0);
+            RenderUtils.addVertex(v8, 0.0, length);
+            RenderUtils.addVertex(v5, 1.0, length);
+            RenderUtils.addVertex(v1, 1.0, 0.0);
+        
+            RenderUtils.addVertex(v8, 0.0, 0.0);
+            RenderUtils.addVertex(v7, 0.0, 0.1);
+            RenderUtils.addVertex(v6, 0.1, 0.1);
+            RenderUtils.addVertex(v5, 0.1, 0.0);
+            t.draw();
+        }
+        GL11.glColor3f(1.0F,1.0F,1.0F);
+        GL11.glPopMatrix();
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(Entity entity) {
-		return null;
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(Entity entity) {
+        return null;
+    }
 
 
 }

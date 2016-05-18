@@ -55,33 +55,33 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
  */
 public class ClientProxy extends Proxy {
 
-	@Override
-	public void init() {
-		RenderingRegistry.registerEntityRenderingHandler(EntitySnark.class,
-				new LIRenderMob(new ModelSnark(), 0.2F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityHeadcrab.class,
-				new LIRenderMob(new ModelHeadcrab(), 0.4F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityBabyHeadcrab.class,
-				new LIRenderMob(new ModelBabyHeadcrab(), 0.4F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityMobBull.class,
-				new LIRenderMob(new ModelMobBull(), 0.4F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityBarnacle.class, new RenderBarnacle());
-		RenderingRegistry.registerEntityRenderingHandler(EntityHLZombie.class, new LIRenderMob(new ModelHLZombie(), 0.5F));
-		RenderingRegistry.registerEntityRenderingHandler(EntityHoundeye.class, new RenderHoundeye());
-		RenderingRegistry.registerEntityRenderingHandler(EntitySentry.class, new RenderTurret());
-		RenderingRegistry.registerEntityRenderingHandler(EntityShockwave.class, new RenderShockwave());
-		RenderingRegistry.registerEntityRenderingHandler(EntityVortigauntRay.class, new RenderVortigauntRay());
-		RenderingRegistry.registerEntityRenderingHandler(EntityAlienSlave.class, new RenderAlienSlave());
-		RenderingRegistry.registerEntityRenderingHandler(EntityBigMomoa.class, new RendererBigMomoa());
-		RenderingRegistry.registerEntityRenderingHandler(EntityToxic.class, new RenderToxic());
-		
-		MinecraftForgeClient.registerItemRenderer(CBCMobItems.weapon_snark, new RenderSnark());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileSentryRay.class,
-				new RenderSentryRay());
-	}
-	
-	@Override
-	public void preInit() {
-	}
-	
+    @Override
+    public void init() {
+        RenderingRegistry.registerEntityRenderingHandler(EntitySnark.class,
+                new LIRenderMob(new ModelSnark(), 0.2F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityHeadcrab.class,
+                new LIRenderMob(new ModelHeadcrab(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityBabyHeadcrab.class,
+                new LIRenderMob(new ModelBabyHeadcrab(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityMobBull.class,
+                new LIRenderMob(new ModelMobBull(), 0.4F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityBarnacle.class, new RenderBarnacle());
+        RenderingRegistry.registerEntityRenderingHandler(EntityHLZombie.class, new LIRenderMob(new ModelHLZombie(), 0.5F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityHoundeye.class, new RenderHoundeye());
+        RenderingRegistry.registerEntityRenderingHandler(EntitySentry.class, new RenderTurret());
+        RenderingRegistry.registerEntityRenderingHandler(EntityShockwave.class, new RenderShockwave());
+        RenderingRegistry.registerEntityRenderingHandler(EntityVortigauntRay.class, new RenderVortigauntRay());
+        RenderingRegistry.registerEntityRenderingHandler(EntityAlienSlave.class, new RenderAlienSlave());
+        RenderingRegistry.registerEntityRenderingHandler(EntityBigMomoa.class, new RendererBigMomoa());
+        RenderingRegistry.registerEntityRenderingHandler(EntityToxic.class, new RenderToxic());
+        
+        MinecraftForgeClient.registerItemRenderer(CBCMobItems.weapon_snark, new RenderSnark());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileSentryRay.class,
+                new RenderSentryRay());
+    }
+    
+    @Override
+    public void preInit() {
+    }
+    
 }

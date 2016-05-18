@@ -27,42 +27,42 @@ import net.minecraft.util.MathHelper;
  */
 public class ItemPhysicalCalibur extends Weapon_Crowbar {
 
-	/**
-	 * @param item_id
-	 */
-	public ItemPhysicalCalibur() {
-		super();
-		setCreativeTab(CBCMod.cct);
-		setUnlocalizedName("physcalibur");
-	}
-	
-	/*
-	@Override
+    /**
+     * @param item_id
+     */
+    public ItemPhysicalCalibur() {
+        super();
+        setCreativeTab(CBCMod.cct);
+        setUnlocalizedName("physcalibur");
+    }
+    
+    /*
+    @Override
     public float getDamageVsEntity(Entity par1Entity, ItemStack itemStack)
     {
         return 18;
     }*/
-	
-	@Override
+    
+    @Override
     public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase attackedEntity, EntityLivingBase player)
     {
-		attackedEntity.hurtResistantTime = -1;
-		attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(player), 15);
-		
-		float f = 1.0F;
-		double motionX = -MathHelper.sin(player.rotationYaw / 180.0F
-				* (float) Math.PI)
-				* MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI)
-				* f;
-		double motionZ = MathHelper.cos(player.rotationYaw / 180.0F
-				* (float) Math.PI)
-				* MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI)
-				* f;
-		double motionY = 0.5;
-		attackedEntity.addVelocity(motionX, motionY, motionZ);
-    	EntityLightningBolt bolt = new EntityLightningBolt(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ);
-    	attackedEntity.worldObj.spawnEntityInWorld(bolt);
-		//attackedEntity.onStruckByLightning(bolt);
+        attackedEntity.hurtResistantTime = -1;
+        attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(player), 15);
+        
+        float f = 1.0F;
+        double motionX = -MathHelper.sin(player.rotationYaw / 180.0F
+                * (float) Math.PI)
+                * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI)
+                * f;
+        double motionZ = MathHelper.cos(player.rotationYaw / 180.0F
+                * (float) Math.PI)
+                * MathHelper.cos(player.rotationPitch / 180.0F * (float) Math.PI)
+                * f;
+        double motionY = 0.5;
+        attackedEntity.addVelocity(motionX, motionY, motionZ);
+        EntityLightningBolt bolt = new EntityLightningBolt(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ);
+        attackedEntity.worldObj.spawnEntityInWorld(bolt);
+        //attackedEntity.onStruckByLightning(bolt);
         return true;
     }
 

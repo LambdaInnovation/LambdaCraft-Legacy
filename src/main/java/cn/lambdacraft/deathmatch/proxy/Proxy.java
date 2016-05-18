@@ -20,11 +20,11 @@ package cn.lambdacraft.deathmatch.proxy;
  */
 public class Proxy {
 
-	public void preInit() {
-		
-	}
-	
-	public void init() {
-	}
+    public void preInit() {
+        
+    }
+    
+    public void init() {
+    }
 
 }

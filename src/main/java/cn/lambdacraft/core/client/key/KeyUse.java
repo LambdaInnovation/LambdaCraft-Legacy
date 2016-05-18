@@ -36,47 +36,47 @@ import cn.liutils.api.util.Motion3D;
  */
 public class KeyUse implements IKeyHandler {
 
-	@Override
-	public void onKeyDown(int keyCode, boolean isEnd) {
-		if(isEnd)
-			return;
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		if (player == null || Minecraft.getMinecraft().currentScreen != null)
-			return;
-		EntityPlayer thePlayer = Minecraft.getMinecraft().thePlayer;
-		Motion3D begin = new Motion3D(thePlayer, true);
-		MovingObjectPosition mop = thePlayer.worldObj.rayTraceBlocks(
-				begin.getPosVec(thePlayer.worldObj), begin.move(8.0).getPosVec(thePlayer.worldObj)
-			);
-		if (mop == null || mop.sideHit == -1)
-			return;
-		Block block = thePlayer.worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ);
-		UsingUtils.useBlock(new BlockPos(mop.blockX, mop.blockY,
-				mop.blockZ, block), thePlayer.worldObj, thePlayer);
-		CBCMod.netHandler.sendToServer(new MsgKeyUsing(true));
-	}
+    @Override
+    public void onKeyDown(int keyCode, boolean isEnd) {
+        if(isEnd)
+            return;
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        if (player == null || Minecraft.getMinecraft().currentScreen != null)
+            return;
+        EntityPlayer thePlayer = Minecraft.getMinecraft().thePlayer;
+        Motion3D begin = new Motion3D(thePlayer, true);
+        MovingObjectPosition mop = thePlayer.worldObj.rayTraceBlocks(
+                begin.getPosVec(thePlayer.worldObj), begin.move(8.0).getPosVec(thePlayer.worldObj)
+            );
+        if (mop == null || mop.sideHit == -1)
+            return;
+        Block block = thePlayer.worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ);
+        UsingUtils.useBlock(new BlockPos(mop.blockX, mop.blockY,
+                mop.blockZ, block), thePlayer.worldObj, thePlayer);
+        CBCMod.netHandler.sendToServer(new MsgKeyUsing(true));
+    }
 
-	@Override
-	public void onKeyUp(int keyCode, boolean isEnd) {
-		if(isEnd)
-			return;
-		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
-		if (player == null || Minecraft.getMinecraft().currentScreen != null)
-			return;
-		UsingUtils.stopUsingBlock(player.worldObj, player);
-		CBCMod.netHandler.sendToServer(new MsgKeyUsing(false));
-		ItemStack armorStack = player.inventory.armorInventory[3];
-		if (armorStack == null)
-			return;
-		ClientProxy.cth.flag = !ClientProxy.cth.flag;
-	
-		//if (armorStack.itemID == DMItems.armorHEVHelmet.itemID)
-		//	player.sendChatToPlayer(StatCollector.translateToLocal("flashlight.status.name") + (ClientProxy.cth.flag ? StatCollector.translateToLocal("flashlight.status.on.name") : StatCollector.translateToLocal("flashlight.status.off.name")));
-	}
+    @Override
+    public void onKeyUp(int keyCode, boolean isEnd) {
+        if(isEnd)
+            return;
+        EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+        if (player == null || Minecraft.getMinecraft().currentScreen != null)
+            return;
+        UsingUtils.stopUsingBlock(player.worldObj, player);
+        CBCMod.netHandler.sendToServer(new MsgKeyUsing(false));
+        ItemStack armorStack = player.inventory.armorInventory[3];
+        if (armorStack == null)
+            return;
+        ClientProxy.cth.flag = !ClientProxy.cth.flag;
+    
+        //if (armorStack.itemID == DMItems.armorHEVHelmet.itemID)
+        //    player.sendChatToPlayer(StatCollector.translateToLocal("flashlight.status.name") + (ClientProxy.cth.flag ? StatCollector.translateToLocal("flashlight.status.on.name") : StatCollector.translateToLocal("flashlight.status.off.name")));
+    }
 
 
-	@Override
-	public void onKeyTick(int keyCode, boolean tickEnd) {
-	}
+    @Override
+    public void onKeyTick(int keyCode, boolean tickEnd) {
+    }
 
 }

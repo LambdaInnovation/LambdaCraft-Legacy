@@ -37,157 +37,157 @@ import net.minecraft.world.World;
  */
 public class BlockArmorCharger extends CBCBlockContainer implements IUseable {
 
-	protected final float WIDTH = 0.3F, HEIGHT = 0.4F, LENGTH = 0.08F;
+    protected final float WIDTH = 0.3F, HEIGHT = 0.4F, LENGTH = 0.08F;
 
-	/**
-	 * @param par1
-	 * @param par2Material
-	 */
-	public BlockArmorCharger() {
-		super(Material.rock);
-		this.setBlockName("armorcharger");
-		this.setBlockTextureName("lambdacraft:charger");
-		this.setHardness(2.0F);
-		this.setGuiId(GeneralProps.GUI_ID_CHARGER);
-	}
+    /**
+     * @param par1
+     * @param par2Material
+     */
+    public BlockArmorCharger() {
+        super(Material.rock);
+        this.setBlockName("armorcharger");
+        this.setBlockTextureName("lambdacraft:charger");
+        this.setHardness(2.0F);
+        this.setGuiId(GeneralProps.GUI_ID_CHARGER);
+    }
 
-	@Override
-	public void onNeighborBlockChange(World par1World, int par2, int par3,
-			int par4, Block par5) {
-		TileArmorCharger te = (TileArmorCharger) par1World.getTileEntity(
-				par2, par3, par4);
-		if (par1World.isBlockIndirectlyGettingPowered(par2, par3, par4)) {
-			te.isRSActivated = true;
-		} else {
-			te.isRSActivated = false;
-		}
-	}
+    @Override
+    public void onNeighborBlockChange(World par1World, int par2, int par3,
+            int par4, Block par5) {
+        TileArmorCharger te = (TileArmorCharger) par1World.getTileEntity(
+                par2, par3, par4);
+        if (par1World.isBlockIndirectlyGettingPowered(par2, par3, par4)) {
+            te.isRSActivated = true;
+        } else {
+            te.isRSActivated = false;
+        }
+    }
 
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z,
-			EntityPlayer player, int idk, float what, float these, float are) {
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity == null || player.isSneaking()) {
-			return false;
-		}
-		player.openGui(CBCMod.instance, GeneralProps.GUI_ID_CHARGER, world, x,
-				y, z);
-		return true;
-	}
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z,
+            EntityPlayer player, int idk, float what, float these, float are) {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity == null || player.isSneaking()) {
+            return false;
+        }
+        player.openGui(CBCMod.instance, GeneralProps.GUI_ID_CHARGER, world, x,
+                y, z);
+        return true;
+    }
 
-	@Override
-	public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity == null || !(tileEntity instanceof TileArmorCharger)) {
-			return;
-		}
-		TileArmorCharger inventory = (TileArmorCharger) tileEntity;
-		dropItems(world, x, y, z, inventory.slots);
-		super.breakBlock(world, x, y, z, par5, par6);
-	}
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block par5, int par6) {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity == null || !(tileEntity instanceof TileArmorCharger)) {
+            return;
+        }
+        TileArmorCharger inventory = (TileArmorCharger) tileEntity;
+        dropItems(world, x, y, z, inventory.slots);
+        super.breakBlock(world, x, y, z, par5, par6);
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderType() {
-		return ClientProps.RENDER_TYPE_EMPTY;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int getRenderType() {
+        return ClientProps.RENDER_TYPE_EMPTY;
+    }
 
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
 
-	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess,
-			int par2, int par3, int par4) {
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess,
+            int par2, int par3, int par4) {
 
-		int var5 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-		float var6 = HEIGHT;
-		float var7 = WIDTH;
-		if (var5 == 5) // X+
-		{
-			this.setBlockBounds(0.0F, 0.5F - var6, 0.5F - var7, LENGTH * 2.0F,
-					0.5F + var6, 0.5F + var7); // (0, 0.5) (0.3, 0.7), (0.2,
-												// 0.8)
-		} else if (var5 == 4) // X-
-		{
-			this.setBlockBounds(1.0F - LENGTH * 2.0F, 0.5F - var6, 0.5F - var7,
-					1.0F, 0.5F + var6, 0.5F + var7);
-		} else if (var5 == 3) // Z+
-		{
-			this.setBlockBounds(0.5F - var7, 0.5F - var6, 0.0F, 0.5F + var7,
-					0.5F + var6, LENGTH * 2.0F);
-		} else if (var5 == 2) // Z-
-		{
-			this.setBlockBounds(0.5F - var7, 0.5F - var6, 1.0F - LENGTH * 2.0F,
-					0.5F + var7, 0.5F + var6, 1.0F);
-		}
+        int var5 = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+        float var6 = HEIGHT;
+        float var7 = WIDTH;
+        if (var5 == 5) // X+
+        {
+            this.setBlockBounds(0.0F, 0.5F - var6, 0.5F - var7, LENGTH * 2.0F,
+                    0.5F + var6, 0.5F + var7); // (0, 0.5) (0.3, 0.7), (0.2,
+                                                // 0.8)
+        } else if (var5 == 4) // X-
+        {
+            this.setBlockBounds(1.0F - LENGTH * 2.0F, 0.5F - var6, 0.5F - var7,
+                    1.0F, 0.5F + var6, 0.5F + var7);
+        } else if (var5 == 3) // Z+
+        {
+            this.setBlockBounds(0.5F - var7, 0.5F - var6, 0.0F, 0.5F + var7,
+                    0.5F + var6, LENGTH * 2.0F);
+        } else if (var5 == 2) // Z-
+        {
+            this.setBlockBounds(0.5F - var7, 0.5F - var6, 1.0F - LENGTH * 2.0F,
+                    0.5F + var7, 0.5F + var6, 1.0F);
+        }
 
-	}
+    }
 
-	/**
-	 * Called when the block is placed in the world.
-	 */
-	@Override
-	public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
-			EntityLivingBase par5EntityLiving, ItemStack par6ItemStack) {
-		int l = MathHelper
-				.floor_double(par5EntityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
+    /**
+     * Called when the block is placed in the world.
+     */
+    @Override
+    public void onBlockPlacedBy(World par1World, int par2, int par3, int par4,
+            EntityLivingBase par5EntityLiving, ItemStack par6ItemStack) {
+        int l = MathHelper
+                .floor_double(par5EntityLiving.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 
-		if (l == 0) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
-		}
+        if (l == 0) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 2, 2);
+        }
 
-		if (l == 1) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
-		}
+        if (l == 1) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 5, 2);
+        }
 
-		if (l == 2) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
-		}
+        if (l == 2) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 3, 2);
+        }
 
-		if (l == 3) {
-			par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
-		}
-	}
+        if (l == 3) {
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, 4, 2);
+        }
+    }
 
-	@Override
-	public void onBlockUse(World world, EntityPlayer player, int bx, int by,
-			int bz) {
+    @Override
+    public void onBlockUse(World world, EntityPlayer player, int bx, int by,
+            int bz) {
 
-		TileEntity te = world.getTileEntity(bx, by, bz);
-		System.out.println("OnBlockUse " + world.isRemote);
-		if (te == null)
-			return;
-		TileArmorCharger te2 = (TileArmorCharger) te;
-		String path = te2.currentEnergy > 0 ? "lambdacraft:entities.suitchargeok"
-				: "lambdacraft:entities.suitchargeno";
-		world.playSoundAtEntity(player, path, 0.5F, 1.0F);
-		UsingUtils.setBlockInUse(player, bx, by, bz);
-		if (te2.currentEnergy > 0)
-			te2.startUsing(player);
+        TileEntity te = world.getTileEntity(bx, by, bz);
+        System.out.println("OnBlockUse " + world.isRemote);
+        if (te == null)
+            return;
+        TileArmorCharger te2 = (TileArmorCharger) te;
+        String path = te2.currentEnergy > 0 ? "lambdacraft:entities.suitchargeok"
+                : "lambdacraft:entities.suitchargeno";
+        world.playSoundAtEntity(player, path, 0.5F, 1.0F);
+        UsingUtils.setBlockInUse(player, bx, by, bz);
+        if (te2.currentEnergy > 0)
+            te2.startUsing(player);
 
-	}
+    }
 
-	@Override
-	public void onBlockStopUsing(World world, EntityPlayer player, int bx,
-			int by, int bz) {
-		TileEntity te = world.getTileEntity(bx, by, bz);
-		if (te == null)
-			return;
-		TileArmorCharger te2 = (TileArmorCharger) te;
-		te2.stopUsing(player);
-	}
+    @Override
+    public void onBlockStopUsing(World world, EntityPlayer player, int bx,
+            int by, int bz) {
+        TileEntity te = world.getTileEntity(bx, by, bz);
+        if (te == null)
+            return;
+        TileArmorCharger te2 = (TileArmorCharger) te;
+        te2.stopUsing(player);
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World world, int i) {
-		return new TileArmorCharger();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World world, int i) {
+        return new TileArmorCharger();
+    }
 
 }

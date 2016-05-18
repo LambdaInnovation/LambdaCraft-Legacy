@@ -37,90 +37,90 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class Weapon_RPG_Raw extends WeaponGenericLC {
 
-	public static class ActionRocketShoot extends ActionShoot {
+    public static class ActionRocketShoot extends ActionShoot {
 
-		public ActionRocketShoot() {
-			super(0, "lambdacraft:weapons.rocketfire");
-			setShootRate(40);
-		}
-		
-		@Override
-		protected Entity getProjectileEntity(World world, EntityPlayer player) {
-			ItemStack is = player.getCurrentEquippedItem();
-			return world.isRemote ? null : new EntityRocket(world, player, is);
-		}
-		
-		@Override
-		protected boolean consumeAmmo(EntityPlayer player, ItemStack stack, int amount) {
-			return WeaponHelper.consumeInventoryItem(player.inventory.mainInventory, CBCItems.ammo_rpg, 1) == 0;
-		}
-		
-	}
-	
+        public ActionRocketShoot() {
+            super(0, "lambdacraft:weapons.rocketfire");
+            setShootRate(40);
+        }
+        
+        @Override
+        protected Entity getProjectileEntity(World world, EntityPlayer player) {
+            ItemStack is = player.getCurrentEquippedItem();
+            return world.isRemote ? null : new EntityRocket(world, player, is);
+        }
+        
+        @Override
+        protected boolean consumeAmmo(EntityPlayer player, ItemStack stack, int amount) {
+            return WeaponHelper.consumeInventoryItem(player.inventory.mainInventory, CBCItems.ammo_rpg, 1) == 0;
+        }
+        
+    }
+    
 
-	public Weapon_RPG_Raw() {
-		super(CBCItems.ammo_rpg);
+    public Weapon_RPG_Raw() {
+        super(CBCItems.ammo_rpg);
 
-		setIAndU("weapon_rpg");
-		setCreativeTab(CBCMod.cct);
-		this.hasSubtypes = true;
-		
-		actionReload = null; //Don't need any reload action
-		actionJam = new ActionJam(40, "lambdacraft:weapons.gunjam_a");
-		actionShoot = new ActionRocketShoot();
-	}
-	@Override
-	public void onUpdate(ItemStack par1ItemStack, World par2World,
-			Entity par3Entity, int par4, boolean par5) {
-		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
-	}
+        setIAndU("weapon_rpg");
+        setCreativeTab(CBCMod.cct);
+        this.hasSubtypes = true;
+        
+        actionReload = null; //Don't need any reload action
+        actionJam = new ActionJam(40, "lambdacraft:weapons.gunjam_a");
+        actionShoot = new ActionRocketShoot();
+    }
+    @Override
+    public void onUpdate(ItemStack par1ItemStack, World par2World,
+            Entity par3Entity, int par4, boolean par5) {
+        super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
+    }
 
-	@Override
-	public boolean canShoot(EntityPlayer player, ItemStack is) {
-		return WeaponHelper.hasAmmo(this, player) || player.capabilities.isCreativeMode;
-	}
+    @Override
+    public boolean canShoot(EntityPlayer player, ItemStack is) {
+        return WeaponHelper.hasAmmo(this, player) || player.capabilities.isCreativeMode;
+    }
 
-	@Override
-	public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
-			EntityPlayer par3EntityPlayer, int par4) {
-		super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
-				par4);
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IHudTip[] getHudTip(ItemStack itemStack, EntityPlayer player) {
-		IHudTip[] tips = new IHudTip[1];
-		tips[0] = new IHudTip() {
+    @Override
+    public void onPlayerStoppedUsing(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer, int par4) {
+        super.onPlayerStoppedUsing(par1ItemStack, par2World, par3EntityPlayer,
+                par4);
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IHudTip[] getHudTip(ItemStack itemStack, EntityPlayer player) {
+        IHudTip[] tips = new IHudTip[1];
+        tips[0] = new IHudTip() {
 
-			@Override
-			public IIcon getRenderingIcon(ItemStack itemStack,
-					EntityPlayer player) {
-				if(ammoItem != null){
-					return ammoItem.getIconIndex(itemStack);
-				}
-				return null;
-			}
+            @Override
+            public IIcon getRenderingIcon(ItemStack itemStack,
+                    EntityPlayer player) {
+                if(ammoItem != null){
+                    return ammoItem.getIconIndex(itemStack);
+                }
+                return null;
+            }
 
-			@Override
-			public String getTip(ItemStack itemStack, EntityPlayer player) {
-				return String.valueOf(WeaponHelper.getAmmoCapacity(ammoItem, player.inventory));
-			}
+            @Override
+            public String getTip(ItemStack itemStack, EntityPlayer player) {
+                return String.valueOf(WeaponHelper.getAmmoCapacity(ammoItem, player.inventory));
+            }
 
-			@Override
-			public int getTextureSheet(ItemStack itemStack) {
-				return itemStack.getItemSpriteNumber();
-			}
-			
-		};
-		return tips;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		
-	}
+            @Override
+            public int getTextureSheet(ItemStack itemStack) {
+                return itemStack.getItemSpriteNumber();
+            }
+            
+        };
+        return tips;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack par1ItemStack,
+            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        
+    }
 
 }

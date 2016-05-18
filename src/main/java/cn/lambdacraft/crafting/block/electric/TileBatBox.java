@@ -33,230 +33,230 @@ import cn.lambdacraft.crafting.register.CBCBlocks;
  */
 public class TileBatBox extends TileGeneratorBase implements IInventory, IEnergySink {
 
-	public ItemStack[] slots = new ItemStack[2];
-	public final int type;
+    public ItemStack[] slots = new ItemStack[2];
+    public final int type;
 
-	public static class TileBoxSmall extends TileBatBox {
-		public TileBoxSmall() {
-			super(0);
-		}
-	}
+    public static class TileBoxSmall extends TileBatBox {
+        public TileBoxSmall() {
+            super(0);
+        }
+    }
 
-	public static class TileBoxLarge extends TileBatBox {
-		public TileBoxLarge() {
-			super(1);
-		}
-	}
+    public static class TileBoxLarge extends TileBatBox {
+        public TileBoxLarge() {
+            super(1);
+        }
+    }
 
-	public TileBatBox(int t) {
-		super(t == 0 ? 1 : 2, t == 0 ? 40000 : 200000);
-		type = t;
-	}
+    public TileBatBox(int t) {
+        super(t == 0 ? 1 : 2, t == 0 ? 40000 : 200000);
+        type = t;
+    }
 
-	@Override
-	public void updateEntity() {
-		super.updateEntity();
-		
-		this.markDirty();
-		if (worldObj.isRemote)
-			return;
+    @Override
+    public void updateEntity() {
+        super.updateEntity();
+        
+        this.markDirty();
+        if (worldObj.isRemote)
+            return;
 
-		//System.out.println(currentEnergy);
-		
-		// emit the energy frequently
-		int amt = Math.min(32, currentEnergy);
-		amt -= this.sendEnergy(amt);
-		currentEnergy -= amt;
+        //System.out.println(currentEnergy);
+        
+        // emit the energy frequently
+        int amt = Math.min(32, currentEnergy);
+        amt -= this.sendEnergy(amt);
+        currentEnergy -= amt;
 
-		// charge from slot0
-		if (currentEnergy < maxStorage) {
-			int energyReq = maxStorage - currentEnergy;
-			ItemStack sl = slots[0];
-			if (sl != null) {
-				currentEnergy += EnergyUtils.tryChargeFromStack(sl, energyReq);
-				if (sl.stackSize <= 0)
-					this.setInventorySlotContents(0, null);
-			}
-		}
+        // charge from slot0
+        if (currentEnergy < maxStorage) {
+            int energyReq = maxStorage - currentEnergy;
+            ItemStack sl = slots[0];
+            if (sl != null) {
+                currentEnergy += EnergyUtils.tryChargeFromStack(sl, energyReq);
+                if (sl.stackSize <= 0)
+                    this.setInventorySlotContents(0, null);
+            }
+        }
 
-		// charge the chargeable in slot1
-		if (currentEnergy > 0) {
-			ItemStack sl = slots[1];
-			if (sl != null && sl.getItem() instanceof ISpecialElectricItem) {
-				ISpecialElectricItem item = (ISpecialElectricItem) sl.getItem();
-				currentEnergy -= item.getManager(sl).charge(sl, currentEnergy, type, false,
-						false);
-			}
-		}
-		
-		
+        // charge the chargeable in slot1
+        if (currentEnergy > 0) {
+            ItemStack sl = slots[1];
+            if (sl != null && sl.getItem() instanceof ISpecialElectricItem) {
+                ISpecialElectricItem item = (ISpecialElectricItem) sl.getItem();
+                currentEnergy -= item.getManager(sl).charge(sl, currentEnergy, type, false,
+                        false);
+            }
+        }
+        
+        
 
-	}
+    }
 
-	/**
-	 * Reads a tile entity from NBT.
-	 */
-	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		for (int i = 0; i < slots.length; i++) {
-			short id = nbt.getShort("id" + i), damage = nbt.getShort("damage"
-					+ i);
-			byte count = nbt.getByte("count" + i);
-			if (id == 0)
-				continue;
-			ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
-			slots[i] = is;
-		}
-	}
+    /**
+     * Reads a tile entity from NBT.
+     */
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+        for (int i = 0; i < slots.length; i++) {
+            short id = nbt.getShort("id" + i), damage = nbt.getShort("damage"
+                    + i);
+            byte count = nbt.getByte("count" + i);
+            if (id == 0)
+                continue;
+            ItemStack is = new ItemStack(Item.getItemById(id), count, damage);
+            slots[i] = is;
+        }
+    }
 
-	/**
-	 * Writes a tile entity to NBT.
-	 */
-	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		for (int i = 0; i < slots.length; i++) {
-			if (slots[i] == null)
-				continue;
-			nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
-			nbt.setByte("count" + i, (byte) slots[i].stackSize);
-			nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
-		}
-	}
+    /**
+     * Writes a tile entity to NBT.
+     */
+    @Override
+    public void writeToNBT(NBTTagCompound nbt) {
+        super.writeToNBT(nbt);
+        for (int i = 0; i < slots.length; i++) {
+            if (slots[i] == null)
+                continue;
+            nbt.setShort("id" + i, (short) Item.getIdFromItem(slots[i].getItem()));
+            nbt.setByte("count" + i, (byte) slots[i].stackSize);
+            nbt.setShort("damage" + i, (short) slots[i].getItemDamage());
+        }
+    }
 
-	@Override
-	public double injectEnergy(ForgeDirection paramDirection, double amount, double voltage) {
-		this.currentEnergy += amount;
-		if (currentEnergy > maxStorage) 
-			currentEnergy = maxStorage;
-		
-		return 0;
-	}
+    @Override
+    public double injectEnergy(ForgeDirection paramDirection, double amount, double voltage) {
+        this.currentEnergy += amount;
+        if (currentEnergy > maxStorage) 
+            currentEnergy = maxStorage;
+        
+        return 0;
+    }
 
-	@Override
-	public double getDemandedEnergy() {
-		return getMaxEnergy() - getCurrentEnergy();
-	}
+    @Override
+    public double getDemandedEnergy() {
+        return getMaxEnergy() - getCurrentEnergy();
+    }
 
-	/**
-	 * @return the currentEnergy
-	 */
-	public int getCurrentEnergy() {
-		return currentEnergy;
-	}
+    /**
+     * @return the currentEnergy
+     */
+    public int getCurrentEnergy() {
+        return currentEnergy;
+    }
 
-	/**
-	 * @return the maxEnergy
-	 */
-	public int getMaxEnergy() {
-		return maxStorage;
-	}
-	
-	@Override
-	public int getSizeInventory() {
-		return 2;
-	}
+    /**
+     * @return the maxEnergy
+     */
+    public int getMaxEnergy() {
+        return maxStorage;
+    }
+    
+    @Override
+    public int getSizeInventory() {
+        return 2;
+    }
 
-	@Override
-	public ItemStack getStackInSlot(int i) {
-		return slots[i];
-	}
+    @Override
+    public ItemStack getStackInSlot(int i) {
+        return slots[i];
+    }
 
-	@Override
-	public ItemStack decrStackSize(int slot, int amt) {
-		ItemStack stack = getStackInSlot(slot);
-		if (stack != null) {
-			if (stack.stackSize <= amt) {
-				setInventorySlotContents(slot, null);
-			} else {
-				stack = stack.splitStack(amt);
-				if (stack.stackSize == 0) {
-					setInventorySlotContents(slot, null);
-				}
-			}
-		}
-		return stack;
-	}
+    @Override
+    public ItemStack decrStackSize(int slot, int amt) {
+        ItemStack stack = getStackInSlot(slot);
+        if (stack != null) {
+            if (stack.stackSize <= amt) {
+                setInventorySlotContents(slot, null);
+            } else {
+                stack = stack.splitStack(amt);
+                if (stack.stackSize == 0) {
+                    setInventorySlotContents(slot, null);
+                }
+            }
+        }
+        return stack;
+    }
 
-	@Override
-	public ItemStack getStackInSlotOnClosing(int i) {
-		return slots[i];
-	}
+    @Override
+    public ItemStack getStackInSlotOnClosing(int i) {
+        return slots[i];
+    }
 
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		slots[i] = itemstack;
-	}
+    @Override
+    public void setInventorySlotContents(int i, ItemStack itemstack) {
+        slots[i] = itemstack;
+    }
 
-	@Override
-	public String getInventoryName() {
-		return (this.type == 0 ? CBCBlocks.storageS.getUnlocalizedName()
-				: CBCBlocks.storageL.getUnlocalizedName()) + ".name";
-	}
+    @Override
+    public String getInventoryName() {
+        return (this.type == 0 ? CBCBlocks.storageS.getUnlocalizedName()
+                : CBCBlocks.storageL.getUnlocalizedName()) + ".name";
+    }
 
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
+    @Override
+    public int getInventoryStackLimit() {
+        return 64;
+    }
 
-	@Override
-	public boolean emitsEnergyTo(TileEntity emTileEntity, ForgeDirection emDirection) {
-		return emDirection.ordinal() == this.blockMetadata;
-	}
+    @Override
+    public boolean emitsEnergyTo(TileEntity emTileEntity, ForgeDirection emDirection) {
+        return emDirection.ordinal() == this.blockMetadata;
+    }
 
-	private int getTier() {
-		return type + 1;
-	}
+    private int getTier() {
+        return type + 1;
+    }
 
-	@Override
-	public int getSinkTier() {
-		return getTier();
-	}
+    @Override
+    public int getSinkTier() {
+        return getTier();
+    }
 
-	@Override
-	public int getSourceTier() {
-		return getTier();
-	}
+    @Override
+    public int getSourceTier() {
+        return getTier();
+    }
 
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
-				zCoord + 0.5) <= 64;
-	}
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+        return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
+                zCoord + 0.5) <= 64;
+    }
 
-	@Override
-	public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
-			ForgeDirection paramDirection) {
-		return currentEnergy < maxStorage
-				&& paramDirection.ordinal() != this.blockMetadata;
-	}
+    @Override
+    public boolean acceptsEnergyFrom(TileEntity paramTileEntity,
+            ForgeDirection paramDirection) {
+        return currentEnergy < maxStorage
+                && paramDirection.ordinal() != this.blockMetadata;
+    }
 
-	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		return true;
-	}
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+        return true;
+    }
 
-	@Override
-	public double getOfferedEnergy() {
-		return Math.min(currentEnergy, type == 1 ? 32 : 128);
-	}
+    @Override
+    public double getOfferedEnergy() {
+        return Math.min(currentEnergy, type == 1 ? 32 : 128);
+    }
 
-	@Override
-	public void drawEnergy(double amount) {
-		if(amount > 0) currentEnergy -= amount;
-	}
+    @Override
+    public void drawEnergy(double amount) {
+        if(amount > 0) currentEnergy -= amount;
+    }
 
-	@Override
-	public boolean hasCustomInventoryName() {
-		return false;
-	}
+    @Override
+    public boolean hasCustomInventoryName() {
+        return false;
+    }
 
-	@Override
-	public void openInventory() {
-	}
+    @Override
+    public void openInventory() {
+    }
 
-	@Override
-	public void closeInventory() {
-	}
+    @Override
+    public void closeInventory() {
+    }
 }

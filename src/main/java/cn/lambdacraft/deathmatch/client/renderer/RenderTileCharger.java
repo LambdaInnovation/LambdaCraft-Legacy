@@ -27,34 +27,34 @@ import net.minecraft.util.ResourceLocation;
  */
 public class RenderTileCharger extends RendererSidedCube {
 
-	public RenderTileCharger(Block block) {
-		super(block);
-	}
+    public RenderTileCharger(Block block) {
+        super(block);
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer#
-	 * renderTileEntityAt(net.minecraft.tileentity.TileEntity, double, double,
-	 * double, float)
-	 */
-	@Override
-	public void renderTileEntityAt(TileEntity tileentity, double x, double y,
-			double z, float f) {
-		this.doRender(tileentity, x, y, z, f);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer#
+     * renderTileEntityAt(net.minecraft.tileentity.TileEntity, double, double,
+     * double, float)
+     */
+    @Override
+    public void renderTileEntityAt(TileEntity tileentity, double x, double y,
+            double z, float f) {
+        this.doRender(tileentity, x, y, z, f);
+    }
 
-	@Override
-	public ResourceLocation getTexture(TileEntity te, int side, int metadata) {
-		if (side == 0 || side == 1)
-			return ClientProps.HEVCHARGER_TD;
-		if (side == metadata) {
-			if(((TileArmorCharger)te).currentEnergy > 0)
-				return ClientProps.HEVCHARGER_MAIN;
-			else return ClientProps.AC_NOENERGY;
-		}if (metadata == 5 || metadata == 3)
-			if (side == metadata - 2)
-				return ClientProps.HEVCHARGER_BACK;
-		return ClientProps.HEVCHARGER_SIDE;
-	}
+    @Override
+    public ResourceLocation getTexture(TileEntity te, int side, int metadata) {
+        if (side == 0 || side == 1)
+            return ClientProps.HEVCHARGER_TD;
+        if (side == metadata) {
+            if(((TileArmorCharger)te).currentEnergy > 0)
+                return ClientProps.HEVCHARGER_MAIN;
+            else return ClientProps.AC_NOENERGY;
+        }if (metadata == 5 || metadata == 3)
+            if (side == metadata - 2)
+                return ClientProps.HEVCHARGER_BACK;
+        return ClientProps.HEVCHARGER_SIDE;
+    }
 }

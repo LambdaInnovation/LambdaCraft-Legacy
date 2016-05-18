@@ -21,31 +21,31 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class Weapon_357 extends WeaponGenericLC {
 
-	public Weapon_357() {
+    public Weapon_357() {
 
-		super(CBCItems.ammo_357);
+        super(CBCItems.ammo_357);
 
-		setIAndU("weapon_357");
-		setCreativeTab(CBCMod.cct);
-		setMaxStackSize(1);
-		setMaxDamage(6);
-		setNoRepair();
-		
-		this.actionShoot = new ActionShoot(7, 2, "lambdacraft:weapons.pyt_shota").setShootRate(20).setMuzzle(ClientProps.MUZZLEFLASH2).setMuzzleOffset(0.44, 0.12, 0.1);
-		this.actionReload = new ActionReload(70, "lambdacraft:weapons.pyt_reloada", "");
-		this.actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
-	}
+        setIAndU("weapon_357");
+        setCreativeTab(CBCMod.cct);
+        setMaxStackSize(1);
+        setMaxDamage(6);
+        setNoRepair();
+        
+        this.actionShoot = new ActionShoot(7, 2, "lambdacraft:weapons.pyt_shota").setShootRate(20).setMuzzle(ClientProps.MUZZLEFLASH2).setMuzzleOffset(0.44, 0.12, 0.1);
+        this.actionReload = new ActionReload(70, "lambdacraft:weapons.pyt_reloada", "");
+        this.actionJam = new ActionJam(20, "lambdacraft:weapons.gunjam_a");
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_357");
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister par1IconRegister) {
+        this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_357");
+    }
 
-	@Override
-	public void onUpdate(ItemStack par1ItemStack, World par2World,
-			Entity par3Entity, int par4, boolean par5) {
-		super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
-	}
+    @Override
+    public void onUpdate(ItemStack par1ItemStack, World par2World,
+            Entity par3Entity, int par4, boolean par5) {
+        super.onWpnUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
+    }
 
 }

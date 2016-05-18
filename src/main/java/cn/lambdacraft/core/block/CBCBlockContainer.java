@@ -33,60 +33,60 @@ import net.minecraft.world.World;
  */
 public abstract class CBCBlockContainer extends BlockContainer {
 
-	protected int guiId = -1;
-	protected static final Random rand = new Random();
+    protected int guiId = -1;
+    protected static final Random rand = new Random();
 
-	/**
-	 * @param par1
-	 * @param par2Material
-	 */
-	public CBCBlockContainer(Material mat) {
-		super(mat);
-		this.setCreativeTab(CBCMod.cct);
-	}
+    /**
+     * @param par1
+     * @param par2Material
+     */
+    public CBCBlockContainer(Material mat) {
+        super(mat);
+        this.setCreativeTab(CBCMod.cct);
+    }
 
-	public CBCBlockContainer setGuiId(int id) {
-		this.guiId = id;
-		return this;
-	}
+    public CBCBlockContainer setGuiId(int id) {
+        this.guiId = id;
+        return this;
+    }
 
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z,
-			EntityPlayer player, int idk, float what, float these, float are) {
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (guiId == -1 || tileEntity == null || player.isSneaking()) {
-			return false;
-		}
-		player.openGui(CBCMod.instance, guiId, world, x, y, z);
-		return true;
-	}
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z,
+            EntityPlayer player, int idk, float what, float these, float are) {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (guiId == -1 || tileEntity == null || player.isSneaking()) {
+            return false;
+        }
+        player.openGui(CBCMod.instance, guiId, world, x, y, z);
+        return true;
+    }
 
-	protected void dropItems(World world, int x, int y, int z,
-			ItemStack... inventory) {
-		Random rand = new Random();
+    protected void dropItems(World world, int x, int y, int z,
+            ItemStack... inventory) {
+        Random rand = new Random();
 
-		for (ItemStack item : inventory) {
+        for (ItemStack item : inventory) {
 
-			if (item != null && item.stackSize > 0) {
-				float rx = rand.nextFloat() * 0.8F + 0.1F;
-				float ry = rand.nextFloat() * 0.8F + 0.1F;
-				float rz = rand.nextFloat() * 0.8F + 0.1F;
+            if (item != null && item.stackSize > 0) {
+                float rx = rand.nextFloat() * 0.8F + 0.1F;
+                float ry = rand.nextFloat() * 0.8F + 0.1F;
+                float rz = rand.nextFloat() * 0.8F + 0.1F;
 
-				EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z
-						+ rz, item.copy());
+                EntityItem entityItem = new EntityItem(world, x + rx, y + ry, z
+                        + rz, item.copy());
 
-				if (item.hasTagCompound()) {
-					entityItem.getEntityItem().setTagCompound(
-							(NBTTagCompound) item.getTagCompound().copy());
-				}
+                if (item.hasTagCompound()) {
+                    entityItem.getEntityItem().setTagCompound(
+                            (NBTTagCompound) item.getTagCompound().copy());
+                }
 
-				float factor = 0.05F;
-				entityItem.motionX = rand.nextGaussian() * factor;
-				entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
-				entityItem.motionZ = rand.nextGaussian() * factor;
-				world.spawnEntityInWorld(entityItem);
-				item.stackSize = 0;
-			}
-		}
-	}
+                float factor = 0.05F;
+                entityItem.motionX = rand.nextGaussian() * factor;
+                entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
+                entityItem.motionZ = rand.nextGaussian() * factor;
+                world.spawnEntityInWorld(entityItem);
+                item.stackSize = 0;
+            }
+        }
+    }
 }

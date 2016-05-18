@@ -14,20 +14,20 @@ import net.minecraft.client.renderer.texture.IIconRegister;
  */
 public class BlockXenSand extends Block {
 
-	public BlockXenSand()
-	{
-		super( Material.sand);
-		this.setBlockName("xensand");
-		this.setBlockTextureName("xen_sand");
-		this.setHardness(0.5F);
-		this.setStepSound(soundTypeSand);
-		setCreativeTab(CBCMod.cct);
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister p_149651_1_)
-	{
-	    this.blockIcon = p_149651_1_.registerIcon("lambdacraft:" + this.getTextureName());
-	}
+    public BlockXenSand()
+    {
+        super( Material.sand);
+        this.setBlockName("xensand");
+        this.setBlockTextureName("xen_sand");
+        this.setHardness(0.5F);
+        this.setStepSound(soundTypeSand);
+        setCreativeTab(CBCMod.cct);
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister p_149651_1_)
+    {
+        this.blockIcon = p_149651_1_.registerIcon("lambdacraft:" + this.getTextureName());
+    }
 }

@@ -33,56 +33,56 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class CBCGenericItem extends Item {
 
-	protected String description;
-	protected boolean useDescription = false;
-	private String iconName = "";
+    protected String description;
+    protected boolean useDescription = false;
+    private String iconName = "";
 
-	/**
-	 * @param par1
-	 */
-	public CBCGenericItem() {
-		super();
-		setCreativeTab(CBCMod.cct);
-	}
+    /**
+     * @param par1
+     */
+    public CBCGenericItem() {
+        super();
+        setCreativeTab(CBCMod.cct);
+    }
 
-	public CBCGenericItem setDescription(String d) {
-		this.description = d;
-		useDescription = true;
-		return this;
-	}
+    public CBCGenericItem setDescription(String d) {
+        this.description = d;
+        useDescription = true;
+        return this;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		if (useDescription)
-			par3List.add(description);
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack par1ItemStack,
+            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        if (useDescription)
+            par3List.add(description);
+    }
 
-	public CBCGenericItem setIconName(String name) {
-		this.iconName = name;
-		return this;
-	}
+    public CBCGenericItem setIconName(String name) {
+        this.iconName = name;
+        return this;
+    }
 
-	/**
-	 * 推荐，有助于名字统一 同时设置UnlocalizedName和IconName
-	 * 
-	 * @param names
-	 *            名字
-	 */
-	public CBCGenericItem setIAndU(String names) {
-		this.setUnlocalizedName(names);
-		this.setIconName(names);
-		return this;
-	}
+    /**
+     * 推荐，有助于名字统一 同时设置UnlocalizedName和IconName
+     * 
+     * @param names
+     *            名字
+     */
+    public CBCGenericItem setIAndU(String names) {
+        this.setUnlocalizedName(names);
+        this.setIconName(names);
+        return this;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerIcons(IIconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister
-				.registerIcon("lambdacraft:" + iconName);
-	}
-	
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IIconRegister par1IconRegister) {
+        this.itemIcon = par1IconRegister
+                .registerIcon("lambdacraft:" + iconName);
+    }
+    
     public String getLocalizedName(ItemStack par1ItemStack)
     {
         String s = this.getUnlocalizedName(par1ItemStack);

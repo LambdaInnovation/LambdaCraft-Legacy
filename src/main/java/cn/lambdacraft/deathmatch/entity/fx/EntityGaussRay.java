@@ -29,33 +29,33 @@ import cn.liutils.api.util.Motion3D;
  */
 public class EntityGaussRay extends Entity {
 
-	public double distanceToRender = 50;
-	private Motion3D motion = null;
-	
-	public EntityGaussRay(Motion3D begin, World par1World) {
+    public double distanceToRender = 50;
+    private Motion3D motion = null;
+    
+    public EntityGaussRay(Motion3D begin, World par1World) {
 
-		super(par1World);
-		this.posX = begin.posX;
-		this.posY = begin.posY;
-		this.posZ = begin.posZ;
-		this.motionX = begin.motionX;
-		this.motionY = begin.motionY;
-		this.motionZ = begin.motionZ;
-		this.setRayHeading(motionX, motionY, motionZ, 1.0F, 1.0F);
-		
-	}
+        super(par1World);
+        this.posX = begin.posX;
+        this.posY = begin.posY;
+        this.posZ = begin.posZ;
+        this.motionX = begin.motionX;
+        this.motionY = begin.motionY;
+        this.motionZ = begin.motionZ;
+        this.setRayHeading(motionX, motionY, motionZ, 1.0F, 1.0F);
+        
+    }
 
-	public EntityGaussRay(World world) {
-		super(world);
+    public EntityGaussRay(World world) {
+        super(world);
 
-	}
+    }
 
-	/**
-	 * Similar to setArrowHeading, it's point the throwable entity to a x, y, z
-	 * direction.
-	 */
-	public void setRayHeading(double par1, double par3, double par5,
-			float par7, float par8) {
+    /**
+     * Similar to setArrowHeading, it's point the throwable entity to a x, y, z
+     * direction.
+     */
+    public void setRayHeading(double par1, double par3, double par5,
+            float par7, float par8) {
         float f2 = MathHelper.sqrt_double(par1 * par1 + par3 * par3 + par5 * par5);
         par1 /= f2;
         par3 /= f2;
@@ -74,40 +74,40 @@ public class EntityGaussRay extends Entity {
         this.prevRotationYaw = this.rotationYaw = (float)(Math.atan2(par1, par5) * 180.0D / Math.PI);
         this.prevRotationPitch = this.rotationPitch = (float)(Math.atan2(par3, f3) * 180.0D / Math.PI);
        // System.out.println(rotationYaw + " " + rotationPitch);
-	}
+    }
 
-	@Override
-	public void onUpdate() {
-		if(motion == null)
-			motion = new Motion3D(this, true);
-		onGround = false;
-		MovingObjectPosition trace = this.worldObj.rayTraceBlocks(motion
-				.getPosVec(this.worldObj),
-				motion.move(100.0F).getPosVec(this.worldObj));
-		Vec3 end = (trace == null) ? motion.getPosVec(this.worldObj) : trace.hitVec;
-		double dx = end.xCoord - this.posX;
-		double dy = end.yCoord - this.posY;
-		double dz = end.zCoord - this.posZ;
-		distanceToRender = Math.sqrt(dx * dx + dy * dy + dz * dz);
-		//System.out.println(worldObj.isRemote + " " + this.rotationYaw);
-		
-		if(distanceToRender < 3)
-			distanceToRender = 50;
-		if (this.ticksExisted > 2)
-			this.setDead();
-	}
+    @Override
+    public void onUpdate() {
+        if(motion == null)
+            motion = new Motion3D(this, true);
+        onGround = false;
+        MovingObjectPosition trace = this.worldObj.rayTraceBlocks(motion
+                .getPosVec(this.worldObj),
+                motion.move(100.0F).getPosVec(this.worldObj));
+        Vec3 end = (trace == null) ? motion.getPosVec(this.worldObj) : trace.hitVec;
+        double dx = end.xCoord - this.posX;
+        double dy = end.yCoord - this.posY;
+        double dz = end.zCoord - this.posZ;
+        distanceToRender = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        //System.out.println(worldObj.isRemote + " " + this.rotationYaw);
+        
+        if(distanceToRender < 3)
+            distanceToRender = 50;
+        if (this.ticksExisted > 2)
+            this.setDead();
+    }
 
-	@Override
-	protected void entityInit() {
-		ignoreFrustumCheck = true;
-	}
+    @Override
+    protected void entityInit() {
+        ignoreFrustumCheck = true;
+    }
 
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
-	}
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
+    }
 
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-	}
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
+    }
 
 }

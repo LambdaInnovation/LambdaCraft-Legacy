@@ -23,70 +23,70 @@ import net.minecraftforge.common.util.ForgeDirection;
  */
 public abstract class TileElectricStorage extends TileElectrical implements IEnergySink {
 
-	public int maxEnergy;
-	public int currentEnergy;
-	protected int tier;
-	protected int lastTick;
+    public int maxEnergy;
+    public int currentEnergy;
+    protected int tier;
+    protected int lastTick;
 
-	/**
-	 * 
-	 */
-	public TileElectricStorage(int tier, int max) {
-		this.setMaxEnergy(max);
-	}
+    /**
+     * 
+     */
+    public TileElectricStorage(int tier, int max) {
+        this.setMaxEnergy(max);
+    }
 
-	/**
-	 * Reads a tile entity from NBT.
-	 */
-	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		this.currentEnergy = nbt.getInteger("energy");
-	}
+    /**
+     * Reads a tile entity from NBT.
+     */
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+        this.currentEnergy = nbt.getInteger("energy");
+    }
 
-	/**
-	 * Writes a tile entity to NBT.
-	 */
-	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		nbt.setInteger("energy", getCurrentEnergy());
-	}
+    /**
+     * Writes a tile entity to NBT.
+     */
+    @Override
+    public void writeToNBT(NBTTagCompound nbt) {
+        super.writeToNBT(nbt);
+        nbt.setInteger("energy", getCurrentEnergy());
+    }
 
-	@Override
-	public double getDemandedEnergy() {
-		return getMaxEnergy() - getCurrentEnergy();
-	}
+    @Override
+    public double getDemandedEnergy() {
+        return getMaxEnergy() - getCurrentEnergy();
+    }
 
-	/**
-	 * @return the currentEnergy
-	 */
-	public int getCurrentEnergy() {
-		return currentEnergy;
-	}
+    /**
+     * @return the currentEnergy
+     */
+    public int getCurrentEnergy() {
+        return currentEnergy;
+    }
 
-	/**
-	 * @return the maxEnergy
-	 */
-	public int getMaxEnergy() {
-		return maxEnergy;
-	}
+    /**
+     * @return the maxEnergy
+     */
+    public int getMaxEnergy() {
+        return maxEnergy;
+    }
 
-	/**
-	 * @param maxEnergy
-	 *            the maxEnergy to set
-	 */
-	public void setMaxEnergy(int maxEnergy) {
-		this.maxEnergy = maxEnergy;
-	}
+    /**
+     * @param maxEnergy
+     *            the maxEnergy to set
+     */
+    public void setMaxEnergy(int maxEnergy) {
+        this.maxEnergy = maxEnergy;
+    }
 
-	@Override
-	public double injectEnergy(ForgeDirection paramDirection, double amt, double voltage) {
-		this.currentEnergy += amt;
-		if (currentEnergy > maxEnergy) {
-			currentEnergy = maxEnergy;
-			return currentEnergy - maxEnergy;
-		}
-		return 0;
-	}
+    @Override
+    public double injectEnergy(ForgeDirection paramDirection, double amt, double voltage) {
+        this.currentEnergy += amt;
+        if (currentEnergy > maxEnergy) {
+            currentEnergy = maxEnergy;
+            return currentEnergy - maxEnergy;
+        }
+        return 0;
+    }
 }

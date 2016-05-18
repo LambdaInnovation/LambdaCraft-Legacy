@@ -26,46 +26,46 @@ import cn.lambdacraft.core.block.TileElectrical;
  */
 public abstract class TileGeneratorBase extends TileElectrical implements IEnergySource {
 
-	public final int maxStorage, tier;
-	public int currentEnergy;
+    public final int maxStorage, tier;
+    public int currentEnergy;
 
-	/**
-	 * The generator production in this tick
-	 */
-	public int production;
+    /**
+     * The generator production in this tick
+     */
+    public int production;
 
-	public TileGeneratorBase(int tier, int store) {
-		this.maxStorage = store;
-		this.tier = tier;
-	}
+    public TileGeneratorBase(int tier, int store) {
+        this.maxStorage = store;
+        this.tier = tier;
+    }
 
-	@Override
-	public void updateEntity() {
-		super.updateEntity();
+    @Override
+    public void updateEntity() {
+        super.updateEntity();
 
-	}
+    }
 
-	/**
-	 * Reads a tile entity from NBT.
-	 */
-	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		this.currentEnergy = nbt.getInteger("energy");
-	}
+    /**
+     * Reads a tile entity from NBT.
+     */
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+        this.currentEnergy = nbt.getInteger("energy");
+    }
 
-	/**
-	 * Writes a tile entity to NBT.
-	 */
-	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		nbt.setInteger("energy", currentEnergy);
-	}
-	
-	@Override
-	public boolean emitsEnergyTo(TileEntity paramTileEntity, ForgeDirection paramDirection) {
-		return true;
-	}
+    /**
+     * Writes a tile entity to NBT.
+     */
+    @Override
+    public void writeToNBT(NBTTagCompound nbt) {
+        super.writeToNBT(nbt);
+        nbt.setInteger("energy", currentEnergy);
+    }
+    
+    @Override
+    public boolean emitsEnergyTo(TileEntity paramTileEntity, ForgeDirection paramDirection) {
+        return true;
+    }
 
 }

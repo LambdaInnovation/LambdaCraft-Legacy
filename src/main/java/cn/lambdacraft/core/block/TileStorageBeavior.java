@@ -19,5 +19,5 @@ package cn.lambdacraft.core.block;
  * 
  */
 public enum TileStorageBeavior {
-	NONE, RECEIVEONLY;
+    NONE, RECEIVEONLY;
 }

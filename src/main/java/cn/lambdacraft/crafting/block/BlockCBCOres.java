@@ -28,32 +28,32 @@ import cn.lambdacraft.core.misc.CBCAchievements;
  * 
  */
 public class BlockCBCOres extends BlockOre {
-	private int type;
+    private int type;
 
-	public BlockCBCOres(int type) {
-		super();
-		this.type = type;
-		setCreativeTab(CBCMod.cct);
-		setHardness(type == 0 ? 5.0F : 2.0F);
-		setBlockName(type == 0 ? "uranium" : type == 1 ? "tin" : "copper");
-		this.setHarvestLevel("pickaxe", type == 0 ? 2 : 1);
-	}
+    public BlockCBCOres(int type) {
+        super();
+        this.type = type;
+        setCreativeTab(CBCMod.cct);
+        setHardness(type == 0 ? 5.0F : 2.0F);
+        setBlockName(type == 0 ? "uranium" : type == 1 ? "tin" : "copper");
+        this.setHarvestLevel("pickaxe", type == 0 ? 2 : 1);
+    }
 
-	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
-		blockIcon = par1IconRegister.registerIcon("lambdacraft:"
-				+ (type == 0 ? "uranium" : type == 1 ? "tin" : "copper"));
-	}
+    @Override
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        blockIcon = par1IconRegister.registerIcon("lambdacraft:"
+                + (type == 0 ? "uranium" : type == 1 ? "tin" : "copper"));
+    }
 
-	@Override
-	public int quantityDropped(Random par1Random) {
-		return 1;
-	}
+    @Override
+    public int quantityDropped(Random par1Random) {
+        return 1;
+    }
 
-	@Override
-	public void onBlockHarvested(World par1World, int par2, int par3, int par4,
-			int par5, EntityPlayer par6EntityPlayer) {
-		CBCAchievements.getAchievement(par6EntityPlayer,
-				CBCAchievements.oreAchievements[this.type]);
-	}
+    @Override
+    public void onBlockHarvested(World par1World, int par2, int par3, int par4,
+            int par5, EntityPlayer par6EntityPlayer) {
+        CBCAchievements.getAchievement(par6EntityPlayer,
+                CBCAchievements.oreAchievements[this.type]);
+    }
 }

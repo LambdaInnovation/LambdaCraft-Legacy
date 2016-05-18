@@ -14,10 +14,10 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class BlockSlimeStill extends BlockStaticLiquid{
-	
-	public BlockSlimeStill() 
-	{
-		super(Material.water);
+    
+    public BlockSlimeStill() 
+    {
+        super(Material.water);
         this.setCreativeTab(CBCMod.cct);
         this.setHardness(100.0F);
         this.setLightOpacity(3);
@@ -25,25 +25,25 @@ public class BlockSlimeStill extends BlockStaticLiquid{
         this.setBlockTextureName("slime_still");
         this.disableStats();
         this.setCreativeTab(CBCMod.cct);
-	}
+    }
 
-	@Override
-	public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
-		if(entity instanceof EntityLiving){
-			EntityLiving player=(EntityLiving)entity;
-			player.addPotionEffect(new PotionEffect(Potion.regeneration.id,30,0));
-		}
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister par1)
-	{
-	    this.blockIcon = par1.registerIcon("lambdacraft:" + this.getTextureName());
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
+    @Override
+    public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+        if(entity instanceof EntityLiving){
+            EntityLiving player=(EntityLiving)entity;
+            player.addPotionEffect(new PotionEffect(Potion.regeneration.id,30,0));
+        }
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister par1)
+    {
+        this.blockIcon = par1.registerIcon("lambdacraft:" + this.getTextureName());
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int p_149691_1_, int p_149691_2_)
     {
         return this.blockIcon;

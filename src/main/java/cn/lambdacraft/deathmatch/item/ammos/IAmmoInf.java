@@ -22,12 +22,12 @@ import net.minecraft.item.ItemStack;
  */
 public interface IAmmoInf {
 
-	public int getDamage(ItemStack itemStack);
-	
-	public EnumAmmoEffect getSpecialEffect();
-	
-	public int getAccuracy();
-	
-	public int getEffectLevel();
-	
+    public int getDamage(ItemStack itemStack);
+    
+    public EnumAmmoEffect getSpecialEffect();
+    
+    public int getAccuracy();
+    
+    public int getEffectLevel();
+    
 }

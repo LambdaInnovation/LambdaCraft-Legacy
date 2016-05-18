@@ -30,26 +30,26 @@ import cn.liutils.api.client.render.RenderModelItem;
  *
  */
 public class RenderGauss extends RenderModelItem {
-	
-	Tessellator t = Tessellator.instance;;
-	static IItemModel model = new ModelGauss();
+    
+    Tessellator t = Tessellator.instance;;
+    static IItemModel model = new ModelGauss();
 
-	public RenderGauss() {
-		super(model, ClientProps.GAUSS_ITEM_PATH);
-		this.setInventorySpin(false);
-		this.setOffset(0.0F, 1.5F, 0.0F);
-		this.setInvScale(0.8F);
-		this.setStdRotation(0F, 180F, 0F);
-		this.setInvOffset(-0.588F, 0.114F);
-		this.setInvScale(0.618F);
-		this.setEquipOffset(.78F, .0F, 0F);
-		this.setInvRotation(-41.F, -76.744F, 0.0F);
-	}
-	
-	@Override
-	protected float getModelAttribute(ItemStack item, EntityLivingBase entity) {
-		if(!(entity instanceof EntityPlayer)) return 0F;
-		return Weapon_Gauss.getRotation(item);
-	}
+    public RenderGauss() {
+        super(model, ClientProps.GAUSS_ITEM_PATH);
+        this.setInventorySpin(false);
+        this.setOffset(0.0F, 1.5F, 0.0F);
+        this.setInvScale(0.8F);
+        this.setStdRotation(0F, 180F, 0F);
+        this.setInvOffset(-0.588F, 0.114F);
+        this.setInvScale(0.618F);
+        this.setEquipOffset(.78F, .0F, 0F);
+        this.setInvRotation(-41.F, -76.744F, 0.0F);
+    }
+    
+    @Override
+    protected float getModelAttribute(ItemStack item, EntityLivingBase entity) {
+        if(!(entity instanceof EntityPlayer)) return 0F;
+        return Weapon_Gauss.getRotation(item);
+    }
 
 }

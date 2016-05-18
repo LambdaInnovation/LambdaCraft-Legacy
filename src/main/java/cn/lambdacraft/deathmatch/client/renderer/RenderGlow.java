@@ -26,18 +26,18 @@ import cn.liutils.api.client.render.RenderIcon;
  */
 public class RenderGlow extends RenderIcon {
 
-	
-	public RenderGlow() {
-		super(ClientProps.GLOW_PATH);
-		this.setEnableDepth(false);
-		this.setSize(1.7F);
-	}
-	
-	@Override
-	public void doRender(Entity par1Entity, double par2, double par4,
-			double par6, float par8, float par9) {
-		this.alpha = ((GaussParticleFX)par1Entity).currentAlpha;
-		super.doRender(par1Entity, par2, par4, par6, par8, par9);
-	}
+    
+    public RenderGlow() {
+        super(ClientProps.GLOW_PATH);
+        this.setEnableDepth(false);
+        this.setSize(1.7F);
+    }
+    
+    @Override
+    public void doRender(Entity par1Entity, double par2, double par4,
+            double par6, float par8, float par9) {
+        this.alpha = ((GaussParticleFX)par1Entity).currentAlpha;
+        super.doRender(par1Entity, par2, par4, par6, par8, par9);
+    }
 
 }

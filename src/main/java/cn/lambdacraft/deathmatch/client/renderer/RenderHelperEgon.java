@@ -22,48 +22,48 @@ import cn.liutils.api.client.util.RenderUtils;
  */
 public class RenderHelperEgon implements PlayerRenderHandler {
 
-	ModelEgonBackpack bp = new ModelEgonBackpack();
-	
-	/**
-	 * 
-	 */
-	public RenderHelperEgon() {
-	}
+    ModelEgonBackpack bp = new ModelEgonBackpack();
+    
+    /**
+     * 
+     */
+    public RenderHelperEgon() {
+    }
 
-	/* (non-Javadoc)
-	 * @see cn.liutils.api.client.render.PlayerRenderHelper#isActivated(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World)
-	 */
-	@Override
-	public boolean isActivated(EntityPlayer player, World world) {
-		ItemStack is = player.getCurrentEquippedItem();
-		Minecraft mc = Minecraft.getMinecraft();
-		return mc.gameSettings.thirdPersonView != 0 && is != null && is.getItem() == DMItems.weapon_egon;
-	}
+    /* (non-Javadoc)
+     * @see cn.liutils.api.client.render.PlayerRenderHelper#isActivated(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World)
+     */
+    @Override
+    public boolean isActivated(EntityPlayer player, World world) {
+        ItemStack is = player.getCurrentEquippedItem();
+        Minecraft mc = Minecraft.getMinecraft();
+        return mc.gameSettings.thirdPersonView != 0 && is != null && is.getItem() == DMItems.weapon_egon;
+    }
 
-	/* (non-Javadoc)
-	 * @see cn.liutils.api.client.render.PlayerRenderHelper#renderHead(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World)
-	 */
-	@Override
-	public void renderHead(EntityPlayer player, World world) {
+    /* (non-Javadoc)
+     * @see cn.liutils.api.client.render.PlayerRenderHelper#renderHead(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World)
+     */
+    @Override
+    public void renderHead(EntityPlayer player, World world) {
 
-	}
+    }
 
-	/* (non-Javadoc)
-	 * @see cn.liutils.api.client.render.PlayerRenderHelper#renderBody(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World)
-	 */
-	@Override
-	public void renderBody(EntityPlayer player, World world) {
-		GL11.glPushMatrix();
-		RenderUtils.loadTexture(ClientProps.EGON_BACKPACK);
-		
-		GL11.glTranslated(0.0F, -0.1F, -0.35F);
-		GL11.glScalef(1.0F, -1.0F, -1.0F);
-		GL11.glDisable(GL11.GL_CULL_FACE);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		bp.render(null, 0F, 0F, 0F, 0F, 0F, 0.12F);
-		
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glPopMatrix();
-	}
+    /* (non-Javadoc)
+     * @see cn.liutils.api.client.render.PlayerRenderHelper#renderBody(net.minecraft.entity.player.EntityPlayer, net.minecraft.world.World)
+     */
+    @Override
+    public void renderBody(EntityPlayer player, World world) {
+        GL11.glPushMatrix();
+        RenderUtils.loadTexture(ClientProps.EGON_BACKPACK);
+        
+        GL11.glTranslated(0.0F, -0.1F, -0.35F);
+        GL11.glScalef(1.0F, -1.0F, -1.0F);
+        GL11.glDisable(GL11.GL_CULL_FACE);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        bp.render(null, 0F, 0F, 0F, 0F, 0F, 0.12F);
+        
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glPopMatrix();
+    }
 
 }

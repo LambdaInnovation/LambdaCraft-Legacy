@@ -27,32 +27,32 @@ import cn.liutils.api.item.LIMobSpawner;
  */
 public class ItemBarnaclePlacer extends LIMobSpawner {
 
-	/**
-	 * @param par1
-	 */
-	public ItemBarnaclePlacer() {
-		super(EntityBarnacle.class);
-	}
-	
-	@Override
-	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
-			EntityPlayer par3EntityPlayer) {
-		return par1ItemStack;
-	}
-	
-	@Override
+    /**
+     * @param par1
+     */
+    public ItemBarnaclePlacer() {
+        super(EntityBarnacle.class);
+    }
+    
+    @Override
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World,
+            EntityPlayer par3EntityPlayer) {
+        return par1ItemStack;
+    }
+    
+    @Override
     public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y,
-    		int z, int side, float par8, float par9, float par10)
+            int z, int side, float par8, float par9, float par10)
     {
-		if(world.isRemote)
-			return false;
-		if(side == 0) {
-			if(world.isSideSolid(x, y, z, ForgeDirection.DOWN)) {
-				EntityBarnacle barnacle = new EntityBarnacle(world, x, y, z);
-				world.spawnEntityInWorld(barnacle);
-				return true;
-			}
-		}
+        if(world.isRemote)
+            return false;
+        if(side == 0) {
+            if(world.isSideSolid(x, y, z, ForgeDirection.DOWN)) {
+                EntityBarnacle barnacle = new EntityBarnacle(world, x, y, z);
+                world.spawnEntityInWorld(barnacle);
+                return true;
+            }
+        }
         return false;
     }
 

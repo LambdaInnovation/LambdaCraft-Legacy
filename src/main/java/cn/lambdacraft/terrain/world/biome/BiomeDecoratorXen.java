@@ -21,7 +21,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
  */
 public class BiomeDecoratorXen extends BiomeDecorator {
 
-	/** The world the BiomeDecorator is currently decorating */
+    /** The world the BiomeDecorator is currently decorating */
     public World currentWorld;
 
     /** The Biome Decorator's random number generator. */
@@ -44,7 +44,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
 
     public BiomeDecoratorXen()
     {
-    	super();
+        super();
         this.crystalGen = new WorldGenMinableXen(XenBlocks.crystal, 8);
         this.lightGen = new WorldGenLights();
         this.amethystGen = new WorldGenAmethyst();
@@ -55,12 +55,12 @@ public class BiomeDecoratorXen extends BiomeDecorator {
      * Decorates the world. Calls code that was formerly (pre-1.8) in ChunkProviderGenerate.populate
      */
     @Override
-	public void decorateChunk(World par1World, Random par2Random, BiomeGenBase biomeGenBase, int par3, int par4)
+    public void decorateChunk(World par1World, Random par2Random, BiomeGenBase biomeGenBase, int par3, int par4)
     {
         if (this.currentWorld != null)
         {
            // throw new RuntimeException("Already decorating!!");
-        	CBCMod.log.severe("XenDecorator Already Decorating!");
+            CBCMod.log.severe("XenDecorator Already Decorating!");
         }
         else
         {
@@ -79,7 +79,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
      * The method that does the work of actually decorating chunks
      */
     @Override
-	protected void genDecorations(BiomeGenBase biomeGenBase)
+    protected void genDecorations(BiomeGenBase biomeGenBase)
     {
        this.generateOres();
        
@@ -90,7 +90,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
        
        if(this.randomGenerator.nextInt(20) == 0)
        {
-    	   k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
+           k = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
            l = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
            WorldGenerator worldgenerator = new WorldGenPillar();
            worldgenerator.generate(this.currentWorld, this.randomGenerator, k, this.currentWorld.getHeightValue(k, l), l);
@@ -114,7 +114,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
        
        if(this.randomGenerator.nextInt(8) == 0)
        {
-    	   j = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
+           j = this.chunk_X + this.randomGenerator.nextInt(16) + 8;
            k = this.chunk_Z + this.randomGenerator.nextInt(16) + 8;
            this.xenSandGen.generate(this.currentWorld, this.randomGenerator, j, this.currentWorld.getTopSolidOrLiquidBlock(j, k), k);
        }
@@ -126,7 +126,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
      * Standard ore generation helper. Generates most ores.
      */
     @Override
-	protected void genStandardOre1(int par1, WorldGenerator par2WorldGenerator, int par3, int par4)
+    protected void genStandardOre1(int par1, WorldGenerator par2WorldGenerator, int par3, int par4)
     {
         for (int l = 0; l < par1; ++l)
         {
@@ -141,7 +141,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
      * Standard ore generation helper. Generates Lapis Lazuli.
      */
     @Override
-	protected void genStandardOre2(int par1, WorldGenerator par2WorldGenerator, int par3, int par4)
+    protected void genStandardOre2(int par1, WorldGenerator par2WorldGenerator, int par3, int par4)
     {
         for (int l = 0; l < par1; ++l)
         {
@@ -156,7 +156,7 @@ public class BiomeDecoratorXen extends BiomeDecorator {
      * Generates ores in the current chunk
      */
     @Override
-	protected void generateOres()
+    protected void generateOres()
     {
         this.genStandardOre1(2, this.crystalGen, 30, 100);
     }

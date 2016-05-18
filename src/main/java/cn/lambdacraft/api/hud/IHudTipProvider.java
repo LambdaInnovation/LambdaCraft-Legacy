@@ -23,5 +23,5 @@ import net.minecraft.item.ItemStack;
  *
  */
 public interface IHudTipProvider {
-	public IHudTip[] getHudTip(ItemStack itemStack, EntityPlayer player);
+    public IHudTip[] getHudTip(ItemStack itemStack, EntityPlayer player);
 }

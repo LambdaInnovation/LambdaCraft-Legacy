@@ -19,6 +19,6 @@ package cn.lambdacraft.crafting.proxy;
  * 
  */
 public class Proxy {
-	public void init() {
-	}
+    public void init() {
+    }
 }

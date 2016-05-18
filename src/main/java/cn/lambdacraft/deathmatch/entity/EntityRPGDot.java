@@ -33,96 +33,96 @@ import cn.liutils.api.util.Motion3D;
  */
 public class EntityRPGDot extends EntityThrowable {
 
-	public static final double DOT_MAX_RANGE = 100.0;
-	private EntityPlayer shooter;
+    public static final double DOT_MAX_RANGE = 100.0;
+    private EntityPlayer shooter;
 
-	// -1:Render facing the player. else : Render on block surface.
-	private int side;
+    // -1:Render facing the player. else : Render on block surface.
+    private int side;
 
-	public EntityRPGDot(World par1World, EntityPlayer player) {
-		super(par1World, player);
-		shooter = player;
-		updateDotPosition();
-	}
-	public EntityRPGDot(World world) {
-		super(world);
-	}
+    public EntityRPGDot(World par1World, EntityPlayer player) {
+        super(par1World, player);
+        shooter = player;
+        updateDotPosition();
+    }
+    public EntityRPGDot(World world) {
+        super(world);
+    }
 
-	@Override
-	protected void entityInit() {
-	}
+    @Override
+    protected void entityInit() {
+    }
 
-	@Override
-	public void onUpdate() {
-		if (worldObj.isRemote || getThrower() == null)
-			return;
-		
-		ItemStack currentItem = ((EntityPlayer)getThrower()).getCurrentEquippedItem();
-		if (currentItem == null || !Weapon_RPG.class.isInstance(currentItem.getItem())) {
-			
-			setDead();
-			return;
-			
-		} else {
-			
-			int mode = currentItem.getItemDamage();
-			if (mode == 0)
-				this.setDead();
-			
-		}
-		
-		updateDotPosition();
-	}
+    @Override
+    public void onUpdate() {
+        if (worldObj.isRemote || getThrower() == null)
+            return;
+        
+        ItemStack currentItem = ((EntityPlayer)getThrower()).getCurrentEquippedItem();
+        if (currentItem == null || !Weapon_RPG.class.isInstance(currentItem.getItem())) {
+            
+            setDead();
+            return;
+            
+        } else {
+            
+            int mode = currentItem.getItemDamage();
+            if (mode == 0)
+                this.setDead();
+            
+        }
+        
+        updateDotPosition();
+    }
 
-	private void updateDotPosition() {
-		Motion3D begin = new Motion3D(shooter, true);
-		Motion3D end = new Motion3D(begin).move(DOT_MAX_RANGE);
-		MovingObjectPosition result = GenericUtils.rayTraceBlocksAndEntities(null, worldObj,
-				begin.getPosVec(worldObj), end.getPosVec(worldObj), this, getThrower());
-		if (result != null) {
-			posX = result.hitVec.xCoord;
-			posY = result.hitVec.yCoord;
-			posZ = result.hitVec.zCoord;
-			if(result.typeOfHit == MovingObjectType.ENTITY) {
-				double distance = result.entityHit.getDistance(begin.posX, begin.posY, begin.posZ);
-				distance -= Math.cbrt(result.entityHit.width * result.entityHit.width * result.entityHit.height) * 0.25;
-				end = begin.move(distance);
-				posX = end.posX;
-				posY = end.posY;
-				posZ = end.posZ;
-			}
-			side = result.sideHit;
-			ForgeDirection d = ForgeDirection.values()[side].getOpposite();
-			double dx = d.offsetX, dy = d.offsetY, dz = d.offsetZ;
-			this.setPosition(posX + 0.03 * dx, posY + 0.03 * dy, posZ + 0.03 * dz);
-		} else {
-			posX = end.posX;
-			posY = end.posY;
-			posZ = end.posZ;
-			side = -1;
-		}
-	}
+    private void updateDotPosition() {
+        Motion3D begin = new Motion3D(shooter, true);
+        Motion3D end = new Motion3D(begin).move(DOT_MAX_RANGE);
+        MovingObjectPosition result = GenericUtils.rayTraceBlocksAndEntities(null, worldObj,
+                begin.getPosVec(worldObj), end.getPosVec(worldObj), this, getThrower());
+        if (result != null) {
+            posX = result.hitVec.xCoord;
+            posY = result.hitVec.yCoord;
+            posZ = result.hitVec.zCoord;
+            if(result.typeOfHit == MovingObjectType.ENTITY) {
+                double distance = result.entityHit.getDistance(begin.posX, begin.posY, begin.posZ);
+                distance -= Math.cbrt(result.entityHit.width * result.entityHit.width * result.entityHit.height) * 0.25;
+                end = begin.move(distance);
+                posX = end.posX;
+                posY = end.posY;
+                posZ = end.posZ;
+            }
+            side = result.sideHit;
+            ForgeDirection d = ForgeDirection.values()[side].getOpposite();
+            double dx = d.offsetX, dy = d.offsetY, dz = d.offsetZ;
+            this.setPosition(posX + 0.03 * dx, posY + 0.03 * dy, posZ + 0.03 * dz);
+        } else {
+            posX = end.posX;
+            posY = end.posY;
+            posZ = end.posZ;
+            side = -1;
+        }
+    }
 
-	public int getDotSide() {
-		return side;
-	}
+    public int getDotSide() {
+        return side;
+    }
 
-	@Override
-	protected float func_70182_d() {
-		return 0.0F;
-	}
+    @Override
+    protected float func_70182_d() {
+        return 0.0F;
+    }
 
-	@Override
-	protected float getGravityVelocity() {
-		return 0.0F;
-	}
+    @Override
+    protected float getGravityVelocity() {
+        return 0.0F;
+    }
 
-	@Override
-	protected void onImpact(MovingObjectPosition var1) {
+    @Override
+    protected void onImpact(MovingObjectPosition var1) {
 
-	}
-	
-	@Override
+    }
+    
+    @Override
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         this.setDead();

@@ -44,44 +44,44 @@ import cn.lambdacraft.terrain.world.TeleporterXen;
  *
  */
 public class BlockXenPortal extends BlockContainer {
-	
-	private String iconName;
-	private final float HALF_WIDTH = 0.4F;
+    
+    private String iconName;
+    private final float HALF_WIDTH = 0.4F;
 
-	public BlockXenPortal() {
-		super(Material.portal);
-		this.setCreativeTab(CBCMod.cct);
-		this.setStepSound(soundTypeGlass);
-		this.setLightLevel(0.75F);
-		this.setBlockName("xenPortal");
-		this.setIconName("xen_portal1");
-		this.setHardness(-1.0F);
-		this.setResistance(2000.0F);
-	}
+    public BlockXenPortal() {
+        super(Material.portal);
+        this.setCreativeTab(CBCMod.cct);
+        this.setStepSound(soundTypeGlass);
+        this.setLightLevel(0.75F);
+        this.setBlockName("xenPortal");
+        this.setIconName("xen_portal1");
+        this.setHardness(-1.0F);
+        this.setResistance(2000.0F);
+    }
 
-	public void setIconName(String path) {
-		iconName = path;
-	}
-	
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    public void setIconName(String path) {
+        iconName = path;
+    }
+    
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
 
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
-		this.blockIcon = par1IconRegister.registerIcon("lambdacraft:"
-				+ iconName);
-	}
-	
-	@Override
-	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        this.blockIcon = par1IconRegister.registerIcon("lambdacraft:"
+                + iconName);
+    }
+    
+    @Override
+    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
         super.updateTick(par1World, par2, par3, par4, par5Random);
 
@@ -105,21 +105,21 @@ public class BlockXenPortal extends BlockContainer {
             }
         }
     }
-	
-	@Override
-	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
+    
+    @Override
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
     {
         return null;
     }
-	
-	@Override
-	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    
+    @Override
+    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
         this.setBlockBounds(0.5F - HALF_WIDTH, 0.5F - HALF_WIDTH, 0.5F - HALF_WIDTH, 0.5F + HALF_WIDTH, 0.5F + HALF_WIDTH, 0.5F + HALF_WIDTH);
     }
-	
+    
     @Override
-	public int getRenderType()
+    public int getRenderType()
     {
         return ClientProps.RENDER_ID_XENPORTAL;
     }
@@ -197,11 +197,11 @@ public class BlockXenPortal extends BlockContainer {
      * 
      */
     @Override
-	public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
+    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
     {
         if (par5Entity.ridingEntity == null && par5Entity.riddenByEntity == null && par5Entity instanceof EntityPlayerMP)
         {
-        	EntityPlayerMP thePlayer = (EntityPlayerMP)par5Entity;
+            EntityPlayerMP thePlayer = (EntityPlayerMP)par5Entity;
             if (thePlayer.timeUntilPortal > 0)
             {
                     thePlayer.timeUntilPortal = 10;
@@ -218,14 +218,14 @@ public class BlockXenPortal extends BlockContainer {
         }
     }
 
-	@Override
-	public int quantityDropped(Random par1Random)
+    @Override
+    public int quantityDropped(Random par1Random)
     {
         return 0;
     }
-	
-	@Override
-	@SideOnly(Side.CLIENT)
+    
+    @Override
+    @SideOnly(Side.CLIENT)
 
     /**
      * Returns which pass should this block be rendered on. 0 for solids and 1 for alpha
@@ -236,7 +236,7 @@ public class BlockXenPortal extends BlockContainer {
     }
 
     @Override
-	@SideOnly(Side.CLIENT)
+    @SideOnly(Side.CLIENT)
 
     /**
      * A randomly called display update to be able to add particles or other items for display
@@ -276,9 +276,9 @@ public class BlockXenPortal extends BlockContainer {
         }
     }
 
-	@Override
-	public TileEntity createNewTileEntity(World var1, int var2) {
-		return new TileEntityXenPortal();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2) {
+        return new TileEntityXenPortal();
+    }
 
 }

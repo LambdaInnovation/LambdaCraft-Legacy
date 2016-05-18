@@ -31,82 +31,82 @@ import cn.liutils.api.client.model.ITileEntityModel;
  */
 public class ModelXenLight extends ModelBase implements ITileEntityModel {
 
-	ModelRenderer Shape1;
-	ModelRenderer Shape2;
-	ModelRenderer Shape3;
+    ModelRenderer Shape1;
+    ModelRenderer Shape2;
+    ModelRenderer Shape3;
 
-	public ModelXenLight() {
-		textureWidth = 64;
-		textureHeight = 32;
+    public ModelXenLight() {
+        textureWidth = 64;
+        textureHeight = 32;
 
-		Shape1 = new ModelRenderer(this, 0, 11);
-		Shape1.addBox(0F, 0F, 0F, 3, 4, 3);
-		Shape1.setRotationPoint(-1F, 20F, -1F);
-		Shape1.setTextureSize(64, 32);
-		Shape1.mirror = true;
-		setRotation(Shape1, 0F, 0F, 0F);
-		Shape2 = new ModelRenderer(this, 0, 4);
-		Shape2.addBox(0F, 0F, 0F, 1, 6, 1);
-		Shape2.setRotationPoint(0F, 14F, 0F);
-		Shape2.setTextureSize(64, 32);
-		Shape2.mirror = true;
-		setRotation(Shape2, 0F, 0F, 0F);
-		Shape3 = new ModelRenderer(this, 0, 0);
-		Shape3.addBox(0F, 0F, 0F, 1, 2, 2);
-		Shape3.setRotationPoint(0F, 12F, 0F);
-		Shape3.setTextureSize(64, 32);
-		Shape3.mirror = true;
-		setRotation(Shape3, 0F, 0F, 0F);
-	}
+        Shape1 = new ModelRenderer(this, 0, 11);
+        Shape1.addBox(0F, 0F, 0F, 3, 4, 3);
+        Shape1.setRotationPoint(-1F, 20F, -1F);
+        Shape1.setTextureSize(64, 32);
+        Shape1.mirror = true;
+        setRotation(Shape1, 0F, 0F, 0F);
+        Shape2 = new ModelRenderer(this, 0, 4);
+        Shape2.addBox(0F, 0F, 0F, 1, 6, 1);
+        Shape2.setRotationPoint(0F, 14F, 0F);
+        Shape2.setTextureSize(64, 32);
+        Shape2.mirror = true;
+        setRotation(Shape2, 0F, 0F, 0F);
+        Shape3 = new ModelRenderer(this, 0, 0);
+        Shape3.addBox(0F, 0F, 0F, 1, 2, 2);
+        Shape3.setRotationPoint(0F, 12F, 0F);
+        Shape3.setTextureSize(64, 32);
+        Shape3.mirror = true;
+        setRotation(Shape3, 0F, 0F, 0F);
+    }
 
-	@Override
-	public void render(Entity entity, float f, float f1, float f2, float f3,
-			float f4, float f5) {
-		super.render(entity, f, f1, f2, f3, f4, f5);
-		setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-		Shape1.render(f5);
-		Shape2.render(f5);
-		Shape3.render(f5);
-	}
+    @Override
+    public void render(Entity entity, float f, float f1, float f2, float f3,
+            float f4, float f5) {
+        super.render(entity, f, f1, f2, f3, f4, f5);
+        setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+        Shape1.render(f5);
+        Shape2.render(f5);
+        Shape3.render(f5);
+    }
 
-	private void setRotation(ModelRenderer model, float x, float y, float z) {
-		model.rotateAngleX = x;
-		model.rotateAngleY = y;
-		model.rotateAngleZ = z;
-	}
+    private void setRotation(ModelRenderer model, float x, float y, float z) {
+        model.rotateAngleX = x;
+        model.rotateAngleY = y;
+        model.rotateAngleZ = z;
+    }
 
-	@Override
-	public void setRotationAngles(float f, float f1, float f2, float f3,
-			float f4, float f5, Entity e) {
-		super.setRotationAngles(f, f1, f2, f3, f4, f5, e);
-	}
+    @Override
+    public void setRotationAngles(float f, float f1, float f2, float f3,
+            float f4, float f5, Entity e) {
+        super.setRotationAngles(f, f1, f2, f3, f4, f5, e);
+    }
 
-	@Override
-	public void render(TileEntity is, float f1, float f) {
-		TileEntityXenLight tile = (TileEntityXenLight) is;
-		GL11.glDisable(GL11.GL_CULL_FACE);
-		GL11.glPushMatrix();
-		GL11.glTranslated(0.0, -24, 0.0);
-		Shape1.render(1);
-		//说好的伸缩~
-		GL11.glRotated(12.5 * MathHelper.sin(tile.ticksExisted * 0.07F), 0.1, 1, -0.1);
-		if(tile.isLighting) {
-			if(tile.tickSinceChange < 15)
-				GL11.glTranslatef(0.0F, 0.0166F * (15 - tile.tickSinceChange), 0.0F);
-		} else { 
-			if(tile.tickSinceChange < 5) 
-				GL11.glTranslatef(0.0F, 0.05F * tile.tickSinceChange, 0.0F);
-			else GL11.glTranslatef(0.0F, 0.25F, 0.0F);
-		}
-		Shape2.render(1);
-		Shape3.render(1);
-		GL11.glPopMatrix();
-		GL11.glEnable(GL11.GL_CULL_FACE);
-	}
+    @Override
+    public void render(TileEntity is, float f1, float f) {
+        TileEntityXenLight tile = (TileEntityXenLight) is;
+        GL11.glDisable(GL11.GL_CULL_FACE);
+        GL11.glPushMatrix();
+        GL11.glTranslated(0.0, -24, 0.0);
+        Shape1.render(1);
+        //说好的伸缩~
+        GL11.glRotated(12.5 * MathHelper.sin(tile.ticksExisted * 0.07F), 0.1, 1, -0.1);
+        if(tile.isLighting) {
+            if(tile.tickSinceChange < 15)
+                GL11.glTranslatef(0.0F, 0.0166F * (15 - tile.tickSinceChange), 0.0F);
+        } else { 
+            if(tile.tickSinceChange < 5) 
+                GL11.glTranslatef(0.0F, 0.05F * tile.tickSinceChange, 0.0F);
+            else GL11.glTranslatef(0.0F, 0.25F, 0.0F);
+        }
+        Shape2.render(1);
+        Shape3.render(1);
+        GL11.glPopMatrix();
+        GL11.glEnable(GL11.GL_CULL_FACE);
+    }
 
-	@Override
-	public void renderPart(TileEntity te, String name, float f1, float f) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void renderPart(TileEntity te, String name, float f1, float f) {
+        throw new UnsupportedOperationException();
+    }
 
 }

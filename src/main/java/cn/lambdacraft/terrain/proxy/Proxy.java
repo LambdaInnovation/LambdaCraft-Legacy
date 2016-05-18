@@ -19,5 +19,5 @@ package cn.lambdacraft.terrain.proxy;
  *
  */
 public class Proxy {
-	public void init() {}
+    public void init() {}
 }

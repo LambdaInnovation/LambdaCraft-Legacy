@@ -26,23 +26,23 @@ import cn.lambdacraft.core.CBCMod;
  */
 public class CBCBucket extends ItemBucket {
 
-	protected String name;
-	
-	/**
-	 * @param par1
-	 * @param flowLiquidID
-	 */
-	public CBCBucket(Block flowLiquid, String unlocalizedName) {
-		super(flowLiquid);
-		this.setCreativeTab(CBCMod.cct);
-		this.setContainerItem(Items.bucket);
-		this.setUnlocalizedName(unlocalizedName);
-		name = unlocalizedName;
-	}
-	
-	@Override
-	public void registerIcons(IIconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:" + name);
-	}
+    protected String name;
+    
+    /**
+     * @param par1
+     * @param flowLiquidID
+     */
+    public CBCBucket(Block flowLiquid, String unlocalizedName) {
+        super(flowLiquid);
+        this.setCreativeTab(CBCMod.cct);
+        this.setContainerItem(Items.bucket);
+        this.setUnlocalizedName(unlocalizedName);
+        name = unlocalizedName;
+    }
+    
+    @Override
+    public void registerIcons(IIconRegister par1IconRegister) {
+        this.itemIcon = par1IconRegister.registerIcon("lambdacraft:" + name);
+    }
 
 }

@@ -29,36 +29,36 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class BlockAdvWeaponCrafter extends BlockWeaponCrafter {
 
-	public BlockAdvWeaponCrafter() {
-		super();
-		setBlockName("advcrafter");
-		setHarvestLevel("pickaxe", 2);
-	}
+    public BlockAdvWeaponCrafter() {
+        super();
+        setBlockName("advcrafter");
+        setHarvestLevel("pickaxe", 2);
+    }
 
-	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
-		iconSide = par1IconRegister.registerIcon("lambdacraft:advcrafter_side");
-		iconTop = par1IconRegister.registerIcon("lambdacraft:advcrafter_top");
-		iconBottom = par1IconRegister.registerIcon("lambdacraft:advcrafter_bottom");
-		iconMain = par1IconRegister.registerIcon("lambdacraft:advcrafter_main");
-		blockIcon = iconTop;
-	}
+    @Override
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        iconSide = par1IconRegister.registerIcon("lambdacraft:advcrafter_side");
+        iconTop = par1IconRegister.registerIcon("lambdacraft:advcrafter_top");
+        iconBottom = par1IconRegister.registerIcon("lambdacraft:advcrafter_bottom");
+        iconMain = par1IconRegister.registerIcon("lambdacraft:advcrafter_main");
+        blockIcon = iconTop;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int par1, int par2) {
-		if (par1 < 1)
-			return iconBottom;
-		if (par1 < 2)
-			return iconTop;
-		if (par1 == par2)
-			return iconMain;
-		return iconSide;
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int par1, int par2) {
+        if (par1 < 1)
+            return iconBottom;
+        if (par1 < 2)
+            return iconTop;
+        if (par1 == par2)
+            return iconMain;
+        return iconSide;
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World world, int v) {
-		return new TileWeaponCrafter();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World world, int v) {
+        return new TileWeaponCrafter();
+    }
 
 }

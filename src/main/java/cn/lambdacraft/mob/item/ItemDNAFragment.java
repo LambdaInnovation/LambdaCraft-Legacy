@@ -33,34 +33,34 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class ItemDNAFragment extends Item {
 
-	IIcon[] icons = new IIcon[6];
-	public static final String[] descriptions = new String[] {
-		"headcrab",
-		"barnacle",
-		"houndeye",
-		"snark",
-		"vortigaunt",
-		"tentacle"
-	};	
-	
-	/**
-	 * @param par1
-	 */
-	public ItemDNAFragment() {
-		super();
-		setUnlocalizedName("dna");
-		setCreativeTab(CBCMod.cct);
-		this.hasSubtypes = true;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerIcons(IIconRegister ir) {
-		for(int i = 0; i < 6; i++) {
-			icons[i] = ir.registerIcon("lambdacraft:dna" + i);
-		}
-	}
-	
+    IIcon[] icons = new IIcon[6];
+    public static final String[] descriptions = new String[] {
+        "headcrab",
+        "barnacle",
+        "houndeye",
+        "snark",
+        "vortigaunt",
+        "tentacle"
+    };    
+    
+    /**
+     * @param par1
+     */
+    public ItemDNAFragment() {
+        super();
+        setUnlocalizedName("dna");
+        setCreativeTab(CBCMod.cct);
+        this.hasSubtypes = true;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IIconRegister ir) {
+        for(int i = 0; i < 6; i++) {
+            icons[i] = ir.registerIcon("lambdacraft:dna" + i);
+        }
+    }
+    
     @SideOnly(Side.CLIENT)
     @Override
     /**
@@ -68,17 +68,17 @@ public class ItemDNAFragment extends Item {
      */
     public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List list)
     {
-    	for(int i = 0; i < 6; i ++)
-    		list.add(new ItemStack(par1, 1, i));
+        for(int i = 0; i < 6; i ++)
+            list.add(new ItemStack(par1, 1, i));
     }
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		par3List.add(StatCollector.translateToLocal("tissue." + descriptions[par1ItemStack.getItemDamage()] + ".name"));
-	}
-	
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack par1ItemStack,
+            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        par3List.add(StatCollector.translateToLocal("tissue." + descriptions[par1ItemStack.getItemDamage()] + ".name"));
+    }
+    
     @SideOnly(Side.CLIENT)
     @Override
     /**
@@ -86,7 +86,7 @@ public class ItemDNAFragment extends Item {
      */
     public IIcon getIconFromDamage(int i)
     {
-    	return icons[i];
+        return icons[i];
     }
 
 }

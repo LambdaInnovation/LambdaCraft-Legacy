@@ -27,92 +27,92 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemMaterial extends CBCGenericItem {
 
-	private IIcon icons[] = new IIcon[10]; // 声明Icon对象数组
+    private IIcon icons[] = new IIcon[10]; // 声明Icon对象数组
 
-	public enum EnumMaterial {
-		BOX(0), AMMUNITION(1), ARMOR(2), ACCESSORIES(3), BIO(4), EXPLOSIVE(5), HEAVY(
-				6), LIGHT(7), PISTOL(8), TECH(9);
+    public enum EnumMaterial {
+        BOX(0), AMMUNITION(1), ARMOR(2), ACCESSORIES(3), BIO(4), EXPLOSIVE(5), HEAVY(
+                6), LIGHT(7), PISTOL(8), TECH(9);
 
-		private int id;
+        private int id;
 
-		private EnumMaterial(int i) {
-			this.id = i;
-		}
+        private EnumMaterial(int i) {
+            this.id = i;
+        }
 
-		@Override
-		public String toString() {
-			return this.name().toLowerCase();
-		}
-	}
+        @Override
+        public String toString() {
+            return this.name().toLowerCase();
+        }
+    }
 
-	EnumMaterial mat = EnumMaterial.BOX; // 声明mat为材料枚举中的盒子
+    EnumMaterial mat = EnumMaterial.BOX; // 声明mat为材料枚举中的盒子
 
-	public ItemMaterial() {
-		super();
-		this.hasSubtypes = true;
-		this.setUnlocalizedName("material"); // 默认UnlocalizedName
-	}
+    public ItemMaterial() {
+        super();
+        this.hasSubtypes = true;
+        this.setUnlocalizedName("material"); // 默认UnlocalizedName
+    }
 
-	/**
-	 * 注册Icons
-	 * 
-	 * @param ir
-	 *            IconRegister
-	 */
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister ir) {
-		for (EnumMaterial i : EnumMaterial.values()) {
-			icons[i.id] = ir.registerIcon("lambdacraft:mat_" + i.toString());
-		}
-	}
+    /**
+     * 注册Icons
+     * 
+     * @param ir
+     *            IconRegister
+     */
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister ir) {
+        for (EnumMaterial i : EnumMaterial.values()) {
+            icons[i.id] = ir.registerIcon("lambdacraft:mat_" + i.toString());
+        }
+    }
 
-	/**
-	 * 
-	 * 返回一个这个物品的UnlocalizedName，这个版本接受一个ItemStack，所以不同的ItemStacks基于它们的伤害值或者NBT
-	 * Tag可以有不同的名字
-	 * 
-	 * @param par1ItemStack
-	 *            ItemStack
-	 */
-	@Override
-	public String getUnlocalizedName(ItemStack par1ItemStack) {
-		return "item.mat_"
-				+ EnumMaterial.values()[par1ItemStack.getItemDamage()]
-						.toString();
-	}
+    /**
+     * 
+     * 返回一个这个物品的UnlocalizedName，这个版本接受一个ItemStack，所以不同的ItemStacks基于它们的伤害值或者NBT
+     * Tag可以有不同的名字
+     * 
+     * @param par1ItemStack
+     *            ItemStack
+     */
+    @Override
+    public String getUnlocalizedName(ItemStack par1ItemStack) {
+        return "item.mat_"
+                + EnumMaterial.values()[par1ItemStack.getItemDamage()]
+                        .toString();
+    }
 
-	/**
-	 * 用来获取一个特定metadata的stack的方便函数。
-	 * 
-	 * @param stackSize
-	 * @param mat
-	 * @return
-	 */
-	public static ItemStack newStack(Item item, int stackSize, EnumMaterial mat) {
-		return new ItemStack(item, stackSize, mat.id);
-	}
-	
-	public ItemStack newStack(int stackSize, EnumMaterial mat) {
-		return new ItemStack(this, stackSize, mat.id);
-	}
+    /**
+     * 用来获取一个特定metadata的stack的方便函数。
+     * 
+     * @param stackSize
+     * @param mat
+     * @return
+     */
+    public static ItemStack newStack(Item item, int stackSize, EnumMaterial mat) {
+        return new ItemStack(item, stackSize, mat.id);
+    }
+    
+    public ItemStack newStack(int stackSize, EnumMaterial mat) {
+        return new ItemStack(this, stackSize, mat.id);
+    }
 
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public IIcon getIconFromDamage(int par1) {
-		return this.icons[par1];
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public IIcon getIconFromDamage(int par1) {
+        return this.icons[par1];
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	/**
-	 * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-	 */
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
-			List par3List) {
-		for (int i = 0; i < 10; i++)
-			par3List.add(new ItemStack(par1, 1, i));
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    /**
+     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
+     */
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
+            List par3List) {
+        for (int i = 0; i < 10; i++)
+            par3List.add(new ItemStack(par1, 1, i));
+    }
 
 }

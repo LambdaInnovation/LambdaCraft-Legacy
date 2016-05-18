@@ -26,46 +26,46 @@ import net.minecraft.world.World;
  */
 public class EntityVortigauntRay extends Entity {
 
-	public double startX, startY, startZ;
-	public double destX, destY, destZ;
+    public double startX, startY, startZ;
+    public double destX, destY, destZ;
 
-	/**
-	 * @param par1World
-	 * @param par2EntityLiving
-	 * @param par3itemStack
-	 */
-	public EntityVortigauntRay(World par1World, EntityLiving ent, Entity target) {
-		super(par1World);
-		setSize(1.0F, 1.0F);
-		setPosition(ent.posX, ent.posY + ent.height, ent.posZ);
-		startX = ent.posX;
-		startY = ent.posY + ent.height;
-		startZ = ent.posZ;
-		destX = target.posX;
-		destY = target.posY + target.height - ent.height;
-		destZ = target.posZ;
-		this.ignoreFrustumCheck = true;
-	}
+    /**
+     * @param par1World
+     * @param par2EntityLiving
+     * @param par3itemStack
+     */
+    public EntityVortigauntRay(World par1World, EntityLiving ent, Entity target) {
+        super(par1World);
+        setSize(1.0F, 1.0F);
+        setPosition(ent.posX, ent.posY + ent.height, ent.posZ);
+        startX = ent.posX;
+        startY = ent.posY + ent.height;
+        startZ = ent.posZ;
+        destX = target.posX;
+        destY = target.posY + target.height - ent.height;
+        destZ = target.posZ;
+        this.ignoreFrustumCheck = true;
+    }
 
-	@Override
-	public void entityInit() {
-	}
-	
-	@Override
-	public void onUpdate() {
-		if(++ticksExisted > 15) {
-			
-			setDead();
-		}
-	}
+    @Override
+    public void entityInit() {
+    }
+    
+    @Override
+    public void onUpdate() {
+        if(++ticksExisted > 15) {
+            
+            setDead();
+        }
+    }
 
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
-		setDead();
-	}
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound nbttagcompound) {
+        setDead();
+    }
 
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-		setDead();
-	}
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
+        setDead();
+    }
 }

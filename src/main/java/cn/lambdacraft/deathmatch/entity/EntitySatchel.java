@@ -31,128 +31,128 @@ import cn.weaponmod.api.WeaponHelper;
  */
 public class EntitySatchel extends EntityThrowable {
 
-	public static double HEIGHT = 0.083, WIDTH1 = 0.2, WIDTH2 = 0.15;
-	
-	public boolean still;
-	public double stlY;
+    public static double HEIGHT = 0.083, WIDTH1 = 0.2, WIDTH2 = 0.15;
+    
+    public boolean still;
+    public double stlY;
 
-	/**
-	 * 被击中时的tick数。
-	 */
-	public int tickHit = 0;
+    /**
+     * 被击中时的tick数。
+     */
+    public int tickHit = 0;
 
-	/**
-	 * 实体的旋转情况。
-	 */
-	public float rotationFactor;
+    /**
+     * 实体的旋转情况。
+     */
+    public float rotationFactor;
 
-	public EntitySatchel(World par1World, EntityPlayer par2EntityLiving) {
-		super(par1World, par2EntityLiving);
-	}
+    public EntitySatchel(World par1World, EntityPlayer par2EntityLiving) {
+        super(par1World, par2EntityLiving);
+    }
 
-	public EntitySatchel(World world) {
-		super(world);
-	}
-	
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-		dataWatcher.addObject(9,  Byte.valueOf((byte) 0));
-		dataWatcher.addObject(10, Float.valueOf(0));
-		dataWatcher.addObject(11, Float.valueOf(0));
-		dataWatcher.addObject(12, Float.valueOf(0));
-	}
+    public EntitySatchel(World world) {
+        super(world);
+    }
+    
+    @Override
+    protected void entityInit() {
+        super.entityInit();
+        dataWatcher.addObject(9,  Byte.valueOf((byte) 0));
+        dataWatcher.addObject(10, Float.valueOf(0));
+        dataWatcher.addObject(11, Float.valueOf(0));
+        dataWatcher.addObject(12, Float.valueOf(0));
+    }
 
-	@Override
-	public boolean canBeCollidedWith() {
-		return true;
-	}
+    @Override
+    public boolean canBeCollidedWith() {
+        return true;
+    }
 
-	public void Explode() {
+    public void Explode() {
 
-		WeaponHelper.Explode(worldObj, this, 3.0F, 4.0F, posX, posY, posZ, 35);
-		this.setDead();
+        WeaponHelper.Explode(worldObj, this, 3.0F, 4.0F, posX, posY, posZ, 35);
+        this.setDead();
 
-	}
+    }
 
-	@Override
-	protected float getGravityVelocity() {
-		return still ? 0F : 0.025F;
-	}
+    @Override
+    protected float getGravityVelocity() {
+        return still ? 0F : 0.025F;
+    }
 
-	@Override
-	public AxisAlignedBB getBoundingBox() {
-		return AxisAlignedBB.getBoundingBox(-WIDTH1, -HEIGHT, -WIDTH2, WIDTH1,
-				HEIGHT, WIDTH2);
-	}
+    @Override
+    public AxisAlignedBB getBoundingBox() {
+        return AxisAlignedBB.getBoundingBox(-WIDTH1, -HEIGHT, -WIDTH2, WIDTH1,
+                HEIGHT, WIDTH2);
+    }
 
-	@Override
-	protected float func_70182_d() {
-		return 0.7F;
-	}
+    @Override
+    protected float func_70182_d() {
+        return 0.7F;
+    }
 
-	@Override
-	public void onUpdate() {
-		attemptUpdate();
-		super.onUpdate();
-		if (worldObj.isRemote)
-			return;
-		if (getThrower() == null) {
-			this.setDead();
-			return;
-		}
-		boolean doesExplode = getThrower().getEntityData().getBoolean(
-				"doesExplode");
-		if (doesExplode || isBurning())
-			Explode();
-		if (this.onGround) {
-			rotationFactor += 0.01F;
-		} else
-			rotationFactor += 3.0F;
-		if (rotationFactor > 360.0F)
-			rotationFactor = 0.0F;
-		
-	}
+    @Override
+    public void onUpdate() {
+        attemptUpdate();
+        super.onUpdate();
+        if (worldObj.isRemote)
+            return;
+        if (getThrower() == null) {
+            this.setDead();
+            return;
+        }
+        boolean doesExplode = getThrower().getEntityData().getBoolean(
+                "doesExplode");
+        if (doesExplode || isBurning())
+            Explode();
+        if (this.onGround) {
+            rotationFactor += 0.01F;
+        } else
+            rotationFactor += 3.0F;
+        if (rotationFactor > 360.0F)
+            rotationFactor = 0.0F;
+        
+    }
 
-	@Override
-	protected void onImpact(MovingObjectPosition result) {
-		if(result.typeOfHit != MovingObjectType.BLOCK || 
-				still || !acceptible(result.blockX, result.blockY, result.blockZ)) return;
-		ForgeDirection dir = ForgeDirection.values()[result.sideHit];
-		double offX = dir.offsetX, offY = dir.offsetY, offZ = dir.offsetZ;
-		if(result.sideHit == 0 || result.sideHit == 1) {
-			offY *= 0.1F;
-		} else {
-			offX *= 0.1F;
-			offZ *= 0.1F;
-		}
-		
-		this.still = true;
-		stlY = result.hitVec.yCoord + offY;
-		attemptUpdate();
-	}
-	
-	private void attemptUpdate() {
-		if(worldObj.isRemote) {
-			still = dataWatcher.getWatchableObjectByte(9) == 1;
-			stlY = dataWatcher.getWatchableObjectFloat(11);
-			if(still)
-				posY = stlY;
-		} else {
-			dataWatcher.updateObject(9, still ? (byte)1 : (byte)0);
-			if(still) {
-				dataWatcher.updateObject(11, (float)stlY);
-			}
-		}
-		
-		if(still) {
-			motionX = motionY = motionZ = 0;
-			if(!acceptible((int)posX, (int)posY, (int)posZ)) still = false;
-		}
-	}
-	
-	private boolean acceptible(int x, int y, int z) {
-		return worldObj.getBlock(x, y, z).getCollisionBoundingBoxFromPool(worldObj, x, y, z) != null;
-	}
+    @Override
+    protected void onImpact(MovingObjectPosition result) {
+        if(result.typeOfHit != MovingObjectType.BLOCK || 
+                still || !acceptible(result.blockX, result.blockY, result.blockZ)) return;
+        ForgeDirection dir = ForgeDirection.values()[result.sideHit];
+        double offX = dir.offsetX, offY = dir.offsetY, offZ = dir.offsetZ;
+        if(result.sideHit == 0 || result.sideHit == 1) {
+            offY *= 0.1F;
+        } else {
+            offX *= 0.1F;
+            offZ *= 0.1F;
+        }
+        
+        this.still = true;
+        stlY = result.hitVec.yCoord + offY;
+        attemptUpdate();
+    }
+    
+    private void attemptUpdate() {
+        if(worldObj.isRemote) {
+            still = dataWatcher.getWatchableObjectByte(9) == 1;
+            stlY = dataWatcher.getWatchableObjectFloat(11);
+            if(still)
+                posY = stlY;
+        } else {
+            dataWatcher.updateObject(9, still ? (byte)1 : (byte)0);
+            if(still) {
+                dataWatcher.updateObject(11, (float)stlY);
+            }
+        }
+        
+        if(still) {
+            motionX = motionY = motionZ = 0;
+            if(!acceptible((int)posX, (int)posY, (int)posZ)) still = false;
+        }
+    }
+    
+    private boolean acceptible(int x, int y, int z) {
+        return worldObj.getBlock(x, y, z).getCollisionBoundingBoxFromPool(worldObj, x, y, z) != null;
+    }
 
 }

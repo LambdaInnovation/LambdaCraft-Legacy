@@ -26,51 +26,51 @@ import cn.weaponmod.api.feature.IModdable;
  */
 public class RenderItemElCrowbar implements IItemRenderer {
 
-	
+    
 
-	/* (non-Javadoc)
-	 * @see net.minecraftforge.client.IItemRenderer#handleRenderType(net.minecraft.item.ItemStack, net.minecraftforge.client.IItemRenderer.ItemRenderType)
-	 */
-	@Override
-	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
-		if(type == ItemRenderType.EQUIPPED || type == ItemRenderType.INVENTORY || type == ItemRenderType.EQUIPPED_FIRST_PERSON)
-			return true;
-		return false;
-	}
+    /* (non-Javadoc)
+     * @see net.minecraftforge.client.IItemRenderer#handleRenderType(net.minecraft.item.ItemStack, net.minecraftforge.client.IItemRenderer.ItemRenderType)
+     */
+    @Override
+    public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+        if(type == ItemRenderType.EQUIPPED || type == ItemRenderType.INVENTORY || type == ItemRenderType.EQUIPPED_FIRST_PERSON)
+            return true;
+        return false;
+    }
 
-	/* (non-Javadoc)
-	 * @see net.minecraftforge.client.IItemRenderer#shouldUseRenderHelper(net.minecraftforge.client.IItemRenderer.ItemRenderType, net.minecraft.item.ItemStack, net.minecraftforge.client.IItemRenderer.ItemRendererHelper)
-	 */
-	@Override
-	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
-			ItemRendererHelper helper) {
-		return false;
-	}
+    /* (non-Javadoc)
+     * @see net.minecraftforge.client.IItemRenderer#shouldUseRenderHelper(net.minecraftforge.client.IItemRenderer.ItemRenderType, net.minecraft.item.ItemStack, net.minecraftforge.client.IItemRenderer.ItemRendererHelper)
+     */
+    @Override
+    public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
+            ItemRendererHelper helper) {
+        return false;
+    }
 
-	/* (non-Javadoc)
-	 * @see net.minecraftforge.client.IItemRenderer#renderItem(net.minecraftforge.client.IItemRenderer.ItemRenderType, net.minecraft.item.ItemStack, java.lang.Object[])
-	 */
-	@Override
-	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
-		if(type == ItemRenderType.INVENTORY) {
-			renderInventory(item);
-		} else {
-			renderEquipped((EntityLivingBase) data[1], item);
-		}
-		
-	}
-	
-	private void renderInventory(ItemStack item) {
-		RenderUtils.renderItemInventory(item);
-		if(((IModdable)item.getItem()).getMode(item) == 0 && item.getItemDamage() < item.getMaxDamage() - 1)
-			RenderUtils.renderEnchantGlint_Inv();
-		
-	}
-	
-	private void renderEquipped(EntityLivingBase ent, ItemStack item) {
-		RenderUtils.renderItemIn2d(item, 0.0625);
-		if(((IModdable)item.getItem()).getMode(item) == 0 && item.getItemDamage() < item.getMaxDamage() - 1)
-			RenderUtils.renderEnchantGlint_Equip();
-	}
+    /* (non-Javadoc)
+     * @see net.minecraftforge.client.IItemRenderer#renderItem(net.minecraftforge.client.IItemRenderer.ItemRenderType, net.minecraft.item.ItemStack, java.lang.Object[])
+     */
+    @Override
+    public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+        if(type == ItemRenderType.INVENTORY) {
+            renderInventory(item);
+        } else {
+            renderEquipped((EntityLivingBase) data[1], item);
+        }
+        
+    }
+    
+    private void renderInventory(ItemStack item) {
+        RenderUtils.renderItemInventory(item);
+        if(((IModdable)item.getItem()).getMode(item) == 0 && item.getItemDamage() < item.getMaxDamage() - 1)
+            RenderUtils.renderEnchantGlint_Inv();
+        
+    }
+    
+    private void renderEquipped(EntityLivingBase ent, ItemStack item) {
+        RenderUtils.renderItemIn2d(item, 0.0625);
+        if(((IModdable)item.getItem()).getMode(item) == 0 && item.getItemDamage() < item.getMaxDamage() - 1)
+            RenderUtils.renderEnchantGlint_Equip();
+    }
 
 }

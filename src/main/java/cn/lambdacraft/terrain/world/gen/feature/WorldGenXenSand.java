@@ -18,9 +18,9 @@ public class WorldGenXenSand extends WorldGenerator
     }
 
     @Override
-	public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
+    public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
     {
-    	int l = par2Random.nextInt(this.radius - 2) + 2;
+        int l = par2Random.nextInt(this.radius - 2) + 2;
         byte b0 = 2;
 
         for (int i1 = par3 - l; i1 <= par3 + l; ++i1)

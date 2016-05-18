@@ -10,9 +10,9 @@ import net.minecraft.util.IIcon;
 
 public class BlockSlimeFlow extends BlockDynamicLiquid 
 {
-	
-	public BlockSlimeFlow()
-	{
+    
+    public BlockSlimeFlow()
+    {
         super(Material.water);
         this.setCreativeTab(CBCMod.cct);
         this.setHardness(100.0F);
@@ -21,17 +21,17 @@ public class BlockSlimeFlow extends BlockDynamicLiquid
         this.setBlockTextureName("slime_flow");
         this.disableStats();
         this.setCreativeTab(CBCMod.cct);
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister par1)
-	{
-	    this.blockIcon = par1.registerIcon("lambdacraft:" + this.getTextureName());
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerBlockIcons(IIconRegister par1)
+    {
+        this.blockIcon = par1.registerIcon("lambdacraft:" + this.getTextureName());
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
     public IIcon getIcon(int p_149691_1_, int p_149691_2_)
     {
         return this.blockIcon;

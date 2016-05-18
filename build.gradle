@@ -21,7 +21,7 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 version = "1.9"
-group= "cn.lambdacraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group= "cn.lambdacraft"
 archivesBaseName = "LambdaCraft"
 
 minecraft {
@@ -39,7 +39,6 @@ repositories {
 }
 
 dependencies {
-	compile "cn.liutils:LIUtils:1.7.10.000:dev"
 	compile "net.industrial-craft:industrialcraft-2:2.2.717-experimental:dev"
 }
 

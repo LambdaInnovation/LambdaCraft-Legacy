@@ -32,14 +32,14 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
  */
 public class ClientProxy extends Proxy {
 
-	@Override
-	public void init() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileWire.class,
-				new RenderWire());
-		RenderingRegistry.registerEntityRenderingHandler(EntitySpray.class,
-				new RenderSpray());
-		MinecraftForgeClient.registerItemRenderer(CBCItems.battery, new RenderModelItem(new ModelBattery(), ClientProps.BATTERY_PATH).setInventorySpin(false)
-				.setEquipOffset(0.4F, 0.0F, 0.0F).setScale(.6F).setInvScale(1.5F).setOffset(-0.25F, 1.5F, -0.25F).setInvOffset(5.0F, 7.0F));
-	}
-	
+    @Override
+    public void init() {
+        ClientRegistry.bindTileEntitySpecialRenderer(TileWire.class,
+                new RenderWire());
+        RenderingRegistry.registerEntityRenderingHandler(EntitySpray.class,
+                new RenderSpray());
+        MinecraftForgeClient.registerItemRenderer(CBCItems.battery, new RenderModelItem(new ModelBattery(), ClientProps.BATTERY_PATH).setInventorySpin(false)
+                .setEquipOffset(0.4F, 0.0F, 0.0F).setScale(.6F).setInvScale(1.5F).setOffset(-0.25F, 1.5F, -0.25F).setInvOffset(5.0F, 7.0F));
+    }
+    
 }

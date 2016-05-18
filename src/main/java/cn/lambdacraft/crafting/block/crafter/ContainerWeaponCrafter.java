@@ -26,39 +26,39 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class ContainerWeaponCrafter extends ContainerCrafterBase {
 
-	public final TileWeaponCrafter tileEntity;
-	
-	public ContainerWeaponCrafter(TileWeaponCrafter te) {
-		super(te);
-		this.tileEntity = te;
-	}
+    public final TileWeaponCrafter tileEntity;
+    
+    public ContainerWeaponCrafter(TileWeaponCrafter te) {
+        super(te);
+        this.tileEntity = te;
+    }
 
-	public ContainerWeaponCrafter(InventoryPlayer inventoryPlayer,
-			TileWeaponCrafter te) {
-		super(inventoryPlayer, te);
-		tileEntity = te;
+    public ContainerWeaponCrafter(InventoryPlayer inventoryPlayer,
+            TileWeaponCrafter te) {
+        super(inventoryPlayer, te);
+        tileEntity = te;
 
-		addSlots(te);
-		bindPlayerInventory(inventoryPlayer);
-	}
+        addSlots(te);
+        bindPlayerInventory(inventoryPlayer);
+    }
 
-	@Override
-	public void detectAndSendChanges() {
-		super.detectAndSendChanges();
-		for (int i = 0; i < this.crafters.size(); ++i) {
-			ICrafting icrafting = (ICrafting) this.crafters.get(i);
-			icrafting.sendProgressBarUpdate(this, 4, tileEntity.maxBurnTime);
-			icrafting.sendProgressBarUpdate(this, 5, tileEntity.burnTimeLeft);
-		}
-	}
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+        for (int i = 0; i < this.crafters.size(); ++i) {
+            ICrafting icrafting = (ICrafting) this.crafters.get(i);
+            icrafting.sendProgressBarUpdate(this, 4, tileEntity.maxBurnTime);
+            icrafting.sendProgressBarUpdate(this, 5, tileEntity.burnTimeLeft);
+        }
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void updateProgressBar(int par1, int par2) {
-		super.updateProgressBar(par1, par2);
-		if(par1 == 4)
-			tileEntity.maxBurnTime = par2;
-		else if(par1 == 5)
-			tileEntity.burnTimeLeft = par2;
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void updateProgressBar(int par1, int par2) {
+        super.updateProgressBar(par1, par2);
+        if(par1 == 4)
+            tileEntity.maxBurnTime = par2;
+        else if(par1 == 5)
+            tileEntity.burnTimeLeft = par2;
+    }
 }

@@ -24,43 +24,43 @@ import net.minecraft.world.World;
  */
 public class EntityFakeTarget extends Entity {
 
-	/**
-	 * @param par1World
-	 */
-	public EntityFakeTarget(World par1World) {
-		super(par1World);
-	}
+    /**
+     * @param par1World
+     */
+    public EntityFakeTarget(World par1World) {
+        super(par1World);
+    }
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.entity.Entity#entityInit()
-	 */
-	@Override
-	protected void entityInit() {
-		// TODO Auto-generated method stub
+    /* (non-Javadoc)
+     * @see net.minecraft.entity.Entity#entityInit()
+     */
+    @Override
+    protected void entityInit() {
+        // TODO Auto-generated method stub
 
-	}
-	
-	@Override
-	public void onUpdate() {
-		if(worldObj.isRemote)
-			setDead();
-	}
+    }
+    
+    @Override
+    public void onUpdate() {
+        if(worldObj.isRemote)
+            setDead();
+    }
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.entity.Entity#readEntityFromNBT(net.minecraft.nbt.NBTTagCompound)
-	 */
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound nbt) {
-		setDead();
-	}
+    /* (non-Javadoc)
+     * @see net.minecraft.entity.Entity#readEntityFromNBT(net.minecraft.nbt.NBTTagCompound)
+     */
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound nbt) {
+        setDead();
+    }
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.entity.Entity#writeEntityToNBT(net.minecraft.nbt.NBTTagCompound)
-	 */
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
-		// TODO Auto-generated method stub
+    /* (non-Javadoc)
+     * @see net.minecraft.entity.Entity#writeEntityToNBT(net.minecraft.nbt.NBTTagCompound)
+     */
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound nbttagcompound) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
 }

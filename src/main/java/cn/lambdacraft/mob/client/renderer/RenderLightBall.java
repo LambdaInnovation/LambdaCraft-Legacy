@@ -24,20 +24,20 @@ import net.minecraft.entity.Entity;
  */
 public class RenderLightBall extends RenderIcon {
 
-	public RenderLightBall() {
-		super(ClientProps.LIGHT_BALL_PATH);
-		this.setEnableDepth(false);
-		this.setSize(1.5F);
-	}
+    public RenderLightBall() {
+        super(ClientProps.LIGHT_BALL_PATH);
+        this.setEnableDepth(false);
+        this.setSize(1.5F);
+    }
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.client.renderer.entity.Render#doRender(net.minecraft.entity.Entity, double, double, double, float, float)
-	 */
-	@Override
-	public void doRender(Entity par1Entity, double par2, double par4, double par6,
-			float par8, float par9) {
-		this.alpha = 0.7F;
-		super.doRender(par1Entity, par2, par4, par6, par8, par9);
-	}
+    /* (non-Javadoc)
+     * @see net.minecraft.client.renderer.entity.Render#doRender(net.minecraft.entity.Entity, double, double, double, float, float)
+     */
+    @Override
+    public void doRender(Entity par1Entity, double par2, double par4, double par6,
+            float par8, float par9) {
+        this.alpha = 0.7F;
+        super.doRender(par1Entity, par2, par4, par6, par8, par9);
+    }
 
 }

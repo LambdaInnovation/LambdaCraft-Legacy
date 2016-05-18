@@ -26,69 +26,69 @@ import cn.liutils.api.command.LICommandBase;
  */
 public class CommandSpray extends LICommandBase {
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.command.ICommand#getCommandName()
-	 */
-	@Override
-	public String getCommandName() {
-		return "spray";
-	}
-	
+    /* (non-Javadoc)
+     * @see net.minecraft.command.ICommand#getCommandName()
+     */
     @Override
-	public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandName() {
+        return "spray";
+    }
+    
+    @Override
+    public String getCommandUsage(ICommandSender par1ICommandSender)
     {
         return "/spray color <R> <G> <B> | /spray id <i> | /spray color | /spray id";
     }
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.command.ICommand#processCommand(net.minecraft.command.ICommandSender, java.lang.String[])
-	 */
-	@Override
-	public void processCommand(ICommandSender ics, String[] astring) {
-		if(astring.length == 0) {
-			sendChat(ics, getCommandUsage(ics));
-			return;
-		}
-		if(astring[0].equals("color")) {
-			if(astring.length != 4) {
-				if(astring.length == 1) {
-					sendChat(ics, "spray.color.name", String.valueOf(ClientProps.sprayR) , String.valueOf(ClientProps.sprayG),
-							String.valueOf(ClientProps.sprayB));
-				} else 
-					sendChat(ics, "spray.argument.name");
-			} else {
-				try {
-					int r = Integer.valueOf(astring[1]);
-					int g = Integer.valueOf(astring[2]);
-					int b = Integer.valueOf(astring[3]);
-					ClientProps.setSprayColor(r, g, b, 255);
-				} catch(NumberFormatException e) {
-					sendChat(ics, "spray.format.name");
-				}
-				sendChat(ics, "spray.successful.name");
-			}
-		} else if(astring[0].equals("id")){
-			if(astring.length != 2) {
-				if(astring.length == 1) {
-					sendChat(ics, "spray.id.name", String.valueOf(ClientProps.getSprayId()));
-				} else
-					sendChat(ics, "spray.argument.name");
-			} else {
-				try {
-					int id = Integer.valueOf(astring[1]);
-					ClientProps.setSprayId(id);
-				} catch(NumberFormatException e) {
-					sendChat(ics, "spray.format.name");
-				}
-				sendChat(ics, "spray.successful.name");
-			}
-		} else {
-			sendChat(ics, EnumChatFormatting.RED + getCommandUsage(ics));
-		}
-	}
+    /* (non-Javadoc)
+     * @see net.minecraft.command.ICommand#processCommand(net.minecraft.command.ICommandSender, java.lang.String[])
+     */
+    @Override
+    public void processCommand(ICommandSender ics, String[] astring) {
+        if(astring.length == 0) {
+            sendChat(ics, getCommandUsage(ics));
+            return;
+        }
+        if(astring[0].equals("color")) {
+            if(astring.length != 4) {
+                if(astring.length == 1) {
+                    sendChat(ics, "spray.color.name", String.valueOf(ClientProps.sprayR) , String.valueOf(ClientProps.sprayG),
+                            String.valueOf(ClientProps.sprayB));
+                } else 
+                    sendChat(ics, "spray.argument.name");
+            } else {
+                try {
+                    int r = Integer.valueOf(astring[1]);
+                    int g = Integer.valueOf(astring[2]);
+                    int b = Integer.valueOf(astring[3]);
+                    ClientProps.setSprayColor(r, g, b, 255);
+                } catch(NumberFormatException e) {
+                    sendChat(ics, "spray.format.name");
+                }
+                sendChat(ics, "spray.successful.name");
+            }
+        } else if(astring[0].equals("id")){
+            if(astring.length != 2) {
+                if(astring.length == 1) {
+                    sendChat(ics, "spray.id.name", String.valueOf(ClientProps.getSprayId()));
+                } else
+                    sendChat(ics, "spray.argument.name");
+            } else {
+                try {
+                    int id = Integer.valueOf(astring[1]);
+                    ClientProps.setSprayId(id);
+                } catch(NumberFormatException e) {
+                    sendChat(ics, "spray.format.name");
+                }
+                sendChat(ics, "spray.successful.name");
+            }
+        } else {
+            sendChat(ics, EnumChatFormatting.RED + getCommandUsage(ics));
+        }
+    }
 
-	private void sendChat(ICommandSender ics, String format, Object ...message) {
-		ics.addChatMessage(new ChatComponentTranslation(format, message));
-	}
+    private void sendChat(ICommandSender ics, String format, Object ...message) {
+        ics.addChatMessage(new ChatComponentTranslation(format, message));
+    }
 
 }

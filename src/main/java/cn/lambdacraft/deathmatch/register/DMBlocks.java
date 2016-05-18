@@ -12,23 +12,23 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 public class DMBlocks {
 
-	public static Block blockTripmine, armorCharger, healthCharger;
+    public static Block blockTripmine, armorCharger, healthCharger;
 
-	public static void init(Configuration conf) {
+    public static void init(Configuration conf) {
 
-		blockTripmine = new BlockTripmine();
-		GameRegistry.registerBlock(blockTripmine, "lc_blocktripmine");
-		GameRegistry.registerTileEntity(TileTripmine.class, "tile_entity_tripmine");
+        blockTripmine = new BlockTripmine();
+        GameRegistry.registerBlock(blockTripmine, "lc_blocktripmine");
+        GameRegistry.registerTileEntity(TileTripmine.class, "tile_entity_tripmine");
 
-		armorCharger = new BlockArmorCharger();
-		healthCharger = new BlockHealthCharger();
-		GameRegistry.registerBlock(armorCharger, "lc_armorcharger");
-		GameRegistry.registerBlock(healthCharger, "lc_healthcharger");
+        armorCharger = new BlockArmorCharger();
+        healthCharger = new BlockHealthCharger();
+        GameRegistry.registerBlock(armorCharger, "lc_armorcharger");
+        GameRegistry.registerBlock(healthCharger, "lc_healthcharger");
 
-		GameRegistry.registerTileEntity(TileArmorCharger.class,
-				"tile_entity_charger");
-		GameRegistry.registerTileEntity(TileHealthCharger.class,
-				"tile_entity_hcharger");
+        GameRegistry.registerTileEntity(TileArmorCharger.class,
+                "tile_entity_charger");
+        GameRegistry.registerTileEntity(TileHealthCharger.class,
+                "tile_entity_hcharger");
 
-	}
+    }
 }

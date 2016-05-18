@@ -35,85 +35,85 @@ import net.minecraft.world.World;
  */
 public class EntityShockwave extends Entity {
 
-	public static final float DAMAGE_SCALE = 15.0F;
-	protected boolean attacked = false;
-	
-	private boolean firstUpdate = false;
-	
-	protected EntityHoundeye houndeye;
-	
-	public static IEntitySelector selector = new IEntitySelector() {
+    public static final float DAMAGE_SCALE = 15.0F;
+    protected boolean attacked = false;
+    
+    private boolean firstUpdate = false;
+    
+    protected EntityHoundeye houndeye;
+    
+    public static IEntitySelector selector = new IEntitySelector() {
 
-		@Override
-		public boolean isEntityApplicable(Entity entity) {
-			return GenericUtils.selectorLiving.isEntityApplicable(entity) && !(entity instanceof EntityHoundeye);
-		}
-		
-	};
-	
-	/**
-	 * @param par1World
-	 */
-	public EntityShockwave(World par1World, EntityHoundeye attacker, double x, double y, double z) {
-		super(par1World);
-		this.setSize(8.0F, 0.6F);
-		houndeye = attacker;
-		this.setPosition(x, y, z);
-	}
-	
-	public EntityShockwave(World world) {
-		super(world);
-		this.setSize(8.0F, 0.6F);
-	}
-	
-	@Override
-	public void onUpdate() {
-		if(worldObj.isRemote) {
-			if(firstUpdate) {
-				int blockX = (int) Math.round(posX);
-				int blockY = (int) Math.round(posY);
-				int blockZ = (int) Math.round(posZ);
-				worldObj.setLightValue(EnumSkyBlock.Sky, blockX, blockY, blockZ, 15);
-				worldObj.updateLightByType(EnumSkyBlock.Block, blockX, blockY + 1, blockZ);
-				worldObj.updateLightByType(EnumSkyBlock.Block, blockX - 1, blockY, blockZ);
-				worldObj.updateLightByType(EnumSkyBlock.Block, blockX, blockY, blockZ - 1);
-			}
-		}
-		
-		if(++ticksExisted >= 5 && !attacked) {
-			this.attemptEntityAttack();
-			attacked = true;
-			return;
-		} else if(ticksExisted > 15) {
-			this.setDead();
-		}
-	}
-	
-	private void attemptEntityAttack() {
-		if(worldObj.isRemote)
-			return;
-		AxisAlignedBB box = AxisAlignedBB.getBoundingBox(posX - 4.0, posY - 2.0, posZ - 4.0, posX + 4.0,  posY + 2.0, posZ + 4.0);
-		List<EntityLiving> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, box, selector);
-		for(EntityLivingBase e : list) {
-			double distanceSq = e.getDistanceSqToEntity(this);
-			distanceSq = (33.0 - distanceSq) / 33.0;
-			int dmg = (int) Math.round(distanceSq * DAMAGE_SCALE);
-			e.attackEntityFrom(DamageSource.causeMobDamage(houndeye), dmg);
-			e.addPotionEffect(new PotionEffect(Potion.confusion.id,(int) Math.round(200 * distanceSq),0));
-		}
-	}
+        @Override
+        public boolean isEntityApplicable(Entity entity) {
+            return GenericUtils.selectorLiving.isEntityApplicable(entity) && !(entity instanceof EntityHoundeye);
+        }
+        
+    };
+    
+    /**
+     * @param par1World
+     */
+    public EntityShockwave(World par1World, EntityHoundeye attacker, double x, double y, double z) {
+        super(par1World);
+        this.setSize(8.0F, 0.6F);
+        houndeye = attacker;
+        this.setPosition(x, y, z);
+    }
+    
+    public EntityShockwave(World world) {
+        super(world);
+        this.setSize(8.0F, 0.6F);
+    }
+    
+    @Override
+    public void onUpdate() {
+        if(worldObj.isRemote) {
+            if(firstUpdate) {
+                int blockX = (int) Math.round(posX);
+                int blockY = (int) Math.round(posY);
+                int blockZ = (int) Math.round(posZ);
+                worldObj.setLightValue(EnumSkyBlock.Sky, blockX, blockY, blockZ, 15);
+                worldObj.updateLightByType(EnumSkyBlock.Block, blockX, blockY + 1, blockZ);
+                worldObj.updateLightByType(EnumSkyBlock.Block, blockX - 1, blockY, blockZ);
+                worldObj.updateLightByType(EnumSkyBlock.Block, blockX, blockY, blockZ - 1);
+            }
+        }
+        
+        if(++ticksExisted >= 5 && !attacked) {
+            this.attemptEntityAttack();
+            attacked = true;
+            return;
+        } else if(ticksExisted > 15) {
+            this.setDead();
+        }
+    }
+    
+    private void attemptEntityAttack() {
+        if(worldObj.isRemote)
+            return;
+        AxisAlignedBB box = AxisAlignedBB.getBoundingBox(posX - 4.0, posY - 2.0, posZ - 4.0, posX + 4.0,  posY + 2.0, posZ + 4.0);
+        List<EntityLiving> list = worldObj.getEntitiesWithinAABBExcludingEntity(this, box, selector);
+        for(EntityLivingBase e : list) {
+            double distanceSq = e.getDistanceSqToEntity(this);
+            distanceSq = (33.0 - distanceSq) / 33.0;
+            int dmg = (int) Math.round(distanceSq * DAMAGE_SCALE);
+            e.attackEntityFrom(DamageSource.causeMobDamage(houndeye), dmg);
+            e.addPotionEffect(new PotionEffect(Potion.confusion.id,(int) Math.round(200 * distanceSq),0));
+        }
+    }
 
-	@Override
-	protected void entityInit() {}
+    @Override
+    protected void entityInit() {}
 
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound nbt) {
-		this.setDead();
-	}
+    @Override
+    protected void readEntityFromNBT(NBTTagCompound nbt) {
+        this.setDead();
+    }
 
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound nbt) {
-		this.setDead();
-	}
-	
+    @Override
+    protected void writeEntityToNBT(NBTTagCompound nbt) {
+        this.setDead();
+    }
+    
 }

@@ -44,36 +44,36 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecialElectricItem, IModdable, IClickHandler {
 
 
-	public Weapon_Crowbar_Electrical() {
-		super();
-		this.setUnlocalizedName("weapon_elcrowbar");
-		this.setMaxDamage(10000);
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister par1IconRegister) {
-		this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_crowbar");
-	}
-	
-	@Override
-	public boolean canProvideEnergy(ItemStack itemStack) {
-		return false;
-	}
-
-	@Override
-	public double getMaxCharge(ItemStack itemStack) {
-		return 10000;
-	}
-
-	@Override
-	public int getTier(ItemStack itemStack) {
-		return 2;
-	}
-	
-	/*	
+    public Weapon_Crowbar_Electrical() {
+        super();
+        this.setUnlocalizedName("weapon_elcrowbar");
+        this.setMaxDamage(10000);
+    }
+    
     @Override
-	public float getDamageVsEntity(Entity par1Entity, ItemStack i)
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IIconRegister par1IconRegister) {
+        this.itemIcon = par1IconRegister.registerIcon("lambdacraft:weapon_crowbar");
+    }
+    
+    @Override
+    public boolean canProvideEnergy(ItemStack itemStack) {
+        return false;
+    }
+
+    @Override
+    public double getMaxCharge(ItemStack itemStack) {
+        return 10000;
+    }
+
+    @Override
+    public int getTier(ItemStack itemStack) {
+        return 2;
+    }
+    
+    /*    
+    @Override
+    public float getDamageVsEntity(Entity par1Entity, ItemStack i)
     {
         return 6;
     }
@@ -82,117 +82,117 @@ public class Weapon_Crowbar_Electrical extends Weapon_Crowbar implements ISpecia
     @Override
     public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
-    	return par1ItemStack;
+        return par1ItemStack;
     }
     
     @Override
-	public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase attackedEntity, EntityLivingBase par3EntityLiving)
+    public boolean hitEntity(ItemStack par1ItemStack, EntityLivingBase attackedEntity, EntityLivingBase par3EntityLiving)
     {
         if(getMode(par1ItemStack) == 0 && getManager(par1ItemStack).discharge(par1ItemStack, 400, 2, true, false, false) == 400){
-        	attackedEntity.hurtResistantTime = -1;
-        	attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(par3EntityLiving), 5);
-        	if(attackedEntity instanceof EntityCreeper && itemRand.nextFloat() >= 0.9) {
-        		EntityLightningBolt bolt = new EntityLightningBolt(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ);
-        		if(!attackedEntity.worldObj.isDaytime())
-        			attackedEntity.worldObj.spawnEntityInWorld(bolt);
-        		attackedEntity.onStruckByLightning(bolt);
-        	}
+            attackedEntity.hurtResistantTime = -1;
+            attackedEntity.attackEntityFrom(DamageSource.causeMobDamage(par3EntityLiving), 5);
+            if(attackedEntity instanceof EntityCreeper && itemRand.nextFloat() >= 0.9) {
+                EntityLightningBolt bolt = new EntityLightningBolt(attackedEntity.worldObj, attackedEntity.posX, attackedEntity.posY, attackedEntity.posZ);
+                if(!attackedEntity.worldObj.isDaytime())
+                    attackedEntity.worldObj.spawnEntityInWorld(bolt);
+                attackedEntity.onStruckByLightning(bolt);
+            }
         }
         return true;
     }
-	
-	@Override
-	public double getTransferLimit(ItemStack itemStack) {
-		return 128;
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void addInformation(ItemStack par1ItemStack,
-			EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
-		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
-			par3List.add(StatCollector.translateToLocal("gui.curenergy.name")
-					+ " : " + getItemCharge(par1ItemStack) + "/"
-					+ 10000 + " EU");
-	}
+    
+    @Override
+    public double getTransferLimit(ItemStack itemStack) {
+        return 128;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void addInformation(ItemStack par1ItemStack,
+            EntityPlayer par2EntityPlayer, List par3List, boolean par4) {
+        super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
+            par3List.add(StatCollector.translateToLocal("gui.curenergy.name")
+                    + " : " + getItemCharge(par1ItemStack) + "/"
+                    + 10000 + " EU");
+    }
 
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
-			List par3List) {
-		par3List.add(new ItemStack(par1, 1, 0));
-		ItemStack chargedItem = new ItemStack(par1, 1, 9999);
-		par3List.add(chargedItem);
-	}
-	
-	private int getItemCharge(ItemStack itemStack) {
-		return itemStack.getMaxDamage() - itemStack.getItemDamage();
-	}
-	
-	private void setItemCharge(ItemStack itemStack, int i) {
-		itemStack.setItemDamage(itemStack.getMaxDamage() - i);
-	}
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void getSubItems(Item par1, CreativeTabs par2CreativeTabs,
+            List par3List) {
+        par3List.add(new ItemStack(par1, 1, 0));
+        ItemStack chargedItem = new ItemStack(par1, 1, 9999);
+        par3List.add(chargedItem);
+    }
+    
+    private int getItemCharge(ItemStack itemStack) {
+        return itemStack.getMaxDamage() - itemStack.getItemDamage();
+    }
+    
+    private void setItemCharge(ItemStack itemStack, int i) {
+        itemStack.setItemDamage(itemStack.getMaxDamage() - i);
+    }
 
-	@Override
-	public void onModeChange(ItemStack item, EntityPlayer player, int newMode) {
-		if(item.stackTagCompound == null)
-			item.stackTagCompound = new NBTTagCompound();
-		NBTTagCompound nbt = item.stackTagCompound;
-		nbt.setInteger("mode", newMode);
-	}
+    @Override
+    public void onModeChange(ItemStack item, EntityPlayer player, int newMode) {
+        if(item.stackTagCompound == null)
+            item.stackTagCompound = new NBTTagCompound();
+        NBTTagCompound nbt = item.stackTagCompound;
+        nbt.setInteger("mode", newMode);
+    }
 
-	@Override
-	public int getMode(ItemStack item) {
-		if(item.stackTagCompound == null)
-			item.stackTagCompound = new NBTTagCompound();
-		NBTTagCompound nbt = item.stackTagCompound;
-		return nbt.getInteger("mode");
-	}
+    @Override
+    public int getMode(ItemStack item) {
+        if(item.stackTagCompound == null)
+            item.stackTagCompound = new NBTTagCompound();
+        NBTTagCompound nbt = item.stackTagCompound;
+        return nbt.getInteger("mode");
+    }
 
-	@Override
-	public int getMaxModes() {
-		return 2;
-	}
+    @Override
+    public int getMaxModes() {
+        return 2;
+    }
 
-	@Override
-	public String getModeDescription(int mode) {
-		return "mode.elcrowbar" + mode;
-	}
+    @Override
+    public String getModeDescription(int mode) {
+        return "mode.elcrowbar" + mode;
+    }
 
-	@Override
-	public IElectricItemManager getManager(ItemStack itemStack) {
-		return LCElectItemManager.INSTANCE;
-	}
+    @Override
+    public IElectricItemManager getManager(ItemStack itemStack) {
+        return LCElectItemManager.INSTANCE;
+    }
 
-	@Override
-	public Item getChargedItem(ItemStack itemStack) {
-		return this;
-	}
+    @Override
+    public Item getChargedItem(ItemStack itemStack) {
+        return this;
+    }
 
-	@Override
-	public Item getEmptyItem(ItemStack itemStack) {
-		return this;
-	}
+    @Override
+    public Item getEmptyItem(ItemStack itemStack) {
+        return this;
+    }
 
-	@Override
-	public void onItemClick(World world, EntityPlayer player, ItemStack stack,
-			int keyid) {
-	}
+    @Override
+    public void onItemClick(World world, EntityPlayer player, ItemStack stack,
+            int keyid) {
+    }
 
-	@Override
-	public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,
-			int keyid) {
-		if(keyid == 1) {
-			this.onModeChange(stack, pl, (getMode(stack) + 1) % 2);
-		}
-	}
+    @Override
+    public void onItemRelease(World world, EntityPlayer pl, ItemStack stack,
+            int keyid) {
+        if(keyid == 1) {
+            this.onModeChange(stack, pl, (getMode(stack) + 1) % 2);
+        }
+    }
 
-	@Override
-	public void onItemUsingTick(World world, EntityPlayer player,
-			ItemStack stack, int keyid, int ticks) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onItemUsingTick(World world, EntityPlayer player,
+            ItemStack stack, int keyid, int ticks) {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

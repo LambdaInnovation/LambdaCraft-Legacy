@@ -29,172 +29,172 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class TileGeneratorLava extends TileGeneratorBase implements IInventory {
 
-	public static final int ENERGY_PER_BUCKET = 20000;
-	public ItemStack[] slots = new ItemStack[2];
-	public int bucketCnt = 0;
-	
-	private ItemStack lavaCell;
+    public static final int ENERGY_PER_BUCKET = 20000;
+    public ItemStack[] slots = new ItemStack[2];
+    public int bucketCnt = 0;
+    
+    private ItemStack lavaCell;
 
-	public TileGeneratorLava() {
-		super(1, 20);
-		lavaCell = IC2Items.getItem("lavaCell");
-	}
+    public TileGeneratorLava() {
+        super(1, 20);
+        lavaCell = IC2Items.getItem("lavaCell");
+    }
 
-	@Override
-	public void updateEntity() {
-		super.updateEntity();
-		if (worldObj.isRemote)
-			return;
-		tryBurn();
-		if (currentEnergy > 0) {
-			if (this.slots[1] != null
-					&& slots[1].getItem() instanceof ISpecialElectricItem) {
-				currentEnergy -= ((ISpecialElectricItem) slots[1].getItem()).getManager(slots[1]).charge(slots[1], currentEnergy, 1, false, false);
-			}
-			int toConsume = 10 - sendEnergy(currentEnergy > 10 ? 10 : currentEnergy);
-			currentEnergy -= toConsume;
-		} else {
-			if (bucketCnt-- > 0)
-				currentEnergy += ENERGY_PER_BUCKET;
-			else {
-				bucketCnt = 0;
-				currentEnergy = 0;
-			}
-		}
-	}
+    @Override
+    public void updateEntity() {
+        super.updateEntity();
+        if (worldObj.isRemote)
+            return;
+        tryBurn();
+        if (currentEnergy > 0) {
+            if (this.slots[1] != null
+                    && slots[1].getItem() instanceof ISpecialElectricItem) {
+                currentEnergy -= ((ISpecialElectricItem) slots[1].getItem()).getManager(slots[1]).charge(slots[1], currentEnergy, 1, false, false);
+            }
+            int toConsume = 10 - sendEnergy(currentEnergy > 10 ? 10 : currentEnergy);
+            currentEnergy -= toConsume;
+        } else {
+            if (bucketCnt-- > 0)
+                currentEnergy += ENERGY_PER_BUCKET;
+            else {
+                bucketCnt = 0;
+                currentEnergy = 0;
+            }
+        }
+    }
 
-	private void tryBurn() {
-		int energyReq = maxStorage - bucketCnt;
+    private void tryBurn() {
+        int energyReq = maxStorage - bucketCnt;
 
-		if (energyReq >= 1 && slots[0] != null) {
-			Item item = slots[0].getItem();
-			if (item == Items.lava_bucket
-				|| (lavaCell != null && lavaCell.getItem() == item && 
-				lavaCell.getItemDamage() == slots[0].getItemDamage())) {
-				if(item == Items.lava_bucket) {
-					this.setInventorySlotContents(0, new ItemStack(Items.lava_bucket));
-				} else {
-					slots[0].stackSize--;
-					if(slots[0].stackSize == 0)
-						slots[0] = null;
-				}
-				bucketCnt += 1;
-			}
-		}
-	}
+        if (energyReq >= 1 && slots[0] != null) {
+            Item item = slots[0].getItem();
+            if (item == Items.lava_bucket
+                || (lavaCell != null && lavaCell.getItem() == item && 
+                lavaCell.getItemDamage() == slots[0].getItemDamage())) {
+                if(item == Items.lava_bucket) {
+                    this.setInventorySlotContents(0, new ItemStack(Items.lava_bucket));
+                } else {
+                    slots[0].stackSize--;
+                    if(slots[0].stackSize == 0)
+                        slots[0] = null;
+                }
+                bucketCnt += 1;
+            }
+        }
+    }
 
-	@Override
-	public int getSizeInventory() {
-		return 2;
-	}
+    @Override
+    public int getSizeInventory() {
+        return 2;
+    }
 
-	@Override
-	public ItemStack getStackInSlot(int i) {
-		return slots[i];
-	}
+    @Override
+    public ItemStack getStackInSlot(int i) {
+        return slots[i];
+    }
 
-	@Override
-	public ItemStack decrStackSize(int slot, int amt) {
-		ItemStack stack = getStackInSlot(slot);
-		if (stack != null) {
-			if (stack.stackSize <= amt) {
-				setInventorySlotContents(slot, null);
-			} else {
-				stack = stack.splitStack(amt);
-				if (stack.stackSize == 0) {
-					setInventorySlotContents(slot, null);
-				}
-			}
-		}
-		return stack;
-	}
+    @Override
+    public ItemStack decrStackSize(int slot, int amt) {
+        ItemStack stack = getStackInSlot(slot);
+        if (stack != null) {
+            if (stack.stackSize <= amt) {
+                setInventorySlotContents(slot, null);
+            } else {
+                stack = stack.splitStack(amt);
+                if (stack.stackSize == 0) {
+                    setInventorySlotContents(slot, null);
+                }
+            }
+        }
+        return stack;
+    }
 
-	/**
-	 * Reads a tile entity from NBT.
-	 */
-	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		this.slots = restoreInventory(nbt, "inv", slots.length);
-		bucketCnt = nbt.getShort("bucket");
-	}
+    /**
+     * Reads a tile entity from NBT.
+     */
+    @Override
+    public void readFromNBT(NBTTagCompound nbt) {
+        super.readFromNBT(nbt);
+        this.slots = restoreInventory(nbt, "inv", slots.length);
+        bucketCnt = nbt.getShort("bucket");
+    }
 
-	/**
-	 * Writes a tile entity to NBT.
-	 */
-	@Override
-	public void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		this.storeInventory(nbt, slots, "inv");
-		nbt.setShort("bucket", (short) bucketCnt);
-	}
+    /**
+     * Writes a tile entity to NBT.
+     */
+    @Override
+    public void writeToNBT(NBTTagCompound nbt) {
+        super.writeToNBT(nbt);
+        this.storeInventory(nbt, slots, "inv");
+        nbt.setShort("bucket", (short) bucketCnt);
+    }
 
-	@Override
-	public ItemStack getStackInSlotOnClosing(int i) {
-		return slots[i];
-	}
+    @Override
+    public ItemStack getStackInSlotOnClosing(int i) {
+        return slots[i];
+    }
 
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
-		return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
-				zCoord + 0.5) <= 64;
-	}
+    @Override
+    public boolean isUseableByPlayer(EntityPlayer entityplayer) {
+        return entityplayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5,
+                zCoord + 0.5) <= 64;
+    }
 
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack) {
-		slots[i] = itemstack;
-	}
+    @Override
+    public void setInventorySlotContents(int i, ItemStack itemstack) {
+        slots[i] = itemstack;
+    }
 
-	@Override
-	public String getInventoryName() {
-		return "cbc.tile.genlava";
-	}
+    @Override
+    public String getInventoryName() {
+        return "cbc.tile.genlava";
+    }
 
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-	
-	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
-		if (i == 0)
-			return true;
-		else
-			return (itemstack.getItem() instanceof ISpecialElectricItem);
-	}
+    @Override
+    public int getInventoryStackLimit() {
+        return 64;
+    }
+    
+    @Override
+    public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+        if (i == 0)
+            return true;
+        else
+            return (itemstack.getItem() instanceof ISpecialElectricItem);
+    }
 
-	@Override
-	public double getOfferedEnergy() {
-		return Math.min(currentEnergy, 10);
-	}
+    @Override
+    public double getOfferedEnergy() {
+        return Math.min(currentEnergy, 10);
+    }
 
-	@Override
-	public void drawEnergy(double amount) {
-		currentEnergy -= amount;
-		if(currentEnergy < 0) currentEnergy = 0;
-	}
+    @Override
+    public void drawEnergy(double amount) {
+        currentEnergy -= amount;
+        if(currentEnergy < 0) currentEnergy = 0;
+    }
 
-	@Override
-	public int getSourceTier() {
-		return 2;
-	}
+    @Override
+    public int getSourceTier() {
+        return 2;
+    }
 
-	@Override
-	public boolean hasCustomInventoryName() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+    @Override
+    public boolean hasCustomInventoryName() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-	@Override
-	public void openInventory() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void openInventory() {
+        // TODO Auto-generated method stub
+        
+    }
 
-	@Override
-	public void closeInventory() {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void closeInventory() {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

@@ -25,13 +25,13 @@ import cpw.mods.fml.common.registry.GameRegistry;
  */
 public class CBCMobBlocks {
 
-	public static BlockSentryRay sentryRay;
-	
-	public static void init(Configuration conf) {
-		sentryRay = new BlockSentryRay();
-		
-		GameRegistry.registerBlock(sentryRay, "sentry_ray");
-		GameRegistry.registerTileEntity(TileSentryRay.class, "tile_entity_sentry_ray");
-	}
+    public static BlockSentryRay sentryRay;
+    
+    public static void init(Configuration conf) {
+        sentryRay = new BlockSentryRay();
+        
+        GameRegistry.registerBlock(sentryRay, "sentry_ray");
+        GameRegistry.registerTileEntity(TileSentryRay.class, "tile_entity_sentry_ray");
+    }
 
 }

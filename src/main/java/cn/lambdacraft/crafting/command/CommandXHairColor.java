@@ -25,47 +25,47 @@ import cn.liutils.api.command.LICommandBase;
  */
 public class CommandXHairColor extends LICommandBase {
 
-	@Override
-	public String getCommandName() {
-		return "crosshair";
-	}
-	
     @Override
-	public String getCommandUsage(ICommandSender par1ICommandSender)
+    public String getCommandName() {
+        return "crosshair";
+    }
+    
+    @Override
+    public String getCommandUsage(ICommandSender par1ICommandSender)
     {
         return "/crosshair color | /crosshair color <R> <G> <B>";
     }
 
-	/* (non-Javadoc)
-	 * @see net.minecraft.command.ICommand#processCommand(net.minecraft.command.ICommandSender, java.lang.String[])
-	 */
-	@Override
-	public void processCommand(ICommandSender ics, String[] astring) {
-		if(astring.length == 0) {
-			sendChat(ics, getCommandUsage(ics));
-			return;
-		}
-		if(astring[0].equals("color")) {
-			if(astring.length != 4) {
-				if(astring.length == 1) {
-					LICommandBase.sendWithTranslation(ics, "spray.color.name",
-							ClientProps.xHairR, ClientProps.xHairG, ClientProps.xHairB);
-				} else 
-					LICommandBase.sendChat(ics, "spray.argument.name");
-			} else {
-				try {
-					int r = Integer.valueOf(astring[1]);
-					int g = Integer.valueOf(astring[2]);
-					int b = Integer.valueOf(astring[3]);
-					ClientProps.setCrosshairColor(r, g, b);
-				} catch(NumberFormatException e) {
-					LICommandBase.sendChat(ics, "spray.format.name");
-				}
-				LICommandBase.sendChat(ics, "spray.successful.name");
-			}
-		} else {
-			LICommandBase.sendChat(ics, EnumChatFormatting.RED + getCommandUsage(ics));
-		}	
-	}
+    /* (non-Javadoc)
+     * @see net.minecraft.command.ICommand#processCommand(net.minecraft.command.ICommandSender, java.lang.String[])
+     */
+    @Override
+    public void processCommand(ICommandSender ics, String[] astring) {
+        if(astring.length == 0) {
+            sendChat(ics, getCommandUsage(ics));
+            return;
+        }
+        if(astring[0].equals("color")) {
+            if(astring.length != 4) {
+                if(astring.length == 1) {
+                    LICommandBase.sendWithTranslation(ics, "spray.color.name",
+                            ClientProps.xHairR, ClientProps.xHairG, ClientProps.xHairB);
+                } else 
+                    LICommandBase.sendChat(ics, "spray.argument.name");
+            } else {
+                try {
+                    int r = Integer.valueOf(astring[1]);
+                    int g = Integer.valueOf(astring[2]);
+                    int b = Integer.valueOf(astring[3]);
+                    ClientProps.setCrosshairColor(r, g, b);
+                } catch(NumberFormatException e) {
+                    LICommandBase.sendChat(ics, "spray.format.name");
+                }
+                LICommandBase.sendChat(ics, "spray.successful.name");
+            }
+        } else {
+            LICommandBase.sendChat(ics, EnumChatFormatting.RED + getCommandUsage(ics));
+        }    
+    }
 
 }

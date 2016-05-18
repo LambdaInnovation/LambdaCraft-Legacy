@@ -35,73 +35,73 @@ import cn.liutils.api.client.util.RenderUtils;
  */
 public class RenderAlienSlave extends LIRenderMob {
 
-	private static final float WIDTH = 0.25F;
-	protected static final Random rand = new Random();
-	
-	/**
-	 * @param par1ModelBase
-	 * @param par2
-	 */
-	public RenderAlienSlave() {
-		super(new ModelVortigaunt(), 0.5F);
-	}
+    private static final float WIDTH = 0.25F;
+    protected static final Random rand = new Random();
+    
+    /**
+     * @param par1ModelBase
+     * @param par2
+     */
+    public RenderAlienSlave() {
+        super(new ModelVortigaunt(), 0.5F);
+    }
 
     @Override
-	public void doRender(Entity entity, double x, double y, double z, float par8, float par9)
+    public void doRender(Entity entity, double x, double y, double z, float par8, float par9)
     {
-    	GL11.glPushMatrix();
-    	EntityAlienSlave slave = (EntityAlienSlave) entity;
-    	Tessellator t = Tessellator.instance;
-    	if(slave.isCharging) {
-    		for(Vec3 vec : slave.electrolyze_left) {
-    			renderElectro(slave, vec, t, x, y, z, true);
-    		}
-    		
-    		for(Vec3 vec : slave.electrolyze_right) {
-    			renderElectro(slave, vec, t, x, y, z, false);
-    		}
-    	}
-    	if(entity.hurtResistantTime > 10)
-    		GL11.glColor4f(1.0F, 0.3F, 0.3F, 1.0F);
-    	super.doRender(entity, x, y, z, par8, par9);
-    	GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    	GL11.glPopMatrix();
+        GL11.glPushMatrix();
+        EntityAlienSlave slave = (EntityAlienSlave) entity;
+        Tessellator t = Tessellator.instance;
+        if(slave.isCharging) {
+            for(Vec3 vec : slave.electrolyze_left) {
+                renderElectro(slave, vec, t, x, y, z, true);
+            }
+            
+            for(Vec3 vec : slave.electrolyze_right) {
+                renderElectro(slave, vec, t, x, y, z, false);
+            }
+        }
+        if(entity.hurtResistantTime > 10)
+            GL11.glColor4f(1.0F, 0.3F, 0.3F, 1.0F);
+        super.doRender(entity, x, y, z, par8, par9);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glPopMatrix();
     }
     
     private void renderElectro(EntityAlienSlave ent, Vec3 vec3, Tessellator t, double x, double y, double z, boolean isLeft) {
-    	double dx = vec3.xCoord, dy = vec3.yCoord, dz = vec3.zCoord ;
-    	double tx = 0.0, ty = 1.2, tz = 0.0;
-    	GL11.glPushMatrix();
-    	GL11.glDisable(GL11.GL_CULL_FACE);
-    	GL11.glDisable(GL11.GL_LIGHTING);
-    	GL11.glEnable(GL11.GL_BLEND);
-    	GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-    	RenderUtils.loadTexture(ClientProps.VORTIGAUNT_RAY_PATH[rand.nextInt(3)]);
-    	
-    	Vec3 v1 = RenderUtils.newV3(tx - WIDTH, ty, tz), v2 = RenderUtils.newV3(tx + WIDTH, ty, tz),
-    		v3 = RenderUtils.newV3(tx, ty - WIDTH, tz), v4 = RenderUtils.newV3(tx, ty + WIDTH, tz);
-    	double d = Math.sqrt(dx * dx +  dy * dy + dz * dz) * 1.3;
-    	
-    	GL11.glTranslated(x, y, z);
-    	
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
-		t.startDrawingQuads();
-		t.setBrightness(15728880);
-		t.setColorRGBA_F(0.1F, 0.9F, 0.1F, 0.7F);
-    	RenderUtils.addVertex(v1 , 0, 0);
-    	RenderUtils.addVertex(v2 , 1, 0);
-    	RenderUtils.addVertex(v2.addVector(dx, dy, dz) , 1, d);
-    	RenderUtils.addVertex(v1.addVector(dx, dy, dz) , 0, d);
-    	
-    	RenderUtils.addVertex(v3 , 0, 0);
-    	RenderUtils.addVertex(v4 , 1, 0);
-    	RenderUtils.addVertex(v4.addVector(dx, dy, dz) , 1, d);
-    	RenderUtils.addVertex(v3.addVector(dx, dy, dz) , 0, d);
-    	t.draw();
-    	
-    	GL11.glEnable(GL11.GL_CULL_FACE);
-    	GL11.glEnable(GL11.GL_LIGHTING);
-    	GL11.glPopMatrix();
-    	
+        double dx = vec3.xCoord, dy = vec3.yCoord, dz = vec3.zCoord ;
+        double tx = 0.0, ty = 1.2, tz = 0.0;
+        GL11.glPushMatrix();
+        GL11.glDisable(GL11.GL_CULL_FACE);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        RenderUtils.loadTexture(ClientProps.VORTIGAUNT_RAY_PATH[rand.nextInt(3)]);
+        
+        Vec3 v1 = RenderUtils.newV3(tx - WIDTH, ty, tz), v2 = RenderUtils.newV3(tx + WIDTH, ty, tz),
+            v3 = RenderUtils.newV3(tx, ty - WIDTH, tz), v4 = RenderUtils.newV3(tx, ty + WIDTH, tz);
+        double d = Math.sqrt(dx * dx +  dy * dy + dz * dz) * 1.3;
+        
+        GL11.glTranslated(x, y, z);
+        
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
+        t.startDrawingQuads();
+        t.setBrightness(15728880);
+        t.setColorRGBA_F(0.1F, 0.9F, 0.1F, 0.7F);
+        RenderUtils.addVertex(v1 , 0, 0);
+        RenderUtils.addVertex(v2 , 1, 0);
+        RenderUtils.addVertex(v2.addVector(dx, dy, dz) , 1, d);
+        RenderUtils.addVertex(v1.addVector(dx, dy, dz) , 0, d);
+        
+        RenderUtils.addVertex(v3 , 0, 0);
+        RenderUtils.addVertex(v4 , 1, 0);
+        RenderUtils.addVertex(v4.addVector(dx, dy, dz) , 1, d);
+        RenderUtils.addVertex(v3.addVector(dx, dy, dz) , 0, d);
+        t.draw();
+        
+        GL11.glEnable(GL11.GL_CULL_FACE);
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glPopMatrix();
+        
     }
 }

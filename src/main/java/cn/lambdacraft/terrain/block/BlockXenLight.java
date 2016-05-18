@@ -34,50 +34,50 @@ import cn.lambdacraft.terrain.tileentity.TileEntityXenLight;
  */
 public class BlockXenLight extends CBCBlockContainer {
 
-	private boolean isBright;
+    private boolean isBright;
 
-	public BlockXenLight( boolean bright) {
-		super(Material.cloth);
-		isBright = bright;
-		this.setStepSound(soundTypeCloth);
-		this.setBlockName("xenLight");
-		this.setBlockTextureName("lambdacraft:xenlight");
-		this.setLightLevel(isBright ? 0.7F : 0.0F);
-	}
+    public BlockXenLight( boolean bright) {
+        super(Material.cloth);
+        isBright = bright;
+        this.setStepSound(soundTypeCloth);
+        this.setBlockName("xenLight");
+        this.setBlockTextureName("lambdacraft:xenlight");
+        this.setLightLevel(isBright ? 0.7F : 0.0F);
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World var1, int var2) {
-		return new TileEntityXenLight();
-	}
-	
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2) {
+        return new TileEntityXenLight();
+    }
+    
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
 
-	@Override
-	public boolean renderAsNormalBlock() {
-		return false;
-	}
+    @Override
+    public boolean renderAsNormalBlock() {
+        return false;
+    }
     
     /**
      * Returns true if the given block ID is equivalent to this one. Example: redstoneTorchOn matches itself and
      * redstoneTorchOff, and vice versa. Most blocks only match themselves.
      */
     @Override
-	public boolean isAssociatedBlock(Block par1)
+    public boolean isAssociatedBlock(Block par1)
     {
         return par1 == XenBlocks.light_on || par1 == XenBlocks.light_off;
     }
     
     @Override
-	public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
+    public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_)
     {
         return Item.getItemFromBlock(XenBlocks.light_on);
     }
     
     @Override
-	public int getRenderType()
+    public int getRenderType()
     {
         return ClientProps.RENDER_TYPE_EMPTY;
     }
@@ -86,8 +86,8 @@ public class BlockXenLight extends CBCBlockContainer {
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
     @Override
-	public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
-    	this.setBlockBounds(0.35F, 0.0F, 0.35F, 0.65F, isBright ? 1.0F : 0.4F, 0.65F);
+    public void setBlockBoundsBasedOnState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4) {
+        this.setBlockBounds(0.35F, 0.0F, 0.35F, 0.65F, isBright ? 1.0F : 0.4F, 0.65F);
     }
     
     /**
@@ -96,9 +96,9 @@ public class BlockXenLight extends CBCBlockContainer {
      */
     @Override
     public void onNeighborBlockChange(World world, int par2, int par3, int par4, Block par5) {
-    	if(world.getBlock(par2, par3 - 1, par4) == Blocks.air){
-    		world.setBlockToAir(par2, par3, par4);
-    	}
+        if(world.getBlock(par2, par3 - 1, par4) == Blocks.air){
+            world.setBlockToAir(par2, par3, par4);
+        }
     }
 
 }

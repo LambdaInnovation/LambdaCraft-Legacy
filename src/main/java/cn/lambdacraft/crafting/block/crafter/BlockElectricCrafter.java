@@ -30,48 +30,48 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class BlockElectricCrafter extends BlockWeaponCrafter {
 
-	public BlockElectricCrafter() {
-		super();
-		setBlockName("elcrafter");
-	}
+    public BlockElectricCrafter() {
+        super();
+        setBlockName("elcrafter");
+    }
 
-	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
-		iconSide = par1IconRegister.registerIcon("lambdacraft:ec_side");
-		iconTop = par1IconRegister.registerIcon("lambdacraft:ec_top");
-		iconBottom = par1IconRegister
-				.registerIcon("lambdacraft:crafter_bottom");
-		iconMain = par1IconRegister.registerIcon("lambdacraft:ec_main");
-		blockIcon = iconTop;
-	}
+    @Override
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        iconSide = par1IconRegister.registerIcon("lambdacraft:ec_side");
+        iconTop = par1IconRegister.registerIcon("lambdacraft:ec_top");
+        iconBottom = par1IconRegister
+                .registerIcon("lambdacraft:crafter_bottom");
+        iconMain = par1IconRegister.registerIcon("lambdacraft:ec_main");
+        blockIcon = iconTop;
+    }
 
-	@SideOnly(Side.CLIENT)
-	@Override
-	public IIcon getIcon(int par1, int par2) {
-		if (par1 < 1)
-			return iconBottom;
-		if (par1 < 2)
-			return iconTop;
-		if (par1 == par2)
-			return iconMain;
-		return iconSide;
-	}
+    @SideOnly(Side.CLIENT)
+    @Override
+    public IIcon getIcon(int par1, int par2) {
+        if (par1 < 1)
+            return iconBottom;
+        if (par1 < 2)
+            return iconTop;
+        if (par1 == par2)
+            return iconMain;
+        return iconSide;
+    }
 
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z,
-			EntityPlayer player, int idk, float what, float these, float are) {
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
-		if (tileEntity == null || player.isSneaking()) {
-			return false;
-		}
-		player.openGui(CBCMod.instance, GeneralProps.GUI_ID_EL_CRAFTER, world,
-				x, y, z);
-		return true;
-	}
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z,
+            EntityPlayer player, int idk, float what, float these, float are) {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity == null || player.isSneaking()) {
+            return false;
+        }
+        player.openGui(CBCMod.instance, GeneralProps.GUI_ID_EL_CRAFTER, world,
+                x, y, z);
+        return true;
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World world, int i) {
-		return new TileElCrafter();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World world, int i) {
+        return new TileElCrafter();
+    }
 
 }

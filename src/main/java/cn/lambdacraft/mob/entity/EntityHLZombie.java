@@ -44,21 +44,21 @@ import net.minecraft.world.World;
  * @author mkpoli
  */
 public class EntityHLZombie extends LIEntityMob {
-	public final static float MOVE_SPEED = 0.23F;
-	public final static float MAX_HEALTH = 30F;
-	
-	public int damagetype;
-	public int damage;
-	protected int playtick = 0;
-	public Entity entityToAttack;
-	public int tickCountAttack;
-	private EntityAIBase ai1, ai2;
+    public final static float MOVE_SPEED = 0.23F;
+    public final static float MAX_HEALTH = 30F;
+    
+    public int damagetype;
+    public int damage;
+    protected int playtick = 0;
+    public Entity entityToAttack;
+    public int tickCountAttack;
+    private EntityAIBase ai1, ai2;
 
-	public EntityHLZombie(World par1World) {
-		super(par1World);
-		this.experienceValue = 10;
-		/*
-		this.getNavigator().setBreakDoors(true);
+    public EntityHLZombie(World par1World) {
+        super(par1World);
+        this.experienceValue = 10;
+        /*
+        this.getNavigator().setBreakDoors(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIBreakDoor(this));
         this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, this.getMoveSpeed(), false));
@@ -74,7 +74,7 @@ public class EntityHLZombie extends LIEntityMob {
         ai2 = new EntityAINearestAttackableTarget(this, EntityVillager.class, 0, false);
         this.targetTasks.addTask(2, ai2);
         */
-		
+        
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIBreakDoor(this));
         this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, false));
@@ -87,183 +87,183 @@ public class EntityHLZombie extends LIEntityMob {
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityVillager.class, 0, false));
-	}
-	
+    }
+    
     @Override
-	protected void applyEntityAttributes()
+    protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0D);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D);
         this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3.0D);
     }
-	
-	@Override
-	public void entityInit() {
-		super.entityInit();
-		this.dataWatcher.addObject(20, Byte.valueOf((byte)0));
-	}
+    
+    @Override
+    public void entityInit() {
+        super.entityInit();
+        this.dataWatcher.addObject(20, Byte.valueOf((byte)0));
+    }
 
-	@Override
-	public double getMaxHealth2() {
-		return MAX_HEALTH;
-	}
-	
-	@Override
-	public void onUpdate() {
-		boolean preIsBurning = this.isBurning();
-		super.onUpdate();
-		updateStats();
-		if(isAttacking()) {
-			if(--tickCountAttack <= 0)
-				doRealAttack();
-		}
-		if (!this.worldObj.isRemote) {
-			if (this.isBurning()) {
-				this.targetTasks.removeTask(ai1);
-				this.targetTasks.removeTask(ai2);
-				onBuring();
-			} else if(preIsBurning)
-				this.attackEntityFrom(DamageSource.causeMobDamage(this), 200);
-		}
-	}
-	
-	public boolean isAttacking() {
-		return (worldObj.isRemote && tickCountAttack > 0) || this.entityToAttack != null;
-	}
+    @Override
+    public double getMaxHealth2() {
+        return MAX_HEALTH;
+    }
+    
+    @Override
+    public void onUpdate() {
+        boolean preIsBurning = this.isBurning();
+        super.onUpdate();
+        updateStats();
+        if(isAttacking()) {
+            if(--tickCountAttack <= 0)
+                doRealAttack();
+        }
+        if (!this.worldObj.isRemote) {
+            if (this.isBurning()) {
+                this.targetTasks.removeTask(ai1);
+                this.targetTasks.removeTask(ai2);
+                onBuring();
+            } else if(preIsBurning)
+                this.attackEntityFrom(DamageSource.causeMobDamage(this), 200);
+        }
+    }
+    
+    public boolean isAttacking() {
+        return (worldObj.isRemote && tickCountAttack > 0) || this.entityToAttack != null;
+    }
 
-	@Override
-	public boolean attackEntityAsMob(Entity par1Entity) {
-		if(this.isBurning() || tickCountAttack > 0)
-			return false;
-		damagetype = this.worldObj.rand.nextInt(3);
-		if (damagetype == 0) {
-			this.worldObj.playSoundAtEntity(par1Entity, "lambdacraft:mobs.zo_attacka", 0.5f, 1.0f);
-			damage = 6;
-		} else {
-			this.worldObj.playSoundAtEntity(par1Entity, "lambdacraft:mobs.zo_attackb", 0.5f, 1.0f);
-			damage = 3;
-		}
-		this.entityToAttack = par1Entity;
-		this.tickCountAttack = damagetype == 0 ? 10 : 5;
-		return false;
-	}
-	
-	protected void doRealAttack() {
-		if(!worldObj.isRemote) {
-			double distance = this.getDistanceSqToEntity(entityToAttack);
-			String sndPath;
-			if(distance <= 3.0) {
-				entityToAttack.attackEntityFrom(DamageSource.causeMobDamage(this), damage);
-				sndPath = GenericUtils.getRandomSound("lambdacraft:mobs.zo_claw_strike", 3);
-			} else 
-				sndPath = GenericUtils.getRandomSound("lambdacraft:mobs.zo_claw_miss", 2);
-			this.playSound(sndPath, 0.5F, 1.0F);
-		}
-		this.tickCountAttack = 0;
-		this.entityToAttack = null;
-	}
+    @Override
+    public boolean attackEntityAsMob(Entity par1Entity) {
+        if(this.isBurning() || tickCountAttack > 0)
+            return false;
+        damagetype = this.worldObj.rand.nextInt(3);
+        if (damagetype == 0) {
+            this.worldObj.playSoundAtEntity(par1Entity, "lambdacraft:mobs.zo_attacka", 0.5f, 1.0f);
+            damage = 6;
+        } else {
+            this.worldObj.playSoundAtEntity(par1Entity, "lambdacraft:mobs.zo_attackb", 0.5f, 1.0f);
+            damage = 3;
+        }
+        this.entityToAttack = par1Entity;
+        this.tickCountAttack = damagetype == 0 ? 10 : 5;
+        return false;
+    }
+    
+    protected void doRealAttack() {
+        if(!worldObj.isRemote) {
+            double distance = this.getDistanceSqToEntity(entityToAttack);
+            String sndPath;
+            if(distance <= 3.0) {
+                entityToAttack.attackEntityFrom(DamageSource.causeMobDamage(this), damage);
+                sndPath = GenericUtils.getRandomSound("lambdacraft:mobs.zo_claw_strike", 3);
+            } else 
+                sndPath = GenericUtils.getRandomSound("lambdacraft:mobs.zo_claw_miss", 2);
+            this.playSound(sndPath, 0.5F, 1.0F);
+        }
+        this.tickCountAttack = 0;
+        this.entityToAttack = null;
+    }
 
-	@Override
-	public void onDeath(DamageSource par1DamageSource) {
-		super.onDeath(par1DamageSource);
-		if (!this.worldObj.isRemote && !par1DamageSource.isFireDamage()) {
-			EntityHeadcrab entityHeadcrab = new EntityHeadcrab(this.worldObj);
-			entityHeadcrab.setLocationAndAngles(this.posX, this.posY + this.height, this.posZ, MathHelper.wrapAngleTo180_float(this.worldObj.rand.nextFloat() * 360.0F), 0.0F);
-			this.worldObj.spawnEntityInWorld(entityHeadcrab);
-			entityHeadcrab.setHealth(10);
-		}
-	}
-	
-	public void updateStats() {
-		if(worldObj.isRemote) {
-			Byte a = dataWatcher.getWatchableObjectByte(20);
-			if(!this.isAttacking() && a != 0) {
-				this.damagetype = a - 1;
-				tickCountAttack = damagetype == 0 ? 10 : 5;
-			} 
-		}
-		else {
-			dataWatcher.updateObject(20, Byte.valueOf((byte)((isAttacking() ? 1 : 0) * (this.damagetype + 1))));
-		}
-	}
-	
-	public void onBuring() {
-		if(playtick >= 40) {
-			//this.worldObj.playSoundAtEntity(this, GenericUtils.getRandomSound("lambdacraft:mobs.zo_moan_loop", 3), 0.5F, 1.0F);
-			playtick = 0;
-		}
-		++playtick;
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0f);
-	}
+    @Override
+    public void onDeath(DamageSource par1DamageSource) {
+        super.onDeath(par1DamageSource);
+        if (!this.worldObj.isRemote && !par1DamageSource.isFireDamage()) {
+            EntityHeadcrab entityHeadcrab = new EntityHeadcrab(this.worldObj);
+            entityHeadcrab.setLocationAndAngles(this.posX, this.posY + this.height, this.posZ, MathHelper.wrapAngleTo180_float(this.worldObj.rand.nextFloat() * 360.0F), 0.0F);
+            this.worldObj.spawnEntityInWorld(entityHeadcrab);
+            entityHeadcrab.setHealth(10);
+        }
+    }
+    
+    public void updateStats() {
+        if(worldObj.isRemote) {
+            Byte a = dataWatcher.getWatchableObjectByte(20);
+            if(!this.isAttacking() && a != 0) {
+                this.damagetype = a - 1;
+                tickCountAttack = damagetype == 0 ? 10 : 5;
+            } 
+        }
+        else {
+            dataWatcher.updateObject(20, Byte.valueOf((byte)((isAttacking() ? 1 : 0) * (this.damagetype + 1))));
+        }
+    }
+    
+    public void onBuring() {
+        if(playtick >= 40) {
+            //this.worldObj.playSoundAtEntity(this, GenericUtils.getRandomSound("lambdacraft:mobs.zo_moan_loop", 3), 0.5F, 1.0F);
+            playtick = 0;
+        }
+        ++playtick;
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.0f);
+    }
 
-	@Override
+    @Override
     protected Item getDropItem()
     {
         return Items.rotten_flesh;
     }
-	
+    
     /**
      * Returns true if the newer Entity AI code should be run
      */
     @Override
-	protected boolean isAIEnabled()
+    protected boolean isAIEnabled()
     {
         return true;
     }
     
-	@Override
-	protected String getLivingSound() {
-		return GenericUtils.getRandomSound("lambdacraft:mobs.zo_idle", 3);
-	}
+    @Override
+    protected String getLivingSound() {
+        return GenericUtils.getRandomSound("lambdacraft:mobs.zo_idle", 3);
+    }
 
-	/**
-	 * Returns the sound this mob makes when it is hurt.
-	 */
-	@Override
-	protected String getHurtSound() {
-		return GenericUtils.getRandomSound("lambdacraft:mobs.zo_pain", 2);
-	}
+    /**
+     * Returns the sound this mob makes when it is hurt.
+     */
+    @Override
+    protected String getHurtSound() {
+        return GenericUtils.getRandomSound("lambdacraft:mobs.zo_pain", 2);
+    }
 
-	/**
-	 * Returns the sound this mob makes on death.
-	 */
-	@Override
-	protected String getDeathSound() {
-		return GenericUtils.getRandomSound("lambdacraft:mobs.hc_die", 2);
-	}
+    /**
+     * Returns the sound this mob makes on death.
+     */
+    @Override
+    protected String getDeathSound() {
+        return GenericUtils.getRandomSound("lambdacraft:mobs.hc_die", 2);
+    }
     
-	/* (non-Javadoc)
-	 * @see net.minecraft.entity.monster.EntityMob#attackEntity(net.minecraft.entity.Entity, float)
-	 */
-	@Override
-	protected void attackEntity(Entity par1Entity, float par2) {
-		super.attackEntity(par1Entity, par2);
-	}
+    /* (non-Javadoc)
+     * @see net.minecraft.entity.monster.EntityMob#attackEntity(net.minecraft.entity.Entity, float)
+     */
+    @Override
+    protected void attackEntity(Entity par1Entity, float par2) {
+        super.attackEntity(par1Entity, par2);
+    }
 
-	@Override
-	protected double getFollowRange() {
-		return 10;
-	}
+    @Override
+    protected double getFollowRange() {
+        return 10;
+    }
 
-	@Override
-	protected double getMoveSpeed() {
-		return MOVE_SPEED;
-	}
+    @Override
+    protected double getMoveSpeed() {
+        return MOVE_SPEED;
+    }
 
-	@Override
-	protected double getKnockBackResistance() {
-		return 0;
-	}
+    @Override
+    protected double getKnockBackResistance() {
+        return 0;
+    }
 
-	@Override
-	protected double getAttackDamage() {
-		return 0;
-	}
+    @Override
+    protected double getAttackDamage() {
+        return 0;
+    }
 
-	@Override
-	public ResourceLocation getTexture() {
-		return ClientProps.ZOMBIE_MOB_PATH;
-	}	
+    @Override
+    public ResourceLocation getTexture() {
+        return ClientProps.ZOMBIE_MOB_PATH;
+    }    
     
 }

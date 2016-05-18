@@ -7,16 +7,16 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 
 public class BlockRefined extends Block {
 
-	public BlockRefined() {
-		super(Material.iron);
-		setCreativeTab(CBCMod.cct);
-		setHardness(2.0F);
-		setBlockName("refined");
-	}
+    public BlockRefined() {
+        super(Material.iron);
+        setCreativeTab(CBCMod.cct);
+        setHardness(2.0F);
+        setBlockName("refined");
+    }
 
-	@Override
-	public void registerBlockIcons(IIconRegister par1IconRegister) {
-		blockIcon = par1IconRegister.registerIcon("lambdacraft:refined");
-	}
+    @Override
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        blockIcon = par1IconRegister.registerIcon("lambdacraft:refined");
+    }
 
 }

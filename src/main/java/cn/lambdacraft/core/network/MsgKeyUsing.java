@@ -31,54 +31,54 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
  * @author WeAthFolD
  */
 public class MsgKeyUsing implements IMessage {
-	
-	boolean isUsing;
-	
-	public MsgKeyUsing(boolean b) {
-		isUsing = b;
-	}
-	
-	public MsgKeyUsing() {
-		
-	}
+    
+    boolean isUsing;
+    
+    public MsgKeyUsing(boolean b) {
+        isUsing = b;
+    }
+    
+    public MsgKeyUsing() {
+        
+    }
 
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		isUsing = buf.readBoolean();
-	}
+    @Override
+    public void fromBytes(ByteBuf buf) {
+        isUsing = buf.readBoolean();
+    }
 
-	@Override
-	public void toBytes(ByteBuf buf) {
-		buf.writeBoolean(isUsing);
-	}
-	
-	public static class Handler implements IMessageHandler<MsgKeyUsing, IMessage> {
+    @Override
+    public void toBytes(ByteBuf buf) {
+        buf.writeBoolean(isUsing);
+    }
+    
+    public static class Handler implements IMessageHandler<MsgKeyUsing, IMessage> {
 
-		@Override
-		public IMessage onMessage(MsgKeyUsing msg, MessageContext ctx) {
-			EntityPlayer thePlayer = ctx.getServerHandler().playerEntity;
-			World world = thePlayer.worldObj;
-			
-			if (msg.isUsing) {
-				
-				Motion3D begin = new Motion3D(thePlayer, true);
-				MovingObjectPosition mop = world.rayTraceBlocks(
-						begin.getPosVec(world), begin.move(8.0).getPosVec(world)
-					);
-				if (mop == null || mop.sideHit == -1)
-					return null;
-				Block block = world.getBlock(mop.blockX, mop.blockY, mop.blockZ);
-				UsingUtils.useBlock(new BlockPos(mop.blockX, mop.blockY,
-						mop.blockZ, block), world, thePlayer);
+        @Override
+        public IMessage onMessage(MsgKeyUsing msg, MessageContext ctx) {
+            EntityPlayer thePlayer = ctx.getServerHandler().playerEntity;
+            World world = thePlayer.worldObj;
+            
+            if (msg.isUsing) {
+                
+                Motion3D begin = new Motion3D(thePlayer, true);
+                MovingObjectPosition mop = world.rayTraceBlocks(
+                        begin.getPosVec(world), begin.move(8.0).getPosVec(world)
+                    );
+                if (mop == null || mop.sideHit == -1)
+                    return null;
+                Block block = world.getBlock(mop.blockX, mop.blockY, mop.blockZ);
+                UsingUtils.useBlock(new BlockPos(mop.blockX, mop.blockY,
+                        mop.blockZ, block), world, thePlayer);
 
-			} else {
-				
-				UsingUtils.stopUsingBlock(world, thePlayer);
-				
-			}
-			return null;
-		}
-		
-	}
+            } else {
+                
+                UsingUtils.stopUsingBlock(world, thePlayer);
+                
+            }
+            return null;
+        }
+        
+    }
 
 }
