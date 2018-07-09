@@ -6,3 +6,6 @@ LambdaCraft is a mod with theme of the legendary game [Half-Life](https://en.wik
 LamdaCraft is the very first mod that LambdaInnovation have ever created. Recently we decided to rewrite the project completely, so this repository is deprecated and is just used for future code reference. You can checkout the new project [HERE](https://github.com/LambdaInnovation/LambdaCraft).
 
 
+## License
+
+The LambdaCraft project is licensed under [MIT License](https://mit-license.org/).
